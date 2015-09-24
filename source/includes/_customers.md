@@ -17,7 +17,7 @@
 }
 ```
 
-A customer represents an individual or business with whom you intend to transact with. In order to manage a user's Customers, the `ManageCustomers` OAuth scope is required.
+A customer represents an individual or business with whom you intend to transact with. In order to manage a user's Customers, the `ManageCustomers` OAuth scope is required. Personal and business type customers can do more than unverified customers but require more verification. Personal and business type customers can hold a balance within Dwolla, and can source transfers.
 
 ### Customer Resource
 
@@ -47,7 +47,16 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "firstName": "Bob",
   "lastName": "Dole",
   "email": "bob@dole.com",
-  "ipAddress": "99.99.99.99"
+  "ipAddress": "99.99.99.99",
+  "type": "personal",
+  "address1": "Some Adress Line 1",
+  "address2": "Some Adress Line 2",
+  "city": "San Francisco",
+  "state": "CA",
+  "postalCode": "94108",
+  "dateOfBirth": "1990-03-02",
+  "tin": "123121234",
+  "phone": "1231231234"
 }
 ```
 
@@ -71,7 +80,15 @@ Parameter | Optional? | Description
 firstName | no | Customer's first name.
 lastName | no | Customer's last name.
 email | no | Customer's email address.
-ipAddress | yes | Customer's IP address
+ipAddress | yes | Customer's IP address.
+type | no | Either `unverified`, `personal`, or `business`.
+address1 | no | Customer's current street address.
+address2 | no | Customer's current apartment or suite number.
+city | no | Customer's current city.
+state | no | Customer's current state.
+postalCode | no | Customer's current postal code (zip).
+tin | no | Customer's Employment Identification Number (if business) or SSN (otherwise).
+phone | no | Customer's phone number.
 
 ### Errors
 | HTTP Status | Message |
