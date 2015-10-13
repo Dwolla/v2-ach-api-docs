@@ -23,10 +23,13 @@ new_customer = DwollaSwagger::CustomersApi.create({:body => {
 	:city => 'Long Island City',
 	:state => 'NY',
 	:postalCode => '11101',
-	:dateOfBirth => '01/01/1970',
+	:dateOfBirth => '1970-01-01',
 
 	# For the first attempt, only 
-	# 4 digits of SSN required
+	# the last 4 digits of SSN required
+
+	# If the entire SSN is provided, 
+	# it will still be accepted
 	:ssn => '1234'
 }})
 
@@ -36,7 +39,7 @@ p new_customer # => https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4
 `new_customer` contains the location of the newly created resource. 
 
 ### Retrying verification
-If the data submitted failed verification, the `Customer` created will be placed into the `retry` state. This can happen if any information is miskeyed or invalid. Upon attempting verification, it is required to submit the customer's entire SSN. 
+If the data submitted failed verification, the `Customer` created will be placed into the `retry` state. This can happen if any information is miskeyed or invalid. Upon retrying verification, it is required to submit the customer's entire SSN. 
 
 ```ruby
 require 'dwolla_swagger'
@@ -50,7 +53,7 @@ retried_customer = DwollaSwagger::CustomersApi.update_customer('AB443D36-3757-44
 	:city => 'Long Island City',
 	:state => 'NY',
 	:postalCode => '11101',
-	:dateOfBirth => '01/01/1970',
+	:dateOfBirth => '1970-01-01',
 
 	# For the retry attempt, the 
 	# entire SSN is required
