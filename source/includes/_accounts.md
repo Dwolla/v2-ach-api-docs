@@ -104,28 +104,33 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-an_account = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
+account_url = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
-retrieved = DwollaSwagger::AccountsApi.id(an_account)
-p retrieved.name # => "Charlotte Gillman"
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+account = account_token.get account_url
+p account.name # => "Charlotte Gillman"
+
+# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
+account = DwollaSwagger::AccountsApi.id(account_url)
+p account.name # => "Charlotte Gillman"
 ```
 ```php
 <?php
-$anAccount = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
+$accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
 $accountsApi = DwollaSwagger\AccountsApi($apiClient);
 
-$retrieved = $accountsApi->id($anAccount);
-print($retrieved->name); # => "Charlotte Gillman"
+$account = $accountsApi->id($accountUrl);
+print($account->name); # => "Charlotte Gillman"
 ?>
 ```
 ```python
-an_account = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
+account_url = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
 accounts_api = dwollaswagger.AccountsApi(client)
 
-retrieved = accounts_api.id(an_account)
-print(retrieved.name) # => Charlotte Gillman
+account = accounts_api.id(account_url)
+print(account.name) # => Charlotte Gillman
 ```
 ```javascript
 dwolla.then(function(dwolla) {
@@ -260,28 +265,33 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-account = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
+account_url = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
-acct_fs = DwollaSwagger::FundingsourcesApi.get_account_funding_sources(account)
-p acct_fs[0].name # => "Vera Brittain’s Checking"
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+funding_sources = account_token.get "#{account_url}/funding-sources"
+funding_sources._embedded['funding-sources'][0].name # => "Vera Brittain’s Checking"
+
+# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
+funding_sources = DwollaSwagger::FundingsourcesApi.get_account_funding_sources(account_url)
+funding_sources._embedded[:'funding-sources'][0][:name] # => "Vera Brittain’s Checking"
 ```
 ```php
 <?php
-$account = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
+$accountUrl = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
 $fsApi = DwollaSwagger\FundingsourcesApi($apiClient);
 
-$acctFs = $fsApi->getAccountFundingSources($account);
-print($acctFs[0]->name); # => "Vera Brittain’s Checking"
+$fundingSources = $fsApi->getAccountFundingSources($accountUrl);
+$fundingSources->_embedded->{'funding-sources'}[0]->name); # => "Vera Brittain’s Checking"
 ?>
 ```
 ```python
-account = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
+account_url = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
 fs_api = dwollaswagger.FundingsourcesApi(client)
-acct_fs = fs_api.get_account_funding_sources(account)
+funding_sources = fs_api.get_account_funding_sources(account_url)
 
-print(acct_fs[0].name) # => Vera Brittain’s Checking
+funding_sources._embedded['funding-sources'][0]['name'] # => Vera Brittain’s Checking
 ```
 ```javascript
 dwolla.then(function(dwolla) {
@@ -383,28 +393,33 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-account = 'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
+account_url = 'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
 
-acct_xfers = DwollaSwagger::TransfersApi.get_account_transfers(account)
-p acct_xfers[0].status # => "processed"
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+transfers = account_token.get "#{account_url}/transfers"
+transfers._embedded.transfers[0].status # => "processed"
+
+# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
+transfers = DwollaSwagger::TransfersApi.get_account_transfers(account_url)
+transfers._embedded[:transfers][0][:status] # => "processed"
 ```
 ```php
 <?php
-$account = 'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3';
+$accountUrl = 'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3';
 
-$TransfersApi = DwollaSwagger\TransfersApi($apiClient);
+$transfersApi = DwollaSwagger\TransfersApi($apiClient);
 
-$acctXfers = $TransfersApi->getAccountTransfers($account);
-print($acctXfers[0]->status); # => "processed"
+$transfers = $transfersApi->getAccountTransfers($accountUrl);
+$transfers->_embedded->transfers[0]->status; # => "processed"
 ?>
 ```
 ```python
-account = 'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
+account_url = 'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
 
 transfers_api = dwollaswagger.TransfersApi(client)
-acct_xfers = transfers_api.get_account_transfers(account)
+transfers = transfers_api.get_account_transfers(account_url)
 
-print(acct_xfers[0].status) # => processed
+transfers._embedded['transfers'][0]['status'] # => "processed"
 ```
 ```javascript
 dwolla.then(function(dwolla) {
@@ -487,7 +502,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# No example for this language yet. Coming soon.
+account_url = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
+
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+mass_payments = account_token.get "#{account_url}/mass-payments", limit: 10
 ```
 ```php
 /**

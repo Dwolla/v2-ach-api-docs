@@ -1,12 +1,12 @@
 # MassPay
 
-Dwolla MassPay allows you to easily send up to 5,000 payments one API request. The payments are funded from a single user's specified funding source and processed asynchronously upon submission. 
+Dwolla MassPay allows you to easily send up to 5,000 payments one API request. The payments are funded from a single user's specified funding source and processed asynchronously upon submission.
 
 Your mass payment will then be queued and processed.  As the service processes your mass payment, each `item` is processed one after the other, at a rate between 0.5 sec. - 1 sec. / item.  Therefore, you can expect a 1000-item MassPay to be completed between 8-16 minutes.
 
 MassPay offers a significant advantage over repeatedly calling the [Transfers](#transfers) endpoint for each individual transaction. This benefit is the fact that a bank-funded MassPay only incurs a single ACH debit from the bank account to fund the entire batch of payments.  The alternative approach will incur a debit from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.
 
-### Mass payment resource 
+### Mass payment resource
 
 | Parameter | Description |
 |-----------|------------|
@@ -28,7 +28,7 @@ MassPay offers a significant advantage over repeatedly calling the [Transfers](#
 
 ## Initiate a mass payment
 
-This section covers how to initiate a mass payment from an [Account](#accounts) or verified [Customer](#customers) resource. A mass payment contains a list of `items` representing individual payments. Optionally, mass payments can contain `metadata` on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively. 
+This section covers how to initiate a mass payment from an [Account](#accounts) or verified [Customer](#customers) resource. A mass payment contains a list of `items` representing individual payments. Optionally, mass payments can contain `metadata` on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively.
 
 <ol class="alerts">
     <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Send` <a href="#oauth-scopes">scope</a>.</li>
@@ -89,7 +89,7 @@ Funding source | `https://api.dwolla.com/funding-sources/{id}` | Destination of 
 | HTTP Status | Code | Description |
 |--------------|-------------|-----------------|
 | 201 | Created | A mass payment resource was created |
-| 400 | ValidationError | Can be: Items exceeded maximum count of 5000, Invalid amount, Invalid metadata, or Invalid funding source. | 
+| 400 | ValidationError | Can be: Items exceeded maximum count of 5000, Invalid amount, Invalid metadata, or Invalid funding source. |
 | 401 | NotAuthorized | OAuth token does not have Send scope. |
 
 ### Request and response (transfer from Account to Customer)
@@ -146,7 +146,50 @@ HTTP/1.1 201 Created
 Location: https://api.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be0b7
 ```
 ```ruby
-# No example for this language yet. Coming soon.
+request_body = {
+  _links: {
+    source: {
+      href: "https://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+    }
+  },
+  items: [
+    {
+      _links: {
+        destination: {
+          href: "https://api-uat.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+        }
+      },
+      amount: {
+        currency: "USD",
+        value: "1.00"
+      },
+      metadata: {
+        payment1: "payment1"
+      }
+    },
+    {
+      _links: {
+        destination: {
+          href: "https://api-uat.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd"
+        }
+      },
+      amount: {
+        currency: "USD",
+        value: "5.00"
+      },
+      metadata: {
+        payment2: "payment2"
+      }
+    }
+  ],
+  metadata: {
+    batch1: "batch1"
+  }
+}
+
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+mass_payment = account_token.post "mass-payments", request_body
+mass_payment.headers[:location] # => https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4
 ```
 ```php
 /**
@@ -183,7 +226,7 @@ id | no | The id of the mass payment to retrieve information for.
 
 | HTTP Status | Code | Description |
 |--------------|-------------|------------------|
-| 404 | NotFound | Mass payment not found. | 
+| 404 | NotFound | Mass payment not found. |
 
 ### Request and response
 
@@ -254,8 +297,8 @@ status | yes | Filter results on item status. Possible values: `failed`, `pendin
 
 | HTTP Status | Code | Description
 |--------------|-------------|------------------|
-| 403 | Forbidden | Not authorized to list mass payment items. | 
-| 404 | NotFound | Mass payment not found. | 
+| 403 | Forbidden | Not authorized to list mass payment items. |
+| 404 | NotFound | Mass payment not found. |
 
 ### Request and response
 
@@ -336,7 +379,11 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# No example for this language yet. Coming soon.
+mass_payment_url = 'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
+
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+mass_payment_items = account_token.get "#{mass_payment_url}/items"
+mass_payment_items.total # => 2
 ```
 ```php
 /**
@@ -354,7 +401,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 ## Get a mass payment item by id
 
-This section covers how to retrieve a mass payment item by its unique identifier. An item can contain `_links` to: the mass payment the item belongs to, the transfer created from the item, and the destination user. 
+This section covers how to retrieve a mass payment item by its unique identifier. An item can contain `_links` to: the mass payment the item belongs to, the transfer created from the item, and the destination user.
 
 <ol class="alerts">
     <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
@@ -373,8 +420,8 @@ id | no | The id of the item to be retrieved in a mass payment.
 
 | HTTP Status | Code | Description
 |--------------|-------------|------------------|
-| 403 | Forbidden | Not authorized to list mass payment items. | 
-| 404 | NotFound | Mass payment not found. | 
+| 403 | Forbidden | Not authorized to list mass payment items. |
+| 404 | NotFound | Mass payment not found. |
 
 ### Request and response
 
@@ -412,7 +459,11 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# No example for this language yet. Coming soon.
+mass_payment_item_url = 'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'
+
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+mass_payment_item = account_token.get mass_payment_item_url
+mass_payment_item.status # => "success"
 ```
 ```php
 /**

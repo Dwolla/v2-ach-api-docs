@@ -11,7 +11,7 @@ Each SDK is automatically versioned with the [Dwolla API Schema](https://api-uat
 |api.dwolla.com|api-uat.dwolla.com|
 
 
-## Ruby
+## DwollaSwagger Ruby
 
 `dwolla-swagger-ruby` is available on [RubyGems](https://rubygems.org/gems/dwolla_swagger) with [source code](https://github.com/Dwolla/dwolla-swagger-ruby) available on our GitHub page. More information is available on the project's README.
 
@@ -35,6 +35,32 @@ DwollaSwagger::Swagger.configure do |config|
 end
 
 my_custies = DwollaSwagger::CustomersApi.list(:limit => 10)
+```
+
+## DwollaV2 Ruby
+
+`dwolla_v2` is available on [RubyGems](https://rubygems.org/gems/dwolla_v2) with [source code](https://github.com/Dwolla/dwolla-v2-ruby) available on our GitHub page. More information is available on the project's README.
+
+### Installation
+
+```bashnoselect
+gem install dwolla_v2
+```
+
+### Quickstart
+
+Let's fetch a page of customers:
+
+```rubynoselect
+require 'dwolla_v2'
+
+# see dwolla.com/applications for your client id and secret
+$dwolla = DwollaV2::Client.new(id: "...", secret: "...")
+
+# generate a token on dwolla.com/applications
+account_token = $dwolla.tokens.new access_token: "..."
+
+customers = account_token.get "customers", limit: 10
 ```
 
 ## Python
@@ -120,7 +146,7 @@ CustomerListResponse custies = c.list(10);
 
 ## JavaScript
 
-Dwolla does not maintain a JavaScript package -- developers are encouraged to use the `swagger-js` project, available on [npm](https://www.npmjs.com/package/swagger-client) with [source code](https://github.com/swagger-api/swagger-js) on the swagger-api project GitHub page. 
+Dwolla does not maintain a JavaScript package -- developers are encouraged to use the `swagger-js` project, available on [npm](https://www.npmjs.com/package/swagger-client) with [source code](https://github.com/swagger-api/swagger-js) on the swagger-api project GitHub page.
 
 ### Installation
 
