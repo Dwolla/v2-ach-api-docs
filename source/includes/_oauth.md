@@ -2,9 +2,9 @@
 
 Dwolla's API lets you interact with a user's Dwolla account and act on its behalf to transfer money, add funding sources, and more.  To do so, your application first needs to request authorization from users.  
 
-Dwolla implements the [OAuth 2.0 standard](http://oauth.net/2/) to facilitate this authorization. Similar to Facebook and Twitter's authentication flow, the user is first presented with a permission dialog for your application, at which point the user can either approve the permissions requested, or reject them. Once the user approves, an `authorization_code` is sent to your application, which will then [be exchanged](#finish-authorization) for an `access_token` and a `refresh_token` pair. 
+Dwolla implements the [OAuth 2.0 standard](http://oauth.net/2/) to facilitate this authorization. Similar to Facebook and Twitter's authentication flow, the user is first presented with a permission dialog for your application, at which point the user can either approve the permissions requested, or reject them. Once the user approves, an `authorization_code` is sent to your application, which will then [be exchanged](#finish-authorization) for an `access_token` and a `refresh_token` pair.
 
-The `access_token` can then be used to make API calls which require user authentication like [Initiate a Transfer](#initiate-transfer) or [List Transfers](#get-transfers-account). 
+The `access_token` can then be used to make API calls which require user authentication like [Initiate a Transfer](#initiate-transfer) or [List Transfers](#get-transfers-account).
 
 ### Token lifetimes
 
@@ -77,8 +77,30 @@ var redirect_uri = "https://www.myredirect.com/redirect";
 var authUrl = Dwolla.authUrl(redirect_uri);
 ```
 ```ruby
-redirect_uri = "https://www.myredirect.com/redirect"
-authUrl = Dwolla::OAuth.get_auth_url(redirect_uri)
+# config/initializers/dwolla.rb
+# you can find your client id and secret at dwolla.com/applications
+$dwolla = DwollaV2::Client.new(id: "...", secret: "...")
+
+# app/controllers/your_auth_controller.rb
+class YourAuthController
+  # redirect the user to dwolla.com/oauth/v2/authenticate
+  def authenticate
+    redirect_to auth.url
+  end
+
+  # exchange the code for a token
+  def callback
+    token = auth.callback(params)
+  end
+
+  private
+
+  def auth
+    $dwolla.auths.new redirect_uri: "https://www.myredirect.com/redirect",
+                      scope: "send|funding",
+                      state: session[:state] ||= SecureRandom.hex
+  end
+end
 ```
 ```raw
 not applicable

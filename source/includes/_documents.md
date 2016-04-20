@@ -64,6 +64,19 @@ file = Faraday::UploadIO.new('mclovin.jpg', 'image/jpeg')
 document = account_token.post "#{customer_url}/documents", file: file, documentType: 'license'
 document.headers[:location] # => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
 ```
+```javascript
+var customerUrl = 'https://api.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE';
+
+var requestBody = new FormData();
+body.append('file', fs.createReadStream('mclovin.jpg'), { filename: 'mclovin.jpg', contentType: 'image/jpeg', knownLength: 12345 });
+body.append('documentType', 'license');
+
+accountToken
+  .post(`${customerUrl}/documents`, requestBody)
+  .then(function(res) {
+    res.headers.get('location'); // => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
+  });
+```
 
 ## List documents
 
@@ -121,7 +134,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-customer_url = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2/documents'
+customer_url = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 documents = token.get "#{customer_url}/documents"
@@ -133,7 +146,7 @@ documents._embedded[:documents][0][:id] # => "56502f7a-fa59-4a2f-8579-0f8bc9d7b9
 ```
 ```php
 <?php
-$customerUrl = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2/documents';
+$customerUrl = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2';
 
 $customersApi = DwollaSwagger\CustomersApi($apiClient);
 
@@ -142,7 +155,7 @@ $customer->total; # => 2
 ?>
 ```
 ```python
-customer_url = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2/documents'
+customer_url = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'
 
 customers_api = dwollaswagger.CustomersApi(client)
 
@@ -150,7 +163,13 @@ documents = customers_api.get_customer_documents(customer_url)
 documents.total # => 2
 ```
 ```javascript
-// coming soon
+var customerUrl = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2';
+
+token
+  .get(`${customerUrl}/documents`)
+  .then(function(res) {
+    res.body._embedded.documents[0].id; // => '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
+  });
 ```
 
 ## Retrieve a document
@@ -215,5 +234,11 @@ document = documents_api.get_customer(document_url)
 document.type # => "passport"
 ```
 ```javascript
-// coming soon
+var documentUrl = 'https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc';
+
+accountToken
+  .get(document_url)
+  .then(function(res) {
+    res.body.type; // => "passport"
+  });
 ```

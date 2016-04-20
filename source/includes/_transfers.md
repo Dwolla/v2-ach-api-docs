@@ -221,28 +221,30 @@ transfer = transfers_api.create(body = {
 transfer # => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.transfers.create({
-      "_links": {
-          "destination": {
-              "href": "https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
-          },
-          "source": {
-              "href": "https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
-          }
-      },
-      "amount": {
-          "currency": "USD",
-          "value": "1.00"
-      },
-      "metadata": {
-          "foo": "bar",
-          "baz": "boo"
-      }
-      }).then(function(data) {
-          console.log(data.obj); // https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
-      })
-})
+var requestBody = {
+  _links: {
+    destination: {
+      href: 'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
+    },
+    source: {
+      href: 'https://api.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
+    }
+  },
+  amount: {
+    currency: 'USD',
+    value: '1.00'
+  },
+  metadata: {
+    foo: 'bar',
+    baz: 'boo'
+  }
+};
+
+accountToken
+  .post('transfers', requestBody)
+  .then(function(res) {
+    res.headers.get('location'); // => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
+  });
 ```
 
 ## Get a transfer by id
@@ -331,12 +333,13 @@ transfer = transfers_api.by_id(transfer_url)
 transfer.status # => 'pending'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.customers.byId({id: '4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'})
-    .then(function(data) {
-        console.log(data.obj._embedded[0].status); // pending
-    })
-})
+var transferUrl = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388';
+
+accountToken
+  .get(transferUrl)
+  .then(function(res) {
+    res.body.status; // => 'pending'
+  });
 ```
 ## Get a transfer's fees
 
@@ -437,9 +440,13 @@ fees.total # => 2
 # No example for this language yet.
 ```
 ```javascript
-/**
- *  No example for this language yet.
- **/
+var transferUrl = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
+
+accountToken
+  .get(`${transferUrl}/fees`)
+  .then(function(res) {
+    res.body.total; // => 2
+  });
 ```
 
 ## Get transfer failure reason
@@ -492,7 +499,11 @@ failure.code # => "R1"
 # No example for this language yet.
 ```
 ```javascript
-/**
- *  No example for this language yet.
- **/
+var transferUrl = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
+
+accountToken
+  .get(`${transferUrl}/failure`)
+  .then(function(res) {
+    res.body.code; // => 'R1'
+  });
 ```

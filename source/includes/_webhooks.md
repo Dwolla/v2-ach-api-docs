@@ -236,13 +236,13 @@ webhook = webhooks_api.id(webhook_url)
 webhook.topic # => 'transfer_created'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.webhooks.id({
-        id: '9ece9660-aa34-41eb-80d7-0125d53b45e8'
-    }).then(function(data) {
-        console.log(data.obj.topic); // transfer_created
-    });
-});
+var webhookUrl = 'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8';
+
+applicationToken
+  .get(webhookUrl)
+  .then(function(res) {
+    res.body.topic; // => 'transfer_created'
+  });
 ```
 
 ## Retry a webhook by id
@@ -305,13 +305,9 @@ webhooks_api = dwollaswagger.WebhooksApi(client)
 webhooks_api.retry_webhook(webhook_url)
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.webhooks.retryWebhook({
-        id: '9ece9660-aa34-41eb-80d7-0125d53b45e8'
-    }).then(function(data) {
-        console.log(data.obj.status); // 200
-    });
-});
+var webhookUrl = 'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8';
+
+applicationToken.post(`${webhookUrl}/retries`);
 ```
 
 ## Get webhook retries by id
@@ -400,11 +396,11 @@ retries = webhooks_api.retries_by_id(webhook_url)
 retries.total # => 1
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.webhooks.retriesById({
-        id: '9ece9660-aa34-41eb-80d7-0125d53b45e8'
-    }).then(function(data) {
-        console.log(data.obj.total); // 1
-    });
-});
+var webhookUrl = 'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8';
+
+applicationToken
+  .get(`${webhookUrl}/retries`)
+  .then(function(res) {
+    res.body.total; // => 1
+  });
 ```

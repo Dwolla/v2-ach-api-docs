@@ -228,11 +228,11 @@ events = events_api.events()
 events.total # => 4
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.events.events().then(function(data) {
-        console.log(data.obj.total); // 4
-    })
-})
+applicationToken
+  .get('events')
+  .then(function(res) {
+    res.body.total; // => 4
+  });
 ```
 
 ## Get event by id
@@ -316,9 +316,11 @@ event = events_api.id(event_url)
 event.topic # => 'customer_transfer_created'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.events.id({id: '81f6e13c-557c-4449-9331-da5c65e61095'}).then(function(data) {
-        console.log(data.obj.topic); // customer_transfer_created
-    })
-})
+var eventUrl = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095';
+
+applicationToken
+  .get(eventUrl)
+  .then(function(res) {
+    res.body.topic; // => 'customer_transfer_created'
+  });
 ```

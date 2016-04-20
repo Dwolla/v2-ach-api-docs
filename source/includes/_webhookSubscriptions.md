@@ -106,14 +106,16 @@ subscription = DwollaSwagger::WebhooksubscriptionsApi.create(:body => request_bo
 subscription # => "https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla['webhook-subscriptions'].list({
-        "url": "http://myapplication.com/webhooks",
-        "secret": "sshhhhhh"
-    }).then(function(data) {
-        console.log(data.obj); // https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216
-    });
-});
+var requestBody = {
+  url: 'http://myawesomeapplication.com/destination',
+  secret: 'your webhook secret'
+};
+
+applicationToken
+  .post('webhook-subscriptions', requestBody)
+  .then(function(res) {
+    res.headers.get('location'); // => 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
+  });
 ```
 ```python
 webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
@@ -174,13 +176,9 @@ application_token.delete webhook_subscription_url
 DwollaSwagger::WebhooksubscriptionApi.delete_by_id(webhook_subscription_url)
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla['webhook-subscriptions'].deleteById({
-      id: '5af4c10a-f6de-4ac8-840d-42cb65454216'
-    }).then(function(data) {
-        console.log(data.status); // 200
-    });
-});
+var webhookSubscriptionUrl = 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216';
+
+applicationToken.delete(webhookSubscriptionUrl);
 ```
 ```python
 webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
@@ -249,12 +247,11 @@ webhook_subscriptions = DwollaSwagger::WebhooksubscriptionsApi.list
 webhook_subscriptions.total # => 1
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla['webhook-subscriptions'].list()
-    .then(function(data) {
-        console.log(data.obj.total); // 1
-    });
-});
+applicationToken
+  .get('webhook-subscriptions')
+  .then(function(res) {
+    res.body.total; // => 1
+  });
 ```
 ```python
 webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
@@ -322,13 +319,13 @@ webhook_subscription = DwollaSwagger::WebhooksubscriptionApi.id webhook_subscrip
 webhook_subscription.created # => 2015-10-28T16:20:47+00:00
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla['webhook-subscriptions'].id({
-      id: '5af4c10a-f6de-4ac8-840d-42cb65454216'
-    }).then(function(data) {
-        console.log(data.obj.created); // 2015-10-28T16:20:47+00:00
-    });
-});
+var webhookSubscriptionUrl = 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216';
+
+applicationToken
+  .get(webhookSubscriptionUrl)
+  .then(function(res) {
+    res.body.created; // => '2016-04-20T15:49:50.340Z'
+  });
 ```
 ```python
 webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
@@ -419,13 +416,13 @@ hooks = DwollaSwagger::WebhooksApi.hooks_by_id webhook_subscription_url
 hooks.total # => 5
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.webhooks.hooksById({
-      id: '5af4c10a-f6de-4ac8-840d-42cb65454216'
-    }).then(function(data) {
-        console.log(data.obj.total); // 5
-    });
-});
+var webhookSubscriptionUrl = 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216';
+
+applicationToken
+  .get(`${webhookSubscriptionUrl}/webhooks`)
+  .then(function(res) {
+    res.body.total; // => 5
+  });
 ```
 ```python
 webhook_api = dwollaswagger.WebhooksApi(client)

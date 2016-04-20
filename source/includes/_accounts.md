@@ -108,11 +108,11 @@ account_url = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 account = account_token.get account_url
-p account.name # => "Charlotte Gillman"
+account.name # => "Charlotte Gillman"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
 account = DwollaSwagger::AccountsApi.id(account_url)
-p account.name # => "Charlotte Gillman"
+account.name # => "Charlotte Gillman"
 ```
 ```php
 <?php
@@ -133,11 +133,13 @@ account = accounts_api.id(account_url)
 print(account.name) # => Charlotte Gillman
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.accounts.id({id:'ca32853c-48fa-40be-ae75-77b37504581b'}).then(function(data) {
-        console.log(data.obj._embedded.name); // Charlotte Gillman
-    })
-})
+var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
+
+accountToken
+  .get(accountUrl)
+  .then(function(res) {
+    res.body.name; // => 'Charlotte Gillman'
+  });
 ```
 
 ## Create an Account funding source
@@ -294,12 +296,13 @@ funding_sources = fs_api.get_account_funding_sources(account_url)
 funding_sources._embedded['funding-sources'][0]['name'] # => Vera Brittain’s Checking
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla['funding-sources'].getAccountFundingSources()
-    .then(function(data) {
-       console.log(data.obj._embedded[0].name); // Vera Brittain’s Checking
-    });
-});
+var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
+
+accountToken
+  .get(`${accountUrl}/funding-sources`)
+  .then(function(res) {
+    res.body._embedded['funding-sources'][0].name; // => 'US Bank Checking'
+  });
 ```
 
 ## List an Account's transfers
@@ -422,11 +425,13 @@ transfers = transfers_api.get_account_transfers(account_url)
 transfers._embedded['transfers'][0]['status'] # => "processed"
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.customers.getAccountTransfers().then(function(data) {
-        console.log(data.obj._embedded[0].status); // processed
-    })
-})
+var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
+
+accountToken
+  .get(`${accountUrl}/transfers`)
+  .then(function(res) {
+    res.body._embedded.transfers.[0].status; // => 'processed'
+  });
 ```
 
 ## List an Account's mass payments
@@ -506,6 +511,7 @@ account_url = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payments = account_token.get "#{account_url}/mass-payments", limit: 10
+mass_payments._embedded['mass-payments'][0].status # => "complete"
 ```
 ```php
 /**
@@ -516,7 +522,11 @@ mass_payments = account_token.get "#{account_url}/mass-payments", limit: 10
 # No example for this language yet. Coming soon.
 ```
 ```javascript
-/**
- *  No example for this language yet. Coming soon.
- **/
+var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
+
+accountToken
+  .get(`${accountUrl}/mass-payments`)
+  .then(function(res) {
+    res.body._embedded['mass-payments'][0].status; // => 'complete'
+  });
 ```

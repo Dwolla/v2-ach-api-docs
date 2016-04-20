@@ -205,16 +205,18 @@ customer = customers_api.create(body = {
 customer # => 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.customers.create({
-      "firstName": "Bob",
-      "lastName": "Merchant",
-      "email": "bmerchant@nomail.net",
-      "ipAddress": "99.99.99.99"})
-      .then(function(data) {
-          console.log(data); // https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
-      });
-});
+var requestBody = {
+  firstName: 'Jane',
+  lastName: 'Merchant',
+  email: 'jmerchant@nomail.net',
+  ipAddress: '99.99.99.99'
+};
+
+accountToken
+  .post('customers', requestBody)
+  .then(function(res) {
+    res.headers.get('location'); // => 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+  });
 ```
 
 ### Verified Customer
@@ -323,31 +325,29 @@ customer = customers_api.create(body = {
 customer # => 'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.customers.create({
-        "firstName": "Bob",
-        "lastName": "Merchant",
-        "email": "bmerchant@nomail.net",
-        "ipAddress": "10.10.10.10",
-        "type": "personal",
-        "address1": "99-99 33rd St",
-        "city": "Some City",
-        "state": "NY",
-        "postalCode": "11101",
-        "dateOfBirth": "1970-01-01",
+var requestBody = {
+  firstName: 'Bill',
+  lastName: 'Bibbit',
+  email: 'bbibbit@nomail.net',
+  type: 'personal',
+  address1: '99-99 33rd St',
+  city: 'Some City',
+  state: 'NY',
+  postalCode: '11101',
+  dateOfBirth: '1970-01-01',
+  // For the first attempt, only the
+  // last 4 digits of SSN required
+  // If the entire SSN is provided,
+  // it will still be accepted
+  ssn: '1234',
+  phone: '3478589191'
+};
 
-        // For the first attempt, only
-        // the last 4 digits of SSN required
-
-        // If the entire SSN is provided,
-        // it will still be accepted
-        "ssn": "1234",
-        "phone": "3478589191"
-      })
-      .then(function(data) {
-          console.log(data); // https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
-      });
-});
+accountToken
+  .post('customers', requestBody)
+  .then(function(res) {
+    res.headers.get('location'); // => 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+  });
 ```
 ### Receive-only customer
 
@@ -409,25 +409,27 @@ customer = customers_api.create(body = {
   'firstName': 'Jane',
   'lastName': 'Merchant',
   'email': 'jmerchant@nomail.net',
-  'type': 'receive-only,
+  'type': 'receive-only',
   'businessName': 'Jane Corp llc',
   'ipAddress': '99.99.99.99'
 })
 customer # => 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.customers.create({
-      "firstName": "Jane",
-      "lastName": "Merchant",
-      "email": "jmerchant@nomail.net",
-      "type": "receive-only",
-      "businessName": "Jane Corp llc",
-      "ipAddress": "99.99.99.99"})
-      .then(function(data) {
-          console.log(data); // https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
-      });
-});
+var requestBody = {
+  firstName: 'Jane',
+  lastName: 'Merchant',
+  email: 'jmerchant@nomail.net',
+  type: 'receive-only',
+  businessName: 'Jane Corp llc',
+  ipAddress: '99.99.99.99'
+};
+
+accountToken
+  .post('customers', requestBody)
+  .then(function(res) {
+    res.headers.get('location'); // => 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+  });
 ```
 
 ## List business classifications
@@ -806,25 +808,27 @@ customer = customers_api.update_customer(customer_url, body = {
 customer.id # => 'FC451A7A-AE30-4404-AB95-E3553FCD733F'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.customers.updateCustomer({
-        "firstName": "Gordon",
-        "lastName": "Zheng",
-        "email": "gordon+15@dwolla.com",
-        "ipAddress": "10.10.10.10",
-        "type": "personal",
-        "address1": "221 Corrected Address St..",
-        "address2": "Fl 8",
-        "city": "Ridgewood",
-        "state": "NY",
-        "postalCode": "11385",
-        "dateOfBirth": "1990-07-11",
-        "ssn": "202-99-1516"
-      })
-      .then(function(data) {
-          console.log(data); // https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
-      });
-});
+var customerUrl = 'https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F';
+var requestBody = {
+  firstName: "Gordon",
+  lastName: "Zheng",
+  email: "gordon+15@dwolla.com",
+  ipAddress: "10.10.10.10",
+  type: "personal",
+  address1: "221 Corrected Address St..",
+  address2: "Fl 8",
+  city: "Ridgewood",
+  state: "NY",
+  postalCode: "11385",
+  dateOfBirth: "1990-07-11",
+  ssn: "202-99-1516"
+};
+
+accountToken
+  .post(customerUrl, requestBody)
+  .then(function(res) {
+    res.body.id; // => 'FC451A7A-AE30-4404-AB95-E3553FCD733F'
+  });
 ```
 
 ### If you try more than once, or Customer is not in retry state:
@@ -943,11 +947,11 @@ customers = customers_api.list(limit = 10)
 customers._embedded['customers'][0]['firstName'] # => 'Elizabeth'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.customers.list({limit:10}).then(function(data) {
-        console.log(data[0].name); // Bob
-    })
-})
+accountToken
+  .get('customers', { limit: 10 })
+  .then(function(res) {
+    res.body._embedded.customers[0].firstName; // => 'Elizabeth'
+  });
 ```
 
 ## Get a Customer by id
@@ -1025,11 +1029,13 @@ customer = customers_api.get_customer(customer_url)
 customer.firstName # => 'Elizabeth'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.customers.getCustomer({id:'07D59716-EF22-4FE6-98E8-F3190233DFB8'}).then(function(data) {
-        console.log(data.obj._embedded.firstName); // Bob
-    })
-})
+var customerUrl = 'https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8';
+
+accountToken
+  .get(customerUrl)
+  .then(function(res) {
+    res.body.firstName; // => 'Elizabeth'
+  });
 ```
 
 ## Create on-demand transfer authorization
@@ -1069,7 +1075,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# No example for this language yet.
+on_demand_authorization = account_token.post "on-demand-authorizations"
+on_demand_authorization.buttonText # => "Agree & Continue"
 ```
 ```php
 /**
@@ -1080,10 +1087,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 # No example for this language yet.
 ```
 ```javascript
-/**
- * No example for this language yet.
- **/
- ```
+accountToken
+  .post('on-demand-authorizations')
+  .then(function(res) {
+    res.body.buttonText; // => "Agree & Continue"
+  });
+```
 
 ## Create a Customer funding source
 There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer's bank account information and pass it to Dwolla via the [new Customer funding source](new-customer-funding-source) endpoint, or you can send the Customer through the the [Instant Account Verification](#instant-account-verification-iav) (IAV) flow which will add and verify a bank account within seconds.
@@ -1162,32 +1171,38 @@ funding_source = DwollaSwagger::FundingsourcesApi.create_customer_funding_source
 funding_source # => "https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
 ```
 ```python
+customer_url = 'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
+
 funding_api = dwollaswagger.FundingsourcesApi(client)
 
-funding_source = funding_api.create_customer_funding_source('https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C', body = {"routingNumber": "222222226",
-        "accountNumber": "123456789",
-        "type": "checking",
-        "name": "Vera Brittain’s Checking"})
-
+funding_source = funding_api.create_customer_funding_source(customer_url, body = {
+  'routingNumber': '222222226',
+  'accountNumber': '123456789',
+  'type': 'checking',
+  'name': 'Vera Brittain’s Checking'
+})
 funding_source # => 'https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla['funding-sources'].createFundingSource({
-      "routingNumber": "222222226",
-      "accountNumber": "123456789",
-      "type": "checking",
-      "name": "Vera Brittain’s Checking"
-    }).then(function(data) {
-       console.log(data); // https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31
-    });
-});
+var customerUrl = 'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C';
+var requestBody = {
+  'routingNumber': '222222226',
+  'accountNumber': '123456789',
+  'type': 'checking',
+  'name': 'Vera Brittain’s Checking'
+};
+
+accountToken
+  .post(`${customerUrl}/funding-sources`, requestBody)
+  .then(function(res) {
+    res.headers.get('location'); // => 'https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'
+  });
 ```
 ### Instant account verification (IAV)
 IAV is a simple and secure process which requires both server-side and client-side interaction. Your server requests a [single-use token](#generate-an-iav-token) which is used to represent the Customer that is adding or verifying their bank. The client-side implementation includes the dwolla.js library on the page that is used to render the IAV flow.
 
 ```javascriptnoselect
-<script src="https://cdn.dwolla.com/dwolla.js"></script>
+<script src="https://cdn.dwolla.com/1/dwolla.js"></script>
 <script type="text/javascript">
   dwolla.config.dwollaUrl = 'https://uat.dwolla.com';
   dwolla.iav.start('container', token.value, function(err, res) {
@@ -1261,19 +1276,17 @@ Initiate instant account verification for a Customer.
 ##### Configure dwolla.js
 
 ```javascriptnoselect
-//Sandbox (UAT)
-dwolla.config.dwollaUrl = 'https://uat.dwolla.com';
-dwolla.config.apiUrl = 'https://api-uat.dwolla.com';
+// Sandbox (UAT)
+dwolla.configure('sandbox');
 
-//Production
-dwolla.config.dwollaUrl = 'https://www.dwolla.com';
-dwolla.config.apiUrl = 'https://api.dwolla.com';
+// Production
+dwolla.configure('prod');
 ```
 ##### Example
 
 ```noselect
 <head>
-<script src="https://cdn.dwolla.com/dwolla.js"></script>
+<script src="https://cdn.dwolla.com/1/dwolla.js"></script>
 <!-- jQuery is used for example purposes -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
@@ -1425,12 +1438,13 @@ funding_sources = fs_api.get_customer_funding_sources(customer_url)
 funding_sources._embedded['funding-sources'][0]['name'] # => 'Vera Brittain’s Checking'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla['funding-sources'].getCustomerFundingSources()
-    .then(function(data) {
-       console.log(data.obj._embedded[0].name); // Vera Brittain’s Checking
-    });
-});
+var customerUrl = 'https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733';
+
+accountToken
+  .get(`${customerUrl}/funding-sources`)
+  .then(function(res) {
+    res.body._embedded['funding-sources'][0].name; // => 'Vera Brittain’s Checking'
+  });
 ```
 
 ## List a Customer's transfers
@@ -1564,11 +1578,13 @@ transfers = transfers_api.get_customer_transfers(customer_url)
 transfers->_embedded->transfers[0]->status # => "pending"
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla.customers.getCustomerTransfers().then(function(data) {
-        console.log(data.obj._embedded[0].status); // pending
-    })
-})
+var customerUrl = 'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';
+
+accountToken
+  .get(`${customerUrl}/transfers`)
+  .then(function(res) {
+    res.body._embedded.transfers[0].status; // => "pending"
+  });
 ```
 
 ## List a Customer's mass payments
@@ -1648,6 +1664,7 @@ customer_url = 'https://api-uat.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payments = account_token.get "#{customer_url}/mass-payments", limit: 10
+mass_payments._embedded['mass-payments'][0].status # => "complete"
 ```
 ```php
 /**
@@ -1658,9 +1675,13 @@ mass_payments = account_token.get "#{customer_url}/mass-payments", limit: 10
 # No example for this language yet. Coming soon.
 ```
 ```javascript
-/**
- *  No example for this language yet. Coming soon.
- **/
+var customerUrl = 'https://api-uat.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b';
+
+accountToken
+  .get(`${customerUrl}/mass-payments`, { limit: 10 })
+  .then(function(res) {
+    res.body._embedded['mass-payments'][0].status; # => "complete"
+  });
 ```
 
 ## Cancel a Customer's transfer by id

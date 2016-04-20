@@ -189,7 +189,7 @@ request_body = {
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment = account_token.post "mass-payments", request_body
-mass_payment.headers[:location] # => https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4
+mass_payment.headers[:location] # => "https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"
 ```
 ```php
 /**
@@ -200,9 +200,52 @@ mass_payment.headers[:location] # => https://api-uat.dwolla.com/mass-payments/cf
 # No example for this language yet. Coming soon.
 ```
 ```javascript
-/**
- *  No example for this language yet. Coming soon.
- **/
+var requestBody = {
+  _links: {
+    source: {
+      href: 'https://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
+    }
+  },
+  items: [
+    {
+      _links: {
+        destination: {
+          href: 'https://api-uat.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db'
+        }
+      },
+      amount: {
+        currency: 'USD',
+        value: '1.00'
+      },
+      metadata: {
+        payment1: 'payment1'
+      }
+    },
+    {
+      _links: {
+        destination: {
+          href: 'https://api-uat.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd'
+        }
+      },
+      amount: {
+        currency: 'USD',
+        value: '5.00'
+      },
+      metadata: {
+        payment2: 'payment2'
+      }
+    }
+  ],
+  metadata: {
+    batch1: 'batch1'
+  }
+}
+
+accountToken
+  .post('mass-payments', requestBody)
+  .then(function(res) {
+    res.headers.get('location'); // => 'https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'
+  });
 ```
 
 ## Get a mass payment by id
@@ -256,7 +299,11 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-# No example for this language yet. Coming soon.
+mass_payment_url = "https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
+
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+mass_payment = account_token.get mass_payment_url
+mass_payment.status # => "processing"
 ```
 ```php
 /**
@@ -267,9 +314,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 # No example for this language yet. Coming soon.
 ```
 ```javascript
-/**
- *  No example for this language yet. Coming soon.
- **/
+var massPaymentUrl = 'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563';
+
+accountToken
+  .get(massPaymentUrl)
+  .then(function(res) {
+    res.body.status; // => 'processing'
+  });
 ```
 
 ## List mass payment items
@@ -394,9 +445,13 @@ mass_payment_items.total # => 2
 # No example for this language yet. Coming soon.
 ```
 ```javascript
-/**
- *  No example for this language yet. Coming soon.
- **/
+var massPaymentUrl = 'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
+
+accountToken
+  .get(`${massPaymentUrl}/items`)
+  .then(function(res) {
+    res.body.total; // => 2
+  });
 ```
 
 ## Get a mass payment item by id
@@ -474,7 +529,11 @@ mass_payment_item.status # => "success"
 # No example for this language yet. Coming soon.
 ```
 ```javascript
-/**
- *  No example for this language yet. Coming soon.
- **/
+var massPaymentItemUrl = 'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388';
+
+accountToken
+  .get(massPaymentItemUrl)
+  .then(function(res) {
+    res.body.status; // => 'success'
+  });
 ```

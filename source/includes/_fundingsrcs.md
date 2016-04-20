@@ -146,12 +146,13 @@ funding_source = fs_api.id(funding_source_url)
 funding_source.name # => 'Test checking account'
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla['funding-sources'].id({id: '692486f8-29f6-4516-a6a5-c69fd2ce854c'})
-    .then(function(data) {
-       console.log(data.obj._embedded.name); // Test checking account
-    });
-});
+var fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+
+accountToken
+  .get(fundingSourceUrl)
+  .then(function(res) {
+    res.body.name; // => "Test checking account"
+  });
 ```
 
 ## Initiate or verify micro-deposits
@@ -209,12 +210,9 @@ account_token.post "#{funding_source_url}/micro-deposits"
 DwollaSwagger::FundingsourcesApi.micro_deposits(funding_source_url)
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla['funding-sources'].microDeposits()
-    .then(function(data) {
-       console.log(data.status); // 200
-    });
-});
+var fundingSourceUrl = 'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909';
+
+accountToken.post(`#{fundingSourceUrl}/micro-deposits`);
 ```
 ```python
 funding_source_url = 'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'
@@ -274,21 +272,19 @@ account_token.post "#{funding_source_url}/micro-deposits", request_body
 DwollaSwagger::FundingsourcesApi.micro_deposits(funding_source_url, body: request_body)
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla['funding-sources'].microDeposits({id: 'e52006c3-7560-4ff1-99d5-b0f3a6f4f909', body: {
-        "amount1": {
-            "value": "0.03",
-            "currency": "USD"
-        },
-        "amount2": {
-            "value": "0.09",
-            "currency": "USD"
-        }
-    }})
-    .then(function(data) {
-       console.log(data.status); // 200
-    });
-});
+var fundingSourceUrl = 'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909';
+var requestBody = {
+  amount1: {
+    value: '0.03',
+    currency: 'USD'
+  },
+  amount2: {
+    value: '0.09',
+    currency: 'USD'
+  }
+};
+
+accountToken.post(`${fundingSourceUrl}/micro-deposits`, requestBody);
 ```
 ```python
 fs_api = dwollaswagger.FundingsourcesApi(client)
@@ -421,10 +417,7 @@ fs_api = dwollaswagger.FundingsourcesApi(client)
 fs_api.delete(funding_source_url)
 ```
 ```javascript
-dwolla.then(function(dwolla) {
-    dwolla['funding-sources'].delete({id: '692486f8-29f6-4516-a6a5-c69fd2ce854c'})
-    .then(function(data) {
-       console.log(data.status); // 200
-    });
-});
+var fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+
+accountToken.delete(fundingSourceUrl);
 ```
