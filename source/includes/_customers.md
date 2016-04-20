@@ -1161,6 +1161,12 @@ $fundingSource; # => "https://api-uat.dwolla.com/funding-sources/375c6781-2a17-4
 ```
 ```ruby
 customer_url = 'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
+request_body = {
+  routingNumber: '222222226',
+  accountNumber: '123456789',
+  type: 'checking',
+  name: 'Vera Brittain’s Checking'
+}
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 funding_source = account_token.post "#{customer_url}/funding-sources", request_body
