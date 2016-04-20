@@ -39,7 +39,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 This section covers how to initiate a transfer for either an [Account](#accounts) or [Customer](#customers) resource.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Send` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Send` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -252,7 +252,7 @@ accountToken
 This section covers how to retrieve a transfer belonging to an Account or Customer by its id.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -346,7 +346,7 @@ accountToken
 This section outlines how to retrieve fees charged on a created transfer. Fees are visible to the `Customer` or `Account` that is charged the fee, as well as the Dwolla `Account` that is involved in receiving the fee.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -454,7 +454,7 @@ accountToken
 When a bank transfer fails for an Account or Customer, Dwolla returns a `failure` link when [getting the transfer by Id](#get-a-transfer-by-id). This failure link is used to retrieve the return code and description. For reference, the list of possible failure codes and descriptions are shown in the [Transfer failures](https://developers.dwolla.com/resources/bank-transfer-workflow/transfer-failures.html) resource article.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP Request

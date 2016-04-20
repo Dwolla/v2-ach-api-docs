@@ -31,7 +31,7 @@ MassPay offers a significant advantage over repeatedly calling the [Transfers](#
 This section covers how to initiate a mass payment from an [Account](#accounts) or verified [Customer](#customers) resource. A mass payment contains a list of `items` representing individual payments. Optionally, mass payments can contain `metadata` on the mass payment itself as well as items contained in the mass payment which can be used to pass along additional information with the mass payment and item respectively.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Send` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Send` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -253,7 +253,7 @@ accountToken
 This section outlines how to retrieve a mass payment by its id. All mass payments will have a status of `pending` upon creation and will move to `processing` and finally `complete` as the service runs. It is recommended that you retrieve your [list of mass payment items](#list-mass-payment-items) when your mass payment has a status of `complete` to determine if any items failed to process successfully.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -329,7 +329,7 @@ A mass payment contains a list of payments called `items`. An `item` is distinct
 
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP Request
@@ -459,7 +459,7 @@ accountToken
 This section covers how to retrieve a mass payment item by its unique identifier. An item can contain `_links` to: the mass payment the item belongs to, the transfer created from the item, and the destination user.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request

@@ -53,7 +53,7 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 This section shows you how to retrieve account information belonging to the authorized user. The developer can pass either an `id` or the entire `location` resource to make this request.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token but does not require a particular scope.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token but does not require a particular scope.</li>
 </ol>
 
 ### HTTP request
@@ -149,7 +149,7 @@ This section details how to add a bank account to a Dwolla account. The bank acc
 For more information on micro-deposit verification, reference the [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -194,7 +194,7 @@ Location: https://api-uat.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d9
 Retrieve a list of funding sources that belong to an Account.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Funding` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -310,7 +310,7 @@ accountToken
 This section covers how to retrieve an Account's list of transfers.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -439,7 +439,7 @@ accountToken
 This section covers how to retrieve an Account's list of previously created mass payments. Mass payments are returned ordered by date created, with most recent mass payments appearing first.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request

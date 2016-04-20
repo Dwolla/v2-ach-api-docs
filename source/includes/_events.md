@@ -32,7 +32,7 @@ When the state of a resource changes, we create a new event resource to record t
 }
 ```
 
-### Event topics
+### Event topics - ([Accounts](#accounts))
 | Topic          | Description                                                                                                       |
 |------------------|---------------------------------------------------------------------------------------------------------------|
 | funding_source_added | A funding source was added to a Dwolla account. |
@@ -51,10 +51,14 @@ When the state of a resource changes, we create a new event resource to record t
 | transfer_failed | A transfer failed to clear successfully. |
 | transfer_reclaimed | The transfer was returned to the sender after remaining unclaimed by the intended recipient for a period of time. |
 | transfer_completed | A transfer has cleared successfully. |
-| masspay_created | A mass payment was created. |
-| masspay_completed | A mass payment completed. |
+| mass_payment_created | A mass payment was created. |
+| mass_payment_completed | A mass payment completed. |
 | account_suspended | An account was suspended. |
 | account_activated | A Dwolla account moves from deactive or suspended to active state of verification. |
+
+### Event topics - ([Customers](#customers))
+| Topic          | Description                                                                                                       |
+|------------------|---------------------------------------------------------------------------------------------------------------|
 | customer_created | A Customer was created. |
 | customer_verification_document_needed | Additional documentation is needed to verify a Customer. |
 | customer_verification_document_uploaded | A verification document was uploaded for a Customer. |
@@ -79,6 +83,8 @@ When the state of a resource changes, we create a new event resource to record t
 | customer_transfer_cancelled | A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds transferring either to an unverified Customer's bank or to a verified Customer's balance. |
 | customer_transfer_failed | A Customer transfer failed to clear successfully. Represents funds failing to clear either to an unverified Customer's bank or to a verified Customer's balance.|
 | customer_transfer_completed | A Customer transfer has cleared successfully. Represents funds clearing either to an unverified Customer's bank or to a verified Customer's balance.|
+| customer_mass_payment_created | A verified Customer's mass payment was created. |
+| customer_mass_payment_completed | A verified Customer's mass payment completed. |
 
 ## List events
 

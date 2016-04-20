@@ -87,7 +87,7 @@ This section details how to create a new Customer.  To create an unverified Cust
 For more information on verified Customers, reference our [Customer verification](https://developers.dwolla.com/resources/customer-verification.html) resource article.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -104,19 +104,19 @@ ipAddress | yes | Customer's IP address.
 ### Request parameters - verified Customer
 Parameter | Optional? | Description
 ----------|----------|-------------
-firstName | no | Customer's first name.
-lastName | no | Customer's last name.
+firstName | no | Customer or if business, authorized representative’s first name.
+lastName | no | Customer or if business, authorized representative’s last name.
 email | no | Customer's email address.
 ipAddress | yes | Customer's IP address.
 type | no | Either `personal` or `business`. If business, [see below](#additional-request-parameters-for-verified-customer-with-typebusiness) for additional required information.
-address1 | no | First line of the street address of the Customer's permanent residence.
-address2 | yes | Second line of the street address of the Customer's permanent residence.
+address1 | no | First line of the street address of the Customer's permanent residence. Must be 50 characters or less.
+address2 | yes | Second line of the street address of the Customer's permanent residence. Must be 50 characters or less.
 city | no | City of Customer's permanent residence.
 state | no | Two letter abbreviation of the state in which the Customer resides, e.g. `CA`.
 postalCode | no | Postal code of Customer's permanent residence.
-dateOfBirth | no | Customer's date of birth in `YYYY-MM-DD` format.
+dateOfBirth | no | Customer or if business, authorized representative’s date of birth in `YYYY-MM-DD` format.
 ssn | no | Last four digits of the Customer's Social Security Number.
-phone | no | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`.
+phone | no | Customer or if business, authorized representative’s 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`.
 
 ### Additional request parameters for verified Customer with type=business
 Parameter | Optional? | Description |
@@ -437,7 +437,7 @@ accountToken
 Retrieve a list of industry classifications to identify the Customer’s business. An industry classification is required by Dwolla when verifying a `business` in order to better analyze the nature of a business.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -531,7 +531,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 This section shows you how to retrieve a business classification from a list of industry classifications. An industry classification id is needed in order to verify a `business` Customer.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -638,7 +638,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 This endpoint can be used to facilitate the following use cases: Update Customer information, upgrade an `unverified` Customer to a `verified` Customer, `suspend` a Customer, and update a verified Customer's information to `retry` verification.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -868,7 +868,7 @@ phone | yes | Customer's 10 digit phone number.  No hyphens or other separators,
 This section outlines how to retrieve your list of created Customers.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -959,7 +959,7 @@ accountToken
 This section shows you how to retrieve a Customer belonging to the authorized user. Each `Customer` id is a part of its location resource. The developer can pass either an `id` or the entire `location` resource to make this request.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -1045,7 +1045,7 @@ This section outlines how to create an on-demand bank transfer authorization for
 When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. **Note:** On-demand payments come as part of our White Label product and requires additional approval before getting started. Please [contact Sales](https://www.dwolla.com/contact?b=apidocs) for more information on enabling.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -1095,7 +1095,7 @@ accountToken
 ```
 
 ## Create a Customer funding source
-There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer's bank account information and pass it to Dwolla via the [new Customer funding source](new-customer-funding-source) endpoint, or you can send the Customer through the the [Instant Account Verification](#instant-account-verification-iav) (IAV) flow which will add and verify a bank account within seconds.
+There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer's bank account information and pass it to Dwolla via the [new Customer funding source](#new-customer-funding-source) endpoint, or you can send the Customer through the the [Instant Account Verification](#instant-account-verification-iav) (IAV) flow which will add and verify a bank account within seconds.
 
 Before a Dwolla account or white label Customer is eligible to transfer money from their bank or credit union account they need to verify ownership of the account, either via Instant Account Verification (IAV) or micro-deposits. For more information on bank account verification, reference this [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article.
 
@@ -1103,7 +1103,7 @@ Before a Dwolla account or white label Customer is eligible to transfer money fr
 Create a new Funding Source for a Customer.  Customers can have a maximum of 6 funding sources.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -1216,7 +1216,7 @@ IAV is a simple and secure process which requires both server-side and client-si
 Get a single-use IAV token for a Customer.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>ManageCustomers</code> <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP Request
@@ -1257,11 +1257,11 @@ HTTP/1.1 200 OK
 Initiate instant account verification for a Customer.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">An [IAV token](#generate-an-iav-token-customer) is required to render the IAV flow.</li>
+    <li class="alert icon-alert-alert">An [IAV token](#generate-an-iav-token) is required to render the IAV flow.</li>
 </ol>
 
 #### dwolla.js
-`dwolla.js` is a JavaScript library that gives you the ability to render the IAV flow within a specified container. Call the function `dwolla.iav.start()` and pass the following arguments: the container where you want IAV to render, the Customer's single-use [IAV token](#generate-an-iav-token-customer), and a callback to handle the `response` or `error`. This will initiate an HTTP request asking Dwolla to load IAV in the specified container. Once the Customer successfully completes the IAV flow, Dwolla sends a response that includes either an error or a link to the newly created and verified funding source resource.
+`dwolla.js` is a JavaScript library that gives you the ability to render the IAV flow within a specified container. Call the function `dwolla.iav.start()` and pass the following arguments: the container where you want IAV to render, the Customer's single-use [IAV token](#generate-an-iav-token), and a callback to handle the `response` or `error`. This will initiate an HTTP request asking Dwolla to load IAV in the specified container. Once the Customer successfully completes the IAV flow, Dwolla sends a response that includes either an error or a link to the newly created and verified funding source resource.
 
 #### Usage and configuration
 
@@ -1333,7 +1333,7 @@ $('#start').click(function() {
 Retrieve a list of funding sources that belong to a Customer.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -1452,7 +1452,7 @@ accountToken
 This section details how to retrieve a Customer's list of transfers.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -1592,7 +1592,7 @@ accountToken
 This section covers how to retrieve a [verified Customer's](#customers) list of previously created mass payments. Mass payments are returned ordered by date created, with most recent mass payments appearing first.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `Transactions` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP request
@@ -1689,7 +1689,7 @@ accountToken
 When a Customer's bank transfer is eligible for cancellation, Dwolla returns a `cancel` link  when [getting the transfer by Id](#get-a-transfer-by-id). This cancel link is used to trigger the cancellation, preventing the bank transfer from processing further. A bank transfer is cancellable up until 4pm CT on that same business day if initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.
 
 <ol class="alerts">
-    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
+    <li class="alert icon-alert-alert">This endpoint <a href="#authentication">requires</a> an OAuth account access token with the `ManageCustomers` <a href="#oauth-scopes">scope</a>.</li>
 </ol>
 
 ### HTTP Request
