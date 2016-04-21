@@ -30,7 +30,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
- # No example for this language yet.
+root = account_token.get "/"
+root._links.account.href # => "https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"
 ```
 ```php
 /**
@@ -43,7 +44,9 @@ an_account = root_api.root()
 print(an_account._links['account']['href']) # => https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254
 ```
 ```javascript
-/**
- *  No example for this language yet. Coming soon.
- **/
+accountToken
+  .get('/')
+  .then(function(res) {
+    res.body._links.account.href; // => 'https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'
+  });
 ```

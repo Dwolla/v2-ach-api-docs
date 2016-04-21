@@ -171,7 +171,7 @@ request_body = {
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-customer = account_token.post request_body
+customer = account_token.post "customers", request_body
 customer.headers[:location] # => "https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -1014,7 +1014,7 @@ customer.firstName # => "Elizabeth"
 <?php
 $customerUrl = 'https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8';
 
-$customersApi = DwollaSwagger\CustomersApi($apiClient);
+$customersApi = new DwollaSwagger\CustomersApi($apiClient);
 
 $customer = $customersApi->getCustomer($customerUrl);
 $customer->firstName; # => "Elizabeth"
@@ -1569,7 +1569,7 @@ transfers._embedded[:transfers][0][:status] # => "pending"
 <?php
 $customerUrl = 'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';
 
-$TransfersApi = DwollaSwagger\TransfersApi($apiClient);
+$TransfersApi = new DwollaSwagger\TransfersApi($apiClient);
 
 $transfers = $TransfersApi->getCustomerTransfers($customerUrl);
 $transfers->_embedded->transfers[0]->status; # => "pending"
@@ -1581,7 +1581,7 @@ customer_url = 'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1
 transfers_api = dwollaswagger.TransfersApi(client)
 
 transfers = transfers_api.get_customer_transfers(customer_url)
-transfers->_embedded->transfers[0]->status # => "pending"
+transfers._embedded['transfers'][0]['status'] # => "pending"
 ```
 ```javascript
 var customerUrl = 'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';

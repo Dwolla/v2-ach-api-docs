@@ -148,7 +148,7 @@ documents._embedded[:documents][0][:id] # => "56502f7a-fa59-4a2f-8579-0f8bc9d7b9
 <?php
 $customerUrl = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2';
 
-$customersApi = DwollaSwagger\CustomersApi($apiClient);
+$customersApi = new DwollaSwagger\CustomersApi($apiClient);
 
 $customer = $customersApi->getCustomerDocuments($customerUrl);
 $customer->total; # => 2

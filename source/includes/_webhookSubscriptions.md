@@ -121,8 +121,8 @@ applicationToken
 webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
 
 subscription = webhook_api.create({
-  "url": "http://myapplication.com/webhooks",
-  "secret": "sshhhhhh"
+  'url': 'http://myapplication.com/webhooks',
+  'secret': 'sshhhhhh'
 })
 subscription # => 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 ```

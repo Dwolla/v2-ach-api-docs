@@ -221,7 +221,7 @@ webhook.topic # => "transfer_created"
 <?php
 $webhookUrl = 'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8';
 
-$webhooksApi = DwollaSwagger\WebhooksApi($apiClient);
+$webhooksApi = new DwollaSwagger\WebhooksApi($apiClient);
 
 $webhook = $webhooksApi->id($webhookUrl);
 $webhook->topic; # => "transfer_created"

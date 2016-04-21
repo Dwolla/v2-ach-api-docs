@@ -118,7 +118,7 @@ account.name # => "Charlotte Gillman"
 <?php
 $accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
-$accountsApi = DwollaSwagger\AccountsApi($apiClient);
+$accountsApi = new DwollaSwagger\AccountsApi($apiClient);
 
 $account = $accountsApi->id($accountUrl);
 print($account->name); # => "Charlotte Gillman"
@@ -281,7 +281,7 @@ funding_sources._embedded[:'funding-sources'][0][:name] # => "Vera Brittain’s 
 <?php
 $accountUrl = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
-$fsApi = DwollaSwagger\FundingsourcesApi($apiClient);
+$fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
 
 $fundingSources = $fsApi->getAccountFundingSources($accountUrl);
 $fundingSources->_embedded->{'funding-sources'}[0]->name); # => "Vera Brittain’s Checking"
@@ -410,7 +410,7 @@ transfers._embedded[:transfers][0][:status] # => "processed"
 <?php
 $accountUrl = 'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3';
 
-$transfersApi = DwollaSwagger\TransfersApi($apiClient);
+$transfersApi = new DwollaSwagger\TransfersApi($apiClient);
 
 $transfers = $transfersApi->getAccountTransfers($accountUrl);
 $transfers->_embedded->transfers[0]->status; # => "processed"

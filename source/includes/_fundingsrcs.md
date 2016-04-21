@@ -131,7 +131,7 @@ funding_source.name # => "Test checking account"
 <?php
 $fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 
-$fsApi = DwollaSwagger\FundingsourcesApi($apiClient);
+$fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
 
 $fundingSource = $fsApi->id($fundingSourceUrl);
 $fundingSource->name; # => "Test checking account"

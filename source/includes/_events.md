@@ -221,7 +221,7 @@ events.total # => 4
 ```
 ```php
 <?php
-$eventsApi = DwollaSwagger\EventsApi($apiClient);
+$eventsApi = new DwollaSwagger\EventsApi($apiClient);
 
 $events = $eventsApi->events();
 $events->total; # => 4
@@ -307,7 +307,7 @@ event.topic # => "customer_transfer_created"
 <?php
 $eventUrl = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095';
 
-$eventsApi = DwollaSwagger\EventsApi($apiClient);
+$eventsApi = new DwollaSwagger\EventsApi($apiClient);
 
 $event = $eventsApi->id($eventUrl);
 $event->topic; # => "customer_transfer_created"
