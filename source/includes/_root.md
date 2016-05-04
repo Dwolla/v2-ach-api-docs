@@ -39,9 +39,14 @@ root._links.account.href # => "https://api-uat.dwolla.com/accounts/ad5f2162-404a
  **/
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+root = account_token.get('/')
+root.body['_links']['account']['href'] # => 'https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 root_api = dwollaswagger.RootApi(client)
 an_account = root_api.root()
-print(an_account._links['account']['href']) # => https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254
+an_account._links['account']['href'] # => 'https://api-uat.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'
 ```
 ```javascript
 accountToken

@@ -64,6 +64,13 @@ file = Faraday::UploadIO.new('mclovin.jpg', 'image/jpeg')
 document = account_token.post "#{customer_url}/documents", file: file, documentType: 'license'
 document.headers[:location] # => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
 ```
+```python
+customer_url = 'https://api.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'
+
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+document = account_token.post('%s/documents' % customer_url, file = open('mclovin.jpg', 'rb'), documentType = 'license')
+document.headers['location'] # => 'https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16'
+```
 ```javascript
 var customerUrl = 'https://api.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE';
 
@@ -157,8 +164,12 @@ $customer->total; # => 2
 ```python
 customer_url = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'
 
-customers_api = dwollaswagger.CustomersApi(client)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+documents = account_token.get('%s/documents' % customer_url)
+documents.body['total'] # => 2
 
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+customers_api = dwollaswagger.CustomersApi(client)
 documents = customers_api.get_customer_documents(customer_url)
 documents.total # => 2
 ```
@@ -228,8 +239,12 @@ $document->type; # => "passport"
 ```python
 document_url = 'https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
 
-documents_api = dwollaswagger.DocumentsApi(client)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+documents = account_token.get(document_url)
+documents.body['type'] # => 'passport'
 
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+documents_api = dwollaswagger.DocumentsApi(client)
 document = documents_api.get_customer(document_url)
 document.type # => "passport"
 ```

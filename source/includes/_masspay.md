@@ -526,7 +526,11 @@ mass_payment_item.status # => "success"
  **/
 ```
 ```python
-# No example for this language yet. Coming soon.
+mass_payment_item_url = 'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'
+
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+mass_payment_item = account_token.get(mass_payment_item_url)
+mass_payment_item.body['status'] # => 'success'
 ```
 ```javascript
 var massPaymentItemUrl = 'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388';

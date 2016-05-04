@@ -118,12 +118,18 @@ applicationToken
   });
 ```
 ```python
-webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
-
-subscription = webhook_api.create({
+request_body = {
   'url': 'http://myapplication.com/webhooks',
   'secret': 'sshhhhhh'
-})
+}
+
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+retries = application_token.post('webhook-subscriptions', request_body)
+retries.body['total'] # => 1
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
+subscription = webhook_api.create(body = request_body)
 subscription # => 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 ```
 ```php
@@ -181,8 +187,14 @@ var webhookSubscriptionUrl = 'https://api-uat.dwolla.com/webhook-subscriptions/5
 applicationToken.delete(webhookSubscriptionUrl);
 ```
 ```python
+webhook_subscription_url = 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
+
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+application_token.delete(webhook_subscription_url)
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
-webhook_api.delete_by_id('https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216')
+webhook_api.delete_by_id(webhook_subscription_url)
 ```
 ```php
 <?php
@@ -254,8 +266,12 @@ applicationToken
   });
 ```
 ```python
-webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+webhook_subscriptions = application_token.get('webhook-subscriptions')
+webhook_subscriptions.body['total'] # => 1
 
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
 retrieved = webhook_api.list()
 retrieved.total # => 1
 ```
@@ -328,9 +344,15 @@ applicationToken
   });
 ```
 ```python
-webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
-retrieved = webhook_api.id('https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216')
+webhook_subscription_url = 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+webhook_subscription = application_token.get(webhook_subscription_url)
+webhook_subscription.body['created'] # => '2015-10-28T16:20:47+00:00'
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
+retrieved = webhook_api.id(webhook_subscription_url)
 retrieved.created # => 2015-10-28T16:20:47+00:00
 ```
 ```php
@@ -425,9 +447,15 @@ applicationToken
   });
 ```
 ```python
-webhook_api = dwollaswagger.WebhooksApi(client)
+webhook_subscription_url = 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
-hooks = webhook_api.hooks_by_id('https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216')
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+hooks = application_token.get('%s/hooks' % webhook_subscription_url)
+hooks.body['total'] # => 5
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+webhook_api = dwollaswagger.WebhooksApi(client)
+hooks = webhook_api.hooks_by_id(webhook_subscription_url)
 hooks.total # => 5
 ```
 ```php

@@ -228,9 +228,13 @@ $events->total; # => 4
 ?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+events = application_token.get('events')
+events.body['total'] # => 4
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 events_api = dwollaswagger.EventsApi(client)
 events = events_api.events()
-
 events.total # => 4
 ```
 ```javascript
@@ -316,9 +320,13 @@ $event->topic; # => "customer_transfer_created"
 ```python
 event_url = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
 
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+event = application_token.get(event_url)
+event.body['topic'] # => 'customer_transfer_created'
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 events_api = dwollaswagger.EventsApi(client)
 event = events_api.id(event_url)
-
 event.topic # => 'customer_transfer_created'
 ```
 ```javascript

@@ -141,9 +141,13 @@ $fundingSource->name; # => "Test checking account"
 ```python
 funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+funding_source = account_token.get(funding_source_url)
+funding_source.body['name'] # => 'Test checking account'
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 fs_api = dwollaswagger.FundingsourcesApi(client)
 funding_source = fs_api.id(funding_source_url)
-
 funding_source.name # => 'Test checking account'
 ```
 ```javascript
@@ -219,8 +223,11 @@ accountToken.post(`#{fundingSourceUrl}/micro-deposits`);
 ```python
 funding_source_url = 'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'
 
-fs_api = dwollaswagger.FundingsourcesApi(client)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+account_token.post('%s/micro-deposits' % funding_source_url)
 
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+fs_api = dwollaswagger.FundingsourcesApi(client)
 fs_api.micro_deposits(funding_source_url)
 ```
 ```php
@@ -289,9 +296,8 @@ var requestBody = {
 accountToken.post(`${fundingSourceUrl}/micro-deposits`, requestBody);
 ```
 ```python
-fs_api = dwollaswagger.FundingsourcesApi(client)
-
-fs_api.micro_deposits(new_fs, body = {
+funding_source_url = 'https://api-uat.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'
+request_body = {
     "amount1": {
         "value": "0.03",
         "currency": "USD"
@@ -300,7 +306,14 @@ fs_api.micro_deposits(new_fs, body = {
         "value": "0.09",
         "currency": "USD"
     }
-})
+}
+
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+account_token.post('%s/micro-deposits' % funding_source_url, request_body)
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+fs_api = dwollaswagger.FundingsourcesApi(client)
+fs_api.micro_deposits(funding_source_url, body = request_body)
 ```
 ```php
 <?php
@@ -418,6 +431,10 @@ $fsApi->delete($fundingSourceUrl);
 ```python
 funding_source_url = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+account_token.delete(funding_source_url)
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 fs_api = dwollaswagger.FundingsourcesApi(client)
 fs_api.delete(funding_source_url)
 ```

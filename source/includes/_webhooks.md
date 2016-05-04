@@ -230,8 +230,12 @@ $webhook->topic; # => "transfer_created"
 ```python
 webhook_url = 'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'
 
-webhooks_api = dwollaswagger.WebhooksApi(client)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+webhook = application_token.get(transfer_url)
+webhook.body['topic'] # => 'transfer_created'
 
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+webhooks_api = dwollaswagger.WebhooksApi(client)
 webhook = webhooks_api.id(webhook_url)
 webhook.topic # => 'transfer_created'
 ```
@@ -300,8 +304,11 @@ $webhooksApi->retryWebhook($webhookUrl);
 ```python
 webhook_url = 'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'
 
-webhooks_api = dwollaswagger.WebhooksApi(client)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+application_token.post('%s/retries' % webhook_url)
 
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+webhooks_api = dwollaswagger.WebhooksApi(client)
 webhooks_api.retry_webhook(webhook_url)
 ```
 ```javascript
@@ -390,8 +397,12 @@ $retries->total; # => 1
 ```python
 webhook_url = 'https://api.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'
 
-webhooks_api = dwollaswagger.WebhooksApi(client)
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+retries = application_token.get('%s/retries' % webhook_url)
+retries.body['total'] # => 1
 
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+webhooks_api = dwollaswagger.WebhooksApi(client)
 retries = webhooks_api.retries_by_id(webhook_url)
 retries.total # => 1
 ```

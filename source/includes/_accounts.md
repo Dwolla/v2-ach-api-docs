@@ -419,9 +419,13 @@ $transfers->_embedded->transfers[0]->status; # => "processed"
 ```python
 account_url = 'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
 
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+transfers = account_token.get('%s/transfers' % account_url)
+transfers.body['_embedded']['transfers'][0]['status'] # => "processed"
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 transfers_api = dwollaswagger.TransfersApi(client)
 transfers = transfers_api.get_account_transfers(account_url)
-
 transfers._embedded['transfers'][0]['status'] # => "processed"
 ```
 ```javascript
@@ -519,7 +523,11 @@ mass_payments._embedded['mass-payments'][0].status # => "complete"
  **/
 ```
 ```python
-# No example for this language yet. Coming soon.
+account_url = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
+
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+transfers = account_token.get('%s/mass-payments' % account_url, limit = 10)
+transfers.body['_embedded']['mass-payments'][0]['status'] # => "complete"
 ```
 ```javascript
 var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';

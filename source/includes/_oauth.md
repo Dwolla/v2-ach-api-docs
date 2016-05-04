@@ -66,8 +66,19 @@ $url = $OAuth->genAuthUrl("https://myredirect.com/redirect");
 ?>
 ```
 ```python
-# Generate OAuth URL with redirect to requestb.in
-print(oauth.genauthurl("http://requestb.in/122rdhc1"))
+# you can find your client id and secret at dwolla.com/applications
+client = dwollav2.Client(id = '...', secret = '...')
+
+state = binascii.b2a_hex(os.urandom(15))
+client.Auth(redirect_uri = 'https://yoursite.com/callback',
+            scope = 'ManageCustomers|Funding',
+            state = state)
+
+# redirect the user to dwolla.com for authorization
+redirect_to(auth.url)
+
+# exchange the code for a token
+token = auth.callback({'code': '...', 'state': state})
 ```
 ```javascript
 // where to send the user after they grant permission:

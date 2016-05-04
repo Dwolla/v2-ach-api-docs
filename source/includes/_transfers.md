@@ -198,9 +198,7 @@ $transfer; # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a
 ?>
 ```
 ```python
-transfers_api = dwollaswagger.TransfersApi(client)
-
-transfer = transfers_api.create(body = {
+request_body = {
   '_links': {
     'destination': {
       'href': 'https://api.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
@@ -217,7 +215,15 @@ transfer = transfers_api.create(body = {
     'foo': 'bar',
     'baz': 'boo'
   }
-})
+}
+
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+transfer = account_token.post('transfers', request_body)
+transfer.headers['location'] # => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
+transfers_api = dwollaswagger.TransfersApi(client)
+transfer = transfers_api.create(body = request_body)
 transfer # => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
 ```
 ```javascript
@@ -327,9 +333,13 @@ $transfer->status; # => "pending"
 ```python
 transfer_url = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
 
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+fees = account_token.get(transfer_url)
+fees.body['stats'] # => 'pending'
+
+# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 transfers_api = dwollaswagger.TransfersApi(client)
 transfer = transfers_api.by_id(transfer_url)
-
 transfer.status # => 'pending'
 ```
 ```javascript
@@ -437,7 +447,11 @@ fees.total # => 2
  **/
 ```
 ```python
-# No example for this language yet.
+transfer_url = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
+
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+fees = account_token.get('%s/fees' % transfer_url)
+fees.body['total'] # => 2
 ```
 ```javascript
 var transferUrl = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
@@ -496,7 +510,11 @@ failure.code # => "R1"
  **/
 ```
 ```python
-# No example for this language yet.
+transfer_url = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
+
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+failure = account_token.get('%s/failure' % transfer_url)
+failure.body['code'] # => 'R1'
 ```
 ```javascript
 var transferUrl = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
