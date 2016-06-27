@@ -46,6 +46,32 @@ Requests that require an client_id and client_secret are passed in the JSON requ
 
 **Sandbox:** https://api-uat.dwolla.com
 
+## Idempotency key
+
+To prevent an operation from being performed more than once, Dwolla supports passing in an `Idempotency-Key` header with a unique key as the value. Multiple `POSTs` with the same idempotency key won't result in multiple resources being created.
+
+For example, if a request to [initiate a transfer](#initiate-transfer) fails due to a network connection issue, you can reattempt the request with the same idempotency key to guarantee that only a single transfer is created.
+
+If you reattempt a `POST` request with the same value for the `Idempotency-Key`, you will receive the original response. It is recommended to use a random value for the idempotency key, like a UUID (i.e. - `Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a`). Idempotency keys are intented to prevent conflicts over a short period of time, therefore keys will expire after 24 hours. If the Dwolla server is still processing the original `POST`, you will receive a `409 Conflict` error response on the subsequent request.
+
+#### Example transfer using an Idempotency Key
+```noselect
+curl -X POST -H "Content-Type: application/vnd.dwolla.v1.hal+json" -H "Accept: application/vnd.dwolla.v1.hal+json" -H "Authorization: Bearer asdfwXTdDQFimVQOMdn9bOGHJh8KrqnFi34sugYqgrULRCb" -H "Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a" -d '{
+    "_links": {
+        "destination": {
+            "href": "https://api-uat.dwolla.com/customers/d795f696-2cac-4662-8f16-95f1db9bddd8"
+        },
+        "source": {
+            "href": "http://api-uat.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+        }
+    },
+    "amount": {
+        "currency": "USD",
+        "value": "1337.00"
+    }
+}' "https://api-uat.dwolla.com/transfers" -v
+
+```
 
 ## Errors
 

@@ -107,6 +107,7 @@ POST /transfers
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 {
     "_links": {
         "destination": {

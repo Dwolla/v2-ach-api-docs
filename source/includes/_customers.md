@@ -38,18 +38,18 @@ Dwolla offers a seamless process for migrating existing user [Accounts](#account
 |lastName | Customer's last name.
 |email | Customer's email address.
 |type | Either `unverified`, `personal`, `business`, or `receive-only`.
-|status | Either `unverified`, `retry`, `document`, `verified`, or `suspended`.
+|status | If type is **unverified** or **receive-only**: status is `unverified` or `suspended`. <br> If type is **personal** or **business**: status is `retry`, `document`, `verified`, or `suspended`.
 |created | ISO-8601 timestamp.
 
 ### Customer statuses
 
 | Status | Description
 |--------|------------|
-| unverified | Customers of type `unverified` always have this status.
-| retry | The initial verification attempt failed because the information provided did not satisfy our verification check.  You can make one additional attempt by changing some or all the attributes of the existing Customer with a POST request. If the additional attempt fails, the resulting status will be either `document` or `suspended`.
-| document | Dwolla requires additional documentation to identify the Customer.  Read about [Documents](#documents).
-| verified | The Customer is currently verified.
-| suspended | The Customer is suspended and may neither send nor receive funds.
+| unverified | Customers of type `unverified` or `receive-only` always have this status.
+| retry | Customers of type `personal` or `business` can have this status. The initial verification attempt failed because the information provided did not satisfy our verification check.  You can make one additional attempt by changing some or all the attributes of the existing Customer with a POST request. If the additional attempt fails, the resulting status will be either `document` or `suspended`.
+| document | Customers of type `personal` or `business` can have this status. Dwolla requires additional documentation to identify the Customer in the `document` status.  Read about [Documents](#documents).
+| verified | Customers of type `personal` or `business` can have this status. The Customer is currently verified.
+| suspended | All Customer types can have a status of `suspended`. The Customer is suspended and may neither send nor receive funds. Contact Dwolla support for more information.
 
 ```noselect
 {
@@ -667,6 +667,8 @@ A limited set of information can be updated on an existing created Customer. **N
 ##### Request parameters -  unverified Customer
 Parameter | Optional? | Description
 ----------|----------|-------------
+firstName | no | Customer's first name.
+lastName | no | Customer's last name.
 email | no | Customer's email address.
 
 ##### Request parameters -  verified Customer
@@ -693,12 +695,12 @@ website | yes | www.domain.com |
 An unverified Customer can be upgraded to a verified Customer by supplying the necessary information required to create a verified Customer. See [this table](#request-parameters-verified-customer) for required information.
 
 ### Suspend a Customer
-An unverified and verified Customer can be suspended by supplying the status of `suspend`. You'll need to contact Dwolla to unsuspend a Customer.
+An unverified and verified Customer can be suspended by supplying the status of `suspended`. You'll need to contact Dwolla to unsuspend a Customer.
 
 ##### Request parameters
 Parameter | Optional? | Description
 ----------|----------|-------------
-status | no | Value of `suspend`.
+status | no | Value of `suspended`.
 
 ### Retry verification
 If the verified Customer has a status of `retry`, some information may have been miskeyed. You have one more opportunity to correct any mistakes using this endpoint. This time, you’ll need to provide the Customer’s full SSN. If the additional attempt fails, the resulting status will be either `document` or `suspended`.
