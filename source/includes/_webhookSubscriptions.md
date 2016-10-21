@@ -98,7 +98,7 @@ request_body = {
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-subscription = application_token.post "webhook-subscriptions", request_body
+subscription = app_token.post "webhook-subscriptions", request_body
 subscription.headers[:location] # => "https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -113,9 +113,7 @@ var requestBody = {
 
 applicationToken
   .post('webhook-subscriptions', requestBody)
-  .then(function(res) {
-    res.headers.get('location'); // => 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
-  });
+  .then(res => res.headers.get('location')); // => 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 ```
 ```python
 request_body = {
@@ -124,7 +122,7 @@ request_body = {
 }
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-retries = application_token.post('webhook-subscriptions', request_body)
+retries = app_token.post('webhook-subscriptions', request_body)
 retries.body['total'] # => 1
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -192,7 +190,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 webhook_subscription_url = 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-webhook_subscription = application_token.get webhook_subscription_url
+webhook_subscription = app_token.get webhook_subscription_url
 webhook_subscription.created # => 2015-10-28T16:20:47+00:00
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -204,15 +202,13 @@ var webhookSubscriptionUrl = 'https://api-uat.dwolla.com/webhook-subscriptions/5
 
 applicationToken
   .get(webhookSubscriptionUrl)
-  .then(function(res) {
-    res.body.created; // => '2016-04-20T15:49:50.340Z'
-  });
+  .then(res => res.body.created); // => '2016-04-20T15:49:50.340Z'
 ```
 ```python
 webhook_subscription_url = 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-webhook_subscription = application_token.get(webhook_subscription_url)
+webhook_subscription = app_token.get(webhook_subscription_url)
 webhook_subscription.body['created'] # => '2015-10-28T16:20:47+00:00'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -265,7 +261,7 @@ request_body = {
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-subscription = application_token.post "#{webhook_subscription_url}", request_body
+subscription = app_token.post "#{webhook_subscription_url}", request_body
 ```
 ```javascript
 var webhookSubscriptionUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
@@ -276,9 +272,7 @@ var requestBody = {
 
 applicationToken
   .post(webhookSubscriptionUrl, requestBody)
-  .then(function(res) {
-    res.body.paused; // => 'true'
-  });
+  .then(res => res.body.paused); // => 'true'
 ```
 ```python
 webhook_subscription_url = 'https://api.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
@@ -288,7 +282,7 @@ request_body = {
 }
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-subscription = application_token.post(webhook_subscription_url, request_body)
+subscription = app_token.post(webhook_subscription_url, request_body)
 subscription.body['paused'] # => true
 ```
 ```php
@@ -351,7 +345,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-webhook_subscriptions = application_token.get "webhook-subscriptions"
+webhook_subscriptions = app_token.get "webhook-subscriptions"
 webhook_subscriptions.total # => 1
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -361,13 +355,11 @@ webhook_subscriptions.total # => 1
 ```javascript
 applicationToken
   .get('webhook-subscriptions')
-  .then(function(res) {
-    res.body.total; // => 1
-  });
+  .then(res => res.body.total); // => 1
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-webhook_subscriptions = application_token.get('webhook-subscriptions')
+webhook_subscriptions = app_token.get('webhook-subscriptions')
 webhook_subscriptions.body['total'] # => 1
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -416,7 +408,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 webhook_subscription_url = 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-application_token.delete webhook_subscription_url
+app_token.delete webhook_subscription_url
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
 DwollaSwagger::WebhooksubscriptionApi.delete_by_id(webhook_subscription_url)
@@ -430,7 +422,7 @@ applicationToken.delete(webhookSubscriptionUrl);
 webhook_subscription_url = 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-application_token.delete(webhook_subscription_url)
+app_token.delete(webhook_subscription_url)
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
 webhook_api = dwollaswagger.WebhooksubscriptionsApi(client)
@@ -514,7 +506,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 webhook_subscription_url = 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-hooks = application_token.get "#{webhook_subscription_url}/webhooks"
+hooks = app_token.get "#{webhook_subscription_url}/webhooks"
 hooks.total # => 5
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -526,15 +518,13 @@ var webhookSubscriptionUrl = 'https://api-uat.dwolla.com/webhook-subscriptions/5
 
 applicationToken
   .get(`${webhookSubscriptionUrl}/webhooks`)
-  .then(function(res) {
-    res.body.total; // => 5
-  });
+  .then(res => res.body.total); // => 5
 ```
 ```python
 webhook_subscription_url = 'https://api-uat.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-hooks = application_token.get('%s/hooks' % webhook_subscription_url)
+hooks = app_token.get('%s/hooks' % webhook_subscription_url)
 hooks.body['total'] # => 5
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python

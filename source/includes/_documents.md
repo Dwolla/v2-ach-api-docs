@@ -64,14 +64,14 @@ Location: https://api.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0
 customer_url = 'https://api.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'
 
 file = Faraday::UploadIO.new('mclovin.jpg', 'image/jpeg')
-document = account_token.post "#{customer_url}/documents", file: file, documentType: 'license'
+document = app_token.post "#{customer_url}/documents", file: file, documentType: 'license'
 document.headers[:location] # => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
 ```
 ```python
 customer_url = 'https://api.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-document = account_token.post('%s/documents' % customer_url, file = open('mclovin.jpg', 'rb'), documentType = 'license')
+document = app_token.post('%s/documents' % customer_url, file = open('mclovin.jpg', 'rb'), documentType = 'license')
 document.headers['location'] # => 'https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16'
 ```
 ```php
@@ -90,11 +90,9 @@ body.append('file', fs.createReadStream('mclovin.jpg'), {
 });
 body.append('documentType', 'license');
 
-accountToken
+appToken
   .post(`${customerUrl}/documents`, requestBody)
-  .then(function(res) {
-    res.headers.get('location'); // => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
-  });
+  .then(res => res.headers.get('location')); // => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
 ```
 
 ## List documents
@@ -182,7 +180,7 @@ $customer->total; # => 2
 customer_url = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-documents = account_token.get('%s/documents' % customer_url)
+documents = app_token.get('%s/documents' % customer_url)
 documents.body['total'] # => 2
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -195,9 +193,7 @@ var customerUrl = 'https://api.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba
 
 token
   .get(`${customerUrl}/documents`)
-  .then(function(res) {
-    res.body._embedded.documents[0].id; // => '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
-  });
+  .then(res => res.body._embedded.documents[0].id); // => '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
 ```
 
 ## Retrieve a document
@@ -241,7 +237,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 document_url = 'https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-document = account_token.get document_url
+document = app_token.get document_url
 document.type # => "passport"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -262,7 +258,7 @@ $document->type; # => "passport"
 document_url = 'https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-documents = account_token.get(document_url)
+documents = app_token.get(document_url)
 documents.body['type'] # => 'passport'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -273,10 +269,8 @@ document.type # => "passport"
 ```javascript
 var documentUrl = 'https://api.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc';
 
-accountToken
+appToken
   .get(document_url)
-  .then(function(res) {
-    res.body.type; // => "passport"
-  });
+  .then(res => res.body.type); // => "passport"
 ```
 * * *

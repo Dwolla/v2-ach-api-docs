@@ -106,6 +106,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 account_url = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 account = account_token.get account_url
 account.name # => "Jane Doe"
 
@@ -134,11 +135,10 @@ print(account.name) # => Jane Doe
 ```javascript
 var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
+// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(accountUrl)
-  .then(function(res) {
-    res.body.name; // => 'Jane Doe'
-  });
+  .then(res => res.body.name); // => 'Jane Doe'
 ```
 
 ## Create a funding source for an account
@@ -269,6 +269,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 account_url = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 funding_sources = account_token.get "#{account_url}/funding-sources"
 funding_sources._embedded['funding-sources'][0].name # => "Jane Doe's Checking"
 
@@ -297,11 +298,10 @@ funding_sources._embedded['funding-sources'][0]['name'] # => Jane Doe’s Checki
 ```javascript
 var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
+// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(`${accountUrl}/funding-sources`)
-  .then(function(res) {
-    res.body._embedded['funding-sources'][0].name; // => 'ABC Bank Checking'
-  });
+  .then(res => res.body._embedded['funding-sources'][0].name); // => 'ABC Bank Checking'
 ```
 
 ## List and search transfers for an account
@@ -426,6 +426,7 @@ $transfers->_embedded->transfers[0]->status; # => "processed"
 account_url = 'https://api-uat.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 transfers = account_token.get('%s/transfers' % account_url)
 transfers.body['_embedded']['transfers'][0]['status'] # => "processed"
 
@@ -437,11 +438,10 @@ transfers._embedded['transfers'][0]['status'] # => "processed"
 ```javascript
 var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
+// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(`${accountUrl}/transfers`)
-  .then(function(res) {
-    res.body._embedded.transfers.[0].status; // => 'processed'
-  });
+  .then(res => res.body._embedded.transfers.[0].status); // => 'processed'
 ```
 
 ## List mass payments for an account
@@ -531,16 +531,16 @@ mass_payments._embedded['mass-payments'][0].status # => "complete"
 account_url = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 transfers = account_token.get('%s/mass-payments' % account_url, limit = 10)
 transfers.body['_embedded']['mass-payments'][0]['status'] # => "complete"
 ```
 ```javascript
 var accountUrl = 'https://api-uat.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
+// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(`${accountUrl}/mass-payments`)
-  .then(function(res) {
-    res.body._embedded['mass-payments'][0].status; // => 'complete'
-  });
+  .then(res => res.body._embedded['mass-payments'][0].status); // => 'complete'
 ```
 * * *

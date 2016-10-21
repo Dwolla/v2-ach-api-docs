@@ -173,7 +173,7 @@ request_body = {
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-customer = account_token.post "customers", request_body
+customer = app_token.post "customers", request_body
 customer.headers[:location] # => "https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -203,7 +203,7 @@ request_body = {
 }
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-customer = account_token.post('customers', request_body)
+customer = app_token.post('customers', request_body)
 customer.headers['location'] # => 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -219,11 +219,9 @@ var requestBody = {
   ipAddress: '99.99.99.99'
 };
 
-accountToken
+appToken
   .post('customers', requestBody)
-  .then(function(res) {
-    res.headers.get('location'); // => 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
-  });
+  .then(res => res.headers.get('location')); // => 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
 ```
 
 ### Verified Customer
@@ -299,7 +297,7 @@ request_body = {
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-customer = account_token.post "customers", request_body
+customer = app_token.post "customers", request_body
 customer.headers[:location] # => "https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -325,7 +323,7 @@ request_body = {
 }
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-customer = account_token.post('customers', request_body)
+customer = app_token.post('customers', request_body)
 customer.headers['location'] # => 'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -351,11 +349,9 @@ var requestBody = {
   ssn: '1234'
 };
 
-accountToken
+appToken
   .post('customers', requestBody)
-  .then(function(res) {
-    res.headers.get('location'); // => 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
-  });
+  .then(res => res.headers.get('location')); // => 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
 ```
 ### Receive-only customer
 
@@ -388,7 +384,7 @@ request_body = {
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-customer = account_token.post "customers", request_body
+customer = app_token.post "customers", request_body
 customer.headers[:location] # => "https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -421,7 +417,7 @@ request_body = {
 }
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-customer = account_token.post('customers', request_body)
+customer = app_token.post('customers', request_body)
 customer.headers['location'] # => 'https://api-uat.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -439,11 +435,9 @@ var requestBody = {
   ipAddress: '99.99.99.99'
 };
 
-accountToken
+appToken
   .post('customers', requestBody)
-  .then(function(res) {
-    res.headers.get('location'); // => 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
-  });
+  .then(res => res.headers.get('location')); // => 'https://api-uat.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
 ```
 
 ## List business classifications
@@ -795,7 +789,7 @@ request_body = {
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-customer = account_token.post customer_url, request_body
+customer = app_token.post customer_url, request_body
 customer.id # => "FC451A7A-AE30-4404-AB95-E3553FCD733F"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -820,7 +814,7 @@ request_body = {
 }
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-customer = account_token.post('customers', request_body)
+customer = app_token.post('customers', request_body)
 customer.body.id # => 'FC451A7A-AE30-4404-AB95-E3553FCD733F'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -845,11 +839,9 @@ var requestBody = {
   ssn: "202-99-1516"
 };
 
-accountToken
+appToken
   .post(customerUrl, requestBody)
-  .then(function(res) {
-    res.body.id; // => 'FC451A7A-AE30-4404-AB95-E3553FCD733F'
-  });
+  .then(res => res.body.id); // => 'FC451A7A-AE30-4404-AB95-E3553FCD733F'
 ```
 
 ### If you try more than once, or Customer is not in retry state:
@@ -944,7 +936,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-customers = account_token.get "customers", limit: 10
+customers = app_token.get "customers", limit: 10
 customers._embedded.customers[0].firstName # => "Jane"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -961,7 +953,7 @@ $customers->_embedded->customers[0]->firstName; # => "Jane"
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-customer = account_token.get('customers', limit = 10)
+customer = app_token.get('customers', limit = 10)
 customer.body['_embedded']['customers'][0]['firstName'] # => 'Jane'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -970,11 +962,9 @@ customers = customers_api.list(limit = 10)
 customers._embedded['customers'][0]['firstName'] # => 'Jane'
 ```
 ```javascript
-accountToken
+appToken
   .get('customers', { limit: 10 })
-  .then(function(res) {
-    res.body._embedded.customers[0].firstName; // => 'Jane'
-  });
+  .then(res => res.body._embedded.customers[0].firstName); // => 'Jane'
 ```
 
 ## Retrieve a customer
@@ -1025,7 +1015,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 customer_url = 'https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-customer = account_token.get customer_url
+customer = app_token.get customer_url
 customer.firstName # => "Jane"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -1046,7 +1036,7 @@ $customer->firstName; # => "Jane"
 customer_url = 'https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-customer = account_token.get(customer_url)
+customer = app_token.get(customer_url)
 customer.body['firstName']
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -1057,11 +1047,9 @@ customer.firstName # => 'Jane'
 ```javascript
 var customerUrl = 'https://api-uat.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8';
 
-accountToken
+appToken
   .get(customerUrl)
-  .then(function(res) {
-    res.body.firstName; // => 'Jane'
-  });
+  .then(res => res.body.firstName); // => 'Jane'
 ```
 
 ## Create an on-demand transfer authorization
@@ -1101,7 +1089,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-on_demand_authorization = account_token.post "on-demand-authorizations"
+on_demand_authorization = app_token.post "on-demand-authorizations"
 on_demand_authorization.buttonText # => "Agree & Continue"
 ```
 ```php
@@ -1111,15 +1099,13 @@ on_demand_authorization.buttonText # => "Agree & Continue"
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-on_demand_authorization = account_token.post('on-demand-authorizations')
+on_demand_authorization = app_token.post('on-demand-authorizations')
 on_demand_authorization.body['buttonText'] # => 'Agree & Continue'
 ```
 ```javascript
-accountToken
+appToken
   .post('on-demand-authorizations')
-  .then(function(res) {
-    res.body.buttonText; // => "Agree & Continue"
-  });
+  .then(res => res.body.buttonText); // => "Agree & Continue"
 ```
 
 ## Create a funding source for a customer
@@ -1197,7 +1183,7 @@ request_body = {
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-funding_source = account_token.post "#{customer_url}/funding-sources", request_body
+funding_source = app_token.post "#{customer_url}/funding-sources", request_body
 funding_source.headers[:location] # => "https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -1214,7 +1200,7 @@ request_body = {
 }
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-customer = account_token.post('%s/funding-sources' % customer_url, request_body)
+customer = app_token.post('%s/funding-sources' % customer_url, request_body)
 customer.headers['location'] # => 'https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -1231,11 +1217,9 @@ var requestBody = {
   'name': 'Jane Doe’s Checking'
 };
 
-accountToken
+appToken
   .post(`${customerUrl}/funding-sources`, requestBody)
-  .then(function(res) {
-    res.headers.get('location'); // => 'https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'
-  });
+  .then(res => res.headers.get('location')); // => 'https://api-uat.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'
 ```
 ### Instant account verification (IAV)
 IAV is a simple and secure process which requires both server-side and client-side interaction. Your server requests a [single-use token](#generate-an-iav-token) which is used to represent the Customer that is adding or verifying their bank. The client-side implementation includes the dwolla.js library on the page that is used to render the IAV flow.
@@ -1294,7 +1278,7 @@ HTTP/1.1 200 OK
 customer_url = 'https://api-uat.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-customer = account_token.post "#{customer_url}/iav-token"
+customer = app_token.post "#{customer_url}/iav-token"
 customer.token # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -1305,11 +1289,9 @@ customer.token # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
 // Using dwolla-v2 - https://github.com/Dwolla/dwolla-v2-node
 var customerUrl = 'https://api-uat.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6';
 
-accountToken
+appToken
   .post(`${customerUrl}/iav-token`)
-  .then(function(res) {
-    res.body.token; // => 'lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL'
-  });
+  .then(res => res.body.token); // => 'lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL'
 ```
 ```python
 customer_url = 'http://api.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'
@@ -1487,7 +1469,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 customer_url = 'https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-funding_sources = account_token.get "#{customer}/funding-sources"
+funding_sources = app_token.get "#{customer}/funding-sources"
 funding_sources._embedded['funding-sources'][0].name # => "Jane Doe’s Checking"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -1508,7 +1490,7 @@ $fundingSources->_embedded->{'funding-sources'}[0]->name; # => "Jane Doe’s Che
 customer_url = 'https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-funding_sources = account_token.get('%s/funding-sources' % customer_url)
+funding_sources = app_token.get('%s/funding-sources' % customer_url)
 funding_sources.body['_embedded']['funding-sources'][0]['name'] # => 'Jane Doe’s Checking'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -1519,11 +1501,9 @@ funding_sources._embedded['funding-sources'][0]['name'] # => 'Jane Doe’s Check
 ```javascript
 var customerUrl = 'https://api.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733';
 
-accountToken
+appToken
   .get(`${customerUrl}/funding-sources`)
-  .then(function(res) {
-    res.body._embedded['funding-sources'][0].name; // => 'Jane Doe’s Checking'
-  });
+  .then(res => res.body._embedded['funding-sources'][0].name); // => 'Jane Doe’s Checking'
 ```
 
 ## List and search transfers for a customer
@@ -1636,7 +1616,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 customer_url = 'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-transfers = account_token.get "#{customer_url}/transfers"
+transfers = app_token.get "#{customer_url}/transfers"
 transfers._embedded.transfers[0].status # => "pending"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -1657,7 +1637,7 @@ $transfers->_embedded->transfers[0]->status; # => "pending"
 customer_url = 'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-transfers = account_token.get('%s/transfers' % customer_url)
+transfers = app_token.get('%s/transfers' % customer_url)
 transfers.body['_embedded']['transfers'][0]['status'] # => 'pending'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -1668,11 +1648,9 @@ transfers._embedded['transfers'][0]['status'] # => 'pending'
 ```javascript
 var customerUrl = 'http://api.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';
 
-accountToken
+appToken
   .get(`${customerUrl}/transfers`)
-  .then(function(res) {
-    res.body._embedded.transfers[0].status; // => "pending"
-  });
+  .then(res => res.body._embedded.transfers[0].status); // => "pending"
 ```
 
 ## List mass payments for a customer
@@ -1750,7 +1728,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 customer_url = 'https://api-uat.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-mass_payments = account_token.get "#{customer_url}/mass-payments", limit: 10
+mass_payments = app_token.get "#{customer_url}/mass-payments", limit: 10
 mass_payments._embedded['mass-payments'][0].status # => "complete"
 ```
 ```php
@@ -1762,16 +1740,14 @@ mass_payments._embedded['mass-payments'][0].status # => "complete"
 customer_url = 'https://api-uat.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-mass_payments = account_token.get('%s/mass-payments' % customer_url)
+mass_payments = app_token.get('%s/mass-payments' % customer_url)
 mass_payments.body['_embedded']['mass-payments'][0]['status'] # => 'complete'
 ```
 ```javascript
 var customerUrl = 'https://api-uat.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b';
 
-accountToken
+appToken
   .get(`${customerUrl}/mass-payments`, { limit: 10 })
-  .then(function(res) {
-    res.body._embedded['mass-payments'][0].status; # => "complete"
-  });
+  .then(res => res.body._embedded['mass-payments'][0].status); // => "complete"
 ```
 * * *

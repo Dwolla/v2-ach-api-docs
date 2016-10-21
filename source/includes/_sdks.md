@@ -32,13 +32,17 @@ Let's fetch a page of customers:
 ```rubynoselect
 require 'dwolla_v2'
 
-# see dwolla.com/applications for your client id and secret
-$dwolla = DwollaV2::Client.new(id: "...", secret: "...")
+# see dwolla.com/applications or uat.dwolla.com/applications (sandbox) for your consumer key and secret
+consumer_key = "..."
+consumer_secret = "..."
+$dwolla = DwollaV2::Client.new(id: consumer_key, secret: consumer_secret) do |config|
+  config.environment = :sandbox # optional - defaults to production
+end
 
-# generate a token on dwolla.com/applications
-account_token = $dwolla.tokens.new access_token: "..."
+# create an application token
+app_token = $dwolla.auths.client
 
-customers = account_token.get "customers", limit: 10
+customers = app_token.get "customers", limit: 10
 ```
 
 ### DwollaSwagger Ruby
@@ -66,7 +70,38 @@ end
 my_custies = DwollaSwagger::CustomersApi.list(:limit => 10)
 ```
 
-## Python
+## DwollaV2 Python (Recommended)
+
+`dwollav2` is available on [PyPi](https://pypi.python.org/pypi/dwollav2/1.1.7) with
+[source code](https://github.com/Dwolla/dwolla-v2-python) available on our GitHub page. More
+information is available on the project's README.
+
+### Installation
+
+```bashnoselect
+pip install dwollav2
+```
+
+### Quickstart
+
+Let's list some `Customer` objects:
+
+```pythonnoselect
+import dwollav2
+
+# you can find your consumer key and secret at dwolla.com/applications
+consumer_key = '...'
+consumer_secret = '...'
+client = dwollav2.Client(id = consumer_key,
+                         secret = consumer_secret,
+                         environment = 'sandbox') # optional - defaults to production
+
+app_token = client.Auth.client()
+
+customers = app_token.get('customers', {'limit': 10})
+```
+
+## DwollaSwagger Python
 
 `dwolla-swagger-python` is available on [PyPi](https://pypi.python.org/pypi/dwollaswagger) with [source code](https://github.com/Dwolla/dwolla-swagger-python) available on our GitHub page. More information is available on the project's README.
 
@@ -161,19 +196,21 @@ npm install dwolla-v2
 
 Let's fetch a page of customers:
 
-```rubynoselect
-var dwolla = require('dwolla-v2');
+```javascriptnoselect
+const dwolla = require('dwolla-v2');
 
-# see dwolla.com/applications for your client id and secret
-var client = new dwolla.Client({id: "...", secret: "..."});
+// see dwolla.com/applications or uat.dwolla.com/applications for your consumer key and secret
+const consumerKey = '...';
+const consumerSecret = '...';
+const client = new dwolla.Client({
+  id: consumerKey,
+  secret: consumerSecret,
+  environment: 'sandbox' // optional - defaults to production
+});
 
-# generate a token on dwolla.com/applications
-var accountToken = new client.Token({access_token: "..."});
-
-accountToken
-  .get('customers', { limit: 10 })
-  .then(function(res) {
-    console.log(res.body);
-  });
+// create a token
+client.auth.client()
+  .then(appToken => appToken.get('customers', { limit: 10 }))
+  .then(res => console.log(res.body));
 ```
 * * *

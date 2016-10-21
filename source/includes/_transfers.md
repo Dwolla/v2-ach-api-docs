@@ -165,6 +165,7 @@ request_body = {
 }
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 transfer = account_token.post "transfers", request_body
 transfer.headers[:location] # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
 
@@ -218,6 +219,7 @@ request_body = {
 }
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 transfer = account_token.post('transfers', request_body)
 transfer.headers['location'] # => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
 
@@ -246,11 +248,10 @@ var requestBody = {
   }
 };
 
+// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .post('transfers', requestBody)
-  .then(function(res) {
-    res.headers.get('location'); // => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
-  });
+  .then(res => res.headers.get('location')); // => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
 ```
 
 ## Retrieve a transfer
@@ -312,6 +313,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 transfer_url = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
+# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 transfer = account_token.get transfer_url
 transfer.status # => "pending"
 
@@ -333,6 +335,7 @@ $transfer->status; # => "pending"
 transfer_url = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 fees = account_token.get(transfer_url)
 fees.body['stats'] # => 'pending'
 
@@ -344,11 +347,10 @@ transfer.status # => 'pending'
 ```javascript
 var transferUrl = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388';
 
+// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(transferUrl)
-  .then(function(res) {
-    res.body.status; // => 'pending'
-  });
+  .then(res => res.body.status); // => 'pending'
 ```
 ## List fees for a transfer
 
@@ -436,6 +438,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 transfer_url = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 fees = account_token.get "#{transfer_url}/fees"
 fees.total # => 2
 ```
@@ -448,17 +451,17 @@ fees.total # => 2
 transfer_url = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 fees = account_token.get('%s/fees' % transfer_url)
 fees.body['total'] # => 2
 ```
 ```javascript
 var transferUrl = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
 
+// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(`${transferUrl}/fees`)
-  .then(function(res) {
-    res.body.total; // => 2
-  });
+  .then(res => res.body.total); // => 2
 ```
 
 ## Retrieve a transfer failure reason
@@ -500,6 +503,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 transfer_url = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 failure = account_token.get "#{transfer_url}/failure"
 failure.code # => "R1"
 ```
@@ -512,17 +516,17 @@ failure.code # => "R1"
 transfer_url = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
+# For white label applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 failure = account_token.get('%s/failure' % transfer_url)
 failure.body['code'] # => 'R1'
 ```
 ```javascript
 var transferUrl = 'https://api-uat.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
 
+// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(`${transferUrl}/failure`)
-  .then(function(res) {
-    res.body.code; // => 'R1'
-  });
+  .then(res => res.body.code); // => 'R1'
 ```
 
 ## Cancel a transfer

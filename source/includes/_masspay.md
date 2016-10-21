@@ -241,11 +241,10 @@ var requestBody = {
   }
 }
 
+// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .post('mass-payments', requestBody)
-  .then(function(res) {
-    res.headers.get('location'); // => 'https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'
-  });
+  .then(res => res.headers.get('location')); // => 'https://api-uat.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'
 ```
 
 ## Retrieve a mass payment
@@ -315,11 +314,10 @@ mass_payment.status # => "processing"
 ```javascript
 var massPaymentUrl = 'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563';
 
+// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(massPaymentUrl)
-  .then(function(res) {
-    res.body.status; // => 'processing'
-  });
+  .then(res => res.body.status); // => 'processing'
 ```
 
 ## List items for a mass payment
@@ -445,11 +443,10 @@ mass_payment_items.total # => 2
 ```javascript
 var massPaymentUrl = 'https://api-uat.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
 
+// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(`${massPaymentUrl}/items`)
-  .then(function(res) {
-    res.body.total; // => 2
-  });
+  .then(res => res.body.total); // => 2
 ```
 
 ## Retrieve a mass payment item
@@ -532,10 +529,9 @@ mass_payment_item.body['status'] # => 'success'
 ```javascript
 var massPaymentItemUrl = 'https://api-uat.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388';
 
+// For white label applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 accountToken
   .get(massPaymentItemUrl)
-  .then(function(res) {
-    res.body.status; // => 'success'
-  });
+  .then(res => res.body.status); // => 'success'
 ```
 * * *

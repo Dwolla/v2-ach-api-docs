@@ -61,8 +61,14 @@ Applications may request the following permission scopes when generating an acce
  **/
 ```
 ```python
-# you can find your client id and secret at dwolla.com/applications
-client = dwollav2.Client(id = '...', secret = '...')
+import dwollav2
+
+# you can find your consumer key and secret at dwolla.com/applications
+consumer_key = '...'
+consumer_secret = '...'
+client = dwollav2.Client(id = consumer_key,
+                         secret = consumer_secret,
+                         environment = 'sandbox') # optional - defaults to production
 
 state = binascii.b2a_hex(os.urandom(15))
 client.Auth(redirect_uri = 'https://yoursite.com/callback',
@@ -72,8 +78,8 @@ client.Auth(redirect_uri = 'https://yoursite.com/callback',
 # redirect the user to dwolla.com for authorization
 redirect_to(auth.url)
 
-# exchange the code for a token
-token = auth.callback({'code': '...', 'state': state})
+# exchange the code for a token using the query params provided to the redirect_uri
+token = auth.callback(req.GET)
 ```
 ```javascript
 // where to send the user after they grant permission:
@@ -84,8 +90,14 @@ var authUrl = Dwolla.authUrl(redirect_uri);
 ```
 ```ruby
 # config/initializers/dwolla.rb
-# you can find your client id and secret at dwolla.com/applications
-$dwolla = DwollaV2::Client.new(id: "...", secret: "...")
+require 'dwolla_v2'
+
+# see dwolla.com/applications or uat.dwolla.com/applications (sandbox) for your consumer key and secret
+consumer_key = "..."
+consumer_secret = "..."
+$dwolla = DwollaV2::Client.new(id: consumer_key, secret: consumer_secret) do |config|
+  config.environment = :sandbox # optional - defaults to production
+end
 
 # app/controllers/your_auth_controller.rb
 class YourAuthController
@@ -96,7 +108,7 @@ class YourAuthController
 
   # exchange the code for a token
   def callback
-    token = auth.callback(params)
+    account_token = auth.callback(params)
   end
 
   private
@@ -259,6 +271,8 @@ account_id | A unique user account ID for the associated user account
 
 Some endpoints require an *application access token*, which is different from a user **account access token**.  Application access tokens don't require any particular user's authorization, since they grant an application access to resources which belong to the application itself (i.e. events, webhooks, and webhook-subscriptions), rather than an account. Provide your client credentials to receive an application access token.
 
+**Note:** If an application has the `ManageCustomers` scope enabled, it can also be used to access the API for White Label Customer related functions. Application tokens can be created using the client_credentials OAuth grant type
+
 ### HTTP request
 
 **Production:** `POST https://www.dwolla.com/oauth/v2/token`
@@ -276,7 +290,7 @@ Some endpoints require an *application access token*, which is different from a 
 
 Parameter | Description
 ----------|------------
-access_token | A new access token that is used to authenticate against resources that belong to the app itself. 
+access_token | A new access token that is used to authenticate against resources that belong to the app itself.
 expires_in | The lifetime of the access token, in seconds.  Default is 3600.
 token_type | Always `bearer`.
 scope | Pipe <code>&#124;</code> delimited list of permission scopes granted. **Deprecation note:** This response parameter will be removed on **November 23, 2016**.

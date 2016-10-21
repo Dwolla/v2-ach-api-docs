@@ -214,7 +214,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-events = application_token.get "events"
+events = app_token.get "events"
 events.total # => 4
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -231,7 +231,7 @@ $events->total; # => 4
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-events = application_token.get('events')
+events = app_token.get('events')
 events.body['total'] # => 4
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -242,9 +242,7 @@ events.total # => 4
 ```javascript
 applicationToken
   .get('events')
-  .then(function(res) {
-    res.body.total; // => 4
-  });
+  .then(res => res.body.total); // => 4
 ```
 
 ## Retrieve an event
@@ -302,7 +300,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 event_url = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
 
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-event = application_token.get event_url
+event = app_token.get event_url
 event.topic # => "customer_transfer_created"
 
 # Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
@@ -323,7 +321,7 @@ $event->topic; # => "customer_transfer_created"
 event_url = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
 
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-event = application_token.get(event_url)
+event = app_token.get(event_url)
 event.body['topic'] # => 'customer_transfer_created'
 
 # Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
@@ -336,8 +334,6 @@ var eventUrl = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e610
 
 applicationToken
   .get(eventUrl)
-  .then(function(res) {
-    res.body.topic; // => 'customer_transfer_created'
-  });
+  .then(res => res.body.topic); // => 'customer_transfer_created'
 ```
 * * *

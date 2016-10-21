@@ -155,9 +155,7 @@ var fundingSourceUrl = 'https://api.dwolla.com/funding-sources/692486f8-29f6-451
 
 accountToken
   .get(fundingSourceUrl)
-  .then(function(res) {
-    res.body.name; // => "Test checking account"
-  });
+  .then(res => res.body.name); // => "Test checking account"
 ```
 ## Update a funding source
 
@@ -231,9 +229,7 @@ var requestBody = {
 
 accountToken
   .post(fundingSourceUrl, requestBody)
-  .then(function(res) {
-    res.body.name; // => "Test Checking - 1234"
-  });
+  .then(res => res.body.name); // => "Test Checking - 1234"
 ```
 
 ## Initiate micro-deposits
