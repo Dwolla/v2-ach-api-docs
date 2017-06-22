@@ -28,4 +28,6 @@ includes:
 search: true
 
 google_analytics_id: UA-30404064-1
+
+intercom_id: dfdjs7vb
 ---

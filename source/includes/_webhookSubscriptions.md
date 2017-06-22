@@ -232,7 +232,7 @@ request_body = {
 subscription = app_token.post "#{webhook_subscription_url}", request_body
 ```
 ```javascript
-var webhookSubscriptionUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+var webhookSubscriptionUrl = 'https://api-sandbox.dwolla.com/webhook-subscriptions/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 
 var requestBody = {
   paused: true
