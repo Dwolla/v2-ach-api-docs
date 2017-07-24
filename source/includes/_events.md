@@ -70,6 +70,7 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_verified | A Customer was verified. |
 | customer_suspended | A Customer was suspended. |
 | customer_activated | A Customer moves from deactive or suspended to active state of verification. |
+| customer_deactivated | A Customer was deactivated. 
 | customer_funding_source_added | A funding source was added to a Customer. |
 | customer_funding_source_removed | A funding source was removed from a Customer. |
 | customer_funding_source_verified | A Customer’s funding source was marked as verified. |
@@ -206,11 +207,6 @@ $events->total; # => 3
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 events = app_token.get('events')
 events.body['total'] # => 3
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-events_api = dwollaswagger.EventsApi(client)
-events = events_api.events()
-events.total # => 3
 ```
 ```javascript
 applicationToken
@@ -266,14 +262,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 event_url = 'https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 event = app_token.get event_url
-event.topic # => "customer_transfer_created"
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-event = DwollaSwagger::EventsApi.id(event_url)
 event.topic # => "customer_transfer_created"
 ```
 ```php
@@ -287,16 +279,11 @@ $event->topic; # => "customer_transfer_created"
 ?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 event_url = 'https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 event = app_token.get(event_url)
 event.body['topic'] # => 'customer_transfer_created'
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-events_api = dwollaswagger.EventsApi(client)
-event = events_api.id(event_url)
-event.topic # => 'customer_transfer_created'
 ```
 ```javascript
 var eventUrl = 'https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095';
