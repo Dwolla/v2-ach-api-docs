@@ -84,9 +84,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 account_url = 'https://api-sandbox.dwolla.com/accounts/07844b76-bfeb-4a81-87ec-adebc7fa6cfe'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 account = account_token.get account_url
 account.name # => "Jane Doe"
 ```
@@ -342,9 +342,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 account_url = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 transfers = account_token.get "#{account_url}/transfers"
 transfers._embedded.transfers[0].status # => "processed"
 ```
@@ -444,9 +444,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payments = account_token.get "#{account_url}/mass-payments", limit: 10
 mass_payments._embedded['mass-payments'][0].status # => "complete"
 ```
@@ -456,9 +456,9 @@ mass_payments._embedded['mass-payments'][0].status # => "complete"
  **/
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 transfers = account_token.get('%s/mass-payments' % account_url, limit = 10)
 transfers.body['_embedded']['mass-payments'][0]['status'] # => "complete"
 ```

@@ -185,10 +185,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 events = app_token.get "events"
 events.total # => 4
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-events = DwollaSwagger::EventsApi.events
-events.total # => 4
 ```
 ```php
 <?php
@@ -202,11 +198,6 @@ $events->total; # => 4
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 events = app_token.get('events')
 events.body['total'] # => 4
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-events_api = dwollaswagger.EventsApi(client)
-events = events_api.events()
-events.total # => 4
 ```
 ```javascript
 applicationToken
@@ -271,10 +262,6 @@ event_url = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 event = app_token.get event_url
 event.topic # => "customer_transfer_created"
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-event = DwollaSwagger::EventsApi.id(event_url)
-event.topic # => "customer_transfer_created"
 ```
 ```php
 <?php
@@ -287,16 +274,11 @@ $event->topic; # => "customer_transfer_created"
 ?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 event_url = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 event = app_token.get(event_url)
 event.body['topic'] # => 'customer_transfer_created'
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-events_api = dwollaswagger.EventsApi(client)
-event = events_api.id(event_url)
-event.topic # => 'customer_transfer_created'
 ```
 ```javascript
 var eventUrl = 'https://api.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095';

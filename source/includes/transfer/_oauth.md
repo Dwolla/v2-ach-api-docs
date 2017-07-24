@@ -3,12 +3,12 @@
 Dwolla utilizes the [OAuth 2 protocol](https://oauth.net/2/) to facilitate authorization. OAuth is an authorization framework that enables a third-party application to obtain access to protected resources (Transfers, Funding Sources, etc.) in the Dwolla API. Access to the Dwolla API can be granted to an application either on behalf of a user or on behalf of the application itself. The following section will walk through Dwolla’s implementation of OAuth 2 and the various flows that can be leveraged by your application.  
 
 #### Creating an application
-Before you can get started with making OAuth requests, you’ll need to first register an application with Dwolla by logging in and navigating to the applications page. Once an application is registered you will obtain your `client_id` and `client_secret` (aka application Key and Secret), which will be used to identify your application when calling the Dwolla API. The Sandbox environment provides you with a created application once you have signed up for an account. Learn more in our [getting started guide](https://developers.dwolla.com/guides/sandbox-setup/). **Remember:** Your client_secret should be kept a secret! Be sure to store your client credentials securely. 
+Before you can get started with making OAuth requests, you’ll need to first register an application with Dwolla by logging in and navigating to the applications page. Once an application is registered you will obtain your `client_id` and `client_secret` (aka application Key and Secret), which will be used to identify your application when calling the Dwolla API. The Sandbox environment provides you with a created application once you have signed up for an account. Learn more in our [getting started guide](https://developers.dwolla.com/guides/sandbox-setup/). **Remember:** Your client_secret should be kept a secret! Be sure to store your client credentials securely.
 
 #### Dwolla's authorization flows
 The OAuth 2 protocol defines four main authorization grant types, more commonly referred to as OAuth flows. Dwolla implements two of the four grant types depending on how your application accesses data within the API.
 
-* **Flow 1 (Account authorization):** - Using the [authorization code grant flow](/guides/auth/authorization-code-flow.html), your application will redirect the user to Dwolla (typically via a web browser) to authenticate and authorize your application. If the user grants permission, your application will be issued an access token that is used to make requests to the API on the user's behalf. This is a browser-based flow with interaction between an end-user, a third-party application, and the Dwolla API; also known as 3-legged OAuth. 
+* **Flow 1 (Account authorization):** - Using the [authorization code grant flow](/guides/auth/authorization-code-flow.html), your application will redirect the user to Dwolla (typically via a web browser) to authenticate and authorize your application. If the user grants permission, your application will be issued an access token that is used to make requests to the API on the user's behalf. This is a browser-based flow with interaction between an end-user, a third-party application, and the Dwolla API; also known as 3-legged OAuth.
 * **Flow 2 (Application authorization):** - Using the [client credentials grant flow](/guides/auth/client-credentials-flow.html), your application will obtain authorization to interact with the API on its own behalf. This is a server-to-server flow with interaction between an application and the Dwolla API; also known as 2-legged OAuth. An application will exchange it’s `client_id`, `client_secret`, and `grant_type=client_credentials` for an application access token. An application access token is for managing webhooks, webhook-subscriptions, and events.
 
 #### Token lifetimes
@@ -149,7 +149,7 @@ https://sandbox.dwolla.com/oauth/v2/authenticate?client_id=PO%2BSzGAsZCE4BTG7Cw4
 
 ### Step 2: Finish user authorization
 
-Once the user returns to your application via the `redirect_uri` you specified, there will be a `code` querystring parameter appended to that URL.  The `redirect_uri` specified in the initial authorization request is used by Dwolla to handle both the approval of authorization, as well as if the user cancels out of the flow or denies authorization. If the user denies authorization an error will be returned as an `error` querystring parameter. Exchange the authorization `code` for an `access_token` and `refresh_token` pair. 
+Once the user returns to your application via the `redirect_uri` you specified, there will be a `code` querystring parameter appended to that URL.  The `redirect_uri` specified in the initial authorization request is used by Dwolla to handle both the approval of authorization, as well as if the user cancels out of the flow or denies authorization. If the user denies authorization an error will be returned as an `error` querystring parameter. Exchange the authorization `code` for an `access_token` and `refresh_token` pair.
 
 #### HTTP request
 **Production:** `POST https://www.dwolla.com/oauth/v2/token`
@@ -169,16 +169,16 @@ Including the `Content-Type: application/x-www-form-urlencoded` header, the requ
 
 #### Response parameters
 
-Parameter | Description
-----------|------------
-_links | Contains a link to the associated user account resource
-access_token | A new access token with requested scopes
-expires_in | The lifetime of the access token, in seconds.  Default is 3600.
-refresh_token | New refresh token
-refresh_expires_in | The lifetime of the refresh token, in seconds.  Default is 5184000.
-token_type | Always `bearer`.
-scope | Pipe <code>&#124;</code> delimited list of permission scopes granted
-account_id | A unique user account ID for the associated user account
+| Parameter | Description |
+| ----------|------------|
+| _links | Contains a link to the associated user account resource |
+| access_token | A new access token with requested scopes |
+| expires_in | The lifetime of the access token, in seconds.  Default is 3600. |
+| refresh_token | New refresh token |
+| refresh_expires_in | The lifetime of the refresh token, in seconds.  Default is 5184000. |
+| token_type | Always `bearer`. |
+| scope | Pipe <code>&#124;</code> delimited list of permission scopes granted |
+| account_id | A unique user account ID for the associated user account |
 
 #### Request
 
@@ -232,16 +232,16 @@ Including the `Content-Type: application/x-www-form-urlencoded` header, the requ
 
 #### Response parameters
 
-Parameter | Description
-----------|------------
-_links | Contains a link to the associated user account resource
-access_token | A new access token with requested scopes
-expires_in | The lifetime of the access token, in seconds.  Default is 3600.
-refresh_token | New refresh token
-refresh_expires_in | The lifetime of the refresh token, in seconds.  Default is 5184000.
-token_type | Always `bearer`.
-scope | Pipe <code>&#124;</code> delimited list of permission scopes granted
-account_id | A unique user account ID for the associated user account
+| Parameter | Description |
+|----------|--------------|
+| _links | Contains a link to the associated user account resource |
+| access_token | A new access token with requested scopes |
+| expires_in | The lifetime of the access token, in seconds.  Default is 3600. |
+| refresh_token | New refresh token |
+| refresh_expires_in | The lifetime of the refresh token, in seconds.  Default is 5184000. |
+| token_type | Always `bearer`. |
+| scope | Pipe <code>&#124;</code> delimited list of permission scopes granted |
+| account_id | A unique user account ID for the associated user account |
 
 #### Request
 
@@ -317,7 +317,7 @@ POST https://sandbox.dwolla.com/oauth/v2/token
 Content-Type: application/x-www-form-urlencoded
 
 client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&client_secret=g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5CcJSLqXIcDOxfTr&grant_type=client_credentials
-``` 
+```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 # This example assumes you've already intialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html

@@ -100,7 +100,7 @@ The following errors are common across all API endpoints.
 ### Validation errors
 Responses with a top-level error code of `ValidationError` are returned when it’s possible to correct a specific problem with your request. The response will include a message: "Validation error(s) present. See embedded errors list for more details." At least one, but possibly more, detailed error will be present in the list of embedded errors. Multiple errors are represented in a collection of embedded error objects.
 
-#### _embedded JSON object
+#### `_embedded` JSON object
 
 | Parameter | Description
 |-----------|------------|

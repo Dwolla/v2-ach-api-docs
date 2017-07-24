@@ -151,6 +151,7 @@ HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be0b7
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 request_body = {
   _links: {
     source: {
@@ -192,7 +193,6 @@ request_body = {
   }
 }
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment = account_token.post "mass-payments", request_body
 mass_payment.headers[:location] # => "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"
 ```
@@ -246,8 +246,7 @@ var requestBody = {
   }
 }
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-accountToken
+appToken
   .post('mass-payments', requestBody)
   .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'
 ```
@@ -298,9 +297,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment_url = "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment = account_token.get mass_payment_url
 mass_payment.status # => "processing"
 ```
@@ -315,8 +314,7 @@ mass_payment.status # => "processing"
 ```javascript
 var massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563';
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-accountToken
+appToken
   .get(massPaymentUrl)
   .then(res => res.body.status); // => 'processing'
 ```
@@ -355,12 +353,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
       "status" => "pending",
 }
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment = account_token.post "#{mass_payment_url}", request_body
 mass_payment.status # => "pending"
 ```
@@ -370,12 +368,12 @@ mass_payment.status # => "pending"
  **/
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
   "status": "pending"
 }
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 mass_payments = account_token.post('mass-payments', request_body)
 mass_payments.body['status'] # => 'pending'
 ```
@@ -491,9 +489,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment_items = account_token.get "#{mass_payment_url}/items"
 mass_payment_items.total # => 2
 ```
@@ -508,8 +506,7 @@ mass_payment_items.total # => 2
 ```javascript
 var massPaymentUrl = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-accountToken
+appToken
   .get(`${massPaymentUrl}/items`)
   .then(res => res.body.total); // => 2
 ```
@@ -569,9 +566,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment_item_url = 'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payment_item = account_token.get mass_payment_item_url
 mass_payment_item.status # => "success"
 ```
@@ -581,17 +578,16 @@ mass_payment_item.status # => "success"
  **/
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 mass_payment_item_url = 'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 mass_payment_item = account_token.get(mass_payment_item_url)
 mass_payment_item.body['status'] # => 'success'
 ```
 ```javascript
 var massPaymentItemUrl = 'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388';
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-accountToken
+appToken
   .get(massPaymentItemUrl)
   .then(res => res.body.status); // => 'success'
 ```

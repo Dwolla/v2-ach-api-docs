@@ -127,6 +127,7 @@ HTTP/1.1 201 Created
 Location: https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 request_body = {
   :_links => {
     :source => {
@@ -142,7 +143,6 @@ request_body = {
   }
 }
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 transfer = account_token.post "transfers", request_body
 transfer.headers[:location] # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
 ```
@@ -168,6 +168,7 @@ $transfer; # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a
 ?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 request_body = {
   '_links': {
     'source': {
@@ -183,7 +184,6 @@ request_body = {
   }
 }
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 transfer = account_token.post('transfers', request_body)
 transfer.headers['location'] # => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
 ```
@@ -264,9 +264,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 transfer_url = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 transfer = account_token.get transfer_url
 transfer.status # => "pending"
 ```
@@ -281,9 +281,9 @@ $transfer->status; # => "pending"
 ?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 transfer_url = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 fees = account_token.get(transfer_url)
 fees.body['status'] # => 'pending'
 ```
@@ -377,9 +377,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 fees = account_token.get "#{transfer_url}/fees"
 fees.total # => 2
 ```
@@ -389,9 +389,9 @@ fees.total # => 2
  **/
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 fees = account_token.get('%s/fees' % transfer_url)
 fees.body['total'] # => 2
 ```
@@ -439,9 +439,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 failure = account_token.get "#{transfer_url}/failure"
 failure.code # => "R1"
 ```
@@ -451,9 +451,9 @@ failure.code # => "R1"
  **/
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 failure = account_token.get('%s/failure' % transfer_url)
 failure.body['code'] # => 'R1'
 ```

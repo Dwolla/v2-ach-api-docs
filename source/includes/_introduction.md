@@ -100,7 +100,7 @@ The following errors are common across all API endpoints.
 ### Validation errors
 Responses with a top-level error code of `ValidationError` are returned when it’s possible to correct a specific problem with your request. The response will include a message: "Validation error(s) present. See embedded errors list for more details." At least one, but possibly more, detailed error will be present in the list of embedded errors. Multiple errors are represented in a collection of embedded error objects.
 
-#### _embedded JSON object
+#### `_embedded` JSON object
 
 | Parameter | Description
 |-----------|------------|
@@ -183,6 +183,6 @@ The following section will outline development tools you can take advantage of t
 
 The primary benefit is the ability to dynamically generate your UI based on the state of a particular resource. Your application can easily transition state without knowing Dwolla's business rules and what information needs to included in the actual request to transition state. When an `"edit-form"` link relation is returned on the resource, then your application can follow the link by making a GET request to that resource, including the header shown above. The response will include a simple JSON response body that contains information on the HTTP method, message content-type, and the request parameters used when sending the request to the Dwolla API. **Note:** Currently, forms are only returned for creating & editing customers, but we’re looking forward to expanding them across our existing and future endpoints.
 
-Reference [the spec](https://github.com/Dwolla/hal-forms) for more information on the properties that can be returned in the Dwolla HAL-FORMS response. Or read a [blog post](https://www.dwolla.com/updates/simplified-customer-onboarding-through-a-better-formed-api/) from one of our developers on building out this functionality. 
+Reference [the spec](https://github.com/Dwolla/hal-forms) for more information on the properties that can be returned in the Dwolla HAL-FORMS response. Or read a [blog post](https://www.dwolla.com/updates/simplified-customer-onboarding-through-a-better-formed-api/) from one of our developers on building out this functionality.
 
 * * *

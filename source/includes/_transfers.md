@@ -11,7 +11,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 | amount | An amount JSON object. See below
 | created | ISO-8601 timestamp |
 | metadata | A metadata JSON object |
-| clearing |  |
+| clearing | A clearing JSON object. |
 
 ```noselect
 {
@@ -23,8 +23,12 @@ A transfer represents money being transferred from a `source` to a `destination`
     "value": "string",
     "currency": "string"
   },
-  "created": "2015-10-02T19:48:40.485Z",
-  "metadata": {}
+  "created": "string",
+  "metadata": {},
+  "clearing": {
+    "source": "standard",
+    "destination": "next-available"
+  }
 }
 ```
 
@@ -34,6 +38,13 @@ A transfer represents money being transferred from a `source` to a `destination`
 |-----------|------------|
 | value | Amount of money |
 | currency | String, `USD` |
+
+### clearing JSON object
+
+| Parameter | Description
+|-----------|------------|
+| source | String, 'standard' |
+| destination | String, `next-available` |
 
 ## Initiate a transfer
 
@@ -103,7 +114,7 @@ For more information on collecting fees on payments, reference the [facilitator 
 | 403 | OAuth token does not have Send scope. |
 
 ### Request and response (using Same Day ACH)
-The reference example below shows what a request looks like when sending a transfer. Please note this example is using [same-day](https://www.dwolla.com/same-day-ach) clearing to an Access API Customer's bank account, part of Dwolla's Access API. 
+The reference example below shows what a request looks like when sending a transfer. Please note this example is using [same-day](https://www.dwolla.com/same-day-ach) clearing to an Access API Customer's bank account, part of Dwolla's Access API.
 
 ```raw
 POST https://api-sandbox.dwolla.com/transfers
@@ -140,6 +151,7 @@ HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 request_body = {
   :_links => {
     :source => {
@@ -162,14 +174,8 @@ request_body = {
   }
 }
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-transfer = account_token.post "transfers", request_body
+transfer = app_token.post "transfers", request_body
 transfer.headers[:location] # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-transfer = DwollaSwagger::TransfersApi.create(:body => request_body)
-transfer # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
 ```
 ```php
 <?php
@@ -200,6 +206,7 @@ $transfer; # => "https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80d
 ?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 request_body = {
   '_links': {
     'source': {
@@ -222,15 +229,8 @@ request_body = {
   }
 }
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-transfer = account_token.post('transfers', request_body)
+transfer = app_token.post('transfers', request_body)
 transfer.headers['location'] # => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-transfers_api = dwollaswagger.TransfersApi(client)
-transfer = transfers_api.create(body = request_body)
-transfer # => 'https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
 ```
 ```javascript
 var requestBody = {
@@ -317,15 +317,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 transfer_url = 'https://api.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 transfer = account_token.get transfer_url
-transfer.status # => "pending"
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-transfer = DwollaSwagger::TransfersApi.by_id(transfer_url)
 transfer.status # => "pending"
 ```
 ```php
@@ -339,17 +334,11 @@ $transfer->status; # => "pending"
 ?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
 fees = account_token.get(transfer_url)
 fees.body['stats'] # => 'pending'
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-transfers_api = dwollaswagger.TransfersApi(client)
-transfer = transfers_api.by_id(transfer_url)
-transfer.status # => 'pending'
 ```
 ```javascript
 var transferUrl = 'https://api-sandbox.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388';

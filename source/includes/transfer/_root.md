@@ -33,9 +33,12 @@ root = token.get "/"
 root._links.account.href # => "https://api-sandbox.dwolla.com/accounts/dcbb698d-bee7-4f79-8576-e4301bdc57fc"
 ```
 ```php
-/**
- *  No example for this language yet. Coming soon.
- **/
+<?php
+$rootApi = new DwollaSwagger\RootApi($apiClient);
+
+$root = $rootApi->root();
+$accountUrl = $root->_links["account"]->href; # => "https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"
+?>
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)

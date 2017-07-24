@@ -44,7 +44,7 @@ Dwolla offers a seamless process for migrating existing Transfer user Accounts m
 
 ## Retrieve account details
 
-This section shows you how to retrieve basic account information belonging to the authorized user Account. 
+This section shows you how to retrieve basic account information belonging to the authorized user Account.
 
 ### HTTP request
 `GET https://api.dwolla.com/accounts/{id}`
@@ -93,15 +93,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-account = account_token.get account_url
-account.name # => "Jane Doe"
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-account = DwollaSwagger::AccountsApi.id(account_url)
+account = app_token.get account_url
 account.name # => "Jane Doe"
 ```
 ```php
@@ -115,18 +110,16 @@ print($account->name); # => "Jane Doe"
 ?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
-accounts_api = dwollaswagger.AccountsApi(client)
-
-account = accounts_api.id(account_url)
-print(account.name) # => Jane Doe
+account = app_token.get(account_url)
+account.body['name']
 ```
 ```javascript
 var accountUrl = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-accountToken
+appToken
   .get(accountUrl)
   .then(res => res.body.name); // => 'Jane Doe'
 ```
@@ -249,16 +242,11 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 account_url = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
-# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-funding_sources = account_token.get "#{account_url}/funding-sources"
+funding_sources = app_token.get "#{account_url}/funding-sources"
 funding_sources._embedded['funding-sources'][0].name # => "Jane Doe's Checking"
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-funding_sources = DwollaSwagger::FundingsourcesApi.get_account_funding_sources(account_url)
-funding_sources._embedded[:'funding-sources'][0][:name] # => "Jane Doe’s Checking"
 ```
 ```php
 <?php
@@ -271,18 +259,16 @@ $fundingSources->_embedded->{'funding-sources'}[0]->name); # => "Jane Doe’s Ch
 ?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 account_url = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
-fs_api = dwollaswagger.FundingsourcesApi(client)
-funding_sources = fs_api.get_account_funding_sources(account_url)
-
-funding_sources._embedded['funding-sources'][0]['name'] # => Jane Doe’s Checking
+funding_sources = app_token.get('%s/funding-sources' % account_url)
+funding_sources.body['_embedded']['funding-sources'][0]['name'] # => 'Jane Doe’s Checking'
 ```
 ```javascript
 var accountUrl = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-accountToken
+appToken
   .get(`${accountUrl}/funding-sources`)
   .then(res => res.body._embedded['funding-sources'][0].name); // => 'ABC Bank Checking'
 ```
@@ -385,15 +371,11 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 account_url = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 transfers = account_token.get "#{account_url}/transfers"
 transfers._embedded.transfers[0].status # => "processed"
-
-# Using DwollaSwagger - https://github.com/Dwolla/dwolla-swagger-ruby
-transfers = DwollaSwagger::TransfersApi.get_account_transfers(account_url)
-transfers._embedded[:transfers][0][:status] # => "processed"
 ```
 ```php
 <?php
@@ -406,23 +388,16 @@ $transfers->_embedded->transfers[0]->status; # => "processed"
 ?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 account_url = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python (Recommended)
-# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-transfers = account_token.get('%s/transfers' % account_url)
+transfers = app_token.get('%s/transfers' % account_url)
 transfers.body['_embedded']['transfers'][0]['status'] # => "processed"
-
-# Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-python
-transfers_api = dwollaswagger.TransfersApi(client)
-transfers = transfers_api.get_account_transfers(account_url)
-transfers._embedded['transfers'][0]['status'] # => "processed"
 ```
 ```javascript
 var accountUrl = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-accountToken
+appToken
   .get(`${accountUrl}/transfers`)
   .then(res => res.body._embedded.transfers.[0].status); // => 'processed'
 ```
@@ -495,30 +470,32 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby (Recommended)
 mass_payments = account_token.get "#{account_url}/mass-payments", limit: 10
 mass_payments._embedded['mass-payments'][0].status # => "complete"
 ```
 ```php
-/**
- *  No example for this language yet. Coming soon.
- **/
+$accountUrl = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3';
+
+$masspaymentsApi = new DwollaSwagger\MasspaymentsApi($apiClient);
+
+$masspayments = $masspaymentsApi->getByAccount($accountUrl, 10, 0);
+$masspayments->_embedded->{"mass-payments"}[0]->status; # => "complete"
+?>
 ```
 ```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 account_url = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
 
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-# For Access API applications, an app_token can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-transfers = account_token.get('%s/mass-payments' % account_url, limit = 10)
+transfers = app_token.get('%s/mass-payments' % account_url, limit = 10)
 transfers.body['_embedded']['mass-payments'][0]['status'] # => "complete"
 ```
 ```javascript
 var accountUrl = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b';
 
-// For Access API applications, an appToken can be used for this endpoint. (https://docsv2.dwolla.com/#application-access-token)
-accountToken
+appToken
   .get(`${accountUrl}/mass-payments`)
   .then(res => res.body._embedded['mass-payments'][0].status); // => 'complete'
 ```
