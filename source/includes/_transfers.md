@@ -407,7 +407,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       "status": "pending",
       "amount": {
         "value": "2.00",
-        "currency": "usd"
+        "currency": "USD"
       },
       "created": "2016-02-22T20:46:38.777Z"
     },
@@ -430,7 +430,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       "status": "pending",
       "amount": {
         "value": "1.00",
-        "currency": "usd"
+        "currency": "USD"
       },
       "created": "2016-02-22T20:46:38.860Z"
     }
@@ -585,7 +585,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "status": "cancelled",
   "amount": {
     "value": "22.00",
-    "currency": "usd"
+    "currency": "USD"
   },
   "created": "2016-01-28T22:34:02.663Z",
   "metadata": {

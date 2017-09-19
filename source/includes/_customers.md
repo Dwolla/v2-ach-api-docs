@@ -1573,6 +1573,7 @@ This section covers how to retrieve a [verified Customer's](#customers) list of 
 | id | yes | string | Customer unique identifier to get mass payments for. |
 | limit | no | integer | How many results to return. Defaults to 25. |
 | offset | no | integer | How many results to skip. |
+| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: a-Z, 0-9, -, ., and _.
 
 ### HTTP Status and Error Codes
 | HTTP Status | Code | Description |
@@ -1620,7 +1621,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "created": "2016-03-21T19:27:34.000Z",
         "metadata": {
           "masspay1": "masspay1"
-        }
+        },
+        "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
       }
     ]
   },

@@ -44,11 +44,11 @@ MassPay offers a significant advantage over repeatedly calling the [Transfers](#
         "batch": "batch1"
     },
     "total": {
-        "value": "$0.02",
+        "value": "0.02",
         "currency": "USD"
     },
     "totalFees": {
-        "value": "$0.00",
+        "value": "0.00",
         "currency": "USD"
     },
     "correlationId": "d028beed-8152-481d-9427-21b6c4d99644"

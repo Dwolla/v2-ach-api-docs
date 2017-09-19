@@ -416,6 +416,7 @@ This section covers how to retrieve an Account's list of previously created mass
 | id | yes | string | Account unique identifier to get mass payments for. |
 | limit | no | integer | How many results to return. Defaults to 25. |
 | offset | no | integer | How many results to skip. |
+| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and a partner application. Must be less than 255 characters and contain no spaces. Acceptable characters are: a-Z, 0-9, -, ., and _ |
 
 ### HTTP Status and Error Codes
 | HTTP Status | Code | Description |
@@ -463,7 +464,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         "created": "2015-09-03T14:14:10.000Z",
         "metadata": {
           "UserJobId": "some ID"
-        }
+        },
+        "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
       }
     ]
   },
