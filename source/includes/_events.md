@@ -34,6 +34,7 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 
 
 ### Event topics - ([Partner Dwolla Account](#accounts))
+
 | Topic          | Description                                                                                                       |
 |------------------|---------------------------------------------------------------------------------------------------------------|
 | funding_source_added | A funding source was added to a Dwolla account. |
@@ -59,6 +60,7 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | account_activated | A Dwolla account moves from deactivated or suspended to active state of verification. |
 
 ### Event topics - ([Customers](#customers))
+
 | Topic          | Description                                                                                                       |
 |------------------|---------------------------------------------------------------------------------------------------------------|
 | customer_created | A Customer was created. |
@@ -97,15 +99,18 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 Retrieve a list of events for the application.
 
 ### HTTP request
+
 `GET https://api.dwolla.com/events`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|-------------|
 | limit | no | integer | How many results to return |
 | offset | no | integer | How many results to skip |
 
 ### HTTP status and error codes
+
 | HTTP Status | Message |
 |--------------|-------------|
 | 404 | Resource not found. |
