@@ -549,18 +549,6 @@ accountToken
 
 A mass payment contains a list of payments called `items`. An `item` is distinct from the transfer which it creates. An item can contain a status of either `failed`, `pending`, or `success` depending on whether the payment was created by the Dwolla service or not. A mass payment item status of `success` is an indication that a transfer was successfully created. A mass payment's items will be returned in the `_embedded` object as a list of `items`.
 
-### Mass payment item failures
-
-Individual mass payment items can have a status of `failed`. If an item has a status of `failed`, an `_embedded` object will be returned within the item which contains a list of `errors`. Each error object includes a top-level error `code`, a `message` with a detailed description of the error, and a `path` which is a JSON pointer to the specific field in the request that has a problem. You can utilize both the failure code and message to get a better understanding of why the particular item failed.
-
-| Code                    | Message               | Description |
-|-------------------------|-----------------------|-------------|
-| InsufficientFunds     | "Insufficient funds." | The `source` funding source has insufficient funds, and as a result failed to create a transfer. |
-| Invalid     | "Receiver not found."   | The `destination` was not a valid Customer or Funding Source. |
-| Invalid    | "Receiver cannot be the owner of the source funding source." | The `destination` of the transfer cannot be the same as the `source`.  |
-| RequiresFundingSource | "Receiver requires funding source."  | The `destination` of the mass payment item does not have an active funding source attached.  |
-| Restricted | "Receiver restricted." | The `destination` customer is either `deactivated` or `suspended` and is not eligible to receive funds. |
-
 ### HTTP Request
 `GET https://api.dwolla.com/mass-payments/{id}/items`
 
@@ -579,6 +567,18 @@ Individual mass payment items can have a status of `failed`. If an item has a st
 |-------------|-----------|--------------------------------------------|
 | 403         | Forbidden | Not authorized to list mass payment items. |
 | 404         | NotFound  | Mass payment not found.                    |
+
+### Mass payment item failures
+
+Individual mass payment items can have a status of `failed`. If an item has a status of `failed`, an `_embedded` object will be returned within the item which contains a list of `errors`. Each error object includes a top-level error `code`, a `message` with a detailed description of the error, and a `path` which is a JSON pointer to the specific field in the request that has a problem. You can utilize both the failure code and message to get a better understanding of why the particular item failed.
+
+| Code                    | Message               | Description |
+|-------------------------|-----------------------|-------------|
+| InsufficientFunds     | "Insufficient funds." | The `source` funding source has insufficient funds, and as a result failed to create a transfer. |
+| Invalid     | "Receiver not found."   | The `destination` was not a valid Customer or Funding Source. |
+| Invalid    | "Receiver cannot be the owner of the source funding source." | The `destination` of the transfer cannot be the same as the `source`.  |
+| RequiresFundingSource | "Receiver requires funding source."  | The `destination` of the mass payment item does not have an active funding source attached.  |
+| Restricted        | "Receiver//Sender Restricted" | The `source` or `destination` Customer is either has a `deactivated` or `suspended` status. They will be ineligible to send or receive funds until they are `unsuspended` or `reactivated`. |
 
 ### Request and response
 
