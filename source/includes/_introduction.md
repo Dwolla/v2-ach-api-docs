@@ -180,7 +180,7 @@ Responses which contain a collection of resources have pagination links, `first`
 
 ## Tools
 
-The following section will outline development tools you can take advantage of to assist in your integration with the Dwolla API. The available tools can help to improve your testing and development workflow, as well as aide in solving a difficult problem (e.g. UI generation) when integrating Dwolla into your application.
+The following section will outline development tools you can take advantage of to assist in your integration with the Dwolla API. The available tools can help to improve your testing and development workflow, as well as aid in solving a difficult problem (e.g. UI generation) when integrating Dwolla into your application.
 
 ### Dwolla Hal-Forms
 [Dwolla HAL-Forms](https://github.com/Dwolla/hal-forms) is an extension of the [HAL spec](http://stateless.co/hal_specification.html) and was created to describe how Dwolla represents forms in the API. The extension starts with the media type. The media type should be used as a profile link as part of the `Accept` header of the request in conjunction with the Dwolla HAL style media type. By including these two media-type identifiers in the Accept header, the API knows that you’re looking for a form for the given resource.
