@@ -863,6 +863,8 @@ appToken
 ## List business classifications
 
 Retrieve a list of industry classifications to identify the Customer’s business. An industry classification is required by Dwolla when verifying a `business` in order to better analyze the nature of a business.
+Following endpoint will return list of types of industry classification, each in turn contains "_embedded"
+object with "industry-classifications" list.
 
 ### HTTP request
 
