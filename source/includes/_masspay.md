@@ -81,7 +81,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | items         | yes      | array  | an array of item JSON objects that contain unique payments. [See below](#mass-payment-item)        |
 | metadata      | no       | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters).     |
 | status        | no       | string | Acceptable value is: `deferred`. |
-| achDetails    | no       | string | An ACH details JSON object which represents additional information sent along with a mass payment item to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [See below](#achdetails-and-addenda-object) |
+| achDetails    | no       | object | An ACH details JSON object which represents additional information sent along with a transfer created from a mass payment item to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [See below](#achdetails-and-addenda-object) |
 | correlationId | no       | string | A unique string value attached to a mass payment which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
 
 ### Source and destination values
@@ -108,7 +108,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | amount        | An amount JSON object containing `currency` and `value` keys.                                                                       |
 | metadata      | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters).                  |
 | correlationId | A unique string value attached to a mass payment item which can be used for traceability between Dwolla and your application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
-| achDetails    | An [ACH details JSON object](#achdetails-object) which represents additional information sent along with a mass payment item to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. |
+| achDetails    | An [ACH details JSON object](#achdetails-object) which represents additional information sent along with a transfer created from a mass payment item to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. |
 
 ### amount JSON object
 
@@ -119,7 +119,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 
 ### achDetails and addenda object
 
-The addendum record is used to provide additional information to the payment recipient about to the payment. This value will be passed in on a transfer request and can be exposed on a Customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.
+The addendum record is used to provide additional information to the payment recipient about to the payment. This value will be passed in on a transfer request and can be exposed on a customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.
 
 ##### achDetails object
 
@@ -204,7 +204,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         },
         "achDetails": {
           "destination": {
-            "Addenda": {
+            "addenda": {
               "values": ["ZYX987_AddendaValue"]
             }
           }
@@ -226,7 +226,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         },
         "achDetails": {
           "destination": {
-            "Addenda": {
+            "addenda": {
               "values": ["ZYX987_AddendaValue"]
               }
             }
@@ -244,77 +244,75 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a5cc011be0b7
 ```
-
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 request_body = {
-  _links: {
-    source: {
-      href: "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+  :_links => {
+    :source => {
+      :href => "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
     }
   },
-  achDetails: {
-    source: {
-      addenda: {
-        values: ["ABC123_AddendaValue"]
+  :achDetails => {
+    :source => {
+      :addenda => {
+        :values: => ["ABC123_AddendaValue"]
       }
     }
   },
-  items: [
+  :items => [
     {
-      _links: {
-        destination: {
-          href: "https://api-sandbox.dwolla.com/funding-sources/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+      :_links => {
+        :destination => {
+          :href => "https://api-sandbox.dwolla.com/funding-sources/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
         }
       },
-      amount: {
-        currency: "USD",
-        value: "1.00"
+      :amount => {
+        :currency => "USD",
+        :value => "1.00"
       },
-      metadata: {
-        payment1: "payment1"
+      :metadata => {
+        :payment1 => "payment1"
       },
-      achDetails: {
-        destination: {
-          addenda: {
-            values: ["ZYX987_AddendaValue"]
+      :correlationId => "ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841",
+      :achDetails => {
+        :destination => {
+          :addenda => {
+            :values: => ["ABC123_AddendaValue"]
           }
         }
-      },
-      correlationId: "ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841"
+      }
     },
     {
-      _links: {
-        destination: {
-          href: "https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd"
+      :_links => {
+        :destination => {
+          :href => "https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd"
         }
       },
-      amount: {
-        currency: "USD",
-        value: "5.00"
+      :amount => {
+        :currency => "USD",
+        :value => "5.00"
       },
-      metadata: {
-        payment2: "payment2"
+      :metadata => {
+        :payment2 => "payment2"
       },
-      achDetails: {
-        destination: {
-          addenda: {
-            values: ["ZYX987_AddendaValue"]
+      :achDetails => {
+        :destination => {
+          :addenda => {
+            :values: => ["ABC123_AddendaValue"]
           }
         }
       }
     }
   ],
-  metadata: {
-    batch1: "batch1"
+  :metadata => {
+    :batch1 => "batch1"
   },
-  correlationId: "6d127333-69e9-4c2b-8cae-df850228e130"
+  :correlationId => "6d127333-69e9-4c2b-8cae-df850228e130"
 }
 
-mass_payment = account_token.post "mass-payments", request_body
+mass_payment = app_token.post "mass-payments", request_body
 mass_payment.headers[:location] # => "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"
 ```
-
 ```php
 <?php
 $massPaymentsApi = new DwollaSwagger\MasspaymentsApi($apiClient);
@@ -326,6 +324,14 @@ $massPayment = $massPaymentsApi->create([
     [
       'href' => 'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4',
     ],
+  ],
+  'achDetails' =>
+  [
+    'source' => [
+      'addenda' => [
+        'values' => ['ABC123_AddendaValue']
+      ]
+    ]
   ],
   'items' =>
   [
@@ -347,6 +353,14 @@ $massPayment = $massPaymentsApi->create([
         'payment1' => 'payment1',
       ],
       'correlationId' => 'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841',
+      'achDetails' =>
+      [
+        'source' => [
+          'addenda' => [
+            'values' => ['ABC123_AddendaValue']
+          ]
+        ]
+      ]
     ],
     [
       '_links' =>
@@ -365,6 +379,14 @@ $massPayment = $massPaymentsApi->create([
       [
         'payment2' => 'payment2',
       ],
+      'achDetails' =>
+      [
+        'source' => [
+          'addenda' => [
+            'values' => ['ABC123_AddendaValue']
+          ]
+        ]
+      ]
     ],
   ],
   'metadata' =>
@@ -376,7 +398,6 @@ $massPayment = $massPaymentsApi->create([
 $massPayment; # => "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"
 ?>
 ```
-
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 request_body = {
@@ -386,10 +407,8 @@ request_body = {
     }
   },
   'achDetails': {
-    'source': {
-      'addenda': {
-        'values': ["ABC123_AddendaValue"]
-      }
+    'addenda': {
+      'values': ['ABC123_AddendaValue']
     }
   },
   'items': [
@@ -406,14 +425,12 @@ request_body = {
       'metadata': {
         'payment1': 'payment1'
       },
+      'correlationId': 'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841',
       'achDetails': {
-        'destination': {
-          'addenda': {
-            'values': ["ZYX987_AddendaValue"]
-          }
+        'addenda': {
+          'values': ['ABC123_AddendaValue']
         }
-      },
-      'correlationId': 'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841'
+      }
     },
     {
       '_links': {
@@ -427,6 +444,11 @@ request_body = {
       },
       'metadata': {
         'payment2': 'payment2'
+      },
+      'achDetails': {
+        'addenda': {
+          'values': ['ABC123_AddendaValue']
+        }
       }
     }
   ],
@@ -439,7 +461,6 @@ request_body = {
 mass_payment = app_token.post('mass-payments', request_body)
 mass_payment.headers['location'] # => 'https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4'
 ```
-
 ```javascript
 var requestBody = {
   _links: {
@@ -450,10 +471,10 @@ var requestBody = {
   achDetails: {
     source: {
       addenda: {
-        values: 'ABC123_AddendaValue'
+        values: ['ABC123_AddendaValue']
       }
     }
-  },
+  }
   items: [
     {
       _links: {
@@ -468,14 +489,14 @@ var requestBody = {
       metadata: {
         payment1: 'payment1'
       },
+      correlationId: 'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841',
       achDetails: {
         destination: {
           addenda: {
-            values: [ZYX987_AddendaValue]
+            values: ['ABC123_AddendaValue']
           }
         }
-      },
-      correlationId: 'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841'
+      }
     },
     {
       _links: {
@@ -493,10 +514,10 @@ var requestBody = {
       achDetails: {
         destination: {
           addenda: {
-            values: [ZYX987_AddendaValue]
+            values: ['ABC123_AddendaValue']
           }
         }
-      },
+      }
     }
   ],
   metadata: {
