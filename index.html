@@ -8224,13 +8224,13 @@ HTTP 200 OK
 <td>_links</td>
 <td>yes</td>
 <td>object</td>
-<td>A _links JSON object describing the desired <code class="prettyprint">source</code> and <code class="prettyprint">destination</code> of a transfer. <a href="#source-and-destination-types">See below</a> for possible values for <code class="prettyprint">source</code> and <code class="prettyprint">destination</code>.</td>
+<td>A _links JSON object describing the desired <code class="prettyprint">source</code> and <code class="prettyprint">destination</code> of a transfer. <a href="#source-and-destination-types">Reference the Source and Destination object to learn more</a> about possible values for <code class="prettyprint">source</code> and <code class="prettyprint">destination</code>.</td>
 </tr>
 <tr>
 <td>amount</td>
 <td>yes</td>
 <td>object</td>
-<td>An amount JSON object. <a href="#amount-json-object">See above</a>.</td>
+<td>An amount JSON object. <a href="#amount-json-object">Reference the amount JSON object to learn more</a>.</td>
 </tr>
 <tr>
 <td>metadata</td>
@@ -8242,13 +8242,19 @@ HTTP 200 OK
 <td>fees</td>
 <td>no</td>
 <td>array</td>
-<td>an array of fee JSON objects that contain unique fee transfers. <a href="#a-fee-json-object">See below</a>.</td>
+<td>An array of fee JSON objects that contain unique fee transfers. <a href="#facilitator-fee-json-object">Reference the facilitator fee JSON object to learn more</a>.</td>
 </tr>
 <tr>
 <td>clearing</td>
 <td>no</td>
 <td>object</td>
-<td>A clearing JSON object that contains <code class="prettyprint">source</code> and <code class="prettyprint">destination</code> keys. Acceptable value for source is: <code class="prettyprint">standard</code>. Acceptable value for destination is: <code class="prettyprint">next-available</code>. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. <strong>Note:</strong> The clearing request parameter is a premium feature available for <a href="https://www.dwolla.com/platform">Dwolla</a> customers. Next-day ACH functionality must be enabled.</td>
+<td>A clearing JSON object that contains <code class="prettyprint">source</code> and <code class="prettyprint">destination</code> keys. <a href="#clearing-json-object">Reference the clearing JSON object to learn more</a>.</td>
+</tr>
+<tr>
+<td>achDetails</td>
+<td>no</td>
+<td>object</td>
+<td>An ACH details JSON object which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. <a href="#achdetails-object">Reference the achDetails JSON object to learn more</a></td>
 </tr>
 <tr>
 <td>correlationId</td>
@@ -8256,84 +8262,8 @@ HTTP 200 OK
 <td>string</td>
 <td>A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
-<tr>
-<td>achDetails</td>
-<td>no</td>
-<td>object</td>
-<td>An <a href="#achdetails-object">ACH details JSON object</a> which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution.</td>
-</tr>
 </tbody></table>
-<h3 id='amount-json-object'>amount JSON object</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>value</td>
-<td>Amount of money</td>
-</tr>
-<tr>
-<td>currency</td>
-<td>String, <code class="prettyprint">USD</code></td>
-</tr>
-</tbody></table>
-<h3 id='clearing-json-object'>clearing JSON object</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>source</td>
-<td>String, <code class="prettyprint">standard</code></td>
-</tr>
-<tr>
-<td>destination</td>
-<td>String, <code class="prettyprint">next-available</code></td>
-</tr>
-</tbody></table>
-<h4 id='achdetails-object'>achDetails object</h4>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>source</td>
-<td>no</td>
-<td>object</td>
-<td>Represents information that is sent to a source/originating bank account along with a transfer. Include information within this JSON object for customizing details on ACH debit transfers. Can include an <a href="#addenda-object">addenda JSON object</a>.</td>
-</tr>
-<tr>
-<td>destination</td>
-<td>no</td>
-<td>object</td>
-<td>Represents information that is sent to a destination/receiving bank account along with a transfer. Include information within this JSON object for customizing details on ACH credit transfers. Can include an <a href="#addenda-object">addenda JSON object</a>.</td>
-</tr>
-</tbody></table>
-<h3 id='addenda-object'>addenda object</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Required</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>addenda</td>
-<td>no</td>
-<td>object</td>
-<td>An addenda object contains a <code class="prettyprint">values</code> key which is an array of comma separated string addenda values. Addenda record information is used for the purpose of transmitting transfer-related information. Values must be less than or equal to 80 characters and can include spaces. Acceptable characters are: a-Z, 0-9, and special characters <code class="prettyprint">- _ . ~! * &#39; ( ) ; : @ &amp; = + $ , / ? % # [ ]</code>.</td>
-</tr>
-</tbody></table>
-<h3 id='source-and-destination-types'>Source and destination types</h3>
+<h3 id='source-and-destination-types'>Source and destination types</h3><h5 id='source-types'>Source types</h5>
 <table><thead>
 <tr>
 <th>Source Type</th>
@@ -8347,7 +8277,7 @@ HTTP 200 OK
 <td>A bank or balance funding source.</td>
 </tr>
 </tbody></table>
-
+<h5 id='destination-types'>Destination types</h5>
 <table><thead>
 <tr>
 <th>Destination Type</th>
@@ -8370,17 +8300,34 @@ HTTP 200 OK
 <td><code class="prettyprint">https://api.dwolla.com/accounts/{id}</code></td>
 <td>Destination Account of a transfer.</td>
 </tr>
+</tbody></table>
+<h3 id='amount-json-object'>amount JSON object</h3>
+<table><thead>
 <tr>
-<td>Email</td>
-<td><code class="prettyprint">mailto:johndoe@email.com</code></td>
-<td>Email address of existing Dwolla Account or recipient (recipient will create a Dwolla Account to claim funds)</td>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>value</td>
+<td>yes</td>
+<td>string</td>
+<td>Amount of money</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>yes</td>
+<td>string</td>
+<td>Possible values: <code class="prettyprint">USD</code></td>
 </tr>
 </tbody></table>
-<h3 id='facilitator-fee'>Facilitator fee</h3>
+<h3 id='facilitator-fee-json-object'>Facilitator fee JSON object</h3>
 <p>The facilitator fee is a feature allowing for a flat rate amount to be removed from a payment as a fee, and sent to the creator of the Dwolla application. The fee does not affect the original payment amount, and exists as a separate <a href="#transfer-resource">Transfer resource</a> with a unique transfer ID. Within a transfer request you can specify an optional <code class="prettyprint">fees</code> request parameter, which is an array of <a href="#a-fee-json-object">fee objects</a> that can represent many unique fee transfers.</p>
 
 <p>For more information on collecting fees on payments, reference the <a href="https://developers.dwolla.com/resources/facilitator-fee.html">facilitator fee</a> resource article.</p>
-<h4 id='a-fee-json-object'>A fee JSON object</h4>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -8396,7 +8343,7 @@ HTTP 200 OK
 <td>Amount of fee to charge. An amount JSON object. <a href="#amount-json-object">See above</a></td>
 </tr>
 </tbody></table>
-<h4 id='fee-example'>Fee example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">"fees": [
+<h4 id='facilitator-fee-example'>Facilitator fee example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">"fees": [
   {
     "_links": {
       "charge-to": {
@@ -8409,24 +8356,134 @@ HTTP 200 OK
     }
   }
 ]
+</code></pre></div></div><h3 id='clearing-json-object'>clearing JSON object</h3>
+<p>The <code class="prettyprint">clearing</code> object is used in tandem with our expedited transfer feature. 
+Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. <strong>Note:</strong> The clearing request parameter is a premium feature available for <a href="https://www.dwolla.com/platform">Dwolla</a> customers. Next-day ACH functionality must be enabled. </p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>source</td>
+<td>no</td>
+<td>string</td>
+<td>Represents a clearing object for <code class="prettyprint">next-day</code> debits into the Dwolla network. <br> Possible values: <code class="prettyprint">standard</code></td>
+</tr>
+<tr>
+<td>destination</td>
+<td>no</td>
+<td>string</td>
+<td>Represents a clearing object for <code class="prettyprint">same-day</code> credits out of the Dwolla network to a bank funding source. <br> Possible values: <code class="prettyprint">next-available</code></td>
+</tr>
+</tbody></table>
+<h4 id='clearing-example'>Clearing example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">"clearing": {
+  "source": "standard",
+  "destination": "next-available"
+}
+</code></pre></div></div><h3 id='achdetails-and-addenda-object'>achDetails and addenda object</h3>
+<p>The addendum record is used to provide additional information to the payment recipient about to the payment. This value will be passed in on a transfer request and can be exposed on a Customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.</p>
+<h5 id='achdetails-object'>achDetails object</h5>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>source</td>
+<td>no</td>
+<td>object</td>
+<td>Represents information that is sent to a source/originating bank account along with a transfer. Include information within this JSON object for customizing details on ACH debit transfers. Can include an <a href="#addenda-object">addenda JSON object</a>.</td>
+</tr>
+<tr>
+<td>destination</td>
+<td>no</td>
+<td>object</td>
+<td>Represents information that is sent to a destination/receiving bank account along with a transfer. Include information within this JSON object for customizing details on ACH credit transfers. Can include an <a href="#addenda-object">addenda JSON object</a>.</td>
+</tr>
+</tbody></table>
+<h5 id='addenda-object'>addenda object</h5>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>addenda</td>
+<td>no</td>
+<td>object</td>
+<td>An addenda object contains a <code class="prettyprint">values</code> key which is an array of comma separated string addenda values. Addenda record information is used for the purpose of transmitting transfer-related information. Values must be less than or equal to 80 characters and can include spaces. Acceptable characters are: a-Z, 0-9, and special characters <code class="prettyprint">- _ . ~! * &#39; ( ) ; : @ &amp; = + $ , / ? % # [ ]</code>. <em>Will not show up on bank statements from balance-sourced transfers</em></td>
+</tr>
+</tbody></table>
+<h4 id='achdetails-with-addenda-example'>achDetails with addenda example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">"achDetails": {
+  "source": {
+    "addenda": {
+      "values": ["ABC123_AddendaValue"]
+    }
+  },
+  "destination": {
+    "addenda": {
+      "values": ["ZYX987_AddendaValue"]
+    }
+  }
+}
 </code></pre></div></div><h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
 <table><thead>
 <tr>
 <th>HTTP Status</th>
-<th>Message</th>
+<th>Error Message</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
+<td>201</td>
+<td>Created.</td>
+<td>A transfer was created.</td>
+</tr>
+<tr>
 <td>400</td>
-<td>Transfer failed.</td>
+<td>Funding source not found.</td>
+<td>Double check the funding source Id and make sure you are using the correct funding source Id.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Invalid funding source.</td>
+<td>The <code class="prettyprint">source</code> funding source must be verified in order to send funds. Make sure your <code class="prettyprint">source</code> funding source is <code class="prettyprint">verified</code>.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Metadata not supported for this type of transfer.</td>
+<td>Metadata is unable to be passed in on transfers with a Balance Funding Source.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Sender // Receiver Restricted.</td>
+<td>The <code class="prettyprint">source</code> or <code class="prettyprint">destination</code> Customer is either <code class="prettyprint">deactivated</code> or <code class="prettyprint">suspended</code> and not eligible for transfers.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Invalid access token</td>
+<td>Access token not valid. Generate a new one and try again.</td>
 </tr>
 <tr>
 <td>403</td>
-<td>OAuth token does not have Send scope.</td>
+<td>Forbidden</td>
+<td>Not authorized to create a transfer.</td>
 </tr>
 </tbody></table>
-<h3 id='request-and-response-using-same-day-ach'>Request and response (using Same Day ACH)</h3>
-<p>The reference example below shows what a request looks like when sending a transfer. Please note this example is using <a href="https://www.dwolla.com/same-day-ach">same-day</a> clearing to a Dwolla API Customer&rsquo;s bank account, part of Dwolla&rsquo;s API.</p>
+<h3 id='request-and-response'>Request and response</h3>
+<p>The reference example below shows what a request looks like when sending a transfer.
+Please note this example is using <a href="https://www.dwolla.com/same-day-ach">same-day</a> clearing to a Dwolla API Customer&rsquo;s bank account, part of Dwolla&rsquo;s API.</p>
 <div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8442,26 +8499,51 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 
 {
-    "_links": {
+   "_links": {
+       "source": {
+           "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+       },
+       "destination": {
+           "href": "https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
+       }
+   },
+   "amount": {
+       "currency": "USD",
+       "value": "10.00"
+   },
+   "metadata": {
+       "paymentId": "12345678",
+       "note": "payment for completed work Dec. 1"
+   },
+   "fees": [
+       {
+          "_links":{
+             "charge-to":{
+                "href":"https://api-sandbox.dwolla.com/customers/c2bdcc87-91cd-41dd-9b06-5e31d4d3bbe4"
+             }
+          },
+          "amount":{
+             "value":"2.00",
+             "currency":"USD"
+          }
+       }
+   ],
+   "clearing": {
+       "destination": "next-available"
+   },
+    "achDetails": {
         "source": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+            "addenda": {
+                "values": ["ABC123_AddendaValue"]
+            }
         },
         "destination": {
-            "href": "https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
+            "addenda": {
+                "values": ["ZYX987_AddendaValue"]
+            }
         }
-    },
-    "amount": {
-        "currency": "USD",
-        "value": "10.00"
-    },
-    "metadata": {
-        "paymentId": "12345678",
-        "note": "payment for completed work Dec. 1"
-    },
-    "clearing": {
-        "destination": "next-available"
-  },
-  "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
+     },
+ "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
 }
 
 ...
@@ -8496,6 +8578,18 @@ Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34
   <span class="p">},</span>
   <span class="ss">:clearing</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="s2">"next-available"</span>
+  <span class="p">},</span>
+  <span class="ss">:achDetails</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:source</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="ss">:addenda</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:values</span> <span class="o">=&gt;</span> <span class="s2">"ABC123_AddendaValues"</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="ss">:addenda</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:values</span> <span class="o">=&gt;</span> <span class="s2">"ZYX987_AddendaValues"</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
   <span class="p">},</span>
   <span class="ss">:correlationId</span> <span class="o">=&gt;</span> <span class="s2">"8a2cdc8d-629d-4a24-98ac-40b735229fe2"</span>
 <span class="p">}</span>
@@ -8566,6 +8660,18 @@ Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34
   <span class="s">'clearing'</span><span class="p">:</span> <span class="p">{</span>
     <span class="s">'destination'</span><span class="p">:</span> <span class="s">'next-available'</span>
   <span class="p">},</span>
+  <span class="s">'achDetails'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'source'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">'addenda'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'values'</span><span class="p">:</span> <span class="p">[</span><span class="s">"ABC123_AddendaValues"</span><span class="p">]</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s">'destination'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">'addenda'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'values'</span><span class="p">:</span> <span class="p">[</span><span class="s">"ZYX987_AddendaValues"</span><span class="p">]</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
   <span class="s">'correlationId'</span><span class="p">:</span> <span class="s">'8a2cdc8d-629d-4a24-98ac-40b735229fe2'</span>
 <span class="p">}</span>
 
@@ -8595,9 +8701,21 @@ Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34
   <span class="na">metadata</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">paymentId</span><span class="p">:</span> <span class="s1">'12345678'</span><span class="p">,</span>
     <span class="na">note</span><span class="p">:</span> <span class="s1">'payment for completed work Dec. 1'</span>
-  <span class="p">},</span>
+  <span class="p">},</span>  
   <span class="na">clearing</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">destination</span><span class="p">:</span> <span class="s1">'next-available'</span>
+  <span class="p">},</span>
+  <span class="na">addenda</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">source</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">addenda</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">values</span><span class="p">:</span> <span class="p">[</span><span class="s2">"ABC123_AddendaValue"</span><span class="p">]</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">addenda</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">values</span><span class="p">:</span> <span class="p">[</span><span class="s2">"ZYX987_AddendaValue"</span><span class="p">]</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
   <span class="p">},</span>
   <span class="na">correlationId</span><span class="p">:</span> <span class="s1">'8a2cdc8d-629d-4a24-98ac-40b735229fe2'</span>
 <span class="p">};</span>
@@ -8922,7 +9040,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       "href": "https://api-sandbox.dwolla.com/transfers/E6D9A950-AC9E-E511-80DC-0AA34A9B2388/failure"
     }
   },
-  "code": "R1",
+  "code": "R01",
   "description": "Insufficient Funds"
 }
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -8937,7 +9055,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="n">transfer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="n">failure</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">transfer_url</span><span class="si">}</span><span class="s2">/failure"</span>
-<span class="n">failure</span><span class="p">.</span><span class="nf">code</span> <span class="c1"># =&gt; "R1"</span>
+<span class="n">failure</span><span class="p">.</span><span class="nf">code</span> <span class="c1"># =&gt; "R01"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8966,7 +9084,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="n">transfer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
 <span class="n">failure</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/failure'</span> <span class="o">%</span> <span class="n">transfer_url</span><span class="p">)</span>
-<span class="n">failure</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'code'</span><span class="p">]</span> <span class="c"># =&gt; 'R1'</span>
+<span class="n">failure</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'code'</span><span class="p">]</span> <span class="c"># =&gt; 'R01'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8979,7 +9097,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">transferUrl</span><span class="p">}</span><span class="sr">/failure`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">code</span><span class="p">);</span> <span class="c1">// =&gt; 'R1'</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">code</span><span class="p">);</span> <span class="c1">// =&gt; 'R01'</span>
 </code></pre></div></div><h2 id='cancel-a-transfer'>Cancel a transfer</h2>
 <p>When a bank transfer is eligible for cancellation, Dwolla returns a <code class="prettyprint">cancel</code> link  when <a href="#retrieve-a-transfer">getting the transfer by Id</a>. This cancel link is used to trigger the cancellation, preventing the bank transfer from processing further. A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.</p>
 <h3 id='http-request'>HTTP Request</h3>
@@ -9107,14 +9225,14 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">transferUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388'</span>
 <span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">name</span><span class="p">:</span> <span class="s2">"Test Checking - 1234"</span>
+  <span class="na">status</span><span class="p">:</span> <span class="s2">"cancelled"</span>
 <span class="p">};</span>
 
 <span class="nx">appToken</span>
-  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">fundingSourceUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; "Test Checking - 1234"</span>
+  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'transfers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "cancelled"</span>
 </code></pre></div></div>
 <hr>
 
@@ -9214,7 +9332,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>_links</td>
 <td>yes</td>
 <td>object</td>
-<td>A _links JSON object describing the desired <code class="prettyprint">source</code> of a mass payment. <a href="#source-and-destination-values">See below</a> for possible values for <code class="prettyprint">source</code> and <code class="prettyprint">destination</code>.</td>
+<td>A _links JSON object describing the desired <code class="prettyprint">source</code> of a mass payment. <a href="#source-and-destination-values">Reference the Source and Destination object to learn more about </a> possible values for <code class="prettyprint">source</code> and <code class="prettyprint">destination</code>.</td>
 </tr>
 <tr>
 <td>items</td>
@@ -9235,13 +9353,19 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Acceptable value is: <code class="prettyprint">deferred</code>.</td>
 </tr>
 <tr>
+<td>achDetails</td>
+<td>no</td>
+<td>object</td>
+<td>An ACH details JSON object which represents additional information sent along with a transfer created from a mass payment item to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. <a href="#achdetails-and-addenda-object">See below</a></td>
+</tr>
+<tr>
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
 <td>A unique string value attached to a mass payment which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
 </tbody></table>
-<h3 id='source-and-destination-values'>Source and destination values</h3>
+<h3 id='source-and-destination-values'>Source and destination values</h3><h5 id='source-types'>Source types</h5>
 <table><thead>
 <tr>
 <th><strong>Source</strong> Type</th>
@@ -9255,7 +9379,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>A bank or balance funding source of an <a href="#accounts">Account</a> or verified <a href="#customers">Customer</a>.</td>
 </tr>
 </tbody></table>
-
+<h5 id='destination-types'>Destination types</h5>
 <table><thead>
 <tr>
 <th><strong>Destination</strong> Type</th>
@@ -9277,11 +9401,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Account</td>
 <td><code class="prettyprint">https://api.dwolla.com/accounts/{id}</code></td>
 <td>Destination Transfer <a href="#accounts">Account</a> of a transfer.</td>
-</tr>
-<tr>
-<td>Email</td>
-<td><code class="prettyprint">mailto:johndoe@email.com</code></td>
-<td>Email address of existing Transfer Account or recipient (recipient will create a Transfer Account to claim funds)</td>
 </tr>
 </tbody></table>
 <h3 id='mass-payment-item'>Mass payment item</h3>
@@ -9307,23 +9426,88 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>correlationId</td>
 <td>A unique string value attached to a mass payment item which can be used for traceability between Dwolla and your application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
+<tr>
+<td>achDetails</td>
+<td>An <a href="#achdetails-object">ACH details JSON object</a> which represents additional information sent along with a transfer created from a mass payment item to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution.</td>
+</tr>
 </tbody></table>
-<h4 id='item-object-example'>Item object example</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
-  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https: //api.dwolla.com/funding-sources/01B47CB2-52AC-42A7-926C-6F1F50B1F271"</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
-  </span><span class="err">}</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"key1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"value1"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"correlationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d028beed-8152-481d-9427-21b6c4d99644"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div><h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
+<h3 id='amount-json-object'>amount JSON object</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>value</td>
+<td>yes</td>
+<td>string</td>
+<td>Amount of money</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>yes</td>
+<td>string</td>
+<td>Possible values: <code class="prettyprint">USD</code></td>
+</tr>
+</tbody></table>
+<h3 id='achdetails-and-addenda-object'>achDetails and addenda object</h3>
+<p>The addendum record is used to provide additional information to the payment recipient about to the payment. This value will be passed in on a transfer request and can be exposed on a customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.</p>
+<h5 id='achdetails-object'>achDetails object</h5>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>source</td>
+<td>no</td>
+<td>object</td>
+<td>Represents information that is sent to a source/originating bank account along with a transfer. Include information within this JSON object for customizing details on ACH debit transfers. Can include an <a href="#addenda-object">addenda JSON object</a>.</td>
+</tr>
+<tr>
+<td>destination</td>
+<td>no</td>
+<td>object</td>
+<td>Represents information that is sent to a destination/receiving bank account along with a transfer from a mass payment item. Include information within this JSON object for customizing details on ACH credit transfers. Can include an <a href="#addenda-object">addenda JSON object</a>.</td>
+</tr>
+</tbody></table>
+<h5 id='addenda-object'>addenda object</h5>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>addenda</td>
+<td>no</td>
+<td>object</td>
+<td>An addenda object contains a <code class="prettyprint">values</code> key which is an array of comma separated string addenda values. Addenda record information is used for the purpose of transmitting transfer-related information. Values must be less than or equal to 80 characters and can include spaces. Acceptable characters are: a-Z, 0-9, and special characters <code class="prettyprint">- _ . ~! * &#39; ( ) ; : @ &amp; = + $ , / ? % # [ ]</code>. <em>Will not show up on bank statements from balance-sourced transfers</em>.</td>
+</tr>
+</tbody></table>
+<h5 id='source-mass-payment-achdetails-with-addenda-example'>Source mass payment achDetails with addenda example:</h5><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">"achDetails": {
+  "source": {
+    "addenda": {
+      "values": ["ABC123_AddendaValue"]
+    }
+  }
+},
+</code></pre></div></div><h5 id='destination-mass-payment-item-with-achdetails-and-addenda-example'>Destination mass payment item with achDetails and addenda example</h5><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">"achDetails": {
+  "destination": {
+    "addenda": {
+      "values": ["ZYX987_AddendaValue"]
+    }
+  }
+}
+</code></pre></div></div><h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
 <table><thead>
 <tr>
 <th>HTTP Status</th>
@@ -9367,6 +9551,13 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
             "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
         }
     },
+    "achDetails": {
+      "source": {
+        "addenda": {
+          "values": ["ABC123_AddendaValue"]
+        }
+      }
+    },
     "items": [
       {
         "_links": {
@@ -9381,9 +9572,16 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         "metadata": {
             "payment1": "payment1"
         },
+        "achDetails": {
+          "destination": {
+            "addenda": {
+              "values": ["ZYX987_AddendaValue"]
+            }
+          }
+        },
         "correlationId": "ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841"
       },
-            {
+      {
         "_links": {
             "destination": {
                 "href": "https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd"
@@ -9395,6 +9593,13 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         },
         "metadata": {
             "payment2": "payment2"
+        },
+        "achDetails": {
+          "destination": {
+            "addenda": {
+              "values": ["ZYX987_AddendaValue"]
+              }
+            }
         }
       }
     ],
@@ -9418,49 +9623,70 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="ss">_links: </span><span class="p">{</span>
-    <span class="ss">source: </span><span class="p">{</span>
-      <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"</span>
+  <span class="ss">:_links</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:source</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="ss">:href</span> <span class="o">=&gt;</span> <span class="s2">"https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"</span>
     <span class="p">}</span>
   <span class="p">},</span>
-  <span class="ss">items: </span><span class="p">[</span>
+  <span class="ss">:achDetails</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:source</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="ss">:addenda</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:values</span><span class="p">:</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"ABC123_AddendaValue"</span><span class="p">]</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="ss">:items</span> <span class="o">=&gt;</span> <span class="p">[</span>
     <span class="p">{</span>
-      <span class="ss">_links: </span><span class="p">{</span>
-        <span class="ss">destination: </span><span class="p">{</span>
-          <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/funding-sources/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"</span>
+      <span class="ss">:_links</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="ss">:href</span> <span class="o">=&gt;</span> <span class="s2">"https://api-sandbox.dwolla.com/funding-sources/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"</span>
         <span class="p">}</span>
       <span class="p">},</span>
-      <span class="ss">amount: </span><span class="p">{</span>
-        <span class="ss">currency: </span><span class="s2">"USD"</span><span class="p">,</span>
-        <span class="ss">value: </span><span class="s2">"1.00"</span>
+      <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:currency</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span>
+        <span class="ss">:value</span> <span class="o">=&gt;</span> <span class="s2">"1.00"</span>
       <span class="p">},</span>
-      <span class="ss">metadata: </span><span class="p">{</span>
-        <span class="ss">payment1: </span><span class="s2">"payment1"</span>
+      <span class="ss">:metadata</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:payment1</span> <span class="o">=&gt;</span> <span class="s2">"payment1"</span>
       <span class="p">},</span>
-      <span class="ss">correlationId: </span><span class="s2">"ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841"</span>
+      <span class="ss">:correlationId</span> <span class="o">=&gt;</span> <span class="s2">"ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841"</span><span class="p">,</span>
+      <span class="ss">:achDetails</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="ss">:addenda</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="ss">:values</span><span class="p">:</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"ABC123_AddendaValue"</span><span class="p">]</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="ss">_links: </span><span class="p">{</span>
-        <span class="ss">destination: </span><span class="p">{</span>
-          <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd"</span>
+      <span class="ss">:_links</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="ss">:href</span> <span class="o">=&gt;</span> <span class="s2">"https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd"</span>
         <span class="p">}</span>
       <span class="p">},</span>
-      <span class="ss">amount: </span><span class="p">{</span>
-        <span class="ss">currency: </span><span class="s2">"USD"</span><span class="p">,</span>
-        <span class="ss">value: </span><span class="s2">"5.00"</span>
+      <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:currency</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span>
+        <span class="ss">:value</span> <span class="o">=&gt;</span> <span class="s2">"5.00"</span>
       <span class="p">},</span>
-      <span class="ss">metadata: </span><span class="p">{</span>
-        <span class="ss">payment2: </span><span class="s2">"payment2"</span>
+      <span class="ss">:metadata</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:payment2</span> <span class="o">=&gt;</span> <span class="s2">"payment2"</span>
+      <span class="p">},</span>
+      <span class="ss">:achDetails</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="ss">:addenda</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="ss">:values</span><span class="p">:</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"ABC123_AddendaValue"</span><span class="p">]</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">],</span>
-  <span class="ss">metadata: </span><span class="p">{</span>
-    <span class="ss">batch1: </span><span class="s2">"batch1"</span>
+  <span class="ss">:metadata</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:batch1</span> <span class="o">=&gt;</span> <span class="s2">"batch1"</span>
   <span class="p">},</span>
-  <span class="ss">correlationId: </span><span class="s2">"6d127333-69e9-4c2b-8cae-df850228e130"</span>
+  <span class="ss">:correlationId</span> <span class="o">=&gt;</span> <span class="s2">"6d127333-69e9-4c2b-8cae-df850228e130"</span>
 <span class="p">}</span>
 
-<span class="n">mass_payment</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"mass-payments"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">mass_payment</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"mass-payments"</span><span class="p">,</span> <span class="n">request_body</span>
 <span class="n">mass_payment</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -9480,6 +9706,14 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
     <span class="p">[</span>
       <span class="s1">'href'</span> <span class="o">=&gt;</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'</span><span class="p">,</span>
     <span class="p">],</span>
+  <span class="p">],</span>
+  <span class="s1">'achDetails'</span> <span class="o">=&gt;</span>
+  <span class="p">[</span>
+    <span class="s1">'source'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">'addenda'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'values'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'ABC123_AddendaValue'</span><span class="p">]</span>
+      <span class="p">]</span>
+    <span class="p">]</span>
   <span class="p">],</span>
   <span class="s1">'items'</span> <span class="o">=&gt;</span>
   <span class="p">[</span>
@@ -9501,6 +9735,14 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
         <span class="s1">'payment1'</span> <span class="o">=&gt;</span> <span class="s1">'payment1'</span><span class="p">,</span>
       <span class="p">],</span>
       <span class="s1">'correlationId'</span> <span class="o">=&gt;</span> <span class="s1">'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841'</span><span class="p">,</span>
+      <span class="s1">'achDetails'</span> <span class="o">=&gt;</span>
+      <span class="p">[</span>
+        <span class="s1">'source'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+          <span class="s1">'addenda'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'values'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'ABC123_AddendaValue'</span><span class="p">]</span>
+          <span class="p">]</span>
+        <span class="p">]</span>
+      <span class="p">]</span>
     <span class="p">],</span>
     <span class="p">[</span>
       <span class="s1">'_links'</span> <span class="o">=&gt;</span>
@@ -9519,6 +9761,14 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
       <span class="p">[</span>
         <span class="s1">'payment2'</span> <span class="o">=&gt;</span> <span class="s1">'payment2'</span><span class="p">,</span>
       <span class="p">],</span>
+      <span class="s1">'achDetails'</span> <span class="o">=&gt;</span>
+      <span class="p">[</span>
+        <span class="s1">'source'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+          <span class="s1">'addenda'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'values'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'ABC123_AddendaValue'</span><span class="p">]</span>
+          <span class="p">]</span>
+        <span class="p">]</span>
+      <span class="p">]</span>
     <span class="p">],</span>
   <span class="p">],</span>
   <span class="s1">'metadata'</span> <span class="o">=&gt;</span>
@@ -9544,6 +9794,11 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
       <span class="s">'href'</span><span class="p">:</span> <span class="s">'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'</span>
     <span class="p">}</span>
   <span class="p">},</span>
+  <span class="s">'achDetails'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'addenda'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">'values'</span><span class="p">:</span> <span class="p">[</span><span class="s">'ABC123_AddendaValue'</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
   <span class="s">'items'</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="s">'_links'</span><span class="p">:</span> <span class="p">{</span>
@@ -9558,7 +9813,12 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
       <span class="s">'metadata'</span><span class="p">:</span> <span class="p">{</span>
         <span class="s">'payment1'</span><span class="p">:</span> <span class="s">'payment1'</span>
       <span class="p">},</span>
-      <span class="s">'correlationId'</span><span class="p">:</span> <span class="s">'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841'</span>
+      <span class="s">'correlationId'</span><span class="p">:</span> <span class="s">'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841'</span><span class="p">,</span>
+      <span class="s">'achDetails'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'addenda'</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s">'values'</span><span class="p">:</span> <span class="p">[</span><span class="s">'ABC123_AddendaValue'</span><span class="p">]</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
     <span class="p">},</span>
     <span class="p">{</span>
       <span class="s">'_links'</span><span class="p">:</span> <span class="p">{</span>
@@ -9572,6 +9832,11 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
       <span class="p">},</span>
       <span class="s">'metadata'</span><span class="p">:</span> <span class="p">{</span>
         <span class="s">'payment2'</span><span class="p">:</span> <span class="s">'payment2'</span>
+      <span class="p">},</span>
+      <span class="s">'achDetails'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'addenda'</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s">'values'</span><span class="p">:</span> <span class="p">[</span><span class="s">'ABC123_AddendaValue'</span><span class="p">]</span>
+        <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">],</span>
@@ -9597,7 +9862,14 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
       <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'</span>
     <span class="p">}</span>
   <span class="p">},</span>
-  <span class="na">items</span><span class="p">:</span> <span class="p">[</span>
+  <span class="na">achDetails</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">source</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">addenda</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">values</span><span class="p">:</span> <span class="p">[</span><span class="s1">'ABC123_AddendaValue'</span><span class="p">]</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nl">items</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
@@ -9611,7 +9883,14 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
       <span class="na">metadata</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">payment1</span><span class="p">:</span> <span class="s1">'payment1'</span>
       <span class="p">},</span>
-      <span class="na">correlationId</span><span class="p">:</span> <span class="s1">'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841'</span>
+      <span class="na">correlationId</span><span class="p">:</span> <span class="s1">'ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841'</span><span class="p">,</span>
+      <span class="na">achDetails</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">addenda</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">values</span><span class="p">:</span> <span class="p">[</span><span class="s1">'ABC123_AddendaValue'</span><span class="p">]</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
     <span class="p">},</span>
     <span class="p">{</span>
       <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
@@ -9625,6 +9904,13 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
       <span class="p">},</span>
       <span class="na">metadata</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">payment2</span><span class="p">:</span> <span class="s1">'payment2'</span>
+      <span class="p">},</span>
+      <span class="na">achDetails</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">addenda</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">values</span><span class="p">:</span> <span class="p">[</span><span class="s1">'ABC123_AddendaValue'</span><span class="p">]</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">],</span>
@@ -9881,42 +10167,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "pending"</span>
 </code></pre></div></div><h2 id='list-items-for-a-mass-payment'>List items for a mass payment</h2>
 <p>A mass payment contains a list of payments called <code class="prettyprint">items</code>. An <code class="prettyprint">item</code> is distinct from the transfer which it creates. An item can contain a status of either <code class="prettyprint">failed</code>, <code class="prettyprint">pending</code>, or <code class="prettyprint">success</code> depending on whether the payment was created by the Dwolla service or not. A mass payment item status of <code class="prettyprint">success</code> is an indication that a transfer was successfully created. A mass payment&rsquo;s items will be returned in the <code class="prettyprint">_embedded</code> object as a list of <code class="prettyprint">items</code>.</p>
-<h3 id='mass-payment-item-failures'>Mass payment item failures</h3>
-<p>Individual mass payment items can have a status of <code class="prettyprint">failed</code>. If an item has a status of <code class="prettyprint">failed</code>, an <code class="prettyprint">_embedded</code> object will be returned within the item which contains a list of <code class="prettyprint">errors</code>. Each error object includes a top-level error <code class="prettyprint">code</code>, a <code class="prettyprint">message</code> with a detailed description of the error, and a <code class="prettyprint">path</code> which is a JSON pointer to the specific field in the request that has a problem. You can utilize both the failure code and message to get a better understanding of why the particular item failed.</p>
-
-<table><thead>
-<tr>
-<th>Code</th>
-<th>Message</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>InsufficientFunds</td>
-<td>&ldquo;Insufficient funds.&rdquo;</td>
-<td>The <code class="prettyprint">source</code> funding source has insufficient funds, and as a result failed to create a transfer.</td>
-</tr>
-<tr>
-<td>Invalid</td>
-<td>&ldquo;Receiver not found.&rdquo;</td>
-<td>The <code class="prettyprint">destination</code> was not a valid Customer or Funding Source.</td>
-</tr>
-<tr>
-<td>Invalid</td>
-<td>&ldquo;Receiver cannot be the owner of the source funding source.&rdquo;</td>
-<td>The <code class="prettyprint">destination</code> of the transfer cannot be the same as the <code class="prettyprint">source</code>.</td>
-</tr>
-<tr>
-<td>RequiresFundingSource</td>
-<td>&ldquo;Receiver requires funding source.&rdquo;</td>
-<td>The <code class="prettyprint">destination</code> of the mass payment item does not have an active funding source attached.</td>
-</tr>
-<tr>
-<td>Restricted</td>
-<td>&ldquo;Receiver restricted.&rdquo;</td>
-<td>The <code class="prettyprint">destination</code> customer is either <code class="prettyprint">deactivated</code> or <code class="prettyprint">suspended</code> and is not eligible to receive funds.</td>
-</tr>
-</tbody></table>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/mass-payments/{id}/items</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -9951,6 +10201,42 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>no</td>
 <td>string</td>
 <td>Filter results on item status. Possible values: <code class="prettyprint">failed</code>, <code class="prettyprint">pending</code>, and <code class="prettyprint">success</code>. Values delimited by <code class="prettyprint">&amp;status=</code> (i.e. - <code class="prettyprint">/items?status=failed&amp;status=pending</code>).</td>
+</tr>
+</tbody></table>
+<h3 id='mass-payment-item-failures'>Mass payment item failures</h3>
+<p>Individual mass payment items can have a status of <code class="prettyprint">failed</code>. If an item has a status of <code class="prettyprint">failed</code>, an <code class="prettyprint">_embedded</code> object will be returned within the item which contains a list of <code class="prettyprint">errors</code>. Each error object includes a top-level error <code class="prettyprint">code</code>, a <code class="prettyprint">message</code> with a detailed description of the error, and a <code class="prettyprint">path</code> which is a JSON pointer to the specific field in the request that has a problem. You can utilize both the failure code and message to get a better understanding of why the particular item failed.</p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Message</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>InsufficientFunds</td>
+<td>&ldquo;Insufficient funds.&rdquo;</td>
+<td>The <code class="prettyprint">source</code> funding source has insufficient funds, and as a result failed to create a transfer.</td>
+</tr>
+<tr>
+<td>Invalid</td>
+<td>&ldquo;Receiver not found.&rdquo;</td>
+<td>The <code class="prettyprint">destination</code> was not a valid Customer or Funding Source.</td>
+</tr>
+<tr>
+<td>Invalid</td>
+<td>&ldquo;Receiver cannot be the owner of the source funding source.&rdquo;</td>
+<td>The <code class="prettyprint">destination</code> of the transfer cannot be the same as the <code class="prettyprint">source</code>.</td>
+</tr>
+<tr>
+<td>RequiresFundingSource</td>
+<td>&ldquo;Receiver requires funding source.&rdquo;</td>
+<td>The <code class="prettyprint">destination</code> of the mass payment item does not have an active funding source attached.</td>
+</tr>
+<tr>
+<td>Restricted</td>
+<td>&ldquo;Receiver restricted.&rdquo;</td>
+<td>The <code class="prettyprint">destination</code> customer is either <code class="prettyprint">deactivated</code> or <code class="prettyprint">suspended</code> and is not eligible to receive funds.</td>
 </tr>
 </tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
