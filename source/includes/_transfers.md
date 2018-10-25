@@ -54,72 +54,57 @@ A transfer represents money being transferred from a `source` to a `destination`
 This section covers how to initiate a transfer from either a Dwolla [Account](#accounts) or Dwolla API [Customer](#customers) resource.
 
 ### HTTP request
+
 `POST https://api.dwolla.com/transfers`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
-| _links | yes | object | A _links JSON object describing the desired `source` and `destination` of a transfer. [See below](#source-and-destination-types) for possible values for `source` and `destination`. |
-| amount | yes | object | An amount JSON object. [See above](#amount-json-object). |
+| _links | yes | object | A _links JSON object describing the desired `source` and `destination` of a transfer. [Reference the Source and Destination object to learn more](#source-and-destination-types) about possible values for `source` and `destination`. |
+| amount | yes | object | An amount JSON object. [Reference the amount JSON object to learn more](#amount-json-object). |
 | metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
-| fees | no | array | an array of fee JSON objects that contain unique fee transfers. [See below](#a-fee-json-object). |
-| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys. Acceptable value for source is: `standard`. Acceptable value for destination is: `next-available`. Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for [Dwolla](https://www.dwolla.com/platform) customers. Next-day ACH functionality must be enabled. |
+| fees | no | array | An array of fee JSON objects that contain unique fee transfers. [Reference the facilitator fee JSON object to learn more](#facilitator-fee-json-object). |
+| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys. [Reference the clearing JSON object to learn more](#clearing-json-object). |
+| achDetails | no | object | An ACH details JSON object which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [Reference the achDetails JSON object to learn more](#achdetails-object)|
 | correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
-| achDetails | no | object | An [ACH details JSON object](#achdetails-object) which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. |
-
-### amount JSON object
-
-| Parameter | Description |
-|-----------|------------|
-| value | Amount of money |
-| currency | String, `USD` |
-
-### clearing JSON object
-
-| Parameter | Description |
-|-----------|------------|
-| source | String, `standard` |
-| destination | String, `next-available` |
-
-#### achDetails object
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-------------|
-| source | no | object | Represents information that is sent to a source/originating bank account along with a transfer. Include information within this JSON object for customizing details on ACH debit transfers. Can include an [addenda JSON object](#addenda-object). |
-| destination | no | object | Represents information that is sent to a destination/receiving bank account along with a transfer. Include information within this JSON object for customizing details on ACH credit transfers. Can include an [addenda JSON object](#addenda-object).|
-
-### addenda object
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-------------|
-| addenda | no | object | An addenda object contains a `values` key which is an array of comma separated string addenda values. Addenda record information is used for the purpose of transmitting transfer-related information. Values must be less than or equal to 80 characters and can include spaces. Acceptable characters are: a-Z, 0-9, and special characters `- _ . ~! * ' ( ) ; : @ & = + $ , / ? % # [ ]`.
-
 
 ### Source and destination types
+
+##### Source types
 
 | Source Type | URI | Description |
 |-------|---------|---------------|
 | Funding source | `https://api.dwolla.com/funding-sources/{id}` | A bank or balance funding source. |
+
+##### Destination types
 
 | Destination Type | URI | Description |
 |-------|---------|---------------|
 | Funding source | `https://api.dwolla.com/funding-sources/{id}` | Destination of an Account or verified Customer's own bank or balance funding source. **OR** A Customer's bank funding source. |
 | Customer | `https://api.dwolla.com/customers/{id}` | Destination Customer of a transfer. |
 | Account | `https://api.dwolla.com/accounts/{id}` | Destination Account of a transfer. |
-| Email | `mailto:johndoe@email.com` | Email address of existing Dwolla Account or recipient (recipient will create a Dwolla Account to claim funds) |
 
+### amount JSON object
 
-### Facilitator fee
+| Parameter | Required |  Type  | Description            |
+|-----------|----------|--------|------------------------|
+| value     |   yes    | string | Amount of money        |
+| currency  |   yes    | string | Possible values: `USD` |
+
+### Facilitator fee JSON object
+
 The facilitator fee is a feature allowing for a flat rate amount to be removed from a payment as a fee, and sent to the creator of the Dwolla application. The fee does not affect the original payment amount, and exists as a separate [Transfer resource](#transfer-resource) with a unique transfer ID. Within a transfer request you can specify an optional `fees` request parameter, which is an array of [fee objects](#a-fee-json-object) that can represent many unique fee transfers.
 
 For more information on collecting fees on payments, reference the [facilitator fee](https://developers.dwolla.com/resources/facilitator-fee.html) resource article.
 
-#### A fee JSON object
-
-| Parameter | Description
+| Parameter | Description |
 |-----------|------------|
-|_links | Contains a `charge-to` JSON object with a link to the associated source or destination `Customer` or `Account` resource.
-|amount | Amount of fee to charge. An amount JSON object. [See above](#amount-json-object)
+|_links | Contains a `charge-to` JSON object with a link to the associated source or destination `Customer` or `Account` resource. |
+|amount | Amount of fee to charge. An amount JSON object. [See above](#amount-json-object) |
 
-#### Fee example:
+#### Facilitator fee example:
+
 ```noselect
 "fees": [
   {
@@ -136,14 +121,75 @@ For more information on collecting fees on payments, reference the [facilitator 
 ]
 ```
 
-### HTTP status and error codes
-| HTTP Status | Message |
-|--------------|-------------|
-| 400 | Transfer failed. |
-| 403 | OAuth token does not have Send scope. |
+### clearing JSON object
 
-### Request and response (using Same Day ACH)
-The reference example below shows what a request looks like when sending a transfer. Please note this example is using [same-day](https://www.dwolla.com/same-day-ach) clearing to a Dwolla API Customer's bank account, part of Dwolla's API.
+The `clearing` object is used in tandem with our expedited transfer feature. 
+Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for [Dwolla](https://www.dwolla.com/platform) customers. Next-day ACH functionality must be enabled. 
+
+| Parameter | Required | Type | Description |
+|-----------|------------|------|-----------|
+| source | no | string | Represents a clearing object for `next-day` debits into the Dwolla network. <br> Possible values: `standard` |
+| destination | no | string | Represents a clearing object for `same-day` credits out of the Dwolla network to a bank funding source. <br> Possible values: `next-available` |
+
+#### Clearing example:
+
+```noselect
+"clearing": {
+  "source": "standard",
+  "destination": "next-available"
+}
+```
+
+### achDetails and addenda object
+
+The addendum record is used to provide additional information to the payment recipient about to the payment. This value will be passed in on a transfer request and can be exposed on a Customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.
+
+##### achDetails object
+
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| source | no | object | Represents information that is sent to a source/originating bank account along with a transfer. Include information within this JSON object for customizing details on ACH debit transfers. Can include an [addenda JSON object](#addenda-object). |
+| destination | no | object | Represents information that is sent to a destination/receiving bank account along with a transfer. Include information within this JSON object for customizing details on ACH credit transfers. Can include an [addenda JSON object](#addenda-object).|
+
+##### addenda object
+
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| addenda | no | object | An addenda object contains a `values` key which is an array of comma separated string addenda values. Addenda record information is used for the purpose of transmitting transfer-related information. Values must be less than or equal to 80 characters and can include spaces. Acceptable characters are: a-Z, 0-9, and special characters `- _ . ~! * ' ( ) ; : @ & = + $ , / ? % # [ ]`. *Will not show up on bank statements from balance-sourced transfers*
+
+#### achDetails with addenda example:
+
+```noselect
+"achDetails": {
+  "source": {
+    "addenda": {
+      "values": ["ABC123_AddendaValue"]
+    }
+  },
+  "destination": {
+    "addenda": {
+      "values": ["ZYX987_AddendaValue"]
+    }
+  }
+}
+```
+
+### HTTP status and error codes
+
+| HTTP Status |    Error Message       |      Description             |
+|-------------|------------------------|------------------------------|
+|    201      | Created.               | A transfer was created.      |
+|    400      | Funding source not found. | Double check the funding source Id and make sure you are using the correct funding source Id. |
+|    400      | Invalid funding source.| The `source` funding source must be verified in order to send funds. Make sure your `source` funding source is `verified`. |
+|    400      | Metadata not supported for this type of transfer. | Metadata is unable to be passed in on transfers with a Balance Funding Source. |
+|    400      | Sender // Receiver Restricted. | The `source` or `destination` Customer is either `deactivated` or `suspended` and not eligible for transfers. |
+|    401      | Invalid access token   | Access token not valid. Generate a new one and try again. |
+|    403      | Forbidden              | Not authorized to create a transfer. |
+
+### Request and response
+
+The reference example below shows what a request looks like when sending a transfer.
+Please note this example is using [same-day](https://www.dwolla.com/same-day-ach) clearing to a Dwolla API Customer's bank account, part of Dwolla's API.
 
 ```raw
 POST https://api-sandbox.dwolla.com/transfers
@@ -153,26 +199,51 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 
 {
-    "_links": {
+   "_links": {
+       "source": {
+           "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+       },
+       "destination": {
+           "href": "https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
+       }
+   },
+   "amount": {
+       "currency": "USD",
+       "value": "10.00"
+   },
+   "metadata": {
+       "paymentId": "12345678",
+       "note": "payment for completed work Dec. 1"
+   },
+   "fees": [
+       {
+          "_links":{
+             "charge-to":{
+                "href":"https://api-sandbox.dwolla.com/customers/c2bdcc87-91cd-41dd-9b06-5e31d4d3bbe4"
+             }
+          },
+          "amount":{
+             "value":"2.00",
+             "currency":"USD"
+          }
+       }
+   ],
+   "clearing": {
+       "destination": "next-available"
+   },
+    "achDetails": {
         "source": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+            "addenda": {
+                "values": ["ABC123_AddendaValue"]
+            }
         },
         "destination": {
-            "href": "https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
+            "addenda": {
+                "values": ["ZYX987_AddendaValue"]
+            }
         }
-    },
-    "amount": {
-        "currency": "USD",
-        "value": "10.00"
-    },
-    "metadata": {
-        "paymentId": "12345678",
-        "note": "payment for completed work Dec. 1"
-    },
-    "clearing": {
-        "destination": "next-available"
-  },
-  "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
+     },
+ "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
 }
 
 ...
@@ -180,6 +251,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
 ```
+
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 request_body = {
@@ -202,12 +274,25 @@ request_body = {
   :clearing => {
     :destination => "next-available"
   },
+  :achDetails => {
+    :source => {
+      :addenda => {
+        :values => "ABC123_AddendaValues"
+      }
+    },
+    :destination => {
+      :addenda => {
+        :values => "ZYX987_AddendaValues"
+      }
+    }
+  },
   :correlationId => "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
 }
 
 transfer = app_token.post "transfers", request_body
 transfer.headers[:location] # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
 ```
+
 ```php
 <?php
 $transfersApi = new DwollaSwagger\TransfersApi($apiClient);
@@ -237,6 +322,7 @@ $transfer = $transfersApi->create([
 $transfer; # => "https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
 ?>
 ```
+
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 request_body = {
@@ -259,12 +345,25 @@ request_body = {
   'clearing': {
     'destination': 'next-available'
   },
+  'achDetails': {
+    'source': {
+      'addenda': {
+        'values': ["ABC123_AddendaValues"]
+      }
+    },
+    'destination': {
+      'addenda': {
+        'values': ["ZYX987_AddendaValues"]
+      }
+    }
+  },
   'correlationId': '8a2cdc8d-629d-4a24-98ac-40b735229fe2'
 }
 
 transfer = app_token.post('transfers', request_body)
 transfer.headers['location'] # => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
 ```
+
 ```javascript
 var requestBody = {
   _links: {
@@ -282,9 +381,21 @@ var requestBody = {
   metadata: {
     paymentId: '12345678',
     note: 'payment for completed work Dec. 1'
-  },
+  },  
   clearing: {
     destination: 'next-available'
+  },
+  addenda: {
+    source: {
+      addenda: {
+        values: ["ABC123_AddendaValue"]
+      }
+    },
+    destination: {
+      addenda: {
+        values: ["ZYX987_AddendaValue"]
+      }
+    }
   },
   correlationId: '8a2cdc8d-629d-4a24-98ac-40b735229fe2'
 };
@@ -513,7 +624,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       "href": "https://api-sandbox.dwolla.com/transfers/E6D9A950-AC9E-E511-80DC-0AA34A9B2388/failure"
     }
   },
-  "code": "R1",
+  "code": "R01",
   "description": "Insufficient Funds"
 }
 ```
@@ -522,7 +633,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
 failure = app_token.get "#{transfer_url}/failure"
-failure.code # => "R1"
+failure.code # => "R01"
 ```
 ```php
 <?php
@@ -539,14 +650,14 @@ $transferFailure->code; # => "R01"
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
 failure = app_token.get('%s/failure' % transfer_url)
-failure.body['code'] # => 'R1'
+failure.body['code'] # => 'R01'
 ```
 ```javascript
 var transferUrl = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388';
 
 appToken
   .get(`${transferUrl}/failure`)
-  .then(res => res.body.code); // => 'R1'
+  .then(res => res.body.code); // => 'R01'
 ```
 
 ## Cancel a transfer
@@ -606,6 +717,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   }
 }
 ```
+
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388'
@@ -616,6 +728,7 @@ request_body = {
 transfer = app_token.post "#{transfer_url}", request_body
 transfer.status # => "cancelled"
 ```
+
 ```php
 <?php
 $transfersApi = new DwollaSwagger\TransfersApi($apiClient);
@@ -628,6 +741,7 @@ $transfer = $transfersApi->update([
 $transfer->status; # => "cancelled"
 ?>
 ```
+
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388'
@@ -638,14 +752,16 @@ request_body = {
 transfer = app_token.post(transfer_url, request_body)
 transfer.body['status'] # => 'cancelled'
 ```
+
 ```javascript
-var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c';
+var transferUrl = 'https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388'
 var requestBody = {
-  name: "Test Checking - 1234"
+  status: "cancelled"
 };
 
 appToken
-  .post(fundingSourceUrl, requestBody)
-  .then(res => res.body.name); // => "Test Checking - 1234"
+  .post('transfers', requestBody)
+  .then(res => res.body.status); // => "cancelled"
 ```
+
 * * *
