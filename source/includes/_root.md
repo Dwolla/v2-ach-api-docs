@@ -26,7 +26,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```ruby
-root = token.get "/"
+root = app_token.get "/"
 root._links.account.href # => "https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"
 ```
 ```php
@@ -39,11 +39,11 @@ $accountUrl = $root->_links["account"]->href; # => "https://api-sandbox.dwolla.c
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-root = token.get('/')
+root = app_token.get('/')
 root.body['_links']['account']['href'] # => 'https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'
 ```
 ```javascript
-token
+appToken
   .get('/')
   .then(res => res.body._links.account.href); // => 'https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'
 ```

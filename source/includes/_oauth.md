@@ -47,7 +47,7 @@ client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&client_secret=g7QLwv
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 # This example assumes you've already initialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html
-application_token = client.Auth.client()
+app_token = client.Auth.client()
 ```
 ```javascript
 // Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-node
@@ -63,7 +63,7 @@ client.auth.client()
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 # This example assumes you've already initialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html
-application_token = $dwolla.auths.client
+app_token = $dwolla.auths.client
 # => #<DwollaV2::Token client=#<DwollaV2::Client id="..." secret="..." environment=:sandbox> access_token="..." expires_in=3600 scope="...">
 ```
 ```php

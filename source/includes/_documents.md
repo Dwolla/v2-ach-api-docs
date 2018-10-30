@@ -167,8 +167,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customer_url = 'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'
 
-documents = token.get "#{customer_url}/documents"
-documents._embedded.documents[0].id # => "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
+documents = app_token.get "#{customer_url}/documents"
+documents._embedded['documents'][0].id # => "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
 ```
 ```php
 <?php
@@ -192,7 +192,7 @@ var customerUrl = 'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a
 
 token
   .get(`${customerUrl}/documents`)
-  .then(res => res.body._embedded.documents[0].id); // => '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
+  .then(res => res.body._embedded['documents'][0].id); // => '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
 ```
 
 ## Retrieve a document

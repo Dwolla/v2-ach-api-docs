@@ -321,9 +321,10 @@ $accountUrl = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b375045
 $fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
 
 $fundingSources = $fsApi->getAccountFundingSources($accountUrl);
-$fundingSources->_embedded->{'funding-sources'}[0]->name); # => "Jane Doe’s Checking"
+$fundingSources->_embedded->{'funding-sources'}[0]->name; # => "Jane Doe’s Checking"
 ?>
 ```
+
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 account_url = 'https://api.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b'
@@ -437,8 +438,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 account_url = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'
 
-transfers = account_token.get "#{account_url}/transfers"
-transfers._embedded.transfers[0].status # => "processed"
+transfers = app_token.get "#{account_url}/transfers"
+transfers._embedded['transfers'][0].status # => "processed"
 ```
 ```php
 <?php
@@ -447,7 +448,7 @@ $accountUrl = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-0
 $transfersApi = new DwollaSwagger\TransfersApi($apiClient);
 
 $transfers = $transfersApi->getAccountTransfers($accountUrl);
-$transfers->_embedded->transfers[0]->status; # => "processed"
+$transfers->_embedded->{'transfers'}[0]->status; # => "processed"
 ?>
 ```
 ```python
@@ -462,7 +463,7 @@ var accountUrl = 'https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae7
 
 appToken
   .get(`${accountUrl}/transfers`)
-  .then(res => res.body._embedded.transfers.[0].status); // => 'processed'
+  .then(res => res.body._embedded['transfers'][0].status); // => 'processed'
 ```
 
 ## List mass payments for an account
@@ -548,7 +549,7 @@ $accountUrl = 'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-0
 $masspaymentsApi = new DwollaSwagger\MasspaymentsApi($apiClient);
 
 $masspayments = $masspaymentsApi->getByAccount($accountUrl, 10, 0);
-$masspayments->_embedded->{"mass-payments"}[0]->status; # => "complete"
+$masspayments->_embedded->{'mass-payments'}[0]->status; # => "complete"
 ?>
 ```
 ```python

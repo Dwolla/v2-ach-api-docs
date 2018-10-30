@@ -122,7 +122,7 @@ Let's list some `Customer` objects:
 
 ```csharpnoselect
 var client = DwollaClient.Create(isSandbox: true);
-                
+
 var tokenRes = await client.PostAuthAsync<AppTokenRequest, TokenResponse>(
     new Uri($"{client.AuthBaseAddress}/token"),
     new AppTokenRequest {Key = "...", Secret = "..."});
