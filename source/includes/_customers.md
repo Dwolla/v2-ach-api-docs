@@ -181,7 +181,7 @@ request_body = {
 }
 
 customer = app_token.post "customers", request_body
-customer.headers[:location] # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+customer.response_headers[:location] # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
 ```
 
 ```php
@@ -410,7 +410,7 @@ request_body = {
 }
 
 customer = app_token.post "customers", request_body
-customer.headers[:location] # => "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"
+customer.response_headers[:location] # => "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"
 ```
 
 ```python
@@ -1629,7 +1629,7 @@ request_body = {
 }
 
 funding_source = app_token.post "#{customer_url}/funding-sources", request_body
-funding_source.headers[:location] # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
+funding_source.response_headers[:location] # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
@@ -1777,7 +1777,7 @@ dwolla.configure('prod');
 ```
 ##### Example
 
-```noselect
+```noselecthtml
 <head>
 <script src="https://cdn.dwolla.com/1/dwolla.js"></script>
 <!-- jQuery is used for example purposes -->
@@ -1917,7 +1917,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customer_url = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
 
-funding_sources = app_token.get "#{customer}/funding-sources"
+funding_sources = app_token.get "#{customer_url}/funding-sources"
 funding_sources._embedded['funding-sources'][0].name # => "Jane Doe’s Checking"
 ```
 ```php
@@ -2053,7 +2053,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 customer_url = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'
 
 transfers = app_token.get "#{customer_url}/transfers"
-transfers._embedded.transfers[0].status # => "pending"
+transfers._embedded['transfers'][0].status # => "pending"
 ```
 ```php
 <?php

@@ -77,7 +77,7 @@ customer_url = 'https://api-sandbox.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09
 
 file = Faraday::UploadIO.new('mclovin.jpg', 'image/jpeg')
 document = app_token.post "#{customer_url}/documents", file: file, documentType: 'license'
-document.headers[:location] # => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
+document.response_headers[:location] # => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python

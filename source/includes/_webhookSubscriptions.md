@@ -62,14 +62,14 @@ request_body = {
   :secret => "your webhook secret"
 }
 subscription = app_token.post "webhook-subscriptions", request_body
-subscription.headers[:location] # => "https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"
+subscription.response_headers[:location] # => "https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"
 ```
 ```javascript
 var requestBody = {
   url: 'http://myawesomeapplication.com/destination',
   secret: 'your webhook secret'
 };
-applicationToken
+appToken
   .post('webhook-subscriptions', requestBody)
   .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 ```
@@ -143,7 +143,7 @@ webhook_subscription.created # => 2015-10-28T16:20:47+00:00
 ```javascript
 var webhookSubscriptionUrl = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216';
 
-applicationToken
+appToken
   .get(webhookSubscriptionUrl)
   .then(res => res.body.created); // => '2016-04-20T15:49:50.340Z'
 ```
@@ -203,7 +203,7 @@ var requestBody = {
   paused: true
 };
 
-applicationToken
+appToken
   .post(webhookSubscriptionUrl, requestBody)
   .then(res => res.body.paused); // => 'true'
 ```
@@ -278,7 +278,7 @@ webhook_subscriptions = app_token.get "webhook-subscriptions"
 webhook_subscriptions.total # => 1
 ```
 ```javascript
-applicationToken
+appToken
   .get('webhook-subscriptions')
   .then(res => res.body.total); // => 1
 ```
@@ -329,7 +329,7 @@ app_token.delete webhook_subscription_url
 ```javascript
 var webhookSubscriptionUrl = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216';
 
-applicationToken.delete(webhookSubscriptionUrl);
+appToken.delete(webhookSubscriptionUrl);
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
@@ -419,7 +419,7 @@ hooks.total # => 5
 ```javascript
 var webhookSubscriptionUrl = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216';
 
-applicationToken
+appToken
   .get(`${webhookSubscriptionUrl}/webhooks`)
   .then(res => res.body.total); // => 5
 ```

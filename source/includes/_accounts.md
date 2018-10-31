@@ -191,7 +191,7 @@ request_body = {
 }
 
 funding_source = app_token.post "funding-sources", request_body
-funding_source.headers[:location] # => "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"
+funding_source.response_headers[:location] # => "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python

@@ -170,7 +170,7 @@ webhook.body['topic'] # => 'transfer_created'
 ```javascript
 var webhookUrl = 'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8';
 
-applicationToken
+appToken
   .get(webhookUrl)
   .then(res => res.body.topic); // => 'transfer_created'
 ```
@@ -229,7 +229,7 @@ app_token.post('%s/retries' % webhook_url)
 ```javascript
 var webhookUrl = 'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8';
 
-applicationToken.post(`${webhookUrl}/retries`);
+appToken.post(`${webhookUrl}/retries`);
 ```
 
 ## List retries for a webhook
@@ -314,7 +314,7 @@ retries.body['total'] # => 1
 ```javascript
 var webhookUrl = 'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8';
 
-applicationToken
+appToken
   .get(`${webhookUrl}/retries`)
   .then(res => res.body.total); // => 1
 ```

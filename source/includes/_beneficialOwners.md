@@ -149,7 +149,7 @@ request_body = {
 }
 
 beneficial_owner = app_token.post "#{customer_url}/beneficial-owners", request_body
-beneficial_owner.headers[:location] # => "https://api-sandbox.dwolla.com/beneficial-owners/AB443D36-3757-44C1-A1B4-29727FB3111C"
+beneficial_owner.response_headers[:location] # => "https://api-sandbox.dwolla.com/beneficial-owners/AB443D36-3757-44C1-A1B4-29727FB3111C"
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
