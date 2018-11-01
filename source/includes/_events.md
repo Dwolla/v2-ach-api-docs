@@ -268,7 +268,7 @@ events = app_token.get('events')
 events.body['total'] # => 3
 ```
 ```javascript
-applicationToken
+appToken
   .get('events')
   .then(res => res.body.total); // => 3
 ```
@@ -347,7 +347,7 @@ event.body['topic'] # => 'customer_transfer_created'
 ```javascript
 var eventUrl = 'https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095';
 
-applicationToken
+appToken
   .get(eventUrl)
   .then(res => res.body.topic); // => 'customer_transfer_created'
 ```

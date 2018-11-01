@@ -149,7 +149,7 @@ request_body = {
 }
 
 beneficial_owner = app_token.post "#{customer_url}/beneficial-owners", request_body
-beneficial_owner.headers[:location] # => "https://api-sandbox.dwolla.com/beneficial-owners/AB443D36-3757-44C1-A1B4-29727FB3111C"
+beneficial_owner.response_headers[:location] # => "https://api-sandbox.dwolla.com/beneficial-owners/AB443D36-3757-44C1-A1B4-29727FB3111C"
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
@@ -389,7 +389,7 @@ request_body = {
 }
 
 update_beneficial_owner = app_token.post(beneficial_owner_url, request_body)
-update_beneficial_owner.body.id # => '00cb67f2-768c-4ee3-ac81-73bc4faf9c2b'
+update_beneficial_owner.body['id'] # => '00cb67f2-768c-4ee3-ac81-73bc4faf9c2b'
 ```
 ```javascript
 var beneficialOwnerUrl = 'https://api-sandbox.dwolla.com/beneficial-owners/07d59716-ef22-4fe6-98e8-f3190233dfb8';
@@ -508,8 +508,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customer_url = 'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'
 
-beneficial_owners = token.get "#{customer_url}/beneficial-owners"
-beneficial_owners._embedded.beneficial_owners[0].id # => "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
+beneficial_owners = app_token.get "#{customer_url}/beneficial-owners"
+beneficial_owners._embedded['beneficial-owners'][0].id # => "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
 ```
 ```php
 <?php
@@ -531,7 +531,7 @@ var customerUrl = 'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a
 
 token
   .get(`${customerUrl}/beneficial-owners`)
-  .then(res => res.body._embedded.beneficial_owners[0].id); // => '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
+  .then(res => res.body._embedded['beneficial-owners'][0].id); // => '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
 ```
 
 ## Remove a beneficial owner
@@ -595,7 +595,7 @@ app_token.delete beneficial_owner_url
 ```javascript
 var beneficialOwnerUrl = 'https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c';
 
-applicationToken.delete(beneficialOwnerUrl);
+appToken.delete(beneficialOwnerUrl);
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
@@ -780,7 +780,7 @@ beneficial_owner_url = 'https://api-sandbox.dwolla.com/beneficial-owners/1DE32EC
 
 file = Faraday::UploadIO.new('mclovin.jpg', 'image/jpeg')
 document = app_token.post "#{beneficial_owner_url}/documents", file: file, documentType: 'license'
-document.headers[:location] # => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
+document.response_headers[:location] # => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
@@ -935,7 +935,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 beneficial_owner_url = 'https://api-sandbox.dwolla.com/beneficial-owners/176878b8-ecdb-469b-a82b-43ba5e8704b2'
 
 documents = token.get "#{beneficial_owner_url}/documents"
-documents._embedded.documents[0].id # => "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
+documents._embedded['documents'][0].id # => "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
 ```
 ```php
 <?php
@@ -956,7 +956,7 @@ var beneficialOwnerUrl = 'https://api-sandbox.dwolla.com/beneficial-owners/17687
 
 token
   .get(`${beneficialOwnerUrl}/documents`)
-  .then(res => res.body._embedded.documents[0].id); // => '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
+  .then(res => res.body._embedded['documents'][0].id); // => '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
 ```
 
 ---

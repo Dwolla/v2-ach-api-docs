@@ -123,8 +123,8 @@ For more information on collecting fees on payments, reference the [facilitator 
 
 ### clearing JSON object
 
-The `clearing` object is used in tandem with our expedited transfer feature. 
-Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for [Dwolla](https://www.dwolla.com/platform) customers. Next-day ACH functionality must be enabled. 
+The `clearing` object is used in tandem with our expedited transfer feature.
+Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for [Dwolla](https://www.dwolla.com/platform) customers. Next-day ACH functionality must be enabled.
 
 | Parameter | Required | Type | Description |
 |-----------|------------|------|-----------|
@@ -142,7 +142,7 @@ Source specifies the clearing time for the source funding source involved in the
 
 ### achDetails and addenda object
 
-The addendum record is used to provide additional information to the payment recipient about to the payment. This value will be passed in on a transfer request and can be exposed on a Customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.
+The addendum record is used to provide additional information to the payment recipient about the payment. This value will be passed in on a transfer request and can be exposed on a Customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.
 
 ##### achDetails object
 
@@ -179,7 +179,7 @@ The addendum record is used to provide additional information to the payment rec
 | HTTP Status |    Error Message       |      Description             |
 |-------------|------------------------|------------------------------|
 |    201      | Created.               | A transfer was created.      |
-|    400      | Funding source not found. | Double check the funding source Id and make sure you are using the correct funding source Id. |
+|    400      | Funding source not found. | Double check the funding source Id, and make sure you are using the correct funding source Id. |
 |    400      | Invalid funding source.| The `source` funding source must be verified in order to send funds. Make sure your `source` funding source is `verified`. |
 |    400      | Metadata not supported for this type of transfer. | Metadata is unable to be passed in on transfers with a Balance Funding Source. |
 |    400      | Sender // Receiver Restricted. | The `source` or `destination` Customer is either `deactivated` or `suspended` and not eligible for transfers. |
@@ -290,7 +290,7 @@ request_body = {
 }
 
 transfer = app_token.post "transfers", request_body
-transfer.headers[:location] # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
+transfer.response_headers[:location] # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
 ```
 
 ```php
@@ -569,7 +569,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'
 
-fees = account_token.get "#{transfer_url}/fees"
+fees = app_token.get "#{transfer_url}/fees"
 fees.total # => 2
 ```
 ```php

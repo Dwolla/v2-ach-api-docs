@@ -347,7 +347,7 @@ app_token.post "#{funding_source_url}/micro-deposits"
 ```javascript
 var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909';
 
-appToken.post(`#{fundingSourceUrl}/micro-deposits`);
+appToken.post(`${fundingSourceUrl}/micro-deposits`);
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python

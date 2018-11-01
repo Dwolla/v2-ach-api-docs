@@ -119,7 +119,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 
 ### achDetails and addenda object
 
-The addendum record is used to provide additional information to the payment recipient about to the payment. This value will be passed in on a transfer request and can be exposed on a customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.
+The addendum record is used to provide additional information to the payment recipient about the payment. This value will be passed in on a transfer request and can be exposed on a customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.
 
 ##### achDetails object
 
@@ -311,7 +311,7 @@ request_body = {
 }
 
 mass_payment = app_token.post "mass-payments", request_body
-mass_payment.headers[:location] # => "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"
+mass_payment.response_headers[:location] # => "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"
 ```
 ```php
 <?php
@@ -657,7 +657,7 @@ request_body = {
       "status" => "pending",
 }
 
-mass_payment = account_token.post "#{mass_payment_url}", request_body
+mass_payment = app_token.post "#{mass_payment_url}", request_body
 mass_payment.status # => "pending"
 ```
 ```php
@@ -672,7 +672,7 @@ request_body = {
   "status": "pending"
 }
 
-mass_payments = account_token.post('mass-payments', request_body)
+mass_payments = app_token.post('mass-payments', request_body)
 mass_payments.body['status'] # => 'pending'
 ```
 ```javascript
@@ -681,7 +681,7 @@ var requestBody = {
   status: "pending"
 };
 
-accountToken
+appToken
   .post(massPaymentUrl, requestBody)
   .then(res => res.body.status); // => "pending"
 ```
@@ -817,7 +817,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'
 
-mass_payment_items = account_token.get "#{mass_payment_url}/items"
+mass_payment_items = app_token.get "#{mass_payment_url}/items"
 mass_payment_items.total # => 2
 ```
 ```php
@@ -905,7 +905,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 mass_payment_item_url = 'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'
 
-mass_payment_item = account_token.get mass_payment_item_url
+mass_payment_item = app_token.get mass_payment_item_url
 mass_payment_item.status # => "success"
 ```
 ```php
@@ -922,7 +922,7 @@ $massPaymentItem->status; # => "success"
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 mass_payment_item_url = 'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'
 
-mass_payment_item = account_token.get(mass_payment_item_url)
+mass_payment_item = app_token.get(mass_payment_item_url)
 mass_payment_item.body['status'] # => 'success'
 ```
 ```javascript

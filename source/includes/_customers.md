@@ -181,7 +181,7 @@ request_body = {
 }
 
 customer = app_token.post "customers", request_body
-customer.headers[:location] # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+customer.response_headers[:location] # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
 ```
 
 ```php
@@ -410,7 +410,7 @@ request_body = {
 }
 
 customer = app_token.post "customers", request_body
-customer.headers[:location] # => "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"
+customer.response_headers[:location] # => "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"
 ```
 
 ```python
@@ -913,7 +913,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 business_classifications = app_token.get "business-classifications"
-business_classifications._embedded.business-classifications[0].name # => "Food retail and service"
+business_classifications._embedded['business-classifications'][0].name # => "Food retail and service"
 ```
 
 ```php
@@ -921,7 +921,7 @@ business_classifications._embedded.business-classifications[0].name # => "Food r
 $businessClassificationsApi = new DwollaSwagger\BusinessclassificationsApi($apiClient);
 
 $busClassifications = $businessClassificationsApi->_list();
-$busClassifications->_embedded->business-classifications[0]->name; # => "Food retail and service"
+$busClassifications->_embedded->{'business-classifications'}[0]->name; # => "Food retail and service"
 ?>
 ```
 
@@ -934,7 +934,7 @@ business_classifications.body['_embedded']['business-classifications'][0]['name'
 ```javascript
 appToken
   .get('business-classifications')
-  .then(res => res.body._embedded.business-classifications[0].name); // => 'Food retail and service'
+  .then(res => res.body._embedded['business-classifications'][0].name); // => 'Food retail and service'
 ```
 
 ## Retrieve a business classification
@@ -989,7 +989,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 business_classification_url = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203'
 
 business_classification = app_token.get business_classification_url
-business_classification._embedded.name # => "Entertainment and media"
+business_classification.name # => "Entertainment and media"
 ```
 
 ```php
@@ -999,7 +999,7 @@ $businessClassificationUrl = 'https://api-sandbox.dwolla.com/business-classifica
 $businessClassificationsApi = new DwollaSwagger\BusinessclassificationsApi($apiClient);
 
 $busClassifications = $customersApi->getBusinessClassification($businessClassificationUrl);
-$busClassifications->_embedded->name; # => "Entertainment and media"
+$busClassifications->name; # => "Entertainment and media"
 ?>
 ```
 
@@ -1008,7 +1008,7 @@ $busClassifications->_embedded->name; # => "Entertainment and media"
 business_classification_url = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203'
 
 busClassification = app_token.get(business_classification_url)
-busClassification.body['_embedded']['name']
+busClassification.body['name']
 ```
 
 ```javascript
@@ -1016,7 +1016,7 @@ var businessClassificationUrl = 'https://api-sandbox.dwolla.com/business-classif
 
 appToken
   .get(businessClassificationUrl)
-  .then(res => res.body._embedded.name); // => 'Entertainment and media'
+  .then(res => res.body.name); // => 'Entertainment and media'
 ```
 
 ## Update a customer
@@ -1413,14 +1413,14 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customers = app_token.get "customers", limit: 10
-customers._embedded.customers[0].firstName # => "Jane"
+customers._embedded.['customers'][0].firstName # => "Jane"
 ```
 ```php
 <?php
 $customersApi = new DwollaSwagger\CustomersApi($apiClient);
 
 $customers = $customersApi->_list(10, 0);
-$customers->_embedded->customers[0]->firstName; # => "Jane"
+$customers->_embedded->{'customers'}[0]->firstName; # => "Jane"
 ?>
 ```
 ```python
@@ -1431,7 +1431,7 @@ customer.body['_embedded']['customers'][0]['firstName'] # => 'Jane'
 ```javascript
 appToken
   .get('customers', { limit: 10 })
-  .then(res => res.body._embedded.customers[0].firstName); // => 'Jane'
+  .then(res => res.body._embedded['customers'][0].firstName); // => 'Jane'
 ```
 
 ## Retrieve a customer
@@ -1629,7 +1629,7 @@ request_body = {
 }
 
 funding_source = app_token.post "#{customer_url}/funding-sources", request_body
-funding_source.headers[:location] # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
+funding_source.response_headers[:location] # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
@@ -1777,7 +1777,7 @@ dwolla.configure('prod');
 ```
 ##### Example
 
-```noselect
+```noselecthtml
 <head>
 <script src="https://cdn.dwolla.com/1/dwolla.js"></script>
 <!-- jQuery is used for example purposes -->
@@ -1917,7 +1917,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customer_url = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
 
-funding_sources = app_token.get "#{customer}/funding-sources"
+funding_sources = app_token.get "#{customer_url}/funding-sources"
 funding_sources._embedded['funding-sources'][0].name # => "Jane Doe’s Checking"
 ```
 ```php
@@ -2053,7 +2053,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 customer_url = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'
 
 transfers = app_token.get "#{customer_url}/transfers"
-transfers._embedded.transfers[0].status # => "pending"
+transfers._embedded['transfers'][0].status # => "pending"
 ```
 ```php
 <?php
@@ -2062,7 +2062,7 @@ $customerUrl = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-
 $TransfersApi = new DwollaSwagger\TransfersApi($apiClient);
 
 $transfers = $TransfersApi->getCustomerTransfers($customerUrl);
-$transfers->_embedded->transfers[0]->status; # => "pending"
+$transfers->_embedded->{'transfers'}[0]->status; # => "pending"
 ?>
 ```
 ```python
@@ -2077,7 +2077,7 @@ var customerUrl = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-92
 
 appToken
   .get(`${customerUrl}/transfers`)
-  .then(res => res.body._embedded.transfers[0].status); // => "pending"
+  .then(res => res.body._embedded['transfers'][0].status); // => "pending"
 ```
 
 ## List mass payments for a customer
@@ -2163,7 +2163,7 @@ $customerUrl = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-
 $masspaymentsApi = new DwollaSwagger\MasspaymentsApi($apiClient);
 
 $masspayments = $masspaymentsApi->getByCustomer($customerUrl);
-$masspayments->_embedded->mass-payments[0]->status; # => "complete"
+$masspayments->_embedded->{'mass-payments'}[0]->status; # => "complete"
 ?>
 ```
 ```python
