@@ -507,13 +507,15 @@ mvn install package
 <h4 id='token-lifetime'>Token lifetime</h4>
 <p><strong>Access tokens</strong> are <em>short lived</em>: 1 hour. To refresh authorization on an application access token, your application will simply exchange its client credentials for a new app access token which will invalidate the previous token.</p>
 <h2 id='application-authorization'>Application authorization</h2>
-<p>The <a href="https://tools.ietf.org/html/rfc6749#section-4.1">client credentials flow</a> is used when an application needs to obtain permission to act on its own behalf. An application will exchange it&rsquo;s <code class="prettyprint">client_id</code>, <code class="prettyprint">client_secret</code>, and <code class="prettyprint">grant_type=client_credentials</code> for an application access token. An application access token can then be used to make calls to the Dwolla API on behalf of the application, for example, create a webhook subscription, retrieve events, and make calls to Dwolla API Customer related endpoints. The primary reason for obtaining an application access token is for managing webhooks and events. However, Dwolla has modified this grant type by allowing applications to access Dwolla API <a href="https://docsv2.dwolla.com/#customers">Customer</a> related endpoints using the application access token.</p>
+<p>The <a href="https://tools.ietf.org/html/rfc6749#section-4.1">client credentials flow</a> is the simplest OAuth 2 grant, with a server-to-server exchange of your application&rsquo;s <code class="prettyprint">client_id</code>, <code class="prettyprint">client_secret</code> for an OAuth application access token. In order to execute this flow, your application will send a POST requests with the Authorization header that contains the word <code class="prettyprint">Basic</code> followed by a space and a base64-encoded string <code class="prettyprint">client_id:client_secret</code>.</p>
+
+<p><code class="prettyprint">Authorization: Basic Base64(client_id:client_secret)</code></p>
 <h4 id='http-request'>HTTP request</h4>
-<p><strong>Production:</strong> <code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
+<p><strong>Production:</strong> <code class="prettyprint">POST https://accounts.dwolla.com/token</code></p>
 
-<p><strong>Sandbox:</strong> <code class="prettyprint">POST https://sandbox.dwolla.com/oauth/v2/token</code></p>
+<p><strong>Sandbox:</strong> <code class="prettyprint">POST https://accounts-sandbox.dwolla.com/token</code></p>
 
-<p>Including the <code class="prettyprint">Content-Type: application/x-www-form-urlencoded</code> header, the request is sent to the token endpoint with the following <code class="prettyprint">form-encoded</code> parameters:</p>
+<p>Including the <code class="prettyprint">Content-Type: application/x-www-form-urlencoded</code> header, the request is sent to the token endpoint with <code class="prettyprint">grant_type=client_credentials</code> in the body of the request:</p>
 <h4 id='request-parameters'>Request parameters</h4>
 <table><thead>
 <tr>
@@ -570,10 +572,11 @@ mvn install package
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://sandbox.dwolla.com/oauth/v2/token
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://accounts-sandbox.dwolla.com/token
+Authorization: Basic YkVEMGJMaEFhb0pDamplbmFPVjNwMDZSeE9Eb2pyOUNFUzN1dldXcXUyeE9RYk9GeUE6WEZ0bmJIbXR3dXEwNVI1Yk91WmVOWHlqcW9RelNSc21zUU5qelFOZUFZUlRIbmhHRGw=
 Content-Type: application/x-www-form-urlencoded
 
-client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&amp;client_secret=g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5CcJSLqXIcDOxfTr&amp;grant_type=client_credentials
+grant_type=client_credentials
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -584,7 +587,7 @@ client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&amp;client_secret=g7
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
 <span class="c"># This example assumes you've already initialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html</span>
-<span class="n">application_token</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">Auth</span><span class="o">.</span><span class="n">client</span><span class="p">()</span>
+<span class="n">app_token</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">Auth</span><span class="o">.</span><span class="n">client</span><span class="p">()</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -612,7 +615,7 @@ client_id=CGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkwasGMuGhkem9Bo&amp;client_secret=g7
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="c1"># This example assumes you've already initialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html</span>
-<span class="n">application_token</span> <span class="o">=</span> <span class="vg">$dwolla</span><span class="p">.</span><span class="nf">auths</span><span class="p">.</span><span class="nf">client</span>
+<span class="n">app_token</span> <span class="o">=</span> <span class="vg">$dwolla</span><span class="p">.</span><span class="nf">auths</span><span class="p">.</span><span class="nf">client</span>
 <span class="c1"># =&gt; #&lt;DwollaV2::Token client=#&lt;DwollaV2::Client id="..." secret="..." environment=:sandbox&gt; access_token="..." expires_in=3600 scope="..."&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -669,7 +672,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">root</span> <span class="o">=</span> <span class="n">token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"/"</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">root</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"/"</span>
 <span class="n">root</span><span class="p">.</span><span class="nf">_links</span><span class="p">.</span><span class="nf">account</span><span class="p">.</span><span class="nf">href</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -694,7 +697,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
-<span class="n">root</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
 <span class="n">root</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_links'</span><span class="p">][</span><span class="s">'account'</span><span class="p">][</span><span class="s">'href'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -704,7 +707,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">token</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_links</span><span class="p">.</span><span class="nx">account</span><span class="p">.</span><span class="nx">href</span><span class="p">);</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/accounts/ad5f2162-404a-4c4c-994e-6ab6c3a13254'</span>
 </code></pre></div></div>
@@ -1018,7 +1021,7 @@ Location: https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167
 <span class="p">}</span>
 
 <span class="n">funding_source</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"funding-sources"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">funding_source</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"</span>
+<span class="n">funding_source</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -1198,7 +1201,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nv">$fsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\FundingsourcesApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
 <span class="nv">$fundingSources</span> <span class="o">=</span> <span class="nv">$fsApi</span><span class="o">-&gt;</span><span class="na">getAccountFundingSources</span><span class="p">(</span><span class="nv">$accountUrl</span><span class="p">);</span>
-<span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="p">{</span><span class="s1">'funding-sources'</span><span class="p">}[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">);</span> <span class="c1"># =&gt; "Jane Doe’s Checking"
+<span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="p">{</span><span class="s1">'funding-sources'</span><span class="p">}[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span> <span class="c1"># =&gt; "Jane Doe’s Checking"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -1395,8 +1398,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="n">account_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3'</span>
 
-<span class="n">transfers</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">account_url</span><span class="si">}</span><span class="s2">/transfers"</span>
-<span class="n">transfers</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">transfers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">status</span> <span class="c1"># =&gt; "processed"</span>
+<span class="n">transfers</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">account_url</span><span class="si">}</span><span class="s2">/transfers"</span>
+<span class="n">transfers</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'transfers'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">status</span> <span class="c1"># =&gt; "processed"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -1411,7 +1414,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nv">$transfersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\TransfersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
 <span class="nv">$transfers</span> <span class="o">=</span> <span class="nv">$transfersApi</span><span class="o">-&gt;</span><span class="na">getAccountTransfers</span><span class="p">(</span><span class="nv">$accountUrl</span><span class="p">);</span>
-<span class="nv">$transfers</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="na">transfers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">status</span><span class="p">;</span> <span class="c1"># =&gt; "processed"
+<span class="nv">$transfers</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="p">{</span><span class="s1">'transfers'</span><span class="p">}[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">status</span><span class="p">;</span> <span class="c1"># =&gt; "processed"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -1438,7 +1441,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">accountUrl</span><span class="p">}</span><span class="sr">/transfers`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">transfers</span><span class="p">.[</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'processed'</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'transfers'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; 'processed'</span>
 </code></pre></div></div><h2 id='list-mass-payments-for-an-account'>List mass payments for an account</h2>
 <p>This section covers how to retrieve an Account&rsquo;s list of previously created mass payments. Mass payments are returned ordered by date created, with most recent mass payments appearing first.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -1575,7 +1578,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nv">$masspaymentsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\MasspaymentsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
 <span class="nv">$masspayments</span> <span class="o">=</span> <span class="nv">$masspaymentsApi</span><span class="o">-&gt;</span><span class="na">getByAccount</span><span class="p">(</span><span class="nv">$accountUrl</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="nv">$masspayments</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="p">{</span><span class="s2">"mass-payments"</span><span class="p">}[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">status</span><span class="p">;</span> <span class="c1"># =&gt; "complete"
+<span class="nv">$masspayments</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="p">{</span><span class="s1">'mass-payments'</span><span class="p">}[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">status</span><span class="p">;</span> <span class="c1"># =&gt; "complete"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -1899,7 +1902,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
+<span class="n">customer</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2279,7 +2282,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span>
+<span class="n">customer</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -3132,7 +3135,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="n">business_classifications</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"business-classifications"</span>
-<span class="n">business_classifications</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">business</span><span class="o">-</span><span class="n">classifications</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">name</span> <span class="c1"># =&gt; "Food retail and service"</span>
+<span class="n">business_classifications</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'business-classifications'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">name</span> <span class="c1"># =&gt; "Food retail and service"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -3145,7 +3148,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nv">$businessClassificationsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\BusinessclassificationsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
 <span class="nv">$busClassifications</span> <span class="o">=</span> <span class="nv">$businessClassificationsApi</span><span class="o">-&gt;</span><span class="na">_list</span><span class="p">();</span>
-<span class="nv">$busClassifications</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="na">business</span><span class="o">-</span><span class="nx">classifications</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span> <span class="c1"># =&gt; "Food retail and service"
+<span class="nv">$busClassifications</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="p">{</span><span class="s1">'business-classifications'</span><span class="p">}[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span> <span class="c1"># =&gt; "Food retail and service"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -3168,7 +3171,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'business-classifications'</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">business</span><span class="o">-</span><span class="nx">classifications</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; 'Food retail and service'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'business-classifications'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; 'Food retail and service'</span>
 </code></pre></div></div><h2 id='retrieve-a-business-classification'>Retrieve a business classification</h2>
 <p>This section shows you how to retrieve a business classification from a list of industry classifications. An industry classification id is needed in order to verify a <code class="prettyprint">business</code> Customer.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -3237,7 +3240,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="n">business_classification_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203'</span>
 
 <span class="n">business_classification</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">business_classification_url</span>
-<span class="n">business_classification</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">name</span> <span class="c1"># =&gt; "Entertainment and media"</span>
+<span class="n">business_classification</span><span class="p">.</span><span class="nf">name</span> <span class="c1"># =&gt; "Entertainment and media"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -3252,7 +3255,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nv">$businessClassificationsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\BusinessclassificationsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
 <span class="nv">$busClassifications</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">getBusinessClassification</span><span class="p">(</span><span class="nv">$businessClassificationUrl</span><span class="p">);</span>
-<span class="nv">$busClassifications</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span> <span class="c1"># =&gt; "Entertainment and media"
+<span class="nv">$busClassifications</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span> <span class="c1"># =&gt; "Entertainment and media"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -3266,7 +3269,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="n">business_classification_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203'</span>
 
 <span class="n">busClassification</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">business_classification_url</span><span class="p">)</span>
-<span class="n">busClassification</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_embedded'</span><span class="p">][</span><span class="s">'name'</span><span class="p">]</span>
+<span class="n">busClassification</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -3279,7 +3282,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">businessClassificationUrl</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; 'Entertainment and media'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; 'Entertainment and media'</span>
 </code></pre></div></div><h2 id='update-a-customer'>Update a customer</h2>
 <p>This endpoint can be used to facilitate the following use cases: Update Customer information, upgrade an <code class="prettyprint">unverified</code> Customer to a <code class="prettyprint">verified</code> Customer, suspend a Customer, deactivate a Customer, reactivate a Customer, and update a verified Customer&rsquo;s information to <code class="prettyprint">retry</code> verification.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -3906,7 +3909,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="n">customers</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="ss">limit: </span><span class="mi">10</span>
-<span class="n">customers</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">customers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">firstName</span> <span class="c1"># =&gt; "Jane"</span>
+<span class="n">customers</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">[</span><span class="s1">'customers'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">firstName</span> <span class="c1"># =&gt; "Jane"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -3919,7 +3922,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
 <span class="nv">$customers</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">_list</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="nv">$customers</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="na">customers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">;</span> <span class="c1"># =&gt; "Jane"
+<span class="nv">$customers</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="p">{</span><span class="s1">'customers'</span><span class="p">}[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">;</span> <span class="c1"># =&gt; "Jane"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -3942,7 +3945,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'customers'</span><span class="p">,</span> <span class="p">{</span> <span class="na">limit</span><span class="p">:</span> <span class="mi">10</span> <span class="p">})</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">customers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">firstName</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'customers'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">firstName</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane'</span>
 </code></pre></div></div><h2 id='retrieve-a-customer'>Retrieve a customer</h2>
 <p>This section shows you how to retrieve a Customer belonging to the authorized user Account. Each <code class="prettyprint">Customer</code> id is a part of its location resource. The developer can pass either an <code class="prettyprint">id</code> or the entire <code class="prettyprint">location</code> resource to make this request.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -4279,7 +4282,7 @@ Location: https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4
 <span class="p">}</span>
 
 <span class="n">funding_source</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/funding-sources"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">funding_source</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"</span>
+<span class="n">funding_source</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -4463,34 +4466,34 @@ HTTP/1.1 200 OK
 
 <span class="c1">// Production</span>
 <span class="nx">dwolla</span><span class="p">.</span><span class="nx">configure</span><span class="p">(</span><span class="s1">'prod'</span><span class="p">);</span>
-</code></pre></div></div><h5 id='example'>Example</h5><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">&lt;head&gt;
-&lt;script src="https://cdn.dwolla.com/1/dwolla.js"&gt;&lt;/script&gt;
-&lt;!-- jQuery is used for example purposes --&gt;
-&lt;script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"&gt;&lt;/script&gt;
-&lt;/head&gt;
+</code></pre></div></div><h5 id='example'>Example</h5><div class="code-snippet js-code-snippet language-htmlnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-htmlnohide" data-lang="htmlnohide"><span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.dwolla.com/1/dwolla.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="c">&lt;!-- jQuery is used for example purposes --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
 
-&lt;div id="controls"&gt;
-  &lt;input type="button" id="start" value="Start"&gt;
-&lt;/div&gt;
-&lt;div id="iavContainer"&gt;&lt;/div&gt;
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"controls"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">id=</span><span class="s">"start"</span> <span class="na">value=</span><span class="s">"Start"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"iavContainer"</span><span class="nt">&gt;&lt;/div&gt;</span>
 
-&lt;script type="text/javascript"&gt;
-$('#start').click(function() {
-  var iavToken = '4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY';
-  dwolla.configure('sandbox');
-  dwolla.iav.start(iavToken, {
-    container: 'iavContainer',
-    stylesheets: [
-      'http://fonts.googleapis.com/css?family=Lato&amp;subset=latin,latin-ext',
-      'http://myapp.com/iav/customStylesheet.css'
-    ],
-    microDeposits: false,
-    fallbackToMicroDeposits: true
-  }, function(err, res) {
-    console.log('Error: ' + JSON.stringify(err) + ' -- Response: ' + JSON.stringify(res));
-  });
-});
-&lt;/script&gt;
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'#start'</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">iavToken</span> <span class="o">=</span> <span class="s1">'4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY'</span><span class="p">;</span>
+  <span class="nx">dwolla</span><span class="p">.</span><span class="nx">configure</span><span class="p">(</span><span class="s1">'sandbox'</span><span class="p">);</span>
+  <span class="nx">dwolla</span><span class="p">.</span><span class="nx">iav</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="nx">iavToken</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">container</span><span class="p">:</span> <span class="s1">'iavContainer'</span><span class="p">,</span>
+    <span class="na">stylesheets</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s1">'http://fonts.googleapis.com/css?family=Lato&amp;subset=latin,latin-ext'</span><span class="p">,</span>
+      <span class="s1">'http://myapp.com/iav/customStylesheet.css'</span>
+    <span class="p">],</span>
+    <span class="na">microDeposits</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="na">fallbackToMicroDeposits</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Error: '</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' -- Response: '</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">res</span><span class="p">));</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
 </code></pre></div></div><h3 id='response'>Response:</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"funding-source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -4644,7 +4647,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'</span>
 
-<span class="n">funding_sources</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer</span><span class="si">}</span><span class="s2">/funding-sources"</span>
+<span class="n">funding_sources</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/funding-sources"</span>
 <span class="n">funding_sources</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'funding-sources'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">name</span> <span class="c1"># =&gt; "Jane Doe’s Checking"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -4870,7 +4873,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'</span>
 
 <span class="n">transfers</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/transfers"</span>
-<span class="n">transfers</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">transfers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">status</span> <span class="c1"># =&gt; "pending"</span>
+<span class="n">transfers</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'transfers'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">status</span> <span class="c1"># =&gt; "pending"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -4885,7 +4888,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nv">$TransfersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\TransfersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
 <span class="nv">$transfers</span> <span class="o">=</span> <span class="nv">$TransfersApi</span><span class="o">-&gt;</span><span class="na">getCustomerTransfers</span><span class="p">(</span><span class="nv">$customerUrl</span><span class="p">);</span>
-<span class="nv">$transfers</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="na">transfers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">status</span><span class="p">;</span> <span class="c1"># =&gt; "pending"
+<span class="nv">$transfers</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="p">{</span><span class="s1">'transfers'</span><span class="p">}[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">status</span><span class="p">;</span> <span class="c1"># =&gt; "pending"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -4912,7 +4915,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/transfers`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">transfers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "pending"</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'transfers'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "pending"</span>
 </code></pre></div></div><h2 id='list-mass-payments-for-a-customer'>List mass payments for a customer</h2>
 <p>This section covers how to retrieve a <a href="#customers">verified Customer&rsquo;s</a> list of previously created mass payments. Mass payments are returned ordered by date created, with most recent mass payments appearing first.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -5049,7 +5052,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nv">$masspaymentsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\MasspaymentsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
 <span class="nv">$masspayments</span> <span class="o">=</span> <span class="nv">$masspaymentsApi</span><span class="o">-&gt;</span><span class="na">getByCustomer</span><span class="p">(</span><span class="nv">$customerUrl</span><span class="p">);</span>
-<span class="nv">$masspayments</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="na">mass</span><span class="o">-</span><span class="nx">payments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">status</span><span class="p">;</span> <span class="c1"># =&gt; "complete"
+<span class="nv">$masspayments</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="p">{</span><span class="s1">'mass-payments'</span><span class="p">}[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">status</span><span class="p">;</span> <span class="c1"># =&gt; "complete"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -5349,7 +5352,7 @@ Location: https://api.dwolla.com/beneficial-owners/FC451A7A-AE30-4404-AB95-E3553
 <span class="p">}</span>
 
 <span class="n">beneficial_owner</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/beneficial-owners"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">beneficial_owner</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/beneficial-owners/AB443D36-3757-44C1-A1B4-29727FB3111C"</span>
+<span class="n">beneficial_owner</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/beneficial-owners/AB443D36-3757-44C1-A1B4-29727FB3111C"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -5744,7 +5747,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="p">}</span>
 
 <span class="n">update_beneficial_owner</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">beneficial_owner_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">update_beneficial_owner</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="nb">id</span> <span class="c"># =&gt; '00cb67f2-768c-4ee3-ac81-73bc4faf9c2b'</span>
+<span class="n">update_beneficial_owner</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'id'</span><span class="p">]</span> <span class="c"># =&gt; '00cb67f2-768c-4ee3-ac81-73bc4faf9c2b'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -5896,8 +5899,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'</span>
 
-<span class="n">beneficial_owners</span> <span class="o">=</span> <span class="n">token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/beneficial-owners"</span>
-<span class="n">beneficial_owners</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">beneficial_owners</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">id</span> <span class="c1"># =&gt; "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"</span>
+<span class="n">beneficial_owners</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/beneficial-owners"</span>
+<span class="n">beneficial_owners</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'beneficial-owners'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">id</span> <span class="c1"># =&gt; "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -5937,7 +5940,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">token</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/beneficial-owners`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">beneficial_owners</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'beneficial-owners'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
 </code></pre></div></div><h2 id='remove-a-beneficial-owner'>Remove a beneficial owner</h2>
 <p>Delete a beneficial owner. A removed beneficial owner cannot be retrieved after being removed.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -6030,7 +6033,7 @@ HTTP 200 OK
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">beneficialOwnerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span><span class="p">;</span>
 
-<span class="nx">applicationToken</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">beneficialOwnerUrl</span><span class="p">);</span>
+<span class="nx">appToken</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">beneficialOwnerUrl</span><span class="p">);</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -6313,7 +6316,7 @@ Location: https://api-sandbox.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275af
 
 <span class="n">file</span> <span class="o">=</span> <span class="no">Faraday</span><span class="o">::</span><span class="no">UploadIO</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'mclovin.jpg'</span><span class="p">,</span> <span class="s1">'image/jpeg'</span><span class="p">)</span>
 <span class="n">document</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">beneficial_owner_url</span><span class="si">}</span><span class="s2">/documents"</span><span class="p">,</span> <span class="ss">file: </span><span class="n">file</span><span class="p">,</span> <span class="ss">documentType: </span><span class="s1">'license'</span>
-<span class="n">document</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"</span>
+<span class="n">document</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -6539,7 +6542,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="n">beneficial_owner_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/beneficial-owners/176878b8-ecdb-469b-a82b-43ba5e8704b2'</span>
 
 <span class="n">documents</span> <span class="o">=</span> <span class="n">token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">beneficial_owner_url</span><span class="si">}</span><span class="s2">/documents"</span>
-<span class="n">documents</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">documents</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">id</span> <span class="c1"># =&gt; "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"</span>
+<span class="n">documents</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'documents'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">id</span> <span class="c1"># =&gt; "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -6578,7 +6581,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">token</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">beneficialOwnerUrl</span><span class="p">}</span><span class="sr">/documents`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">documents</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'documents'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
 </code></pre></div></div>
 <hr>
 
@@ -6722,7 +6725,7 @@ Location: https://api-sandbox.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275af
 
 <span class="n">file</span> <span class="o">=</span> <span class="no">Faraday</span><span class="o">::</span><span class="no">UploadIO</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'mclovin.jpg'</span><span class="p">,</span> <span class="s1">'image/jpeg'</span><span class="p">)</span>
 <span class="n">document</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/documents"</span><span class="p">,</span> <span class="ss">file: </span><span class="n">file</span><span class="p">,</span> <span class="ss">documentType: </span><span class="s1">'license'</span>
-<span class="n">document</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"</span>
+<span class="n">document</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -6847,8 +6850,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2'</span>
 
-<span class="n">documents</span> <span class="o">=</span> <span class="n">token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/documents"</span>
-<span class="n">documents</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">.</span><span class="nf">documents</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">id</span> <span class="c1"># =&gt; "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"</span>
+<span class="n">documents</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/documents"</span>
+<span class="n">documents</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'documents'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">id</span> <span class="c1"># =&gt; "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -6890,7 +6893,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">token</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/documents`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">.</span><span class="nx">documents</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'documents'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
 </code></pre></div></div><h2 id='retrieve-a-document'>Retrieve a document</h2>
 <p>This section contains information on how to retrieve a document by its id.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -7613,7 +7616,7 @@ Location: https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">fundingSourceUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span><span class="p">;</span>
 
-<span class="nx">appToken</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`#</span><span class="p">{</span><span class="nx">fundingSourceUrl</span><span class="p">}</span><span class="sr">/micro-deposits`</span><span class="se">)</span><span class="err">;
+<span class="nx">appToken</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">fundingSourceUrl</span><span class="p">}</span><span class="sr">/micro-deposits`</span><span class="se">)</span><span class="err">;
 </span></code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8357,8 +8360,8 @@ HTTP 200 OK
   }
 ]
 </code></pre></div></div><h3 id='clearing-json-object'>clearing JSON object</h3>
-<p>The <code class="prettyprint">clearing</code> object is used in tandem with our expedited transfer feature. 
-Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. <strong>Note:</strong> The clearing request parameter is a premium feature available for <a href="https://www.dwolla.com/platform">Dwolla</a> customers. Next-day ACH functionality must be enabled. </p>
+<p>The <code class="prettyprint">clearing</code> object is used in tandem with our expedited transfer feature.
+Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. <strong>Note:</strong> The clearing request parameter is a premium feature available for <a href="https://www.dwolla.com/platform">Dwolla</a> customers. Next-day ACH functionality must be enabled.</p>
 
 <table><thead>
 <tr>
@@ -8386,7 +8389,7 @@ Source specifies the clearing time for the source funding source involved in the
   "destination": "next-available"
 }
 </code></pre></div></div><h3 id='achdetails-and-addenda-object'>achDetails and addenda object</h3>
-<p>The addendum record is used to provide additional information to the payment recipient about to the payment. This value will be passed in on a transfer request and can be exposed on a Customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.</p>
+<p>The addendum record is used to provide additional information to the payment recipient about the payment. This value will be passed in on a transfer request and can be exposed on a Customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.</p>
 <h5 id='achdetails-object'>achDetails object</h5>
 <table><thead>
 <tr>
@@ -8453,7 +8456,7 @@ Source specifies the clearing time for the source funding source involved in the
 <tr>
 <td>400</td>
 <td>Funding source not found.</td>
-<td>Double check the funding source Id and make sure you are using the correct funding source Id.</td>
+<td>Double check the funding source Id, and make sure you are using the correct funding source Id.</td>
 </tr>
 <tr>
 <td>400</td>
@@ -8595,7 +8598,7 @@ Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34
 <span class="p">}</span>
 
 <span class="n">transfer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"transfers"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">transfer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"</span>
+<span class="n">transfer</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -8956,7 +8959,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="n">transfer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388'</span>
 
-<span class="n">fees</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">transfer_url</span><span class="si">}</span><span class="s2">/fees"</span>
+<span class="n">fees</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">transfer_url</span><span class="si">}</span><span class="s2">/fees"</span>
 <span class="n">fees</span><span class="p">.</span><span class="nf">total</span> <span class="c1"># =&gt; 2</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -9454,7 +9457,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 </tbody></table>
 <h3 id='achdetails-and-addenda-object'>achDetails and addenda object</h3>
-<p>The addendum record is used to provide additional information to the payment recipient about to the payment. This value will be passed in on a transfer request and can be exposed on a customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.</p>
+<p>The addendum record is used to provide additional information to the payment recipient about the payment. This value will be passed in on a transfer request and can be exposed on a customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.</p>
 <h5 id='achdetails-object'>achDetails object</h5>
 <table><thead>
 <tr>
@@ -9687,7 +9690,7 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
 <span class="p">}</span>
 
 <span class="n">mass_payment</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"mass-payments"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">mass_payment</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"</span>
+<span class="n">mass_payment</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/mass-payments/cf1e9e00-09cf-43da-b8b5-a43b3f6192d4"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -10120,7 +10123,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       <span class="s2">"status"</span> <span class="o">=&gt;</span> <span class="s2">"pending"</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="n">mass_payment</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">mass_payment_url</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">mass_payment</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">mass_payment_url</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">request_body</span>
 <span class="n">mass_payment</span><span class="p">.</span><span class="nf">status</span> <span class="c1"># =&gt; "pending"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -10147,7 +10150,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="s">"status"</span><span class="p">:</span> <span class="s">"pending"</span>
 <span class="p">}</span>
 
-<span class="n">mass_payments</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'mass-payments'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">mass_payments</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'mass-payments'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 <span class="n">mass_payments</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; 'pending'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -10162,7 +10165,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="na">status</span><span class="p">:</span> <span class="s2">"pending"</span>
 <span class="p">};</span>
 
-<span class="nx">accountToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">massPaymentUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "pending"</span>
 </code></pre></div></div><h2 id='list-items-for-a-mass-payment'>List items for a mass payment</h2>
@@ -10364,7 +10367,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="n">mass_payment_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563'</span>
 
-<span class="n">mass_payment_items</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">mass_payment_url</span><span class="si">}</span><span class="s2">/items"</span>
+<span class="n">mass_payment_items</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">mass_payment_url</span><span class="si">}</span><span class="s2">/items"</span>
 <span class="n">mass_payment_items</span><span class="p">.</span><span class="nf">total</span> <span class="c1"># =&gt; 2</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -10497,7 +10500,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="n">mass_payment_item_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'</span>
 
-<span class="n">mass_payment_item</span> <span class="o">=</span> <span class="n">account_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">mass_payment_item_url</span>
+<span class="n">mass_payment_item</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">mass_payment_item_url</span>
 <span class="n">mass_payment_item</span><span class="p">.</span><span class="nf">status</span> <span class="c1"># =&gt; "success"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -10526,7 +10529,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
 <span class="n">mass_payment_item_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388'</span>
 
-<span class="n">mass_payment_item</span> <span class="o">=</span> <span class="n">account_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mass_payment_item_url</span><span class="p">)</span>
+<span class="n">mass_payment_item</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mass_payment_item_url</span><span class="p">)</span>
 <span class="n">mass_payment_item</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'status'</span><span class="p">]</span> <span class="c"># =&gt; 'success'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -11091,7 +11094,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">applicationToken</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'events'</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 3</span>
 </code></pre></div></div><h2 id='retrieve-an-event'>Retrieve an event</h2>
@@ -11212,7 +11215,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">eventUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/events/81f6e13c-557c-4449-9331-da5c65e61095'</span><span class="p">;</span>
 
-<span class="nx">applicationToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">eventUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">topic</span><span class="p">);</span> <span class="c1">// =&gt; 'customer_transfer_created'</span>
 </code></pre></div></div>
@@ -11355,7 +11358,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
   <span class="ss">:secret</span> <span class="o">=&gt;</span> <span class="s2">"your webhook secret"</span>
 <span class="p">}</span>
 <span class="n">subscription</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"webhook-subscriptions"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">subscription</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"</span>
+<span class="n">subscription</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -11368,7 +11371,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
   <span class="na">url</span><span class="p">:</span> <span class="s1">'http://myawesomeapplication.com/destination'</span><span class="p">,</span>
   <span class="na">secret</span><span class="p">:</span> <span class="s1">'your webhook secret'</span>
 <span class="p">};</span>
-<span class="nx">applicationToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'webhook-subscriptions'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -11484,7 +11487,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookSubscriptionUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">;</span>
 
-<span class="nx">applicationToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">webhookSubscriptionUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">created</span><span class="p">);</span> <span class="c1">// =&gt; '2016-04-20T15:49:50.340Z'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -11585,7 +11588,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
   <span class="na">paused</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">};</span>
 
-<span class="nx">applicationToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">webhookSubscriptionUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">paused</span><span class="p">);</span> <span class="c1">// =&gt; 'true'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -11684,7 +11687,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">applicationToken</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'webhook-subscriptions'</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 1</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -11777,7 +11780,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookSubscriptionUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">;</span>
 
-<span class="nx">applicationToken</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">webhookSubscriptionUrl</span><span class="p">);</span>
+<span class="nx">appToken</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">webhookSubscriptionUrl</span><span class="p">);</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -11912,7 +11915,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookSubscriptionUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span><span class="p">;</span>
 
-<span class="nx">applicationToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">webhookSubscriptionUrl</span><span class="p">}</span><span class="sr">/webhooks`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 5</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -12207,7 +12210,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'</span><span class="p">;</span>
 
-<span class="nx">applicationToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">webhookUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">topic</span><span class="p">);</span> <span class="c1">// =&gt; 'transfer_created'</span>
 </code></pre></div></div><h2 id='retry-a-webhook'>Retry a webhook</h2>
@@ -12308,7 +12311,7 @@ Location: https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d5
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'</span><span class="p">;</span>
 
-<span class="nx">applicationToken</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">webhookUrl</span><span class="p">}</span><span class="sr">/retries`</span><span class="se">)</span><span class="err">;
+<span class="nx">appToken</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">webhookUrl</span><span class="p">}</span><span class="sr">/retries`</span><span class="se">)</span><span class="err">;
 </span></code></pre></div></div><h2 id='list-retries-for-a-webhook'>List retries for a webhook</h2>
 <p>This section covers how to retrieve webhook retries by id.</p>
 <ol class="alerts"><li class="alert icon-alert-alert"><p>This endpoint requires an OAuth application access token.</p>
@@ -12432,7 +12435,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">webhookUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'</span><span class="p">;</span>
 
-<span class="nx">applicationToken</span>
+<span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">webhookUrl</span><span class="p">}</span><span class="sr">/retries`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">total</span><span class="p">);</span> <span class="c1">// =&gt; 1</span>
 </code></pre></div></div>
