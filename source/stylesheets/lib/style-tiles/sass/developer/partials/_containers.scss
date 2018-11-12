@@ -127,7 +127,7 @@ $slide-time: 0.3s;
             margin-top: -200px;
             padding: 220px 20px 20px;
             display: none;
-            
+
             @extend %clearfix;
 
             @include breakpoint($SIZE_TABLET_SMALL){

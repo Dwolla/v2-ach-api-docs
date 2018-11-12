@@ -97,8 +97,6 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | **Destination** Type | URI                     | Description     |
 |----------------------|-----------------------------------------------|--------------|
 | Funding source   | `https://api.dwolla.com/funding-sources/{id}` | Destination of a Verified Customer's own `bank` or `balance` funding source, an Unverified Customer's `bank` funding source, or a Receive-only Customer's `bank` funding source. |
-| Customer  | `https://api.dwolla.com/customers/{id}`       | Destination Dwolla API [Customer](#customers) of a transfer.     |
-| Account          | `https://api.dwolla.com/accounts/{id}`        | Destination Transfer [Account](#accounts) of a transfer.  |
 
 ### Mass payment item
 
@@ -255,7 +253,7 @@ request_body = {
   :achDetails => {
     :source => {
       :addenda => {
-        :values: => ["ABC123_AddendaValue"]
+        :values => ["ABC123_AddendaValue"]
       }
     }
   },
@@ -277,7 +275,7 @@ request_body = {
       :achDetails => {
         :destination => {
           :addenda => {
-            :values: => ["ABC123_AddendaValue"]
+            :values => ["ABC123_AddendaValue"]
           }
         }
       }
@@ -298,7 +296,7 @@ request_body = {
       :achDetails => {
         :destination => {
           :addenda => {
-            :values: => ["ABC123_AddendaValue"]
+            :values => ["ABC123_AddendaValue"]
           }
         }
       }
@@ -583,7 +581,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 mass_payment_url = "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
 
-mass_payment = account_token.get mass_payment_url
+mass_payment = app_token.get mass_payment_url
 mass_payment.status # => "processing"
 ```
 
@@ -754,7 +752,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
             "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
           },
           "destination": {
-            "href": "https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+            "href": "https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd"
           },
           "transfer": {
             "href": "https://api-sandbox.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"
@@ -783,7 +781,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
                 "resource-type": "mass-payment"
             },
             "destination": {
-                "href": "https://api-sandbox.dwolla.com/customers/b442c936-1f87-465d-a4e2-a982164b26bd",
+                "href": "https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd",
                 "type": "application/vnd.dwolla.v1.hal+json",
                 "resource-type": "customer"
             }
@@ -878,13 +876,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-sandbox.dwolla.com/mass-payment-items/2f845bc9-41ed-e511-80df-0aa34a9b2388"
+      "href": "https://api-sandbox.dwolla.com/mass-payment-items/c1c7d293-63ec-e511-80df-0aa34a9b2388"
     },
     "mass-payment": {
       "href": "https://api-sandbox.dwolla.com/mass-payments/eb467252-808c-4bc0-b86f-a5cd01454563"
     },
     "destination": {
-      "href": "https://api-sandbox.dwolla.com/customers/9c7f8d57-cd45-4e7a-bf7a-914dbd6131db"
+      "href": "https://api-sandbox.dwolla.com/funding-sources/b442c936-1f87-465d-a4e2-a982164b26bd"
     },
     "transfer": {
       "href": "https://api-sandbox.dwolla.com/transfers/fa3999db-41ed-e511-80df-0aa34a9b2388"

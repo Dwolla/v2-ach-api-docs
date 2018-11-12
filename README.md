@@ -1,7 +1,7 @@
 About Dwolla
 ========
 
-Dwolla is a software platform that makes it easy to move money between banks. 
+Dwolla is a software platform that makes it easy to move money between banks.
 
 Our software platform is compatible with all banks in the United States.
 
@@ -20,7 +20,7 @@ Official SDKs for Java, Node.JS, PHP, Ruby, and Python are being actively develo
 
 Documentation is reflected here - https://docsv2.dwolla.com/
 
-Getting Started 
+Getting Started
 ------------------------------
 
 ### Prerequisites

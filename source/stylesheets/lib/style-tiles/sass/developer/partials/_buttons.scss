@@ -78,7 +78,7 @@ button::-moz-focus-inner {
     }
 
     &.alternative {
-        @include button($color-white, none, $color-blue);
+        @include button($color-white, none, $color-purple);
     }
 
     &.secondary {

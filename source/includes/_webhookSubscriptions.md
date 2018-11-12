@@ -8,7 +8,7 @@ Dwolla will automatically pause subscribed webhook endpoints that are no longer 
 ### Acknowledgement and retries
 When your application receives a [webhook](#webhooks), it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 400, or your application fails to respond within 10 seconds of the attempt, another attempt will be made.
 
-Dwolla will re-attempt delivery 8 times over the course of 72 hours according the backoff schedule below. If a webhook was successfully received but you would like the information again, you can call [retrieve a webhook by its Id](#retrieve-a-webhook).
+Dwolla will re-attempt delivery 8 times over the course of 72 hours according to the backoff schedule below. If a webhook was successfully received but you would like the information again, you can call [retrieve a webhook by its Id](#retrieve-a-webhook).
 
 | Retry number | Interval (relative to last retry) | Interval (relative to original attempt) |
 |:------------:|:---------------------------------:|:---------------------------------------:|
@@ -165,7 +165,7 @@ $retrieved->created; # => 2015-10-28T16:20:47+00:00
 
 ## Update a webhook subscription
 
-This section details how to pause a webhook subscription. When a webhook subscription is paused Dwolla will continue to create webhooks but not send them to your subscribed webhook url. This is useful if your webhook endpoint is unavailable and you want to temporarily disable webhook requests.
+This section details how to pause a webhook subscription. When a webhook subscription is paused, Dwolla will continue to create webhooks but not send them to your subscribed webhook url. This is useful if your webhook endpoint is unavailable and you want to temporarily disable webhook requests.
 
 ### HTTP request
 `POST https://api.dwolla.com/webhook-subscriptions/{id}`
