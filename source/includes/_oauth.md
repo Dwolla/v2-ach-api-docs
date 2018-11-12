@@ -7,7 +7,7 @@ Before you can get started with making OAuth requests, you’ll need to first re
 
 #### Token lifetime
 
-**Access tokens** are *short lived*: 1 hour. To refresh authorization on an application access token, your application will simply exchange its client credentials for a new app access token which will invalidate the previous token.
+**Access tokens** are *short lived*: 1 hour. To refresh authorization on an application access token, your application will simply exchange its client credentials for a new app access token. Any access tokens that have been previously initialized will not be invalidated with the creation of a new one; they will simply expire within an hour of the time of their creation.
 
 ## Application authorization
 
