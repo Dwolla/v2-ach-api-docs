@@ -1,11 +1,11 @@
-// This wraps all side by side code snippet languages in a 
+// This wraps all side by side code snippet languages in a
 // div with the class dwolla.slateWL.groupCodeSnippets.GROUP_CLASS.
 // Because there is no way to do it in slate without special markup.
 // Also to insure the page doesn't shift we have to level all code
 // snippets in a group to the same height.
 
 // !! This breaks as soon as the large and unstable assumption that a
-// snippet group will always contain all GROUPABLE_LANGS no longer 
+// snippet group will always contain all GROUPABLE_LANGS no longer
 // can be assumed. This is also how selector.js works. !!
 
 (function (dwolla) {
