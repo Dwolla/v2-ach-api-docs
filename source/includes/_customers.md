@@ -1462,7 +1462,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {
     "self": {
-      "href": "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+      "href": "https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
     }
   },
   "id": "FC451A7A-AE30-4404-AB95-E3553FCD733F",
@@ -1713,7 +1713,7 @@ HTTP/1.1 200 OK
 {
   "_links": {
     "self": {
-      "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/iav-token"
+      "href": "https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/iav-token"
     }
   },
   "token": "4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY"
@@ -1721,14 +1721,14 @@ HTTP/1.1 200 OK
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-customer_url = 'https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'
+customer_url = 'https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60'
 
 customer = app_token.post "#{customer_url}/iav-token"
 customer.token # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
 ```
 ```javascript
 // Using dwolla-v2 - https://github.com/Dwolla/dwolla-v2-node
-var customerUrl = 'https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6';
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60';
 
 appToken
   .post(`${customerUrl}/iav-token`)
@@ -1736,7 +1736,7 @@ appToken
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-customer_url = 'http://api.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'
+customer_url = 'http://api.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60'
 
 app_token.post('%s/iav-token' % customer_url)
 ```
@@ -1744,7 +1744,7 @@ app_token.post('%s/iav-token' % customer_url)
 <?php
 $customersApi = new DwollaSwagger\CustomersApi($apiClient);
 
-$iavToken = $customersApi->getCustomerIavToken("https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6");
+$iavToken = $customersApi->getCustomerIavToken("https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60");
 $iavToken->token; # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
 ?>
 ```
@@ -1975,7 +1975,7 @@ This section details how to retrieve a Customer's list of transfers. Transaction
 ### Request and response
 
 ```raw
-GET http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271/transfers
+GET https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295/transfers
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -1983,37 +1983,43 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
   "_links": {
+    "self": {
+      "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295/transfers"
+    },
     "first": {
-      "href": "https://api-sandbox.dwolla.com/customers/01b47cb2-52ac-42a7-926c-6f1f50b1f271/transfers?limit=25&offset=0"
+      "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295/transfers?&limit=25&offset=0"
     },
     "last": {
-      "href": "https://api-sandbox.dwolla.com/customers/01b47cb2-52ac-42a7-926c-6f1f50b1f271/transfers?limit=25&offset=0"
-    },
-    "self": {
-      "href": "http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271/transfers"
-    }
+      "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295/transfers?&limit=25&offset=0"
+    }  
   },
   "_embedded": {
     "transfers": [
       {
         "_links": {
           "self": {
-            "href": "https://api-sandbox.dwolla.com/transfers/4C8AD8B8-3D69-E511-80DB-0AA34A9B2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/61cbc6db-19f4-e811-8112-e8dd3bececa8"
           },
           "source": {
-            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+            "href": "https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d"
+          },
+          "source-funding-source": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/73ce02cb-8857-4f01-83fc-b6640b24f9f7"
           },
           "destination": {
-            "href": "https://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271"
-          }
+            "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295"
+          },
+          "destination-funding-source": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/ac6d4c2a-fda8-49f6-805d-468066dd474c"
+          },
         },
-        "id": "4C8AD8B8-3D69-E511-80DB-0AA34A9B2388",
+        "id": "461cbc6db-19f4-e811-8112-e8dd3bececa8",
         "status": "pending",
         "amount": {
           "value": "225.00",
           "currency": "USD"
         },
-        "created": "2015-10-02T19:42:32.950Z",
+        "created": "2018-11-29 21:00:59 UTC",
         "metadata": {
           "foo": "bar",
           "baz": "foo"
@@ -2022,16 +2028,22 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-sandbox.dwolla.com/transfers/9DC99076-3D69-E511-80DB-0AA34A9B2388"
+            "href": "https://api-sandbox.dwolla.com/transfers/76e5541d-18f4-e811-8112-e8dd3bececa8"
           },
           "source": {
-            "href": "https://api-sandbox.dwolla.com/accounts/ca32853c-48fa-40be-ae75-77b37504581b"
+            "href": "https://api-sandbox.dwolla.com/customers/0e309d41-a5df-4105-97da-2c6739e71a67"
+          },
+          "source-funding-source": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/73ce02cb-8857-4f01-83fc-b6640b24f9f7"
           },
           "destination": {
-            "href": "https://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271"
+            "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295"
+          },
+          "destination-funding-source": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/ac6d4c2a-fda8-49f6-805d-468066dd474c"
           }
         },
-        "id": "9DC99076-3D69-E511-80DB-0AA34A9B2388",
+        "id": "76e5541d-18f4-e811-8112-e8dd3bececa8",
         "status": "pending",
         "amount": {
           "value": "225.00",
@@ -2050,14 +2062,14 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-customer_url = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'
+customer_url = 'http://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295'
 
 transfers = app_token.get "#{customer_url}/transfers"
 transfers._embedded['transfers'][0].status # => "pending"
 ```
 ```php
 <?php
-$customerUrl = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';
+$customerUrl = 'http://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295';
 
 $TransfersApi = new DwollaSwagger\TransfersApi($apiClient);
 
@@ -2067,13 +2079,13 @@ $transfers->_embedded->{'transfers'}[0]->status; # => "pending"
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-customer_url = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271'
+customer_url = 'http://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295'
 
 transfers = app_token.get('%s/transfers' % customer_url)
 transfers.body['_embedded']['transfers'][0]['status'] # => 'pending'
 ```
 ```javascript
-var customerUrl = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';
+var customerUrl = 'http://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295';
 
 appToken
   .get(`${customerUrl}/transfers`)
