@@ -25,7 +25,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 | metadata | A metadata JSON object |
 | clearing | A clearing JSON object. |
 | correlationId | A unique string value attached to a transfer resource which can be used for traceability between Dwolla and your application. |
-| individualAchId | The individual identifier for that ACH entry, a unique string value matching the value on bank line related to the transfer. Appears when the debit entry clears out of the bank. |
+| individualAchId | A unique string value matching the value on bank line related to the transfer. Appears when the debit entry clears out of the bank. The individual identifier for that ACH entry. |
 
 ```noselect
 {
@@ -65,9 +65,9 @@ This section covers how to initiate a transfer from either a Dwolla [Account](#a
 | amount | yes | object | An amount JSON object. [Reference the amount JSON object to learn more](#amount-json-object). |
 | metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
 | fees | no | array | An array of fee JSON objects that contain unique fee transfers. [Reference the facilitator fee JSON object to learn more](#facilitator-fee-json-object). |
-| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys. [Reference the clearing JSON object to learn more](#clearing-json-object). |
+| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys to expedite or slow down a transfer. [Reference the clearing JSON object to learn more](#clearing-json-object). |
 | achDetails | no | object | An ACH details JSON object which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [Reference the achDetails JSON object to learn more](#achdetails-object)|
-| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
+| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
 
 ### Source and destination types
 
@@ -141,7 +141,7 @@ Source specifies the clearing time for the source funding source involved in the
 
 ### achDetails and addenda object
 
-The addendum record is used to provide additional information to the payment recipient about the payment. This value will be passed in on a transfer request and can be exposed on a Customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.
+**Note: This feature is only supported for business Customer records.** <br> The addendum record is used to provide additional information to the payment recipient about the payment. This value will be passed in on a transfer request and can be exposed on a Customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.
 
 ##### achDetails object
 
@@ -154,7 +154,7 @@ The addendum record is used to provide additional information to the payment rec
 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
-| addenda | no | object | An addenda object contains a `values` key which is an array of comma separated string addenda values. Addenda record information is used for the purpose of transmitting transfer-related information. Values must be less than or equal to 80 characters and can include spaces. Acceptable characters are: a-Z, 0-9, and special characters `- _ . ~! * ' ( ) ; : @ & = + $ , / ? % # [ ]`. *Will not show up on bank statements from balance-sourced transfers*
+| addenda | no | object | An addenda object contains a `values` key which is an array of comma separated string addenda values. Addenda record information is used for the purpose of transmitting transfer-related information from a business. <br> Values must be less than or equal to 80 characters and can include spaces. <br> Acceptable characters are: a-Z, 0-9, and special characters `- _ . ~ ! * ' ( ) ; : @ & = + $ , / ? % # [ ]`. <br> *Transfers must be sent to/from a business entity's bank to guarantee addenda delivery.* |
 
 #### achDetails with addenda example:
 
