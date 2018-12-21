@@ -1,6 +1,6 @@
 # Customers
 
-A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla [account](#accounts) via the API. In order for a Dwolla `Account` to create and manage Customers, an application must obtain permission from Dwolla before being enabled in production.
+A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla [Master account](#accounts) via the API. In order for a Dwolla `Account` to create and manage Customers, an application must obtain permission from Dwolla before being enabled in production.
 
 ### Customer types
 
@@ -480,7 +480,7 @@ For an in-depth look at business verified Customers creation and status handling
 | businessName | yes | string | Registered business name. |
 | doingBusinessAs | no | string | Preferred business name -- also known as fictitious name, or assumed name. |
 | businessType | yes | string | Business structure. Value of `soleProprietorship`. |
-| businessClassification| yes | string | The industry classification Id that corresponds to Customer’s business. [Reference our Dev Docs](https://docsv2.dwolla.com/#list-business-classifications) to learn how to generate this Id. |
+| businessClassification| yes | string | The industry classification Id that corresponds to Customer’s business. [Reference our Dev Docs](#list-business-classifications) to learn how to generate this Id. |
 | ein | no | string | Employer Identification Number. Optional for `soleProprietorship` business Customers |
 | website | no | string | Business’ website |
 | phone | no | string | Business's 10 digit phone number. No hyphens or other separators, e.g. 3334447777. |
@@ -631,7 +631,7 @@ A verified business Customer must input information on the controller and the Bu
 | businessName | yes |string | Registered business name. |
 | doingBusinessAs | no |string | Preferred business name – also known as fictitious name, or assumed name. |
 | businessType | yes |string | Business structure. Possible values are `corporation`, `llc`, `partnership`. |
-| businessClassification | yes |string | The industry classification Id that corresponds to Customer’s business. [Reference the next section of our docs](https://docsv2.dwolla.com/#list-business-classifications) to learn how to generate this Id.  |
+| businessClassification | yes |string | The industry classification Id that corresponds to Customer’s business. [Reference the next section of our docs](#list-business-classifications) to learn how to generate this Id.  |
 | ein | yes |string | Employer Identification Number. |
 | website | no |string | Business’ website |
 | phone | no | string | Business's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
@@ -860,163 +860,155 @@ appToken
   .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304d60c3d5'
 ```
 
-## List business classifications
+## Retrieve a customer
 
-Retrieve a list of industry classifications to identify the Customer’s business. An industry classification is required by Dwolla when verifying a `business` in order to better analyze the nature of a business.
-
-### HTTP request
-
-`GET https://api.dwolla.com/business-classifications`
-
-### Request and response
-
-```raw
-GET https://api-sandbox.dwolla.com/business-classifications
-Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
-
-{
-  "_links": {},
-  "_embedded": {
-    "business-classifications": [
-      {
-        "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/business-classifications/9ed3f669-7d6f-11e3-b545-5404a6144203"
-          }
-        },
-        "_embedded": {
-          "industry-classifications": [
-            {
-              "id": "9ed3f671-7d6f-11e3-803c-5404a6144203",
-              "name": "Gourmet foods"
-            },
-            {
-              "id": "9ed3f66c-7d6f-11e3-86ae-5404a6144203",
-              "name": "Distilleries"
-            },
-            {
-              ...........
-            }
-          ]
-        },
-        "id": "9ed3f669-7d6f-11e3-b545-5404a6144203",
-        "name": "Food retail and service"
-      }
-      ...........
-    ]
-  },
-  "total": 27
-}
-```
-
-```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-business_classifications = app_token.get "business-classifications"
-business_classifications._embedded['business-classifications'][0].name # => "Food retail and service"
-```
-
-```php
-<?php
-$businessClassificationsApi = new DwollaSwagger\BusinessclassificationsApi($apiClient);
-
-$busClassifications = $businessClassificationsApi->_list();
-$busClassifications->_embedded->{'business-classifications'}[0]->name; # => "Food retail and service"
-?>
-```
-
-```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-business_classifications = app_token.get('business-classifications')
-business_classifications.body['_embedded']['business-classifications'][0]['name'] # => 'Food retail and service'
-```
-
-```javascript
-appToken
-  .get('business-classifications')
-  .then(res => res.body._embedded['business-classifications'][0].name); // => 'Food retail and service'
-```
-
-## Retrieve a business classification
-
-This section shows you how to retrieve a business classification from a list of industry classifications. An industry classification id is needed in order to verify a `business` Customer.
+This section shows you how to retrieve a Customer belonging to the authorized Dwolla Master Account. Each `Customer` id is a part of its location resource. You can pass either an `id` or the entire `location` resource to make this request.
 
 ### HTTP request
-
-`GET https://api.dwolla.com/business-classifications/{id}`
+`GET https://api.dwolla.com/customers/{id}`
 
 ### Request parameters
-
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
-| id | yes | string | Business classification unique identifier. |
+| id | yes | string | Customer unique identifier. |
+
+### HTTP status and error codes
+| HTTP Status | Message |
+|--------------|-------------|
+| 403 | Not authorized to get a customer by id. |
+| 404 | Customer not found. |
 
 ### Request and response
 
 ```raw
-GET https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203
+GET https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
   "_links": {
     "self": {
-      "href": "https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203"
+      "href": "https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
+    }
+  },
+  "id": "FC451A7A-AE30-4404-AB95-E3553FCD733F",
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "email": "janedoe@nomail.com",
+  "type": "unverified",
+  "status": "unverified",
+  "created": "2015-09-03T23:56:10.023Z"
+}
+```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+customer_url = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
+
+customer = app_token.get customer_url
+customer.firstName # => "Jane"
+```
+```php
+<?php
+$customerUrl = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8';
+
+$customersApi = new DwollaSwagger\CustomersApi($apiClient);
+
+$customer = $customersApi->getCustomer($customerUrl);
+$customer->firstName; # => "Jane"
+?>
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+customer_url = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
+
+customer = app_token.get(customer_url)
+customer.body['firstName']
+```
+```javascript
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8';
+
+appToken
+  .get(customerUrl)
+  .then(res => res.body.firstName); // => 'Jane'
+```
+
+## List and search customers
+
+This section outlines how to retrieve your list of created Customers.
+
+### HTTP request
+`GET https://api.dwolla.com/customers`
+
+### Request parameters
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| limit | no | integer | How many results to return. |
+| offset | no | integer | How many results to skip. |
+| search | no | string | Searches on `firstName`, `lastName`, and `email` fields. (`/customers?search=Doe`) |
+| status | no | string | Filter by Customer status or multiple Customer statuses. Possible values: `unverified`, `retry`, `document`, `verified`, `suspended`, or `deactivated`. (e.g. `/customers?status=retry&status=document`)
+
+### Request and response
+
+```raw
+GET https://api-sandbox.dwolla.com/customers
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+  "_links": {
+    "first": {
+      "href": "https://api-sandbox.dwolla.com/customers?limit=25&offset=0"
+    },
+    "last": {
+      "href": "https://api-sandbox.dwolla.com/customers?limit=25&offset=0"
+    },
+    "self": {
+      "href": "https://api-sandbox.dwolla.com/customers?limit=25&offset=0"
     }
   },
   "_embedded": {
-    "industry-classifications": [
+    "customers": [
       {
-        "id": "9ed3cf58-7d6f-11e3-81a4-5404a6144203",
-        "name": "Toys and games"
-      },
-      {
-        "id": "9ed3cf50-7d6f-11e3-8ae8-5404a6144203",
-        "name": "Music"
-      },
-      {
-        ...........
+        "_links": {
+          "self": {
+            "href": "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+          }
+        },
+        "id": "FC451A7A-AE30-4404-AB95-E3553FCD733F",
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "email": "janedoe@nomail.com",
+        "type": "unverified",
+        "status": "unverified",
+        "created": "2015-09-03T23:56:10.023Z"
       }
     ]
   },
-  "id": "9ed3a866-7d6f-11e3-a0ce-5404a6144203",
-  "name": "Entertainment and media"
+  "total": 1
 }
 ```
-
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-business_classification_url = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203'
-
-business_classification = app_token.get business_classification_url
-business_classification.name # => "Entertainment and media"
+customers = app_token.get "customers", limit: 10
+customers._embedded.['customers'][0].firstName # => "Jane"
 ```
-
 ```php
 <?php
-$businessClassificationUrl = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203';
+$customersApi = new DwollaSwagger\CustomersApi($apiClient);
 
-$businessClassificationsApi = new DwollaSwagger\BusinessclassificationsApi($apiClient);
-
-$busClassifications = $customersApi->getBusinessClassification($businessClassificationUrl);
-$busClassifications->name; # => "Entertainment and media"
+$customers = $customersApi->_list(10, 0);
+$customers->_embedded->{'customers'}[0]->firstName; # => "Jane"
 ?>
 ```
-
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-business_classification_url = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203'
-
-busClassification = app_token.get(business_classification_url)
-busClassification.body['name']
+customer = app_token.get('customers', limit = 10)
+customer.body['_embedded']['customers'][0]['firstName'] # => 'Jane'
 ```
-
 ```javascript
-var businessClassificationUrl = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203';
-
 appToken
-  .get(businessClassificationUrl)
-  .then(res => res.body.name); // => 'Entertainment and media'
+  .get('customers', { limit: 10 })
+  .then(res => res.body._embedded['customers'][0].firstName); // => 'Jane'
 ```
 
 ## Update a customer
@@ -1355,841 +1347,164 @@ appToken
 | 400 | Duplicate customer or validation error. |
 | 403 | Not authorized to create customers. |
 
-## List and search customers
+## List business classifications
 
-This section outlines how to retrieve your list of created Customers.
+Retrieve an `_embedded` list of business classifications that contains an `_embedded` list of industry classifications. An industry classification is used to identify the Customer's business and is required by Dwolla when verifying a `business` in order to better analyze the nature of a business.
+
 
 ### HTTP request
-`GET https://api.dwolla.com/customers`
 
-### Request parameters
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-------------|
-| limit | no | integer | How many results to return. |
-| offset | no | integer | How many results to skip. |
-| search | no | string | Searches on `firstName`, `lastName`, and `email` fields. (`/customers?search=Doe`) |
-| status | no | string | Filter by Customer status or multiple Customer statuses. Possible values: `unverified`, `retry`, `document`, `verified`, `suspended`, or `deactivated`. (e.g. `/customers?status=retry&status=document`)
+`GET https://api.dwolla.com/business-classifications`
 
 ### Request and response
 
 ```raw
-GET https://api-sandbox.dwolla.com/customers
+GET https://api-sandbox.dwolla.com/business-classifications
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
-  "_links": {
-    "first": {
-      "href": "https://api-sandbox.dwolla.com/customers?limit=25&offset=0"
-    },
-    "last": {
-      "href": "https://api-sandbox.dwolla.com/customers?limit=25&offset=0"
-    },
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/customers?limit=25&offset=0"
-    }
-  },
+  "_links": {},
   "_embedded": {
-    "customers": [
+    "business-classifications": [
       {
         "_links": {
           "self": {
-            "href": "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+            "href": "https://api-sandbox.dwolla.com/business-classifications/9ed3f669-7d6f-11e3-b545-5404a6144203"
           }
         },
-        "id": "FC451A7A-AE30-4404-AB95-E3553FCD733F",
-        "firstName": "Jane",
-        "lastName": "Doe",
-        "email": "janedoe@nomail.com",
-        "type": "unverified",
-        "status": "unverified",
-        "created": "2015-09-03T23:56:10.023Z"
+        "_embedded": {
+          "industry-classifications": [
+            {
+              "id": "9ed3f671-7d6f-11e3-803c-5404a6144203",
+              "name": "Gourmet foods"
+            },
+            {
+              "id": "9ed3f66c-7d6f-11e3-86ae-5404a6144203",
+              "name": "Distilleries"
+            },
+            {
+              ...........
+            }
+          ]
+        },
+        "id": "9ed3f669-7d6f-11e3-b545-5404a6144203",
+        "name": "Food retail and service"
       }
+      ...........
     ]
   },
-  "total": 1
+  "total": 27
 }
 ```
+
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-customers = app_token.get "customers", limit: 10
-customers._embedded.['customers'][0].firstName # => "Jane"
+business_classifications = app_token.get "business-classifications"
+business_classifications._embedded['business-classifications'][0].name # => "Food retail and service"
 ```
+
 ```php
 <?php
-$customersApi = new DwollaSwagger\CustomersApi($apiClient);
+$businessClassificationsApi = new DwollaSwagger\BusinessclassificationsApi($apiClient);
 
-$customers = $customersApi->_list(10, 0);
-$customers->_embedded->{'customers'}[0]->firstName; # => "Jane"
+$busClassifications = $businessClassificationsApi->_list();
+$busClassifications->_embedded->{'business-classifications'}[0]->name; # => "Food retail and service"
 ?>
 ```
+
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-customer = app_token.get('customers', limit = 10)
-customer.body['_embedded']['customers'][0]['firstName'] # => 'Jane'
+business_classifications = app_token.get('business-classifications')
+business_classifications.body['_embedded']['business-classifications'][0]['name'] # => 'Food retail and service'
 ```
+
 ```javascript
 appToken
-  .get('customers', { limit: 10 })
-  .then(res => res.body._embedded['customers'][0].firstName); // => 'Jane'
+  .get('business-classifications')
+  .then(res => res.body._embedded['business-classifications'][0].name); // => 'Food retail and service'
 ```
 
-## Retrieve a customer
+## Retrieve a business classification
 
-This section shows you how to retrieve a Customer belonging to the authorized user Account. Each `Customer` id is a part of its location resource. The developer can pass either an `id` or the entire `location` resource to make this request.
+This section shows you how to retrieve a business classification from a list of industry classifications. An industry classification id is needed in order to verify a `business` Customer.
 
 ### HTTP request
-`GET https://api.dwolla.com/customers/{id}`
+
+`GET https://api.dwolla.com/business-classifications/{id}`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
-| id | yes | string | Customer unique identifier. |
-
-### HTTP status and error codes
-| HTTP Status | Message |
-|--------------|-------------|
-| 403 | Not authorized to get a customer by id. |
-| 404 | Customer not found. |
+| id | yes | string | Business classification unique identifier. |
 
 ### Request and response
 
 ```raw
-GET https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8
+GET https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
   "_links": {
     "self": {
-      "href": "https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
-    }
-  },
-  "id": "FC451A7A-AE30-4404-AB95-E3553FCD733F",
-  "firstName": "Jane",
-  "lastName": "Doe",
-  "email": "janedoe@nomail.com",
-  "type": "unverified",
-  "status": "unverified",
-  "created": "2015-09-03T23:56:10.023Z"
-}
-```
-```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-customer_url = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
-
-customer = app_token.get customer_url
-customer.firstName # => "Jane"
-```
-```php
-<?php
-$customerUrl = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8';
-
-$customersApi = new DwollaSwagger\CustomersApi($apiClient);
-
-$customer = $customersApi->getCustomer($customerUrl);
-$customer->firstName; # => "Jane"
-?>
-```
-```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-customer_url = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
-
-customer = app_token.get(customer_url)
-customer.body['firstName']
-```
-```javascript
-var customerUrl = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8';
-
-appToken
-  .get(customerUrl)
-  .then(res => res.body.firstName); // => 'Jane'
-```
-
-## Create an on-demand transfer authorization
-
-This section outlines how to create an on-demand bank transfer authorization for your Customer. On-demand authorization allows Customers to authorize Dwolla to transfer variable amounts from their bank account using ACH at a later point in time for products or services delivered. This on-demand authorization is supplied along with the Customer's bank details when creating a [new Customer funding source](#new-funding-source-for-a-customer).
-
-When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. **Note:** On-demand payments come as part of our Dwolla API and requires additional approval before getting started. Please [contact Sales](https://www.dwolla.com/contact?b=apidocs) for more information on enabling.
-
-### HTTP request
-`POST https://api.dwolla.com/on-demand-authorizations`
-
-### HTTP status and error codes
-| HTTP Status | Code | Description |
-|--------------|-------------|---------------|
-| 403 | Forbidden | The supplied credentials are not authorized for this resource. |
-
-### Request and response
-
-```raw
-POST https://api-sandbox.dwolla.com/on-demand-authorizations
-Accept: application/vnd.dwolla.v1.hal+json
-Content-Type: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
-
-{
-  "_links": {
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
-    }
-  },
-  "bodyText": "I agree that future payments to Company ABC inc. will be processed by the Dwolla payment system from the selected account above. In order to cancel this authorization, I will change my payment settings within my Company ABC inc. account.",
-  "buttonText": "Agree & Continue"
-}
-```
-```ruby
-on_demand_authorization = app_token.post "on-demand-authorizations"
-on_demand_authorization.buttonText # => "Agree & Continue"
-```
-```php
-<?php
-$onDemandApi = new DwollaSwagger\OndemandauthorizationsApi($apiClient);
-
-$onDemandAuth = $onDemandApi->createAuthorization();
-$onDemandAuth->_links["self"]->href; # => "https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
-?>
-```
-```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-on_demand_authorization = app_token.post('on-demand-authorizations')
-on_demand_authorization.body['buttonText'] # => 'Agree & Continue'
-```
-```javascript
-appToken
-  .post('on-demand-authorizations')
-  .then(res => res.body.buttonText); // => "Agree & Continue"
-```
-
-## Create a funding source for a customer
-There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer's bank account information and pass it to Dwolla via the [new Customer funding source](#new-funding-source-for-a-customer) endpoint, or you can send the Customer through the the [Instant Account Verification](#instant-account-verification-iav) (IAV) flow which will add and verify a bank account within seconds.
-
-Before a Dwolla account or Dwolla API Customer is eligible to transfer money from their bank or credit union account they need to verify ownership of the account, either via Instant Account Verification (IAV) or micro-deposits. For more information on bank account verification, reference this [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article.
-
-### New funding source for a customer
-Create a new Funding Source for a Customer.  Customers can have a maximum of 6 funding sources.
-
-### HTTP request
-`POST https://api.dwolla.com/customers/{id}/funding-sources`
-
-### Request parameters
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-----------|
-| _links | no | object | A <code>_links</code> JSON object containing an `on-demand-authorization` link relation. See example raw request and response below. |
-| routingNumber | yes | string | The bank account's routing number. |
-| accountNumber | yes | string | The bank account number. |
-| bankAccountType | yes | string | Type of bank account: `checking` or `savings`. |
-| name | yes | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
-| channels | no | array | An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Dwolla](https://www.dwolla.com/platform) customers. |
-
-### HTTP status and error codes
-| HTTP Status | Code | Description |
-|--------------|-------------|-------------------|
-| 400 | ValidationError | Can be: Duplicate funding source or validation error. Authorization already associated to a funding source. |
-| 403 | Forbidden | Not authorized to create funding source. |
-
-### Request and response
-
-```raw
-POST https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/funding-sources
-Content-Type: application/vnd.dwolla.v1.hal+json
-Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
-{
-  "routingNumber": "222222226",
-  "accountNumber": "123456789",
-  "bankAccountType": "checking",
-  "name": "Jane Doe’s Checking"
-}
-
-HTTP/1.1 201 Created
-Location: https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB3111C
-```
-```php
-<?php
-$fundingApi = new DwollaSwagger\FundingsourcesApi($apiClient);
-
-$fundingSource = $fundingApi->createCustomerFundingSource([
-  "routingNumber" => "222222226",
-  "accountNumber" => "123456789",
-  "bankAccountType" => "checking",
-  "name" => "Jane Doe’s Checking"
-], "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C");
-$fundingSource; # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
-?>
-```
-```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-customer_url = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
-request_body = {
-  routingNumber: '222222226',
-  accountNumber: '123456789',
-  bankAccountType: 'checking',
-  name: 'Jane Doe’s Checking'
-}
-
-funding_source = app_token.post "#{customer_url}/funding-sources", request_body
-funding_source.response_headers[:location] # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
-```
-```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-customer_url = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
-request_body = {
-  'routingNumber': '222222226',
-  'accountNumber': '123456789',
-  'bankAccountType': 'checking',
-  'name': 'Jane Doe’s Checking'
-}
-
-customer = app_token.post('%s/funding-sources' % customer_url, request_body)
-customer.headers['location'] # => 'https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'
-```
-```javascript
-var customerUrl = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C';
-var requestBody = {
-  'routingNumber': '222222226',
-  'accountNumber': '123456789',
-  'bankAccountType': 'checking',
-  'name': 'Jane Doe’s Checking'
-};
-
-appToken
-  .post(`${customerUrl}/funding-sources`, requestBody)
-  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'
-```
-### Instant account verification (IAV)
-IAV is a simple and secure process which requires both server-side and client-side interaction. Your server requests a [single-use token](#generate-an-iav-token) which is used to represent the Customer that is adding or verifying their bank. The client-side implementation includes the dwolla.js library on the page that is used to render the IAV flow.
-
-```javascriptnoselect
-<script src="https://cdn.dwolla.com/1/dwolla.js"></script>
-<script type="text/javascript">
-  var iavToken = '4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY';
-  dwolla.configure('sandbox');
-  dwolla.iav.start(iavToken, {
-  container: 'iavContainer',
-  stylesheets: [
-    'https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext',
-    'https://myapp.com/iav/customStylesheet.css'
-  ],
-  microDeposits: false,
-  fallbackToMicroDeposits: true,
-  backButton: true,
-  subscriber: ({ currentPage, error }) => {
-      console.log('currentPage:', currentPage, 'error:', JSON.stringify(error))
-    }
-  }, function(err, res) {
-    console.log('Error: ' + JSON.stringify(err) + ' -- Response: ' + JSON.stringify(res))
-  });
-</script>
-```
-
-### Generate an IAV token
-
-Get a single-use IAV token for a Customer.
-
-### HTTP Request
-`POST https://api.dwolla.com/customers/{id}/iav-token`
-
-### Request parameters
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-------------|
-| id | yes | string | Customer unique identifier. |
-
-### HTTP status and error codes
-| HTTP Status | Message |
-|--------------|-------------|
-| 404 | Customer not found. |
-
-### Request and response
-
-```raw
-POST https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/iav-token
-Content-Type: application/vnd.dwolla.v1.hal+json
-Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
-
-HTTP/1.1 200 OK
-
-{
-  "_links": {
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/iav-token"
-    }
-  },
-  "token": "4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY"
-}
-```
-```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-customer_url = 'https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60'
-
-customer = app_token.post "#{customer_url}/iav-token"
-customer.token # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
-```
-```javascript
-// Using dwolla-v2 - https://github.com/Dwolla/dwolla-v2-node
-var customerUrl = 'https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60';
-
-appToken
-  .post(`${customerUrl}/iav-token`)
-  .then(res => res.body.token); // => 'lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL'
-```
-```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-customer_url = 'http://api.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60'
-
-app_token.post('%s/iav-token' % customer_url)
-```
-```php
-<?php
-$customersApi = new DwollaSwagger\CustomersApi($apiClient);
-
-$iavToken = $customersApi->getCustomerIavToken("https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60");
-$iavToken->token; # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
-?>
-```
-
-### Initiate IAV flow
-
-Initiate instant account verification for a Customer.
-
-#### dwolla.js
-`dwolla.js` is a JavaScript library that gives you the ability to render the IAV flow within a specified container. Call the function `dwolla.iav.start()` and pass the following arguments: the container where you want IAV to render, the Customer's single-use [IAV token](#generate-an-iav-token), and a callback to handle the `response` or `error`. This will initiate an HTTP request asking Dwolla to load IAV in the specified container. Once the Customer successfully completes the IAV flow, Dwolla sends a response that includes either an error or a link to the newly created and verified funding source resource.
-
-#### Usage and configuration
-
-##### Include dwolla.js
-
-**Development version:**
-`<script src="https://cdn.dwolla.com/1/dwolla.js"></script>`
-
-**Production (minified) version:**
-`<script src="https://cdn.dwolla.com/1/dwolla.min.js"></script>`
-
-##### Configure dwolla.js
-
-```javascriptnoselect
-// Sandbox
-dwolla.configure('sandbox');
-
-// Production
-dwolla.configure('prod');
-```
-##### Example
-
-```noselecthtml
-<head>
-<script src="https://cdn.dwolla.com/1/dwolla.js"></script>
-<!-- jQuery is used for example purposes -->
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-</head>
-
-<div id="controls">
-  <input type="button" id="start" value="Start">
-</div>
-<div id="iavContainer"></div>
-
-<script type="text/javascript">
-$('#start').click(function() {
-  var iavToken = '4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY';
-  dwolla.configure('sandbox');
-  dwolla.iav.start(iavToken, {
-    container: 'iavContainer',
-    stylesheets: [
-      'http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext',
-      'http://myapp.com/iav/customStylesheet.css'
-    ],
-    microDeposits: false,
-    fallbackToMicroDeposits: true
-  }, function(err, res) {
-    console.log('Error: ' + JSON.stringify(err) + ' -- Response: ' + JSON.stringify(res));
-  });
-});
-</script>
-```
-
-### Response:
-
-```noselect
-{
-  "_links": {
-    "funding-source": {
-      "href": "https://api.dwolla.com/funding-sources/3daf2382-e0e4-444a-863e-544239a261e3"
-    }
-  }
-}
-```
-
-### Errors
-
-| Code | Message |
-|--------------|-------------|
-| UnexpectedPage |IAV navigated to an unexpected page and was cancelled. |
-| InvalidIavToken |Invalid IAV token. |
-| UnsupportedBank |The customer's bank is not supported by the IAV flow. |
-| RateLimitReached |The customer exceeded the max # of IAV attempts. |
-
-## List funding sources for a customer
-
-Retrieve a list of funding sources that belong to a Customer. By default, all funding sources are returned unless the `removed` query string parameter is set to `false` in the request.
-
-### HTTP request
-`GET https://api.dwolla.com/customers/{id}/funding-sources`
-
-### Request parameters
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-----------|
-| id | yes | string | Customer's unique identifier. |
-| removed | no | string | Filter removed funding sources. Defaults to `true`. Set to `false` to filter out removed funding sources from list (i.e. - /customers/{id}/funding-sources?removed=false). |
-
-### HTTP status and error codes
-| HTTP Status | Message |
-|--------------|-------------|
-| 403 | Not authorized to list funding sources.
-| 404 | Customer not found. |
-
-### Request and response
-
-```raw
-GET https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/funding-sources
-Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
-
-...
-
-{
-  "_links": {
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/funding-sources"
-    },
-    "customer": {
-      "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733"
+      "href": "https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203"
     }
   },
   "_embedded": {
-    "funding-sources": [
+    "industry-classifications": [
       {
-        "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/ab9cd5de-9435-47af-96fb-8d2fa5db51e8"
-          },
-          "customer": {
-            "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733"
-          },
-          "with-available-balance": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/ab9cd5de-9435-47af-96fb-8d2fa5db51e8"
-          }
-        },
-        "id": "ab9cd5de-9435-47af-96fb-8d2fa5db51e8",
-        "status": "verified",
-        "type": "balance",
-        "name": "Balance",
-        "created": "2015-10-02T21:00:28.153Z",
-        "removed": false,
-        "channels": []
+        "id": "9ed3cf58-7d6f-11e3-81a4-5404a6144203",
+        "name": "Toys and games"
       },
       {
-        "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/98c209d3-02d6-4bee-bc0f-61e18acf0e33"
-          },
-          "customer": {
-            "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733"
-          }
-        },
-        "id": "98c209d3-02d6-4bee-bc0f-61e18acf0e33",
-        "status": "verified",
-        "type": "bank",
-        "bankAccountType": "checking",
-        "name": "Jane Doe’s Checking",
-        "created": "2015-10-02T22:03:45.537Z",
-        "removed": false,
-        "channels": [
-            "ach"
-        ],
-        "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
-      }
-    ]
-  }
-}
-```
-```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-customer_url = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
-
-funding_sources = app_token.get "#{customer_url}/funding-sources"
-funding_sources._embedded['funding-sources'][0].name # => "Jane Doe’s Checking"
-```
-```php
-<?php
-$customerUrl = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733';
-
-$fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
-
-$fundingSources = $fsApi->getCustomerFundingSources($customerUrl);
-$fundingSources->_embedded->{'funding-sources'}[0]->name; # => "Jane Doe’s Checking"
-?>
-```
-```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-customer_url = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
-
-funding_sources = app_token.get('%s/funding-sources' % customer_url)
-funding_sources.body['_embedded']['funding-sources'][0]['name'] # => 'Jane Doe’s Checking'
-```
-```javascript
-var customerUrl = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733';
-
-appToken
-  .get(`${customerUrl}/funding-sources`)
-  .then(res => res.body._embedded['funding-sources'][0].name); // => 'Jane Doe’s Checking'
-```
-
-## List and search transfers for a customer
-
-This section details how to retrieve a Customer's list of transfers. Transaction search is supported by passing in optional querystring parameters such as: `search` which represents a term to search on, `correlationId`, `startAmount`, `endAmount`, `startDate`, `endDate`, and `status`.
-
-### HTTP request
-`GET https://api.dwolla.com/customers/{id}/transfers`
-
-### Request parameters
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-------------|
-| id | yes | string | Customer unique identifier to get transfers for. |
-| search | no | string | A string to be matched with `firstName`, `lastName`, `email`, `businessName`, Customer Id, and Account Id. (`/transfers?search=Doe`) |
-| startAmount | no | string | Only include transactions with an amount equal to or greater than `startAmount`. Can optionally be used with `endAmount` to specify an amount range. |
-| endAmount | no | string | Only include transactions with an amount equal to or less than `endAmount`. Can optionally be used with `startAmount` to specify an amount range. |
-| startDate | no | string | Only include transactions created after this date. ISO-8601 format: `YYYY-MM-DD`. Can optionally be used with `endDate` to specify a date range. |
-| endDate | no | string | Only include transactions created before than this date. ISO-8601 format: `YYYY-MM-DD`. Can optionally be used with `startDate` to specify a date range. |
-| status | no | string | Filter results on transaction status. Possible values: `pending`, `processed`, `failed`, or `cancelled`. |
-| correlationId | no | string | A string value to search on if a `correlationId` was specified on a transfer or mass payment item. |
-| limit | no | integer | Number of search results to return. Defaults to 25. |
-| offset | no | integer | Number of search results to skip. Used for pagination. |
-
-### HTTP status and error codes
-| HTTP Status | Message |
-|--------------|-------------|
-| 403 | Not authorized to list transfers. |
-| 404 | Customer not found. |
-
-### Request and response
-
-```raw
-GET https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295/transfers
-Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
-
-...
-
-{
-  "_links": {
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295/transfers"
-    },
-    "first": {
-      "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295/transfers?&limit=25&offset=0"
-    },
-    "last": {
-      "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295/transfers?&limit=25&offset=0"
-    }  
-  },
-  "_embedded": {
-    "transfers": [
-      {
-        "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/transfers/61cbc6db-19f4-e811-8112-e8dd3bececa8"
-          },
-          "source": {
-            "href": "https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d"
-          },
-          "source-funding-source": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/73ce02cb-8857-4f01-83fc-b6640b24f9f7"
-          },
-          "destination": {
-            "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295"
-          },
-          "destination-funding-source": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/ac6d4c2a-fda8-49f6-805d-468066dd474c"
-          },
-        },
-        "id": "461cbc6db-19f4-e811-8112-e8dd3bececa8",
-        "status": "pending",
-        "amount": {
-          "value": "225.00",
-          "currency": "USD"
-        },
-        "created": "2018-11-29 21:00:59 UTC",
-        "metadata": {
-          "foo": "bar",
-          "baz": "foo"
-        }
+        "id": "9ed3cf50-7d6f-11e3-8ae8-5404a6144203",
+        "name": "Music"
       },
       {
-        "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/transfers/76e5541d-18f4-e811-8112-e8dd3bececa8"
-          },
-          "source": {
-            "href": "https://api-sandbox.dwolla.com/customers/0e309d41-a5df-4105-97da-2c6739e71a67"
-          },
-          "source-funding-source": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/73ce02cb-8857-4f01-83fc-b6640b24f9f7"
-          },
-          "destination": {
-            "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295"
-          },
-          "destination-funding-source": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/ac6d4c2a-fda8-49f6-805d-468066dd474c"
-          }
-        },
-        "id": "76e5541d-18f4-e811-8112-e8dd3bececa8",
-        "status": "pending",
-        "amount": {
-          "value": "225.00",
-          "currency": "USD"
-        },
-        "created": "2015-10-02T19:40:41.437Z",
-        "metadata": {
-          "foo": "bar",
-          "baz": "foo"
-        }
+        ...........
       }
     ]
   },
-  "total": 2
+  "id": "9ed3a866-7d6f-11e3-a0ce-5404a6144203",
+  "name": "Entertainment and media"
 }
 ```
+
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-customer_url = 'http://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295'
+business_classification_url = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203'
 
-transfers = app_token.get "#{customer_url}/transfers"
-transfers._embedded['transfers'][0].status # => "pending"
+business_classification = app_token.get business_classification_url
+business_classification.name # => "Entertainment and media"
 ```
+
 ```php
 <?php
-$customerUrl = 'http://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295';
+$businessClassificationUrl = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203';
 
-$TransfersApi = new DwollaSwagger\TransfersApi($apiClient);
+$businessClassificationsApi = new DwollaSwagger\BusinessclassificationsApi($apiClient);
 
-$transfers = $TransfersApi->getCustomerTransfers($customerUrl);
-$transfers->_embedded->{'transfers'}[0]->status; # => "pending"
+$busClassifications = $customersApi->getBusinessClassification($businessClassificationUrl);
+$busClassifications->name; # => "Entertainment and media"
 ?>
 ```
+
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-customer_url = 'http://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295'
+business_classification_url = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203'
 
-transfers = app_token.get('%s/transfers' % customer_url)
-transfers.body['_embedded']['transfers'][0]['status'] # => 'pending'
+busClassification = app_token.get(business_classification_url)
+busClassification.body['name']
 ```
+
 ```javascript
-var customerUrl = 'http://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295';
+var businessClassificationUrl = 'https://api-sandbox.dwolla.com/business-classifications/9ed3a866-7d6f-11e3-a0ce-5404a6144203';
 
 appToken
-  .get(`${customerUrl}/transfers`)
-  .then(res => res.body._embedded['transfers'][0].status); // => "pending"
+  .get(businessClassificationUrl)
+  .then(res => res.body.name); // => 'Entertainment and media'
 ```
 
-## List mass payments for a customer
-
-This section covers how to retrieve a [verified Customer's](#customers) list of previously created mass payments. Mass payments are returned ordered by date created, with most recent mass payments appearing first.
-
-### HTTP request
-`GET https://api.dwolla.com/customers/{id}/mass-payments`
-
-### Request parameters
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-------------|
-| id | yes | string | Customer unique identifier to get mass payments for. |
-| limit | no | integer | How many results to return. Defaults to 25. |
-| offset | no | integer | How many results to skip. |
-| correlationId | no | string | A string value to search on if a correlationId was specified on a mass payment. |
-
-### HTTP status and error codes
-| HTTP Status | Code | Description |
-|--------------|-------------|------------------------|
-| 403 | NotAuthorized | Not authorized to list mass payments. |
-| 404 | NotFound | Customer not found. |
-
-### Request and response
-
-```raw
-GET https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments
-Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
-
-....
-
-{
-  "_links": {
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments"
-    },
-    "first": {
-      "href": "https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments?limit=25&offset=0"
-    },
-    "last": {
-      "href": "https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments?limit=25&offset=0"
-    }
-  },
-  "_embedded": {
-    "mass-payments": [
-      {
-        "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/mass-payments/89ca72d2-63bf-4a8f-92ef-a5d00140aefa"
-          },
-          "source": {
-            "href": "https://api-sandbox.dwolla.com/funding-sources/e1c972d4-d8d9-4c30-861a-9081dcbaf4ab"
-          },
-          "items": {
-            "href": "https://api-sandbox.dwolla.com/mass-payments/89ca72d2-63bf-4a8f-92ef-a5d00140aefa/items"
-          }
-        },
-        "id": "89ca72d2-63bf-4a8f-92ef-a5d00140aefa",
-        "status": "complete",
-        "created": "2016-03-21T19:27:34.000Z",
-        "metadata": {
-          "masspay1": "masspay1"
-        },
-        "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
-      }
-    ]
-  },
-  "total": 1
-}
-```
-```ruby
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-customer_url = 'https://api-sandbox.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'
-
-mass_payments = app_token.get "#{customer_url}/mass-payments", limit: 10
-mass_payments._embedded['mass-payments'][0].status # => "complete"
-```
-```php
-<?php
-$customerUrl = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';
-
-$masspaymentsApi = new DwollaSwagger\MasspaymentsApi($apiClient);
-
-$masspayments = $masspaymentsApi->getByCustomer($customerUrl);
-$masspayments->_embedded->{'mass-payments'}[0]->status; # => "complete"
-?>
-```
-```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-customer_url = 'https://api-sandbox.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'
-
-mass_payments = app_token.get('%s/mass-payments' % customer_url)
-mass_payments.body['_embedded']['mass-payments'][0]['status'] # => 'complete'
-```
-```javascript
-var customerUrl = 'https://api-sandbox.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b';
-
-appToken
-  .get(`${customerUrl}/mass-payments`, { limit: 10 })
-  .then(res => res.body._embedded['mass-payments'][0].status); // => "complete"
-```
 * * *

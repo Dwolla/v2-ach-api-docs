@@ -2,18 +2,16 @@
 
 An `Account` represents your Dwolla Master Account that was established on dwolla.com.
 
-### Migrating Transfer user Accounts to Dwolla API Customers
-Dwolla offers a seamless process for migrating existing Transfer user Accounts managed via OAuth on your platform to Dwolla API [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading to the Dwolla API, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).
-
 ### Account links
+
 | Link | Description|
 |------|------------|
-| self | URL of the Account resource
-| receive | Follow the link to create a transfer to this Account.
-| funding-sources | GET this link to list the Account's funding sources.
-| transfers | GET this link to list the Account's transfers
-| customers | (optional) If this link exists, this account is authorized to create and manage Dwolla API Customers.
-| send | Follow the link to create a transfer to this Account.
+| self | URL of the Account resource |
+| receive | Follow the link to create a transfer to this Account. |
+| funding-sources | GET this link to list the Account's funding sources. |
+| transfers | GET this link to list the Account's transfers. |
+| customers | (optional) If this link exists, this account is authorized to create and manage Dwolla API Customers. |
+| send | Follow the link to create a transfer to this Account. |
 
 ```noselect
 {
@@ -44,20 +42,25 @@ Dwolla offers a seamless process for migrating existing Transfer user Accounts m
 
 ## Retrieve account details
 
-This section shows you how to retrieve basic account information belonging to the authorized user Account.
+This section shows you how to retrieve basic account information belonging to the authorized Dwolla Master Account.
+
+To retrieve your Account ID, you will need to call the [root](#root) of the API.
 
 ### HTTP request
+
 `GET https://api.dwolla.com/accounts/{id}`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | Account unique identifier. |
 
 ### HTTP status and error codes
+
 | HTTP Status | Message |
 |--------------|-------------|
-| 403 | Not authorized to get an Account by id. |
+| 403 | Not authorized to retrieve an Account by id. |
 | 404 | Account not found. |
 
 ### Request and response
@@ -126,14 +129,16 @@ appToken
 
 ## Create a funding source for an account
 
-This section details how to add a bank account to a Dwolla account. The bank account will have a status of `unverified` upon creation. Before a Dwolla account is eligible to transfer money from their bank or credit union account they need to verify ownership of the account via micro-deposit verification.
+This section details how to add a bank account to a Dwolla Master account. The bank account will have a status of `unverified` upon creation. Before a Dwolla Master account is eligible to transfer money from their bank or credit union account they need to verify ownership of the account via micro-deposit verification.
 
 For more information on micro-deposit verification, reference the [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article.
 
 ### HTTP request
+
 `POST https://api.dwolla.com/funding-sources`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | accountNumber | yes | string | The bank account number. |
@@ -143,6 +148,7 @@ For more information on micro-deposit verification, reference the [funding sourc
 | channels | no | array | An array containing a list of processing channels. ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Dwolla](https://www.dwolla.com/platform) customers. |
 
 ### HTTP status and error codes
+
 | HTTP Status | Message |
 |--------------|-------------|
 | 400 | Duplicate funding source or validation error.
@@ -223,15 +229,18 @@ appToken
 Retrieve a list of funding sources that belong to an Account. By default, all funding sources are returned unless the `removed` querystring parameter is set to `false` in the request.
 
 ### HTTP request
+
 `GET https://api.dwolla.com/accounts/{id}/funding-sources`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | Account's unique identifier. |
 | removed | no | boolean | Filter removed funding sources. Defaults to `true`. Set to `false` to filter out removed funding sources from list (i.e. - /accounts/{id}/funding-sources?removed=false). |
 
 ### HTTP status and error codes
+
 | HTTP Status | Message |
 |--------------|-------------|
 | 403 | Not authorized to list funding sources.
@@ -345,6 +354,7 @@ appToken
 This section covers how to retrieve an Account's list of transfers. Transaction search is supported by passing in optional query string parameters such as: `search` which represents a term to search on, `correlationId`, `startAmount`, `endAmount`, `startDate`, `endDate`, and `status`.
 
 ### HTTP request
+
 `GET https://api.dwolla.com/accounts/{id}/transfers`
 
 ### Request parameters
@@ -523,9 +533,11 @@ appToken
 This section covers how to retrieve an Account's list of previously created mass payments. Mass payments are returned ordered by date created, with most recent mass payments appearing first.
 
 ### HTTP request
+
 `GET https://api.dwolla.com/accounts/{id}/mass-payments`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | Account unique identifier to get mass payments for. |
@@ -534,6 +546,7 @@ This section covers how to retrieve an Account's list of previously created mass
 | correlationId | no | string | A string value to search on if a correlationId was specified on a mass payment. |
 
 ### HTTP status and error codes
+
 | HTTP Status | Code | Description |
 |--------------|-------------|------------------------|
 | 403 | NotAuthorized | Not authorized to list mass payments. |

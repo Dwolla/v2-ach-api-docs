@@ -2,8 +2,6 @@
 
 When a new [event](#events) is created, and there is an active [webhook subscription](#webhook-subscriptions), a new webhook is created in order to deliver that event.  Attempted deliveries are recorded under the webhook's `attempts` property.  Each attempt includes the recorded request and response of the delivery attempt. Webhooks are sent asynchronously and are not guaranteed to be delivered in order. We recommend that applications protect against duplicated events by making event processing idempotent.
 
-**Note:** Webhooks containing an [event](#events) are only fired if an application has a valid refresh_token for the Dwolla user Account that an event is created on.
-
 ### Webhook resource
 
 | Parameter      | Description                                       |
@@ -164,7 +162,7 @@ $webhook->topic; # => "transfer_created"
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 webhook_url = 'https://api-sandbox.dwolla.com/webhooks/9ece9660-aa34-41eb-80d7-0125d53b45e8'
 
-webhook = app_token.get(transfer_url)
+webhook = app_token.get(webhook_url)
 webhook.body['topic'] # => 'transfer_created'
 ```
 ```javascript

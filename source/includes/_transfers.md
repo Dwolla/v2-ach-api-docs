@@ -53,6 +53,14 @@ A transfer represents money being transferred from a `source` to a `destination`
 
 This section covers how to initiate a transfer from either a Dwolla [Account](#accounts) or Dwolla API [Customer](#customers) resource.
 
+### Prevent duplicate transfers with idempotency key
+
+To prevent an operation from being performed more than once, Dwolla supports passing in an `Idempotency-Key` header with a unique key as the value. Multiple `POSTs` with the same idempotency key won't result in multiple resources being created.
+
+For example, if a request to initiate a transfer fails due to a network connection issue, you can reattempt the request with the same idempotency key to ensure that only a single transfer is created.
+
+Refer to our [idempotency key](#idempotency-key) section to learn more.
+
 ### HTTP request
 
 `POST https://api.dwolla.com/transfers`
@@ -511,6 +519,154 @@ appToken
   .get(transferUrl)
   .then(res => res.body.status); // => 'pending'
 ```
+
+## List and search transfers for a customer
+
+This section details how to retrieve a Customer's list of transfers. Transaction search is supported by passing in optional querystring parameters such as: `search` which represents a term to search on, `correlationId`, `startAmount`, `endAmount`, `startDate`, `endDate`, and `status`.
+
+### HTTP request
+`GET https://api.dwolla.com/customers/{id}/transfers`
+
+### Request parameters
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| id | yes | string | Customer unique identifier to get transfers for. |
+| search | no | string | A string to be matched with `firstName`, `lastName`, `email`, `businessName`, Customer Id, and Account Id. (`/transfers?search=Doe`) |
+| startAmount | no | string | Only include transactions with an amount equal to or greater than `startAmount`. Can optionally be used with `endAmount` to specify an amount range. |
+| endAmount | no | string | Only include transactions with an amount equal to or less than `endAmount`. Can optionally be used with `startAmount` to specify an amount range. |
+| startDate | no | string | Only include transactions created after this date. ISO-8601 format: `YYYY-MM-DD`. Can optionally be used with `endDate` to specify a date range. |
+| endDate | no | string | Only include transactions created before than this date. ISO-8601 format: `YYYY-MM-DD`. Can optionally be used with `startDate` to specify a date range. |
+| status | no | string | Filter results on transaction status. Possible values: `pending`, `processed`, `failed`, or `cancelled`. |
+| correlationId | no | string | A string value to search on if a `correlationId` was specified on a transfer or mass payment item. |
+| limit | no | integer | Number of search results to return. Defaults to 25. |
+| offset | no | integer | Number of search results to skip. Used for pagination. |
+
+### HTTP status and error codes
+| HTTP Status | Message |
+|--------------|-------------|
+| 403 | Not authorized to list transfers. |
+| 404 | Customer not found. |
+
+### Request and response
+
+```raw
+GET https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295/transfers
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+...
+
+{
+  "_links": {
+    "self": {
+      "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295/transfers"
+    },
+    "first": {
+      "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295/transfers?&limit=25&offset=0"
+    },
+    "last": {
+      "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295/transfers?&limit=25&offset=0"
+    }  
+  },
+  "_embedded": {
+    "transfers": [
+      {
+        "_links": {
+          "self": {
+            "href": "https://api-sandbox.dwolla.com/transfers/61cbc6db-19f4-e811-8112-e8dd3bececa8"
+          },
+          "source": {
+            "href": "https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d"
+          },
+          "source-funding-source": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/73ce02cb-8857-4f01-83fc-b6640b24f9f7"
+          },
+          "destination": {
+            "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295"
+          },
+          "destination-funding-source": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/ac6d4c2a-fda8-49f6-805d-468066dd474c"
+          },
+        },
+        "id": "461cbc6db-19f4-e811-8112-e8dd3bececa8",
+        "status": "pending",
+        "amount": {
+          "value": "225.00",
+          "currency": "USD"
+        },
+        "created": "2018-11-29 21:00:59 UTC",
+        "metadata": {
+          "foo": "bar",
+          "baz": "foo"
+        }
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "https://api-sandbox.dwolla.com/transfers/76e5541d-18f4-e811-8112-e8dd3bececa8"
+          },
+          "source": {
+            "href": "https://api-sandbox.dwolla.com/customers/0e309d41-a5df-4105-97da-2c6739e71a67"
+          },
+          "source-funding-source": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/73ce02cb-8857-4f01-83fc-b6640b24f9f7"
+          },
+          "destination": {
+            "href": "https://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295"
+          },
+          "destination-funding-source": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/ac6d4c2a-fda8-49f6-805d-468066dd474c"
+          }
+        },
+        "id": "76e5541d-18f4-e811-8112-e8dd3bececa8",
+        "status": "pending",
+        "amount": {
+          "value": "225.00",
+          "currency": "USD"
+        },
+        "created": "2015-10-02T19:40:41.437Z",
+        "metadata": {
+          "foo": "bar",
+          "baz": "foo"
+        }
+      }
+    ]
+  },
+  "total": 2
+}
+```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+customer_url = 'http://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295'
+
+transfers = app_token.get "#{customer_url}/transfers"
+transfers._embedded['transfers'][0].status # => "pending"
+```
+```php
+<?php
+$customerUrl = 'http://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295';
+
+$TransfersApi = new DwollaSwagger\TransfersApi($apiClient);
+
+$transfers = $TransfersApi->getCustomerTransfers($customerUrl);
+$transfers->_embedded->{'transfers'}[0]->status; # => "pending"
+?>
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+customer_url = 'http://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295'
+
+transfers = app_token.get('%s/transfers' % customer_url)
+transfers.body['_embedded']['transfers'][0]['status'] # => 'pending'
+```
+```javascript
+var customerUrl = 'http://api-sandbox.dwolla.com/customers/33e56307-6754-41cb-81e2-23a7f1072295';
+
+appToken
+  .get(`${customerUrl}/transfers`)
+  .then(res => res.body._embedded['transfers'][0].status); // => "pending"
+```
+
 ## List fees for a transfer
 
 This section outlines how to retrieve fees charged on a created transfer. Fees are visible to the `Customer` or `Account` that is charged the fee, as well as the Dwolla `Account` that is involved in receiving the fee.
@@ -806,6 +962,61 @@ var requestBody = {
 appToken
   .post('transfers', requestBody)
   .then(res => res.body.status); // => "cancelled"
+```
+
+## Create an on-demand transfer authorization
+
+This section outlines how to create an on-demand bank transfer authorization for your Customer. On-demand authorization allows Customers to authorize Dwolla to transfer variable amounts from their bank account using ACH at a later point in time for products or services delivered. This on-demand authorization is supplied along with the Customer's bank details when creating a [new Customer funding source](#new-funding-source-for-a-customer).
+
+When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. **Note:** On-demand payments come as part of our Dwolla API and requires additional approval before getting started. Please [contact Sales](https://www.dwolla.com/contact?b=apidocs) for more information on enabling.
+
+### HTTP request
+`POST https://api.dwolla.com/on-demand-authorizations`
+
+### HTTP status and error codes
+| HTTP Status | Code | Description |
+|--------------|-------------|---------------|
+| 403 | Forbidden | The supplied credentials are not authorized for this resource. |
+
+### Request and response
+
+```raw
+POST https://api-sandbox.dwolla.com/on-demand-authorizations
+Accept: application/vnd.dwolla.v1.hal+json
+Content-Type: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+  "_links": {
+    "self": {
+      "href": "https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
+    }
+  },
+  "bodyText": "I agree that future payments to Company ABC inc. will be processed by the Dwolla payment system from the selected account above. In order to cancel this authorization, I will change my payment settings within my Company ABC inc. account.",
+  "buttonText": "Agree & Continue"
+}
+```
+```ruby
+on_demand_authorization = app_token.post "on-demand-authorizations"
+on_demand_authorization.buttonText # => "Agree & Continue"
+```
+```php
+<?php
+$onDemandApi = new DwollaSwagger\OndemandauthorizationsApi($apiClient);
+
+$onDemandAuth = $onDemandApi->createAuthorization();
+$onDemandAuth->_links["self"]->href; # => "https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
+?>
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+on_demand_authorization = app_token.post('on-demand-authorizations')
+on_demand_authorization.body['buttonText'] # => 'Agree & Continue'
+```
+```javascript
+appToken
+  .post('on-demand-authorizations')
+  .then(res => res.body.buttonText); // => "Agree & Continue"
 ```
 
 * * *
