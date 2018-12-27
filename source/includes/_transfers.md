@@ -946,7 +946,7 @@ $transfer->status; # => "cancelled"
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 transfer_url = 'https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388'
 request_body = {
-  "status": "cancelled"
+  'status': 'cancelled'
 }
 
 transfer = app_token.post(transfer_url, request_body)

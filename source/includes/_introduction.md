@@ -35,8 +35,6 @@ All requests require either an OAuth access token or a `client_id` and `client_s
 
 `Authorization: Bearer {access_token_here}`
 
-Requests that require a client_id and client_secret can be sent using the `application/x-www-form-urlencoded` Content-Type or via a JSON body with the `application/json` Content-Type.
-
 ### API Host
 **Production:** `https://api.dwolla.com`
 

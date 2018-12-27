@@ -587,7 +587,7 @@ funding_source.name # => "Test Checking - 1234"
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
-  "name": "Test Checking - 1234"
+  'name': 'Test Checking - 1234'
 }
 
 funding_source = app_token.post(funding_source_url, request_body)
@@ -740,13 +740,13 @@ appToken.post(`${fundingSourceUrl}/micro-deposits`, requestBody);
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'
 request_body = {
-    "amount1": {
-        "value": "0.03",
-        "currency": "USD"
+    'amount1': {
+        'value': '0.03',
+        'currency': 'USD'
     },
-    "amount2": {
-        "value": "0.09",
-        "currency": "USD"
+    'amount2': {
+        'value': '0.09',
+        'currency': 'USD'
     }
 }
 
@@ -1005,7 +1005,7 @@ $fsApi->softDelete(['removed' => true ], $fundingSourceUrl);
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
-  "removed": True
+  'removed': True
 }
 
 funding_source = app_token.post(funding_source_url, request_body)

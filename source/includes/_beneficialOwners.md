@@ -157,13 +157,13 @@ customer_url = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4
 request_body = {
   'firstName': 'John',
   'lastName': 'Doe',
-  'dateOfBirth': '1970-01-01'
-  'ssn': '123-46-7890'
+  'dateOfBirth': '1970-01-01',
+  'ssn': '123-46-7890',
   'address': {
     'address1': '99-99 33rd St',
     'city': 'Some City',
     'stateProvinceRegion': 'NY',
-    'country': 'US'
+    'country': 'US',
     'postalCode': '11101'
   }
 }
@@ -494,13 +494,13 @@ beneficial_owner_url = 'https://api-sandbox.dwolla.com/beneficial-owners/07d5971
 request_body = {
   'firstName': 'beneficial',
   'lastName': 'owner',
-  'dateOfBirth': '1963-11-11'
-  'ssn': '123-54-6789'
+  'dateOfBirth': '1963-11-11',
+  'ssn': '123-54-6789',
   'address': {
     'address1': '123 Main St',
     'city': 'Des Moines',
     'stateProvinceRegion': 'IA',
-    'country': 'US'
+    'country': 'US',
     'postalCode': '50309'
   }
 }
