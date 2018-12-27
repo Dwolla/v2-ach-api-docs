@@ -65,6 +65,14 @@ A mass payment offers a significant advantage over repeatedly calling the [Trans
 
 This section covers how to initiate a mass payment from your Dwolla Master [Account](#accounts) or Verified [Customer](#customers) resource. A mass payment contains a list of `items` representing individual payments. Optionally, mass payments can contain `metadata` and a `correlationId` on the mass payment itself as well as items contained in the mass payment, which can be used to pass along additional information with the mass payment and item respectively. If a `correlationId` is included on a mass payment item it will be passed along to the transfer created from the item and can be searched on.
 
+### Prevent duplicate mass payment with idempotency key
+
+To prevent an operation from being performed more than once, Dwolla supports passing in an `Idempotency-Key` header with a unique key as the value. Multiple `POSTs` with the same idempotency key won't result in multiple resources being created.
+
+For example, if a request to initiate a mass payment fails due to a network connection issue, you can reattempt the request with the same idempotency key to ensure that only a single mass payment is created.
+
+Refer to our [idempotency key](#idempotency-key) section to learn more.
+
 ### Deferred mass payment
 
 A mass payment can be created with a status of `deferred`, which allows you to create the mass payment and defer processing to a later time. To trigger processing on a deferred mass payment, you'll [update the mass payment](https://docsv2.dwolla.com/#update-a-mass-payment) with a status of `pending`. A deferred mass payment can be cancelled by updating the mass payment with a status of `cancelled`.
@@ -930,4 +938,106 @@ appToken
   .get(massPaymentItemUrl)
   .then(res => res.body.status); // => 'success'
 ```
+
+## List mass payments for a customer
+
+This section covers how to retrieve a [verified Customer's](#customers) list of previously created mass payments. Mass payments are returned ordered by date created, with most recent mass payments appearing first.
+
+### HTTP request
+`GET https://api.dwolla.com/customers/{id}/mass-payments`
+
+### Request parameters
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| id | yes | string | Customer unique identifier to get mass payments for. |
+| limit | no | integer | How many results to return. Defaults to 25. |
+| offset | no | integer | How many results to skip. |
+| correlationId | no | string | A string value to search on if a correlationId was specified on a mass payment. |
+
+### HTTP status and error codes
+| HTTP Status | Code | Description |
+|--------------|-------------|------------------------|
+| 403 | NotAuthorized | Not authorized to list mass payments. |
+| 404 | NotFound | Customer not found. |
+
+### Request and response
+
+```raw
+GET https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+....
+
+{
+  "_links": {
+    "self": {
+      "href": "https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments"
+    },
+    "first": {
+      "href": "https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments?limit=25&offset=0"
+    },
+    "last": {
+      "href": "https://api-sandbox.dwolla.com/customers/39e21228-5958-4c4f-96fe-48a4bf11332d/mass-payments?limit=25&offset=0"
+    }
+  },
+  "_embedded": {
+    "mass-payments": [
+      {
+        "_links": {
+          "self": {
+            "href": "https://api-sandbox.dwolla.com/mass-payments/89ca72d2-63bf-4a8f-92ef-a5d00140aefa"
+          },
+          "source": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/e1c972d4-d8d9-4c30-861a-9081dcbaf4ab"
+          },
+          "items": {
+            "href": "https://api-sandbox.dwolla.com/mass-payments/89ca72d2-63bf-4a8f-92ef-a5d00140aefa/items"
+          }
+        },
+        "id": "89ca72d2-63bf-4a8f-92ef-a5d00140aefa",
+        "status": "complete",
+        "created": "2016-03-21T19:27:34.000Z",
+        "metadata": {
+          "masspay1": "masspay1"
+        },
+        "correlationId": "8a2cdc8d-629d-4a24-98ac-40b735229fe2"
+      }
+    ]
+  },
+  "total": 1
+}
+```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+customer_url = 'https://api-sandbox.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'
+
+mass_payments = app_token.get "#{customer_url}/mass-payments", limit: 10
+mass_payments._embedded['mass-payments'][0].status # => "complete"
+```
+```php
+<?php
+$customerUrl = 'http://api-sandbox.dwolla.com/customers/01B47CB2-52AC-42A7-926C-6F1F50B1F271';
+
+$masspaymentsApi = new DwollaSwagger\MasspaymentsApi($apiClient);
+
+$masspayments = $masspaymentsApi->getByCustomer($customerUrl);
+$masspayments->_embedded->{'mass-payments'}[0]->status; # => "complete"
+?>
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+customer_url = 'https://api-sandbox.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b'
+
+mass_payments = app_token.get('%s/mass-payments' % customer_url)
+mass_payments.body['_embedded']['mass-payments'][0]['status'] # => 'complete'
+```
+```javascript
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/ca32853c-48fa-40be-ae75-77b37504581b';
+
+appToken
+  .get(`${customerUrl}/mass-payments`, { limit: 10 })
+  .then(res => res.body._embedded['mass-payments'][0].status); // => "complete"
+```
+
 * * *

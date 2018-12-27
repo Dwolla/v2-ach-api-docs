@@ -28,7 +28,7 @@ For more information on handling the Customer verification status of `document`,
 }
 ```
 
-## Create a document
+## Create a document for a customer
 
 Create a document for a Customer pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a `.jpg`, `.jpeg`, `.png`, or `.pdf` up to 10MB in size.
 
@@ -107,7 +107,7 @@ appToken
   .then(res => res.headers.get('location')); // => "https://api-sandbox.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
 ```
 
-## List documents
+## List documents for a customer
 
 This section contains information on how to retrieve a list of documents that belong to a Customer.
 
@@ -195,6 +195,156 @@ token
   .then(res => res.body._embedded['documents'][0].id); // => '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
 ```
 
+## Create a document for a beneficial owner
+
+Create a document for a beneficial owner pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a `.jpg`, `.jpeg`, `.png`, or `.pdf` up to 10MB in size.
+
+### HTTP request
+`POST https://api.dwolla.com/beneficial-owners/{id}/documents`
+
+### Request parameters
+|Form Field| Description|
+|----------|-------------|
+| documentType | One of `passport`, `license`, `idCard`, or `other` |
+| file | File contents. |
+
+### Request and response
+
+```raw
+curl -X POST
+\ -H "Authorization: Bearer tJlyMNW6e3QVbzHjeJ9JvAPsRglFjwnba4NdfCzsYJm7XbckcR"
+\ -H "Accept: application/vnd.dwolla.v1.hal+json"
+\ -H "Cache-Control: no-cache"
+\ -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
+\ -F "documentType=passport"
+\ -F "file=@foo.png"
+\ 'https://api-sandbox.dwolla.com/beneficial-owners/1de32ec7-ff0b-4c0c-9f09-19629e6788ce/documents'
+
+...
+
+HTTP/1.1 201 Created
+Location: https://api-sandbox.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0
+```
+```ruby
+beneficial_owner_url = 'https://api-sandbox.dwolla.com/beneficial-owners/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'
+
+file = Faraday::UploadIO.new('mclovin.jpg', 'image/jpeg')
+document = app_token.post "#{beneficial_owner_url}/documents", file: file, documentType: 'license'
+document.response_headers[:location] # => "https://api.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+beneficial_owner_url = 'https://api-sandbox.dwolla.com/beneficial-owners/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'
+
+document = app_token.post('%s/documents' % customer_url, file = open('mclovin.jpg', 'rb'), documentType = 'license')
+document.headers['location'] # => 'https://api-sandbox.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16'
+```
+```php
+/**
+ * No example for this language yet.
+ **/
+```
+```javascript
+var beneficialOwnerUrl = 'https://api-sandbox.dwolla.com/beneficial-owners/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE';
+
+var requestBody = new FormData();
+body.append('file', fs.createReadStream('mclovin.jpg'), {
+  filename: 'mclovin.jpg',
+  contentType: 'image/jpeg',
+  knownLength: fs.statSync('mclovin.jpg').size
+});
+body.append('documentType', 'license');
+
+appToken
+  .post(`${beneficialOwnerUrl}/documents`, requestBody)
+  .then(res => res.headers.get('location')); // => "https://api-sandbox.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16"
+```
+
+## List documents for a beneficial owner
+
+This section contains information on how to retrieve a list of documents that belong to a beneficial owner.
+
+### HTTP request
+`GET https://api.dwolla.com/beneficial-owners/{id}/documents`
+
+### Request parameters
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| id | yes | string | Beneficial owner unique identifier. |
+
+### Request and response
+
+```raw
+GET https://api-sandbox.dwolla.com/beneficial-owners/176878b8-ecdb-469b-a82b-43ba5e8704b2/documents
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+...
+
+{
+  "_links": {
+    "self": {
+      "href": "https://api-sandbox.dwolla.com/beneficial-owners/176878b8-ecdb-469b-a82b-43ba5e8704b2/documents"
+    }
+  },
+  "_embedded": {
+    "documents": [
+      {
+        "_links": {
+          "self": {
+            "href": "https://api-sandbox.dwolla.com/documents/56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
+          }
+        },
+        "id": "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc",
+        "status": "pending",
+        "type": "passport",
+        "created": "2015-09-29T21:42:16.000Z"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "https://api-sandbox.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0"
+          }
+        },
+        "id": "11fe0bab-39bd-42ee-bb39-275afcc050d0",
+        "status": "pending",
+        "type": "passport",
+        "created": "2015-09-29T21:45:37.000Z"
+      }
+    ]
+  },
+  "total": 2
+}
+```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+beneficial_owner_url = 'https://api-sandbox.dwolla.com/beneficial-owners/176878b8-ecdb-469b-a82b-43ba5e8704b2'
+
+documents = token.get "#{beneficial_owner_url}/documents"
+documents._embedded['documents'][0].id # => "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc"
+```
+```php
+<?php
+$beneficialOwnersApi = new DwollaSwagger\BeneficialownersApi($apiClient);
+$beneficialOwner = 'https://api-sandbox.dwolla.com/beneficial-owners/55469604-40ab-44b6-962f-de2c0837ba98';
+$listDocsBeneficialOwner = $beneficialOwnersApi->getBeneficialOwnerDocuments($beneficialOwner);
+?>
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+beneficial_owner_url = 'https://api-sandbox.dwolla.com/beneficial-owners/176878b8-ecdb-469b-a82b-43ba5e8704b2'
+
+documents = app_token.get('%s/documents' % beneficial_owner_url)
+documents.body['total'] # => 2
+```
+```javascript
+var beneficialOwnerUrl = 'https://api-sandbox.dwolla.com/beneficial-owners/176878b8-ecdb-469b-a82b-43ba5e8704b2';
+
+token
+  .get(`${beneficialOwnerUrl}/documents`)
+  .then(res => res.body._embedded['documents'][0].id); // => '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'
+```
+
 ## Retrieve a document
 
 This section contains information on how to retrieve a document by its id.
@@ -259,4 +409,5 @@ appToken
   .get(document_url)
   .then(res => res.body.type); // => "passport"
 ```
+
 * * *

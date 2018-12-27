@@ -71,6 +71,257 @@ Add and retrieve ACH bank account information via funding sources.  Customers ca
 }
 ```
 
+## Create a funding source for a customer
+
+There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer's bank account information and pass it to Dwolla via the [new Customer funding source](#new-funding-source-for-a-customer) endpoint, or you can send the Customer through the the [Instant Account Verification](#instant-account-verification-iav) (IAV) flow which will add and verify a bank account within seconds.
+
+Before a Dwolla account or Dwolla API Customer is eligible to transfer money from their bank or credit union account they need to verify ownership of the account, either via Instant Account Verification (IAV) or micro-deposits. For more information on bank account verification, reference this [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article.
+
+Customers can have a maximum of 6 funding sources.
+
+### HTTP request
+
+`POST https://api.dwolla.com/customers/{id}/funding-sources`
+
+### Request parameters
+
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-----------|
+| _links | no | object | A <code>_links</code> JSON object containing an `on-demand-authorization` link relation. See example raw request and response below. |
+| routingNumber | yes | string | The bank account's routing number. |
+| accountNumber | yes | string | The bank account number. |
+| bankAccountType | yes | string | Type of bank account: `checking` or `savings`. |
+| name | yes | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
+| plaidToken | no | string | A processor token obtained from Plaid for `adding and verifying` a bank. Reference our [Plaid Link Developer Resource Article](https://developers.dwolla.com/resources/dwolla-plaid-integration.html) to learn more about this integration. |
+| channels | no | array | An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Dwolla](https://www.dwolla.com/platform) customers. |
+
+### HTTP status and error codes
+
+| HTTP Status | Code | Description |
+|--------------|-------------|-------------------|
+| 400 | ValidationError | Can be: Duplicate funding source or validation error. Authorization already associated to a funding source. |
+| 403 | Forbidden | Not authorized to create funding source. |
+
+### Request and response
+
+```raw
+POST https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/funding-sources
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+{
+  "routingNumber": "222222226",
+  "accountNumber": "123456789",
+  "bankAccountType": "checking",
+  "name": "Jane Doe’s Checking"
+}
+
+HTTP/1.1 201 Created
+Location: https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB3111C
+```
+```php
+<?php
+$fundingApi = new DwollaSwagger\FundingsourcesApi($apiClient);
+
+$fundingSource = $fundingApi->createCustomerFundingSource([
+  "routingNumber" => "222222226",
+  "accountNumber" => "123456789",
+  "bankAccountType" => "checking",
+  "name" => "Jane Doe’s Checking"
+], "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C");
+$fundingSource; # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
+?>
+```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+customer_url = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
+request_body = {
+  routingNumber: '222222226',
+  accountNumber: '123456789',
+  bankAccountType: 'checking',
+  name: 'Jane Doe’s Checking'
+}
+
+funding_source = app_token.post "#{customer_url}/funding-sources", request_body
+funding_source.response_headers[:location] # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+customer_url = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
+request_body = {
+  'routingNumber': '222222226',
+  'accountNumber': '123456789',
+  'bankAccountType': 'checking',
+  'name': 'Jane Doe’s Checking'
+}
+
+customer = app_token.post('%s/funding-sources' % customer_url, request_body)
+customer.headers['location'] # => 'https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'
+```
+```javascript
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C';
+var requestBody = {
+  'routingNumber': '222222226',
+  'accountNumber': '123456789',
+  'bankAccountType': 'checking',
+  'name': 'Jane Doe’s Checking'
+};
+
+appToken
+  .post(`${customerUrl}/funding-sources`, requestBody)
+  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'
+```
+
+## Create a funding sources token for dwolla.js
+
+Dwolla.js is a client-side library that allows you `add` a funding source for your Customer without having any sensitive data hit your server. This section details how to create a token that will be sent to the client and used to authenticate the HTTP request asking Dwolla to `add` a new funding source.
+
+Refer to our [Dwolla.js developer resource article](https://developers.dwolla.com/resources/dwolla-js/add-a-bank-account.html) to learn more on how to utilize this single-use funding-sources-token to `add` funding source for a Customer.
+
+### HTTP Request
+
+`POST https://api.dwolla.com/customers/{id}/funding-sources-token`
+
+### Request parameters
+
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| id | yes | string | Customer unique identifier. |
+
+### HTTP status and error codes
+
+| HTTP Status | Message |
+|--------------|-------------|
+| 404 | Customer not found. |
+
+### Request and response
+
+```raw
+POST https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/funding-sources-token
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+HTTP/1.1 200 OK
+
+{
+ "_links": {
+   "self": {
+     "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/funding-sources-token"
+   }
+ },
+ "token": "4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY"
+}
+```
+
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+customer_url = 'https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'
+
+customer = app_token.post "#{customer_url}/funding-sources-token"
+customer.token # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
+```
+
+```javascript
+// Using dwolla-v2 - https://github.com/Dwolla/dwolla-v2-node
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6';
+
+appToken
+ .post(`${customerUrl}/funding-sources-token`)
+ .then(res => res.body.token); // => 'lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL'
+```
+
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+customer_url = 'http://api.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'
+
+app_token.post('%s/funding-sources-token' % customer_url)
+```
+
+```php
+<?php
+$customersApi = new DwollaSwagger\CustomersApi($apiClient);
+
+$iavToken = $customersApi->getCustomerIavToken("https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6");
+$iavToken->token; # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
+?>
+```
+
+## Create an IAV token for dwolla.js
+
+Dwolla.js is a client-side library that allows you `add and verify` a funding source for your Customer without having any sensitive data hit your server. This section details how to create a token that will be sent to the client and used to authenticate the HTTP request asking Dwolla to `add and verify` a new funding source.
+
+Refer to our [Dwolla.js developer resource article](https://developers.dwolla.com/resources/dwolla-js/instant-account-verification.html) to learn more on how to utilize this single-use iav-token to `add and verify` a funding source for a Customer.
+
+### HTTP Request
+
+`POST https://api.dwolla.com/customers/{id}/iav-token`
+
+### Request parameters
+
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| id | yes | string | Customer unique identifier. |
+
+### HTTP status and error codes
+
+| HTTP Status | Message |
+|--------------|-------------|
+| 404 | Customer not found. |
+
+### Request and response
+
+```raw
+POST https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/iav-token
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+HTTP/1.1 200 OK
+
+{
+ "_links": {
+   "self": {
+     "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/iav-token"
+   }
+ },
+ "token": "4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY"
+}
+```
+
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+customer_url = 'https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'
+
+customer = app_token.post "#{customer_url}/iav-token"
+customer.token # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
+```
+
+```javascript
+// Using dwolla-v2 - https://github.com/Dwolla/dwolla-v2-node
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6';
+
+appToken
+ .post(`${customerUrl}/iav-token`)
+ .then(res => res.body.token); // => 'lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL'
+```
+
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+customer_url = 'http://api.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'
+
+app_token.post('%s/iav-token' % customer_url)
+```
+
+```php
+<?php
+$customersApi = new DwollaSwagger\CustomersApi($apiClient);
+
+$iavToken = $customersApi->getCustomerIavToken("https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6");
+$iavToken->token; # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
+?>
+```
+
 ## Retrieve a funding source
 
 This section covers how to retrieve a funding source by id.
@@ -162,11 +413,128 @@ appToken
   .then(res => res.body.name); // => "Test checking account"
 ```
 
+## List funding sources for a customer
+
+Retrieve a list of funding sources that belong to a Customer. By default, all funding sources are returned unless the `removed` query string parameter is set to `false` in the request.
+
+### HTTP request
+`GET https://api.dwolla.com/customers/{id}/funding-sources`
+
+### Request parameters
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-----------|
+| id | yes | string | Customer's unique identifier. |
+| removed | no | string | Filter removed funding sources. Defaults to `true`. Set to `false` to filter out removed funding sources from list (i.e. - /customers/{id}/funding-sources?removed=false). |
+
+### HTTP status and error codes
+| HTTP Status | Message |
+|--------------|-------------|
+| 403 | Not authorized to list funding sources.
+| 404 | Customer not found. |
+
+### Request and response
+
+```raw
+GET https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/funding-sources
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+...
+
+{
+  "_links": {
+    "self": {
+      "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733/funding-sources"
+    },
+    "customer": {
+      "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733"
+    }
+  },
+  "_embedded": {
+    "funding-sources": [
+      {
+        "_links": {
+          "self": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/ab9cd5de-9435-47af-96fb-8d2fa5db51e8"
+          },
+          "customer": {
+            "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733"
+          },
+          "with-available-balance": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/ab9cd5de-9435-47af-96fb-8d2fa5db51e8"
+          }
+        },
+        "id": "ab9cd5de-9435-47af-96fb-8d2fa5db51e8",
+        "status": "verified",
+        "type": "balance",
+        "name": "Balance",
+        "created": "2015-10-02T21:00:28.153Z",
+        "removed": false,
+        "channels": []
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "https://api-sandbox.dwolla.com/funding-sources/98c209d3-02d6-4bee-bc0f-61e18acf0e33"
+          },
+          "customer": {
+            "href": "https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733"
+          }
+        },
+        "id": "98c209d3-02d6-4bee-bc0f-61e18acf0e33",
+        "status": "verified",
+        "type": "bank",
+        "bankAccountType": "checking",
+        "name": "Jane Doe’s Checking",
+        "created": "2015-10-02T22:03:45.537Z",
+        "removed": false,
+        "channels": [
+            "ach"
+        ],
+        "fingerprint": "4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"
+      }
+    ]
+  }
+}
+```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+customer_url = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
+
+funding_sources = app_token.get "#{customer_url}/funding-sources"
+funding_sources._embedded['funding-sources'][0].name # => "Jane Doe’s Checking"
+```
+```php
+<?php
+$customerUrl = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733';
+
+$fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
+
+$fundingSources = $fsApi->getCustomerFundingSources($customerUrl);
+$fundingSources->_embedded->{'funding-sources'}[0]->name; # => "Jane Doe’s Checking"
+?>
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+customer_url = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'
+
+funding_sources = app_token.get('%s/funding-sources' % customer_url)
+funding_sources.body['_embedded']['funding-sources'][0]['name'] # => 'Jane Doe’s Checking'
+```
+```javascript
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733';
+
+appToken
+  .get(`${customerUrl}/funding-sources`)
+  .then(res => res.body._embedded['funding-sources'][0].name); // => 'Jane Doe’s Checking'
+```
+
 ## Update a funding source
 
 This section covers how to update a `bank` funding source. The `accountNumber`, `routingNumber`, `type` and `name` are all optional attributes that can be updated on a funding source when it has an `unverified` status. You can choose to update only name, name and routingNumber, name and accountNumber, name and type or all four attributes. Any attribute that isn't updated remains the same as it was prior to update, including the funding source id. The `name` attribute can be updated when a funding source has either an `unverified` or `verified` status.
 
 ### HTTP request
+
 `POST https://api.dwolla.com/funding-sources/{id}`
 
 ### Request parameters
@@ -234,79 +602,6 @@ var requestBody = {
 appToken
   .post(fundingSourceUrl, requestBody)
   .then(res => res.body.name); // => "Test Checking - 1234"
-```
-
-## Retrieve a funding source balance
-
-This section covers how to retrieve the `balance` of a funding source. The funding source type `balance` only exists for [Verified Customer](https://developers.dwolla.com/resources/account-types.html#verified-customer) accounts and represents a balance held in the Dwolla network.
-
-### HTTP request
-`GET https://api.dwolla.com/funding-sources/{id}/balance`
-
-### Request parameters
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-------------|
-| id | yes | string | id of funding source to retrieve a balance for. |
-
-### HTTP status and error codes
-| HTTP Status | Code | Description |
-|--------------|-------------|-------------------|
-| 404 | NotFound | Funding source not found. |
-
-### Request and response
-
-```raw
-GET https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418/balance
-Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
-
-{
-  "_links": {
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418/balance",
-      "type": "application/vnd.dwolla.v1.hal+json",
-      "resource-type": "balance"
-    },
-    "funding-source": {
-      "href": "https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418",
-      "type": "application/vnd.dwolla.v1.hal+json",
-      "resource-type": "funding-source"
-    }
-  },
-  "balance": {
-    "value": "4616.87",
-    "currency": "USD"
-  },
-  "lastUpdated": "2017-04-18T15:20:25.880Z"
-}
-```
-```ruby
-funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418'
-
-# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-funding_source = app_token.get "#{funding_source_url}/balance"
-```
-```php
-<?php
-$fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418';
-
-$fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
-
-$fundingSource = $fsApi->getBalance($fundingSourceUrl);
-?>
-```
-```python
-# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418'
-
-funding_source = app_token.get('%s/balance' % funding_source_url)
-```
-```javascript
-var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418';
-
-appToken
-  .get(`${fundingSourceUrl}/balance`)
-  .then(res => res.body.balance.amount);
 ```
 
 ## Initiate micro-deposits
@@ -475,6 +770,79 @@ $fsApi->microDeposits([
   $fundingSourceUrl
 );
 ?>
+```
+
+## Retrieve a funding source balance
+
+This section covers how to retrieve the `balance` of a funding source. The funding source type `balance` only exists for [Verified Customer](https://developers.dwolla.com/resources/account-types.html#verified-customer) accounts and represents a balance held in the Dwolla network.
+
+### HTTP request
+`GET https://api.dwolla.com/funding-sources/{id}/balance`
+
+### Request parameters
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| id | yes | string | id of funding source to retrieve a balance for. |
+
+### HTTP status and error codes
+| HTTP Status | Code | Description |
+|--------------|-------------|-------------------|
+| 404 | NotFound | Funding source not found. |
+
+### Request and response
+
+```raw
+GET https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418/balance
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+  "_links": {
+    "self": {
+      "href": "https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418/balance",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "balance"
+    },
+    "funding-source": {
+      "href": "https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418",
+      "type": "application/vnd.dwolla.v1.hal+json",
+      "resource-type": "funding-source"
+    }
+  },
+  "balance": {
+    "value": "4616.87",
+    "currency": "USD"
+  },
+  "lastUpdated": "2017-04-18T15:20:25.880Z"
+}
+```
+```ruby
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418'
+
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+funding_source = app_token.get "#{funding_source_url}/balance"
+```
+```php
+<?php
+$fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418';
+
+$fsApi = new DwollaSwagger\FundingsourcesApi($apiClient);
+
+$fundingSource = $fsApi->getBalance($fundingSourceUrl);
+?>
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+funding_source_url = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418'
+
+funding_source = app_token.get('%s/balance' % funding_source_url)
+```
+```javascript
+var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-1b0e-4d18-a4a2-e552cc111418';
+
+appToken
+  .get(`${fundingSourceUrl}/balance`)
+  .then(res => res.body.balance.amount);
 ```
 
 ## Retrieve micro-deposits details
