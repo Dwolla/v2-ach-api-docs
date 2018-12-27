@@ -675,7 +675,7 @@ mass_payment.status # => "pending"
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 mass_payment_url = 'https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'
 request_body = {
-  "status": "pending"
+  'status': 'pending'
 }
 
 mass_payments = app_token.post('mass-payments', request_body)
