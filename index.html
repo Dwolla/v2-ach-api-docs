@@ -165,8 +165,6 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 <p>All requests require either an OAuth access token or a <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code>.  OAuth access tokens are passed via the <code class="prettyprint">Authorization</code> HTTP header:</p>
 
 <p><code class="prettyprint">Authorization: Bearer {access_token_here}</code></p>
-
-<p>Requests that require a client_id and client_secret can be sent using the <code class="prettyprint">application/x-www-form-urlencoded</code> Content-Type or via a JSON body with the <code class="prettyprint">application/json</code> Content-Type.</p>
 <h3 id='api-host'>API Host</h3>
 <p><strong>Production:</strong> <code class="prettyprint">https://api.dwolla.com</code></p>
 
@@ -4407,13 +4405,13 @@ Location: https://api.dwolla.com/beneficial-owners/FC451A7A-AE30-4404-AB95-E3553
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'firstName'</span><span class="p">:</span> <span class="s">'John'</span><span class="p">,</span>
   <span class="s">'lastName'</span><span class="p">:</span> <span class="s">'Doe'</span><span class="p">,</span>
-  <span class="s">'dateOfBirth'</span><span class="p">:</span> <span class="s">'1970-01-01'</span>
-  <span class="s">'ssn'</span><span class="p">:</span> <span class="s">'123-46-7890'</span>
+  <span class="s">'dateOfBirth'</span><span class="p">:</span> <span class="s">'1970-01-01'</span><span class="p">,</span>
+  <span class="s">'ssn'</span><span class="p">:</span> <span class="s">'123-46-7890'</span><span class="p">,</span>
   <span class="s">'address'</span><span class="p">:</span> <span class="p">{</span>
     <span class="s">'address1'</span><span class="p">:</span> <span class="s">'99-99 33rd St'</span><span class="p">,</span>
     <span class="s">'city'</span><span class="p">:</span> <span class="s">'Some City'</span><span class="p">,</span>
     <span class="s">'stateProvinceRegion'</span><span class="p">:</span> <span class="s">'NY'</span><span class="p">,</span>
-    <span class="s">'country'</span><span class="p">:</span> <span class="s">'US'</span>
+    <span class="s">'country'</span><span class="p">:</span> <span class="s">'US'</span><span class="p">,</span>
     <span class="s">'postalCode'</span><span class="p">:</span> <span class="s">'11101'</span>
   <span class="p">}</span>
 <span class="p">}</span>
@@ -4927,13 +4925,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'firstName'</span><span class="p">:</span> <span class="s">'beneficial'</span><span class="p">,</span>
   <span class="s">'lastName'</span><span class="p">:</span> <span class="s">'owner'</span><span class="p">,</span>
-  <span class="s">'dateOfBirth'</span><span class="p">:</span> <span class="s">'1963-11-11'</span>
-  <span class="s">'ssn'</span><span class="p">:</span> <span class="s">'123-54-6789'</span>
+  <span class="s">'dateOfBirth'</span><span class="p">:</span> <span class="s">'1963-11-11'</span><span class="p">,</span>
+  <span class="s">'ssn'</span><span class="p">:</span> <span class="s">'123-54-6789'</span><span class="p">,</span>
   <span class="s">'address'</span><span class="p">:</span> <span class="p">{</span>
     <span class="s">'address1'</span><span class="p">:</span> <span class="s">'123 Main St'</span><span class="p">,</span>
     <span class="s">'city'</span><span class="p">:</span> <span class="s">'Des Moines'</span><span class="p">,</span>
     <span class="s">'stateProvinceRegion'</span><span class="p">:</span> <span class="s">'IA'</span><span class="p">,</span>
-    <span class="s">'country'</span><span class="p">:</span> <span class="s">'US'</span>
+    <span class="s">'country'</span><span class="p">:</span> <span class="s">'US'</span><span class="p">,</span>
     <span class="s">'postalCode'</span><span class="p">:</span> <span class="s">'50309'</span>
   <span class="p">}</span>
 <span class="p">}</span>
@@ -6905,7 +6903,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
 <span class="n">funding_source_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"name"</span><span class="p">:</span> <span class="s">"Test Checking - 1234"</span>
+  <span class="s">'name'</span><span class="p">:</span> <span class="s">'Test Checking - 1234'</span>
 <span class="p">}</span>
 
 <span class="n">funding_source</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">funding_source_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
@@ -7180,13 +7178,13 @@ HTTP 200 OK
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
 <span class="n">funding_source_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5-b0f3a6f4f909'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">"amount1"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">"value"</span><span class="p">:</span> <span class="s">"0.03"</span><span class="p">,</span>
-        <span class="s">"currency"</span><span class="p">:</span> <span class="s">"USD"</span>
+    <span class="s">'amount1'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'value'</span><span class="p">:</span> <span class="s">'0.03'</span><span class="p">,</span>
+        <span class="s">'currency'</span><span class="p">:</span> <span class="s">'USD'</span>
     <span class="p">},</span>
-    <span class="s">"amount2"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">"value"</span><span class="p">:</span> <span class="s">"0.09"</span><span class="p">,</span>
-        <span class="s">"currency"</span><span class="p">:</span> <span class="s">"USD"</span>
+    <span class="s">'amount2'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'value'</span><span class="p">:</span> <span class="s">'0.09'</span><span class="p">,</span>
+        <span class="s">'currency'</span><span class="p">:</span> <span class="s">'USD'</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
@@ -7595,7 +7593,7 @@ HTTP 200 OK
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
 <span class="n">funding_source_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/funding-sources/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"removed"</span><span class="p">:</span> <span class="bp">True</span>
+  <span class="s">'removed'</span><span class="p">:</span> <span class="bp">True</span>
 <span class="p">}</span>
 
 <span class="n">funding_source</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">funding_source_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
@@ -8996,7 +8994,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
 <span class="n">transfer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/transfers/3d48c13a-0fc6-e511-80de-0aa34a9b2388'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"status"</span><span class="p">:</span> <span class="s">"cancelled"</span>
+  <span class="s">'status'</span><span class="p">:</span> <span class="s">'cancelled'</span>
 <span class="p">}</span>
 
 <span class="n">transfer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">transfer_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
@@ -10012,7 +10010,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
 <span class="n">mass_payment_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/mass-payments/692486f8-29f6-4516-a6a5-c69fd2ce854c'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">"status"</span><span class="p">:</span> <span class="s">"pending"</span>
+  <span class="s">'status'</span><span class="p">:</span> <span class="s">'pending'</span>
 <span class="p">}</span>
 
 <span class="n">mass_payments</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'mass-payments'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
@@ -12505,7 +12503,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           <section class="copyright">
             <div class="page-wrap">
               <div>
-                <span>© 2018 Dwolla, Inc.</span>
+                <span>© 2019 Dwolla, Inc.</span>
                 <a href="https://www.dwolla.com/legal/about-our-financial-institution-partner/">Dwolla, Inc. is an agent of its Financial Institution Partner(s)</a>
               </div>
             </div>
