@@ -8,12 +8,6 @@ All requests should supply the `Accept: application/vnd.dwolla.v1.hal+json` head
 
 Requests must be made over HTTPS.  Any non-secure requests are met with a redirect (HTTP 302) to the HTTPS equivalent URI.
 
-<ol class = "alerts">
-    <li class="alert icon-alert-info">
-      Dwolla has discontinued support for TLS 1.0 and TLS 1.1 across the platform as of June 30, 2018. This impacts a small number of integrations; however, to avoid service disruption, you will need to ensure that you’re connecting to the Dwolla API using TLS v1.2 or higher.
-  </li>
-</ol>
-
 ```noselect
 POST https://api.dwolla.com/customers
 Content-Type: application/json
