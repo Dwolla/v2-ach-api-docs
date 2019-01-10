@@ -94,7 +94,7 @@ The following errors are common across all API endpoints.
 | 400 | ValidationError | Validation error(s) present. See embedded errors list for more details. ([See below](#validation-errors)) |
 | 401 | InvalidCredentials | Missing or invalid Authorization header. |
 | 401 | InvalidAccessToken | Invalid access token. |
-| 401 | ExpiredAccessToken | Generate a new access token using a valid refresh token. |
+| 401 | ExpiredAccessToken | Generate a new access token using your client credentials. |
 | 401 | InvalidAccountStatus | Invalid access token account status. |
 | 401 | InvalidApplicationStatus | Invalid application status. |
 | 401 | InvalidScopes | Missing or invalid scopes for requested endpoint. |
