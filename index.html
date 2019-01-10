@@ -148,8 +148,7 @@
 <p>All requests should supply the <code class="prettyprint">Accept: application/vnd.dwolla.v1.hal+json</code> header. <code class="prettyprint">POST</code> requests must specify the <code class="prettyprint">Content-Type: application/vnd.dwolla.v1.hal+json</code> header. Request and response bodies are JSON encoded.</p>
 
 <p>Requests must be made over HTTPS.  Any non-secure requests are met with a redirect (HTTP 302) to the HTTPS equivalent URI.</p>
-<ol class = "alerts"><li class="alert icon-alert-alert"><p>Dwolla has discontinued support for TLS 1.0 and TLS 1.1 across the platform as of June 30, 2018. This impacts a small number of integrations; however, to avoid service disruption, you will need to ensure that you’re connecting to the Dwolla API using TLS v1.2 or higher.</p>
-</li></ol><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://api.dwolla.com/customers
+<div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://api.dwolla.com/customers
 Content-Type: application/json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer myOAuthAccessToken123
@@ -1677,8 +1676,6 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <p>Verified Customers are defined by their ability to both send and receive money, thus, being able to fit all funds flows. They can also interact with any Customer type and hold a <code class="prettyprint">balance</code> funding source within the Dwolla network. Think of the Dwolla <code class="prettyprint">balance</code> as a &ldquo;wallet&rdquo; which a Customer can send, receive, or hold funds to within the Dwolla network. With no weekly transfer limits, this Customer type is flexible for high transaction volumes.</p>
 
 <p>A verified Customer can be created as a type of either <code class="prettyprint">Personal</code> or <code class="prettyprint">Business</code>.</p>
-<h3 id='migrating-dwolla-user-accounts-to-dwolla-api-customers'>Migrating Dwolla user Accounts to Dwolla API Customers</h3>
-<p>Dwolla offers a seamless process for migrating existing user <a href="#accounts">Accounts</a> managed via OAuth on your platform to Dwolla API <a href="#customers">Customers</a>. The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading from our V1 API or Transfer API to the current V2 Dwolla API, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
 <h3 id='customer-links'>Customer links</h3>
 <table><thead>
 <tr>
