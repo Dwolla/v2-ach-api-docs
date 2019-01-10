@@ -20,10 +20,6 @@ Verified Customers are defined by their ability to both send and receive money, 
 
 A verified Customer can be created as a type of either `Personal` or `Business`.
 
-### Migrating Dwolla user Accounts to Dwolla API Customers
-
-Dwolla offers a seamless process for migrating existing user [Accounts](#accounts) managed via OAuth on your platform to Dwolla API [Customers](#customers). The user Account will maintain existing functionality on dwolla.com and will act as a separate Dwolla API Customer upon completion of the migration. To learn more about upgrading from our V1 API or Transfer API to the current V2 Dwolla API, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).
-
 ### Customer links
 
 | Link | Description|
