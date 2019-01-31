@@ -6,7 +6,7 @@ Create a webhook subscription to receive `POST` requests from Dwolla (called web
 Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after **400 consecutive failures**. This will help us ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API customers. Webhook subscriptions can be unpaused by calling [this endpoint](https://docsv2.dwolla.com/#update-a-webhook-subscription).
 
 ### Acknowledgement and retries
-When your application receives a [webhook](#webhooks), it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 400, or your application fails to respond within 10 seconds of the attempt, another attempt will be made.
+When your application receives a [webhook](#webhooks), it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 3xx, or your application fails to respond within 10 seconds of the attempt, another attempt will be made. Dwolla will not follow redirects and will treat them as a failure.
 
 Dwolla will re-attempt delivery 8 times over the course of 72 hours according to the backoff schedule below. If a webhook was successfully received but you would like the information again, you can call [retrieve a webhook by its Id](#retrieve-a-webhook).
 
@@ -174,7 +174,7 @@ This section details how to pause a webhook subscription. When a webhook subscri
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | Webhook unique identifier. |
-| paused | yes | string | Specify a value of `true` to pause the associated webhook subscription or `false` to unpause a paused subscription. |
+| paused | yes | boolean | Specify a value of `true` to pause the associated webhook subscription or `false` to unpause a paused subscription. |
 
 ### Request and response
 ```raw
@@ -370,43 +370,44 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {},
   "total": 0,
-  "items": [
-    {
-      "_links": {},
-      "id": "string",
-      "topic": "string",
-      "accountId": "string",
-      "eventId": "string",
-      "subscriptionId": "string",
-      "attempts": [
-        {
-          "id": "string",
-          "request": {
-            "created": "2015-07-23T14:19:37.006Z",
-            "url": "string",
-            "headers": [
+  "_embedded": {
+      "webhooks": [
+          {
+            "_links": {},
+            "id": "string",
+            "topic": "string",
+            "accountId": "string",
+            "eventId": "string",
+            "subscriptionId": "string",
+            "attempts": [
               {
-                "name": "string",
-                "value": "string"
+                "id": "string",
+                "request": {
+                  "created": "2015-07-23T14:19:37.006Z",
+                  "url": "string",
+                  "headers": [
+                    {
+                      "name": "string",
+                      "value": "string"
+                    }
+                  ],
+                  "body": "string"
+                },
+                "response": {
+                  "created": "2015-07-23T14:19:37.006Z",
+                  "headers": [
+                    {
+                      "name": "string",
+                      "value": "string"
+                    }
+                  ],
+                  "statusCode": 0,
+                  "body": "string"
+                }
               }
-            ],
-            "body": "string"
-          },
-          "response": {
-            "created": "2015-07-23T14:19:37.006Z",
-            "headers": [
-              {
-                "name": "string",
-                "value": "string"
-              }
-            ],
-            "statusCode": 0,
-            "body": "string"
           }
-        }
       ]
-    }
-  ]
+  }
 }
 ```
 ```ruby
@@ -427,7 +428,7 @@ appToken
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
 webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
-hooks = app_token.get('%s/hooks' % webhook_subscription_url)
+hooks = app_token.get('%s/webhooks' % webhook_subscription_url)
 hooks.body['total'] # => 5
 ```
 ```php
