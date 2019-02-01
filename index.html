@@ -75,12 +75,13 @@
              </div>
            </div>
            <nav class="js-hamburger-nav">
-             <a href="https://www.dwolla.com/platform">Platform</a>
+             <a href="https://www.dwolla.com/platform">Product</a>
              <a href="https://www.dwolla.com/pricing">Pricing</a>
              <a href="https://developers.dwolla.com">Developers</a>
-             <a href="https://www.dwolla.com/updates/">Blog</a>
+             <a href="https://www.dwolla.com/updates/">Resources</a>
+             <a href="https://www.dwolla.com/about/">Company</a>
              <a href="https://www.dwolla.com/login">Login</a>
-             <a class="btn primary" href="https://www.dwolla.com/contact?b=nav">Contact Sales</a>
+             <a class="btn primary" href="https://www.dwolla.com/contact/">Contact Us</a>
            </nav>
          </div>
       </div>
@@ -234,7 +235,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 <tr>
 <td>401</td>
 <td>ExpiredAccessToken</td>
-<td>Generate a new access token using a valid refresh token.</td>
+<td>Generate a new access token using your client credentials.</td>
 </tr>
 <tr>
 <td>401</td>
@@ -11250,7 +11251,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <h3 id='strongautomatic-pause-of-a-webhook-subscriptionstrong'><strong>Automatic pause of a webhook subscription</strong></h3>
 <p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API customers. Webhook subscriptions can be unpaused by calling <a href="https://docsv2.dwolla.com/#update-a-webhook-subscription">this endpoint</a>.</p>
 <h3 id='acknowledgement-and-retries'>Acknowledgement and retries</h3>
-<p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 400, or your application fails to respond within 10 seconds of the attempt, another attempt will be made.</p>
+<p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 3xx, or your application fails to respond within 10 seconds of the attempt, another attempt will be made. Dwolla will not follow redirects and will treat them as a failure.</p>
 
 <p>Dwolla will re-attempt delivery 8 times over the course of 72 hours according to the backoff schedule below. If a webhook was successfully received but you would like the information again, you can call <a href="#retrieve-a-webhook">retrieve a webhook by its Id</a>.</p>
 
@@ -11563,7 +11564,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>paused</td>
 <td>yes</td>
-<td>string</td>
+<td>boolean</td>
 <td>Specify a value of <code class="prettyprint">true</code> to pause the associated webhook subscription or <code class="prettyprint">false</code> to unpause a paused subscription.</td>
 </tr>
 </tbody></table>
@@ -11878,43 +11879,44 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
   "_links": {},
   "total": 0,
-  "items": [
-    {
-      "_links": {},
-      "id": "string",
-      "topic": "string",
-      "accountId": "string",
-      "eventId": "string",
-      "subscriptionId": "string",
-      "attempts": [
-        {
-          "id": "string",
-          "request": {
-            "created": "2015-07-23T14:19:37.006Z",
-            "url": "string",
-            "headers": [
+  "_embedded": {
+      "webhooks": [
+          {
+            "_links": {},
+            "id": "string",
+            "topic": "string",
+            "accountId": "string",
+            "eventId": "string",
+            "subscriptionId": "string",
+            "attempts": [
               {
-                "name": "string",
-                "value": "string"
+                "id": "string",
+                "request": {
+                  "created": "2015-07-23T14:19:37.006Z",
+                  "url": "string",
+                  "headers": [
+                    {
+                      "name": "string",
+                      "value": "string"
+                    }
+                  ],
+                  "body": "string"
+                },
+                "response": {
+                  "created": "2015-07-23T14:19:37.006Z",
+                  "headers": [
+                    {
+                      "name": "string",
+                      "value": "string"
+                    }
+                  ],
+                  "statusCode": 0,
+                  "body": "string"
+                }
               }
-            ],
-            "body": "string"
-          },
-          "response": {
-            "created": "2015-07-23T14:19:37.006Z",
-            "headers": [
-              {
-                "name": "string",
-                "value": "string"
-              }
-            ],
-            "statusCode": 0,
-            "body": "string"
           }
-        }
       ]
-    }
-  ]
+  }
 }
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -11953,7 +11955,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
 <span class="n">webhook_subscription_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'</span>
 
-<span class="n">hooks</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/hooks'</span> <span class="o">%</span> <span class="n">webhook_subscription_url</span><span class="p">)</span>
+<span class="n">hooks</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/webhooks'</span> <span class="o">%</span> <span class="n">webhook_subscription_url</span><span class="p">)</span>
 <span class="n">hooks</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'total'</span><span class="p">]</span> <span class="c"># =&gt; 5</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
