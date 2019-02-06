@@ -49,26 +49,25 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | funding_source_removed |  A funding source was removed from a Dwolla account. |
 | funding_source_verified | A funding source was marked as `verified`. |
 | funding_source_unverified | A funding source has been systematically `unverified`. This is generally a result of a transfer failure. [View our developer resource article](https://developers.dwolla.com/resources/bank-transfer-workflow/transfer-failures.html) to learn more. |
-| funding_source_negative | A Dwolla Master account `balance` has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for your account. If your balance funding source has gone negative, you are responsible for making the Dwolla account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source. |
+| funding_source_negative | A Dwolla Master Account `balance` has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for your account. If your balance funding source has gone negative, you are responsible for making the Dwolla account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source. |
 | funding_source_updated | A funding source has been updated. This can also be fired as a result of a correction after a bank transfer processes. For example, a financial institution can issue a correction to change the bank account `type` from `checking` to `savings`. |
-| microdeposits_added | Two <=10¢ transfers to a Dwolla Master account’s linked bank account were initiated. |
-| microdeposits_failed | The two <=10¢ transfers to a Dwolla Master account’s linked bank account failed to clear successfully. |
-| microdeposits_completed | The two <=10¢ transfers to a Dwolla Master account’s linked bank account have cleared successfully. |
+| microdeposits_added | Two <=10¢ transfers to a Dwolla Master Account’s linked bank account were initiated. |
+| microdeposits_failed | The two <=10¢ transfers to a Dwolla Master Account’s linked bank account failed to clear successfully. |
+| microdeposits_completed | The two <=10¢ transfers to a Dwolla Master Account’s linked bank account have cleared successfully. |
 | microdeposits_maxattempts | The funding source has reached its max verification attempts limit of three. The funding source can no longer be verified with the completed micro-deposit amounts. |
 
 ##### Transfers
 
 | Topic          | Description           |
 |--------------|-------------------------|
-| bank_transfer_created | A bank transfer was created. |
-| bank_transfer_cancelled | A pending bank transfer has been cancelled, and will not process further. |
-| bank_transfer_failed | A transfer failed to clear successfully. Usually, this is a result of an ACH failure (insufficient funds, etc.). |
-| bank_transfer_completed | A bank transfer has cleared successfully. |
-| transfer_created | A transfer was created. |
-| transfer_cancelled | A pending transfer has been cancelled, and will not process further. |
-| transfer_failed | A transfer failed to clear successfully. |
-| transfer_reclaimed | The transfer was returned to the sender after remaining unclaimed by the intended recipient for a period of time. |
-| transfer_completed | A transfer has cleared successfully. |
+| bank_transfer_created | A bank transfer was created. Represents funds moving either from a Dwolla Master Account’s bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s bank. |
+| bank_transfer_cancelled | A pending bank transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a Dwolla Master Account’s bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s  bank. |
+| bank_transfer_failed | A transfer failed to clear successfully. Usually, this is a result of an ACH failure (insufficient funds, etc.). Represents funds failing to clear either from a Dwolla Master Account’s  bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s  bank. |
+| bank_transfer_completed | A bank transfer has cleared successfully. Represents funds clearing either from a Dwolla Master Account’s  bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s  bank. |
+| transfer_created | A transfer was created. Represents fund moving either from a Dwolla Master Account’s `balance` to a verified Customer’s `balance` or from a Dwolla Master Account’s `balance` to a verified Customer’s `balance`. |
+| transfer_cancelled | A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a Dwolla Master Account’s `balance` to a verified Customer’s `balance` or from a Dwolla Master Account’s `balance` to a verified Customer’s `balance`. |
+| transfer_failed | A transfer failed to clear successfully. Represents funds failing to clear either from a Dwolla Master Account’s `balance` to a verified Customer’s `balance` or from a Dwolla Master Account’s `balance` to a verified Customer’s `balance`. |
+| transfer_completed | A transfer has cleared successfully. Represents funds clearing either from a Dwolla Master Account’s `balance` to a verified Customer’s `balance` or from a Dwolla Master Account’s `balance` to a verified Customer’s `balance`. |
 
 ##### Mass Payments
 
