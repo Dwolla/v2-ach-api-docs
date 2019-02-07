@@ -398,7 +398,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
 <p>Let&rsquo;s list some <code class="prettyprint">Customer</code> objects:</p>
 <div class="code-snippet js-code-snippet language-rubynohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-rubynohide" data-lang="rubynohide"><span class="nb">require</span> <span class="s1">'dwolla_v2'</span>
 
-<span class="c1"># Navigate to https://www.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.</span>
+<span class="c1"># Navigate to https://dashboard.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.</span>
 <span class="n">app_key</span> <span class="o">=</span> <span class="s2">"..."</span>
 <span class="n">app_secret</span> <span class="o">=</span> <span class="s2">"..."</span>
 <span class="vg">$dwolla</span> <span class="o">=</span> <span class="no">DwollaV2</span><span class="o">::</span><span class="no">Client</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">key: </span><span class="n">app_key</span><span class="p">,</span> <span class="ss">secret: </span><span class="n">app_secret</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
@@ -418,7 +418,7 @@ information is available on the project&rsquo;s README.</p>
 <p>Let&rsquo;s list some <code class="prettyprint">Customer</code> objects:</p>
 <div class="code-snippet js-code-snippet language-pythonnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-pythonnohide" data-lang="pythonnohide"><span class="kn">import</span> <span class="nn">dwollav2</span>
 
-<span class="c"># Navigate to https://www.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.</span>
+<span class="c"># Navigate to https://dashboard.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.</span>
 <span class="n">app_key</span> <span class="o">=</span> <span class="s">'...'</span>
 <span class="n">app_secret</span> <span class="o">=</span> <span class="s">'...'</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">dwollav2</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">app_key</span><span class="p">,</span>
@@ -488,7 +488,7 @@ mvn install package
 <p>Let&rsquo;s fetch a page of customers:</p>
 <div class="code-snippet js-code-snippet language-javascriptnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-javascriptnohide" data-lang="javascriptnohide"><span class="kr">const</span> <span class="nx">dwolla</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'dwolla-v2'</span><span class="p">);</span>
 
-<span class="c1">// Navigate to https://www.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.</span>
+<span class="c1">// Navigate to https://dashboard.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.</span>
 <span class="kr">const</span> <span class="nx">appKey</span> <span class="o">=</span> <span class="s1">'...'</span><span class="p">;</span>
 <span class="kr">const</span> <span class="nx">appSecret</span> <span class="o">=</span> <span class="s1">'...'</span><span class="p">;</span>
 <span class="kr">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">dwolla</span><span class="p">.</span><span class="nx">Client</span><span class="p">({</span>
@@ -533,13 +533,13 @@ mvn install package
 <td>client_id</td>
 <td>yes</td>
 <td>string</td>
-<td>Application key. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-sandbox.dwolla.com/applications</code> (Sandbox) for your application key.</td>
+<td>Application key. Navigate to <code class="prettyprint">https://dashboard.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-sandbox.dwolla.com/applications-legacy</code> (Sandbox) for your application key.</td>
 </tr>
 <tr>
 <td>client_secret</td>
 <td>yes</td>
 <td>string</td>
-<td>Application secret. Navigate to <code class="prettyprint">https://www.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-sandbox.dwolla.com/applications</code> (Sandbox) for your application secret.</td>
+<td>Application secret. Navigate to <code class="prettyprint">https://dashboard.dwolla.com/applications</code> (production) or <code class="prettyprint">https://dashboard-sandbox.dwolla.com/applications-legacy</code> (Sandbox) for your application secret.</td>
 </tr>
 <tr>
 <td>grant_type</td>
@@ -905,7 +905,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">accountUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane Doe'</span>
 </code></pre></div></div><h2 id='create-a-funding-source-for-an-account'>Create a funding source for an account</h2>
-<p>This section details how to add a bank account to a Dwolla Master account. The bank account will have a status of <code class="prettyprint">unverified</code> upon creation. Before a Dwolla Master account is eligible to transfer money from their bank or credit union account they need to verify ownership of the account via micro-deposit verification.</p>
+<p>This section details how to add a bank account to a Dwolla Master Account. The bank account will have a status of <code class="prettyprint">unverified</code> upon creation. Before a Dwolla Master Account is eligible to transfer money from their bank or credit union account they need to verify ownership of the account via micro-deposit verification.</p>
 
 <p>For more information on micro-deposit verification, reference the <a href="https://developers.dwolla.com/resources/funding-source-verification.html">funding source verification</a> resource article.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -10660,7 +10660,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>funding_source_negative</td>
-<td>A Dwolla Master account <code class="prettyprint">balance</code> has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for your account. If your balance funding source has gone negative, you are responsible for making the Dwolla account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source.</td>
+<td>A Dwolla Master Account <code class="prettyprint">balance</code> has gone negative. You are responsible for ensuring a zero or positive Dwolla balance for your account. If your balance funding source has gone negative, you are responsible for making the Dwolla account whole. Dwolla will notify you via a webhook and separate email of the negative balance. If no action is taken, Dwolla will debit your attached billing source.</td>
 </tr>
 <tr>
 <td>funding_source_updated</td>
@@ -10668,15 +10668,15 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>microdeposits_added</td>
-<td>Two &lt;=10¢ transfers to a Dwolla Master account’s linked bank account were initiated.</td>
+<td>Two &lt;=10¢ transfers to a Dwolla Master Account’s linked bank account were initiated.</td>
 </tr>
 <tr>
 <td>microdeposits_failed</td>
-<td>The two &lt;=10¢ transfers to a Dwolla Master account’s linked bank account failed to clear successfully.</td>
+<td>The two &lt;=10¢ transfers to a Dwolla Master Account’s linked bank account failed to clear successfully.</td>
 </tr>
 <tr>
 <td>microdeposits_completed</td>
-<td>The two &lt;=10¢ transfers to a Dwolla Master account’s linked bank account have cleared successfully.</td>
+<td>The two &lt;=10¢ transfers to a Dwolla Master Account’s linked bank account have cleared successfully.</td>
 </tr>
 <tr>
 <td>microdeposits_maxattempts</td>
@@ -10692,39 +10692,35 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </thead><tbody>
 <tr>
 <td>bank_transfer_created</td>
-<td>A bank transfer was created.</td>
+<td>A bank transfer was created. Represents funds moving either from a Dwolla Master Account’s bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s bank.</td>
 </tr>
 <tr>
 <td>bank_transfer_cancelled</td>
-<td>A pending bank transfer has been cancelled, and will not process further.</td>
+<td>A pending bank transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a Dwolla Master Account’s bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s  bank.</td>
 </tr>
 <tr>
 <td>bank_transfer_failed</td>
-<td>A transfer failed to clear successfully. Usually, this is a result of an ACH failure (insufficient funds, etc.).</td>
+<td>A transfer failed to clear successfully. Usually, this is a result of an ACH failure (insufficient funds, etc.). Represents funds failing to clear either from a Dwolla Master Account’s  bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s  bank.</td>
 </tr>
 <tr>
 <td>bank_transfer_completed</td>
-<td>A bank transfer has cleared successfully.</td>
+<td>A bank transfer has cleared successfully. Represents funds clearing either from a Dwolla Master Account’s  bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s  bank.</td>
 </tr>
 <tr>
 <td>transfer_created</td>
-<td>A transfer was created.</td>
+<td>A transfer was created. Represents fund moving either from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code> or from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code>.</td>
 </tr>
 <tr>
 <td>transfer_cancelled</td>
-<td>A pending transfer has been cancelled, and will not process further.</td>
+<td>A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code> or from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code>.</td>
 </tr>
 <tr>
 <td>transfer_failed</td>
-<td>A transfer failed to clear successfully.</td>
-</tr>
-<tr>
-<td>transfer_reclaimed</td>
-<td>The transfer was returned to the sender after remaining unclaimed by the intended recipient for a period of time.</td>
+<td>A transfer failed to clear successfully. Represents funds failing to clear either from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code> or from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code>.</td>
 </tr>
 <tr>
 <td>transfer_completed</td>
-<td>A transfer has cleared successfully.</td>
+<td>A transfer has cleared successfully. Represents funds clearing either from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code> or from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code>.</td>
 </tr>
 </tbody></table>
 <h5 id='mass-payments'>Mass Payments</h5>
