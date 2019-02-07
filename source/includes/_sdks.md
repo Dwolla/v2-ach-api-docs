@@ -30,7 +30,7 @@ Let's list some `Customer` objects:
 ```rubynoselect
 require 'dwolla_v2'
 
-# Navigate to https://www.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.
+# Navigate to https://dashboard.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.
 app_key = "..."
 app_secret = "..."
 $dwolla = DwollaV2::Client.new(key: app_key, secret: app_secret) do |config|
@@ -62,7 +62,7 @@ Let's list some `Customer` objects:
 ```pythonnoselect
 import dwollav2
 
-# Navigate to https://www.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.
+# Navigate to https://dashboard.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.
 app_key = '...'
 app_secret = '...'
 client = dwollav2.Client(key = app_key,
@@ -181,7 +181,7 @@ Let's fetch a page of customers:
 ```javascriptnoselect
 const dwolla = require('dwolla-v2');
 
-// Navigate to https://www.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.
+// Navigate to https://dashboard.dwolla.com/applications (production) or https://dashboard-sandbox.dwolla.com/applications (Sandbox) for your application key and secret.
 const appKey = '...';
 const appSecret = '...';
 const client = new dwolla.Client({

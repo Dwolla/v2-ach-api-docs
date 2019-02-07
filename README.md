@@ -18,7 +18,7 @@ Official SDKs for Java, Node.JS, PHP, Ruby, and Python are being actively develo
 
 ========
 
-Documentation is reflected here - https://docsv2.dwolla.com/
+Documentation is reflected here - https://docs.dwolla.com/
 
 Getting Started
 ------------------------------
