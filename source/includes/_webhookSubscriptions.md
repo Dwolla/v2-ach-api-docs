@@ -1,6 +1,6 @@
 # Webhook subscriptions
 
-Create a webhook subscription to receive `POST` requests from Dwolla (called webhooks) when events associated with your application occur.  [Webhooks](#webhooks) are sent to a URL which you provide when creating a webhook subscription. While we see most applications maintain one webhook subscription, you can have up to **ten** active webhook subscription at a time. Refer to the [events](#events) section for the list of events that trigger webhooks.
+Create a webhook subscription to receive `POST` requests from Dwolla (called webhooks) when events associated with your application occur.  [Webhooks](#webhooks) are sent to a URL which you provide when creating a webhook subscription. While we see most applications maintain one webhook subscription, you can have up to **ten** active webhook subscriptions in Sandbox, and up to **five** in Production at a time. Refer to the [events](#events) section for the list of events that trigger webhooks.
 
 ### **Automatic pause of a webhook subscription**
 Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after **400 consecutive failures**. This will help us ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API customers. Webhook subscriptions can be unpaused by calling [this endpoint](#update-a-webhook-subscription).
@@ -42,6 +42,12 @@ This section details how to create a webhook subscription to deliver [webhooks](
 |-----------|----------|----------------|-------------|
 | url | yes | string | Where Dwolla should deliver the webhook notification. |
 | secret | yes | string | A random, secret key, only known by your application. This secret key should be securely stored and used later when [validating the authenticity](https://developers.dwolla.com/guides/webhooks/validating-webhooks.html) of the webhook request from Dwolla. |
+
+### HTTP status and error codes
+
+| HTTP Status |    Code                  |   Description       |
+|-------------|--------------------------|---------------------|
+| 400         | MaxNumberOfResources     | The maximum number of subscriptions has been reached.|
 
 ### Request and response
 
