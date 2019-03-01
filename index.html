@@ -1669,8 +1669,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <p>A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla <a href="#accounts">Master account</a> via the API. In order for a Dwolla <code class="prettyprint">Account</code> to create and manage Customers, an application must obtain permission from Dwolla before being enabled in production.</p>
 <h3 id='customer-types'>Customer types</h3>
 <p>With a transfer of money, <em>at least one party must complete the identity verification process</em>, either the sender or the receiver. This can be either the Dwolla Master Account itself or a <code class="prettyprint">verified</code> Customer type. Based on your business model and funds flow, it’s your decision about which party completes this process&ndash; you may even want to have both parties complete the identity verification process. A brief description of each Customer type is below, but for a more in-depth overview of each Customer type and what their capabilities are, check out our <a href="https://developers.dwolla.com/resources/account-types.html">developer resource article</a>.</p>
-<h5 id='receive-only-customers'>Receive-only Customers</h5>
-<p>Receive-only customers are restricted to a &ldquo;payouts only&rdquo; funds flow. A receive-only customer maintains limited functionality in the API and is only eligible to receive transfers to an attached bank account. This Customer type can only interact with verified Customers and a Dwolla Master Account.</p>
+<h5 id='receive-only-users'>Receive-only Users</h5>
+<p>Receive-only users are restricted to a &ldquo;payouts only&rdquo; funds flow. A receive-only user maintains limited functionality in the API and is only eligible to receive transfers to an attached bank account. This Customer type can only interact with verified Customers and a Dwolla Master Account.</p>
 <h5 id='unverified-customers'>Unverified Customers</h5>
 <p>Unverified Customers have a default sending transaction limit of $5,000 per week. A week is defined as Monday to Sunday UTC time. As this Customer is not identity verified, they will only be able to transact with verified Customers or your Dwolla Master Account.</p>
 <h5 id='verified-customers'>Verified Customers</h5>
@@ -1844,7 +1844,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </span></code></pre></div></div><h2 id='create-a-customer'>Create a customer</h2>
 <p>This section details how to create a new Customer.</p>
 
-<p><a href="/#request-parameters---receive-only-customer"><strong>To create <code class="prettyprint">Receive-only Customers</code></strong></a>, you&rsquo;ll provide the customer&rsquo;s full name and email address, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
+<p><a href="/#request-parameters---receive-only-customer"><strong>To create <code class="prettyprint">Receive-only Users</code></strong></a>, you&rsquo;ll provide the customer&rsquo;s full name and email address, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
 
 <p><a href="/#request-parameters---unverified-customer"><strong>To create <code class="prettyprint">Unverified Customers</code></strong></a>, you will only need to provide the customer&rsquo;s full name and email address, as well as a <code class="prettyprint">businessName</code> if applicable.</p>
 
@@ -1867,7 +1867,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Not authorized to create customers.</td>
 </tr>
 </tbody></table>
-<h3 id='request-parameters---receive-only-customer'>Request parameters - receive-only Customer</h3>
+<h3 id='request-parameters---receive-only-user'>Request parameters - receive-only User</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1913,7 +1913,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Customer&rsquo;s IP address.</td>
 </tr>
 </tbody></table>
-<h5 id='request-and-response---receive-only-customer'>Request and response - receive-only Customer</h5><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+<h5 id='request-and-response---receive-only-user'>Request and response - receive-only User</h5><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -3382,7 +3382,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <p><code class="prettyprint">POST https://api.dwolla.com/customers/{id}</code></p>
 <h3 id='update-a-customer39s-information'>Update a Customer&rsquo;s information</h3>
 <p>A limited set of information can be updated on an existing created Customer. <strong>Note:</strong> A Customer&rsquo;s information cannot be updated when in a <a href="#customer-statuses">status</a> of <code class="prettyprint">document</code> or <code class="prettyprint">suspended</code>.</p>
-<h5 id='request-parameters---unverified-customer-and-receive-only-customer'>Request parameters -  unverified Customer and receive-only Customer</h5>
+<h5 id='request-parameters---unverified-customer-and-receive-only-user'>Request parameters -  unverified Customer and receive-only User</h5>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -7682,12 +7682,66 @@ HTTP 200 OK
 <td>A clearing JSON object.</td>
 </tr>
 <tr>
+<td>achDetails</td>
+<td>An achDetails JSON object. See below.</td>
+</tr>
+<tr>
 <td>correlationId</td>
 <td>A unique string value attached to a transfer resource which can be used for traceability between Dwolla and your application.</td>
 </tr>
 <tr>
 <td>individualAchId</td>
 <td>A unique string value matching the value on bank line related to the transfer. Appears when the debit entry clears out of the bank. The individual identifier for that ACH entry.</td>
+</tr>
+</tbody></table>
+<h4 id='amount-json-object'>amount JSON object</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>value</td>
+<td>Amount of money</td>
+</tr>
+<tr>
+<td>currency</td>
+<td><code class="prettyprint">USD</code></td>
+</tr>
+</tbody></table>
+<h4 id='clearing-json-object'>clearing JSON object</h4>
+<p>Can be used to upgrade or downgrade the clearing time from the default ACH processing.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>source</td>
+<td>Represents a clearing object for next-day debits into the Dwolla network.</td>
+</tr>
+<tr>
+<td>destination</td>
+<td>Represents a clearing object for same-day credits out of the Dwolla network to a bank funding source.</td>
+</tr>
+</tbody></table>
+<h4 id='achdetails-json-object'>achDetails JSON object</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>addenda</td>
+<td>A string value passed on a <a href="#initiate-a-transfer">transfer request</a> and can be exposed on a Customer’s bank statement.</td>
+</tr>
+<tr>
+<td>traceId</td>
+<td>A unique string value that identifies a transaction from the source funding source to the destination funding source. This value is often used to determine where a transaction&rsquo;s funds lie at a certain time.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -7702,12 +7756,31 @@ HTTP 200 OK
   </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"value"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
+  </span><span class="p">},</span><span class="w">
   </span><span class="nt">"clearing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="s2">"next-available"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"correlationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="nt">"achDetails"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"addenda"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="s2">"string"</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"traceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"addenda"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="s2">"string"</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"traceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"correlationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"individualAchId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='initiate-a-transfer'>Initiate a transfer</h2>
 <p>This section covers how to initiate a transfer from either a Dwolla <a href="#accounts">Account</a> or Dwolla API <a href="#customers">Customer</a> resource.</p>
@@ -9264,7 +9337,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>Funding source</td>
 <td><code class="prettyprint">https://api.dwolla.com/funding-sources/{id}</code></td>
-<td>Destination of a Verified Customer&rsquo;s own <code class="prettyprint">bank</code> or <code class="prettyprint">balance</code> funding source, an Unverified Customer&rsquo;s <code class="prettyprint">bank</code> funding source, or a Receive-only Customer&rsquo;s <code class="prettyprint">bank</code> funding source.</td>
+<td>Destination of a Verified Customer&rsquo;s own <code class="prettyprint">bank</code> or <code class="prettyprint">balance</code> funding source, an Unverified Customer&rsquo;s <code class="prettyprint">bank</code> funding source, or a Receive-only User&rsquo;s <code class="prettyprint">bank</code> funding source.</td>
 </tr>
 </tbody></table>
 <h3 id='mass-payment-item'>Mass payment item</h3>
@@ -11243,7 +11316,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='webhook-subscriptions'>Webhook subscriptions</h1>
-<p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. While we see most applications maintain one webhook subscription, you can have up to <strong>ten</strong> active webhook subscription at a time. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
+<p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. While we see most applications maintain one webhook subscription, you can have up to <strong>ten</strong> active webhook subscriptions in Sandbox, and up to <strong>five</strong> in Production at a time. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
 <h3 id='strongautomatic-pause-of-a-webhook-subscriptionstrong'><strong>Automatic pause of a webhook subscription</strong></h3>
 <p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API customers. Webhook subscriptions can be unpaused by calling <a href="#update-a-webhook-subscription">this endpoint</a>.</p>
 <h3 id='acknowledgement-and-retries'>Acknowledgement and retries</h3>
@@ -11347,6 +11420,20 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>yes</td>
 <td>string</td>
 <td>A random, secret key, only known by your application. This secret key should be securely stored and used later when <a href="https://developers.dwolla.com/guides/webhooks/validating-webhooks.html">validating the authenticity</a> of the webhook request from Dwolla.</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>MaxNumberOfResources</td>
+<td>The maximum number of subscriptions has been reached.</td>
 </tr>
 </tbody></table>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
