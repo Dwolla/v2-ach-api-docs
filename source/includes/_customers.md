@@ -6,9 +6,9 @@ A Customer represents an individual or business with whom you intend to transact
 
 With a transfer of money, *at least one party must complete the identity verification process*, either the sender or the receiver. This can be either the Dwolla Master Account itself or a `verified` Customer type. Based on your business model and funds flow, it’s your decision about which party completes this process-- you may even want to have both parties complete the identity verification process. A brief description of each Customer type is below, but for a more in-depth overview of each Customer type and what their capabilities are, check out our [developer resource article](https://developers.dwolla.com/resources/account-types.html).
 
-##### Receive-only Customers
+##### Receive-only Users
 
-Receive-only customers are restricted to a "payouts only" funds flow. A receive-only customer maintains limited functionality in the API and is only eligible to receive transfers to an attached bank account. This Customer type can only interact with verified Customers and a Dwolla Master Account.
+Receive-only users are restricted to a "payouts only" funds flow. A receive-only user maintains limited functionality in the API and is only eligible to receive transfers to an attached bank account. This Customer type can only interact with verified Customers and a Dwolla Master Account.
 
 ##### Unverified Customers
 
@@ -116,7 +116,7 @@ A verified Customer can be created as a type of either `Personal` or `Business`.
 
 This section details how to create a new Customer.
 
-[**To create `Receive-only Customers`**](/#request-parameters---receive-only-customer), you'll provide the customer's full name and email address, `type` with the value of `receive-only`, and `businessName` if applicable.
+[**To create `Receive-only Users`**](/#request-parameters---receive-only-customer), you'll provide the customer's full name and email address, `type` with the value of `receive-only`, and `businessName` if applicable.
 
 [**To create `Unverified Customers`**](/#request-parameters---unverified-customer), you will only need to provide the customer's full name and email address, as well as a `businessName` if applicable.
 
@@ -133,7 +133,7 @@ This section details how to create a new Customer.
 | 400 | Duplicate customer or validation error.
 | 403 | Not authorized to create customers.
 
-### Request parameters - receive-only Customer
+### Request parameters - receive-only User
 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
@@ -144,7 +144,7 @@ This section details how to create a new Customer.
 | businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
 
-##### Request and response - receive-only Customer
+##### Request and response - receive-only User
 
 ```raw
 POST https://api-sandbox.dwolla.com/customers
@@ -1019,7 +1019,7 @@ This endpoint can be used to facilitate the following use cases: Update Customer
 
 A limited set of information can be updated on an existing created Customer. **Note:** A Customer's information cannot be updated when in a [status](#customer-statuses) of `document` or `suspended`.
 
-##### Request parameters -  unverified Customer and receive-only Customer
+##### Request parameters -  unverified Customer and receive-only User
 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|

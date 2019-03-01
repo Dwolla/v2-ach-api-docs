@@ -104,7 +104,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 
 | **Destination** Type | URI                     | Description     |
 |----------------------|-----------------------------------------------|--------------|
-| Funding source   | `https://api.dwolla.com/funding-sources/{id}` | Destination of a Verified Customer's own `bank` or `balance` funding source, an Unverified Customer's `bank` funding source, or a Receive-only Customer's `bank` funding source. |
+| Funding source   | `https://api.dwolla.com/funding-sources/{id}` | Destination of a Verified Customer's own `bank` or `balance` funding source, an Unverified Customer's `bank` funding source, or a Receive-only User's `bank` funding source. |
 
 ### Mass payment item
 
