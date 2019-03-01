@@ -24,8 +24,32 @@ A transfer represents money being transferred from a `source` to a `destination`
 | created | ISO-8601 timestamp. |
 | metadata | A metadata JSON object |
 | clearing | A clearing JSON object. |
+| achDetails | An achDetails JSON object. See below. |
 | correlationId | A unique string value attached to a transfer resource which can be used for traceability between Dwolla and your application. |
 | individualAchId | A unique string value matching the value on bank line related to the transfer. Appears when the debit entry clears out of the bank. The individual identifier for that ACH entry. |
+
+#### amount JSON object
+
+| Parameter   |   Description                      |
+|-------------|------------------------------------|
+| value       | Amount of money                    |
+| currency    | `USD`                              |
+
+#### clearing JSON object
+
+Can be used to upgrade or downgrade the clearing time from the default ACH processing.
+
+| Parameter   |   Description                      |
+|-------------|------------------------------------|
+| source      | Represents a clearing object for next-day debits into the Dwolla network. |
+| destination | Represents a clearing object for same-day credits out of the Dwolla network to a bank funding source. |
+
+#### achDetails JSON object
+
+| Parameter   |   Description                      |
+|-------------|------------------------------------|
+| addenda     | A string value passed on a [transfer request](#initiate-a-transfer) and can be exposed on a Customer’s bank statement. |
+| traceId     | A unique string value that identifies a transaction from the source funding source to the destination funding source. This value is often used to determine where a transaction's funds lie at a certain time.  |
 
 ```noselect
 {
@@ -40,12 +64,31 @@ A transfer represents money being transferred from a `source` to a `destination`
   "created": "string",
   "metadata": {
     "key": "value"
-    },
+  },
   "clearing": {
     "source": "standard",
     "destination": "next-available"
   },
-  "correlationId": "string"
+  "achDetails": {
+        "source": {
+            "addenda": {
+                "values": [
+                    "string"
+                ]
+            },
+            "traceId": "string"
+            },
+        "destination": {
+            "addenda": {
+                "values": [
+                    "string"
+                ]
+            },
+            "traceId": "string"
+            }
+        },
+  "correlationId": "string",
+  "individualAchId": "string"
 }
 ```
 
@@ -90,7 +133,6 @@ Refer to our [idempotency key](#idempotency-key) section to learn more.
 | Destination Type | URI | Description |
 |-------|---------|---------------|
 | Funding source | `https://api.dwolla.com/funding-sources/{id}` | Destination of an Account or verified Customer's own bank or balance funding source. **OR** A Customer's bank funding source. |
-
 
 ### amount JSON object
 
