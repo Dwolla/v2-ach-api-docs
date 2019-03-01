@@ -48,7 +48,7 @@ Can be used to upgrade or downgrade the clearing time from the default ACH proce
 
 | Parameter   |   Description                      |
 |-------------|------------------------------------|
-| addenda     | A string value passed on a transfer request and can be exposed on a Customer’s bank statement. |
+| addenda     | A string value passed on a [transfer request](#initiate-a-transfer) and can be exposed on a Customer’s bank statement. |
 | traceId     | A unique string value that identifies a transaction from the source funding source to the destination funding source. This value is often used to determine where a transaction's funds lie at a certain time.  |
 
 ```noselect
