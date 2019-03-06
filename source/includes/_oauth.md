@@ -17,9 +17,9 @@ The [client credentials flow](https://tools.ietf.org/html/rfc6749#section-4.1) i
 
 #### HTTP request
 
-**Production:** `POST https://accounts.dwolla.com/token`
+**Production:** `POST https://api.dwolla.com/token`
 
-**Sandbox:** `POST https://accounts-sandbox.dwolla.com/token`
+**Sandbox:** `POST https://api-sandbox.dwolla.com/token`
 
 Including the `Content-Type: application/x-www-form-urlencoded` header, the request is sent to the token endpoint with `grant_type=client_credentials` in the body of the request:
 
@@ -41,7 +41,7 @@ token_type | Always `bearer`.
 #### Request
 
 ```raw
-POST https://accounts-sandbox.dwolla.com/token
+POST https://api-sandbox.dwolla.com/token
 Authorization: Basic YkVEMGJMaEFhb0pDamplbmFPVjNwMDZSeE9Eb2pyOUNFUzN1dldXcXUyeE9RYk9GeUE6WEZ0bmJIbXR3dXEwNVI1Yk91WmVOWHlqcW9RelNSc21zUU5qelFOZUFZUlRIbmhHRGw=
 Content-Type: application/x-www-form-urlencoded
 
