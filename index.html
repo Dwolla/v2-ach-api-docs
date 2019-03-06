@@ -515,9 +515,9 @@ mvn install package
 
 <p><code class="prettyprint">Authorization: Basic Base64(client_id:client_secret)</code></p>
 <h4 id='http-request'>HTTP request</h4>
-<p><strong>Production:</strong> <code class="prettyprint">POST https://accounts.dwolla.com/token</code></p>
+<p><strong>Production:</strong> <code class="prettyprint">POST https://api.dwolla.com/token</code></p>
 
-<p><strong>Sandbox:</strong> <code class="prettyprint">POST https://accounts-sandbox.dwolla.com/token</code></p>
+<p><strong>Sandbox:</strong> <code class="prettyprint">POST https://api-sandbox.dwolla.com/token</code></p>
 
 <p>Including the <code class="prettyprint">Content-Type: application/x-www-form-urlencoded</code> header, the request is sent to the token endpoint with <code class="prettyprint">grant_type=client_credentials</code> in the body of the request:</p>
 <h4 id='request-parameters'>Request parameters</h4>
@@ -576,7 +576,7 @@ mvn install package
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://accounts-sandbox.dwolla.com/token
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/token
 Authorization: Basic YkVEMGJMaEFhb0pDamplbmFPVjNwMDZSeE9Eb2pyOUNFUzN1dldXcXUyeE9RYk9GeUE6WEZ0bmJIbXR3dXEwNVI1Yk91WmVOWHlqcW9RelNSc21zUU5qelFOZUFZUlRIbmhHRGw=
 Content-Type: application/x-www-form-urlencoded
 
