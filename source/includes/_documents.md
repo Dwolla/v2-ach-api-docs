@@ -1,6 +1,6 @@
 # Documents
 
-Verified Customers of type `personal` or `business` and of status `document` require photos of identifying documents to be uploaded for manual review in order to be verified. Currently, SDK support for document upload only exists for Ruby, Node.js, and Python. To upload a document using other languages, you must use an external HTTP library.
+Verified Customers of type `personal` or `business` and of status `document` require color photos of identifying documents to be uploaded for manual review in order to be verified. Currently, SDK support for document upload only exists for Ruby, Node.js, and Python. To upload a document using other languages, you must use an external HTTP library.
 
 For more information on handling the Customer verification status of `document`, reference our [Customer verification](https://developers.dwolla.com/resources/customer-verification/handling-verification-statuses.html) resource article.
 
@@ -9,7 +9,7 @@ For more information on handling the Customer verification status of `document`,
 | Parameter | Description |
 |-----------|------------|
 |id | Document unique identifier |
-|type | Either `passport`, `license`, `idCard`, or `other`. |
+|type | Either `passport`, `license`, `idCard`, or `other`. Must be a color scan of US Government issued identification.|
 |status| Either `pending` or `reviewed`.  When a document has been manually reviewed by Dwolla, its status will be `reviewed`.  A reviewed document does not necessarily indicate that the customer has completed the identity verification process. |
 | created | ISO 8601 Timestamp of document upload time and date. |
 | failureReason | The reason an uploaded document was rejected. Can be: `ScanNotReadable`, `ScanNotUploaded`, `ScanIdTypeNotSupported`, or `ScanNameMismatch`. |
@@ -30,7 +30,14 @@ For more information on handling the Customer verification status of `document`,
 
 ## Create a document for a customer
 
-Create a document for a Customer pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a `.jpg`, `.jpeg`, `.png`, or `.pdf` up to 10MB in size.
+Create a document for a Customer pending verification by uploading a color scan or photo of government issued identification (see below for acceptable document types). This requires a multipart form-data POST request. The uploaded file must be a color image, in a `.jpg`, `.jpeg`, `.png`, or `.pdf` format, and less than 10MB in size.
+
+### Acceptable documents
+
+|    Customer type                  |   Acceptable documents       |
+|-----------------------------------|------------------------------|
+| Personal Verified Customer        | `passport`, `license`, or `idCard`. Must be a color scan of US Government issued identification. |
+| Business Verified Customer        | Controller documents - `passport`, `license`, `idCard`, or `other`. Must be a color scan of US Government issued identification. <br> Business documents - Refer to our guide on [Handling Document status for Business Verified Customers](https://developers.dwolla.com/resources/business-verified-customer/handling-controller-and-customer-statuses.html#document-types) for acceptable documents.<br> Beneficial Owner documents - Refer to our guide on [Handling Document status for Beneficial Owners](https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html#handling-document-status) for acceptable documents.|
 
 ### HTTP request
 
