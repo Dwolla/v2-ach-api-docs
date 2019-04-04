@@ -218,8 +218,8 @@ HTTP/1.1 200 OK
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 customer_url = 'https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'
 
-customer = app_token.post "#{customer_url}/funding-sources-token"
-customer.token # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
+fs_token = app_token.post "#{customer_url}/funding-sources-token"
+fs_token.token # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
 ```
 
 ```javascript
@@ -242,8 +242,8 @@ app_token.post('%s/funding-sources-token' % customer_url)
 <?php
 $customersApi = new DwollaSwagger\CustomersApi($apiClient);
 
-$iavToken = $customersApi->getCustomerIavToken("https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6");
-$iavToken->token; # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
+$fsToken = $customersApi->createFundingSourcesTokenForCustomer("https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6");
+$fsToken->token; # => "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
 ?>
 ```
 
