@@ -1710,15 +1710,15 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>verify-with-document</td>
-<td>If the Verified Customer of type <code class="prettyprint">personal</code> or <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload a new photo document to verify the Customer&rsquo;s identity. If type <code class="prettyprint">business</code>, the controller of the business. Read about <a href="#documents">Documents</a>.</td>
+<td>If the Verified Customer of type <code class="prettyprint">personal</code> or <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload a new color photo document to verify the Customer&rsquo;s identity. If type <code class="prettyprint">business</code>, the controller of the business. Read about <a href="#documents">Documents</a>.</td>
 </tr>
 <tr>
 <td>verify-business-with-document</td>
-<td>If the Verified Customer of type <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload a new photo document to verify the identity of the business itself.  Read about <a href="#documents">Documents</a>.</td>
+<td>If the Verified Customer of type <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload a new color photo document to verify the identity of the business itself.  Read about <a href="#documents">Documents</a>.</td>
 </tr>
 <tr>
 <td>verify-controller-and-business-with-document</td>
-<td>If the Verified Customer of type <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload new photo documents to verify the identity of the controller of the business as well as the business itself.  Read about <a href="#documents">Documents</a>.</td>
+<td>If the Verified Customer of type <code class="prettyprint">business</code> has a <code class="prettyprint">status</code> of <code class="prettyprint">document</code>, POST to this link to upload new color photo documents to verify the identity of the controller of the business as well as the business itself.  Read about <a href="#documents">Documents</a>.</td>
 </tr>
 </tbody></table>
 <h3 id='customer-resource'>Customer resource</h3>
@@ -5304,7 +5304,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='documents'>Documents</h1>
-<p>Verified Customers of type <code class="prettyprint">personal</code> or <code class="prettyprint">business</code> and of status <code class="prettyprint">document</code> require photos of identifying documents to be uploaded for manual review in order to be verified. Currently, SDK support for document upload only exists for Ruby, Node.js, and Python. To upload a document using other languages, you must use an external HTTP library.</p>
+<p>Verified Customers of type <code class="prettyprint">personal</code> or <code class="prettyprint">business</code> and of status <code class="prettyprint">document</code> require color photos of identifying documents to be uploaded for manual review in order to be verified. Currently, SDK support for document upload only exists for Ruby, Node.js, and Python. To upload a document using other languages, you must use an external HTTP library.</p>
 
 <p>For more information on handling the Customer verification status of <code class="prettyprint">document</code>, reference our <a href="https://developers.dwolla.com/resources/customer-verification/handling-verification-statuses.html">Customer verification</a> resource article.</p>
 <h3 id='document-resource'>Document resource</h3>
@@ -5320,7 +5320,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>type</td>
-<td>Either <code class="prettyprint">passport</code>, <code class="prettyprint">license</code>, <code class="prettyprint">idCard</code>, or <code class="prettyprint">other</code>.</td>
+<td>Either <code class="prettyprint">passport</code>, <code class="prettyprint">license</code>, <code class="prettyprint">idCard</code>, or <code class="prettyprint">other</code>. Must be a color scan of US Government issued identification.</td>
 </tr>
 <tr>
 <td>status</td>
@@ -5347,7 +5347,23 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-29T21:42:16.000Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='create-a-document-for-a-customer'>Create a document for a customer</h2>
-<p>Create a document for a Customer pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, or <code class="prettyprint">.pdf</code> up to 10MB in size.</p>
+<p>Create a document for a Customer pending verification by uploading a color scan or photo of government issued identification (see below for acceptable document types). This requires a multipart form-data POST request. The uploaded file must be a color image, in a <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, or <code class="prettyprint">.pdf</code> format, and less than 10MB in size.</p>
+<h3 id='acceptable-documents'>Acceptable documents</h3>
+<table><thead>
+<tr>
+<th>Customer type</th>
+<th>Acceptable documents</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Personal Verified Customer</td>
+<td><code class="prettyprint">passport</code>, <code class="prettyprint">license</code>, or <code class="prettyprint">idCard</code>. Must be a color scan of US Government issued identification.</td>
+</tr>
+<tr>
+<td>Business Verified Customer</td>
+<td>Controller documents - <code class="prettyprint">passport</code>, <code class="prettyprint">license</code>, <code class="prettyprint">idCard</code>, or <code class="prettyprint">other</code>. Must be a color scan of US Government issued identification. <br> Business documents - Refer to our guide on <a href="https://developers.dwolla.com/resources/business-verified-customer/handling-controller-and-customer-statuses.html#document-types">Handling Document status for Business Verified Customers</a> for acceptable documents.<br> Beneficial Owner documents - Refer to our guide on <a href="https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html#handling-document-status">Handling Document status for Beneficial Owners</a> for acceptable documents.</td>
+</tr>
+</tbody></table>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/customers/{id}/documents</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
@@ -6321,8 +6337,8 @@ HTTP/1.1 200 OK
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
 <span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6'</span>
 
-<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/funding-sources-token"</span>
-<span class="n">customer</span><span class="p">.</span><span class="nf">token</span> <span class="c1"># =&gt; "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"</span>
+<span class="n">fs_token</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/funding-sources-token"</span>
+<span class="n">fs_token</span><span class="p">.</span><span class="nf">token</span> <span class="c1"># =&gt; "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -6360,8 +6376,8 @@ HTTP/1.1 200 OK
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
-<span class="nv">$iavToken</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">getCustomerIavToken</span><span class="p">(</span><span class="s2">"https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6"</span><span class="p">);</span>
-<span class="nv">$iavToken</span><span class="o">-&gt;</span><span class="na">token</span><span class="p">;</span> <span class="c1"># =&gt; "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
+<span class="nv">$fsToken</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">createFundingSourcesTokenForCustomer</span><span class="p">(</span><span class="s2">"https://api-sandbox.dwolla.com/customers/06b51d56-7a6c-4535-a0cc-2c0106f56ba6"</span><span class="p">);</span>
+<span class="nv">$fsToken</span><span class="o">-&gt;</span><span class="na">token</span><span class="p">;</span> <span class="c1"># =&gt; "lr0Ax1zwIpeXXt8sJDiVXjPbwEeGO6QKFWBIaKvnFG0Sm2j7vL"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='create-an-iav-token-for-dwolla-js'>Create an IAV token for dwolla.js</h2>
 <p>Dwolla.js is a client-side library that allows you <code class="prettyprint">add and verify</code> a funding source for your Customer without having any sensitive data hit your server. This section details how to create a token that will be sent to the client and used to authenticate the HTTP request asking Dwolla to <code class="prettyprint">add and verify</code> a new funding source.</p>
