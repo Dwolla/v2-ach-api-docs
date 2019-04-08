@@ -47,6 +47,10 @@ body > header {
                 display: none;
                 float: right;
 
+                a:not(:last-of-type) {
+                    margin-right: 8px;
+                }
+
                 header {
                     margin-right: 15px;
 
@@ -74,7 +78,7 @@ body > header {
       font-style: normal;
       font-weight: 500;
       line-height: normal;
-      font-size: 13px;
+      font-size: 14px;
       margin-right: 30px;
     }
 
