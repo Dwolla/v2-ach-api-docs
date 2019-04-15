@@ -73,7 +73,7 @@ Add and retrieve ACH bank account information via funding sources.  Customers ca
 
 ## Create a funding source for a customer
 
-There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer's bank account information and pass it to Dwolla via the [new Customer funding source](#new-funding-source-for-a-customer) endpoint, or you can send the Customer through the the [Instant Account Verification](#instant-account-verification-iav) (IAV) flow which will add and verify a bank account within seconds.
+There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer's bank account information and pass it to Dwolla via the [new Customer funding source](#create-a-funding-source-for-a-customer) endpoint, or you can send the Customer through the the [Instant Account Verification](https://developers.dwolla.com/resources/dwolla-js.html) (IAV) flow which will add and verify a bank account within seconds.
 
 Before a Dwolla account or Dwolla API Customer is eligible to transfer money from their bank or credit union account they need to verify ownership of the account, either via Instant Account Verification (IAV) or micro-deposits. For more information on bank account verification, reference this [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article.
 
