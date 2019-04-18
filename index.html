@@ -80,7 +80,7 @@
              <a href="https://developers.dwolla.com">Developers</a>
              <a href="https://www.dwolla.com/updates/">Resources</a>
              <a href="https://www.dwolla.com/about/">Company</a>
-             <a href="https://www.dwolla.com/login">Login</a>
+             <a href="https://accounts.dwolla.com/login">Login</a>
              <a class="btn primary" href="https://www.dwolla.com/contact/">Contact Us</a>
            </nav>
          </div>
@@ -5332,7 +5332,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>failureReason</td>
-<td>The reason an uploaded document was rejected. Can be: <code class="prettyprint">ScanNotReadable</code>, <code class="prettyprint">ScanNotUploaded</code>, <code class="prettyprint">ScanIdTypeNotSupported</code>, or <code class="prettyprint">ScanNameMismatch</code>.</td>
+<td>The reason an uploaded document was rejected. Can be: <code class="prettyprint">ScanNotReadable</code>, <code class="prettyprint">ScanNotUploaded</code>, <code class="prettyprint">ScanIdTypeNotSupported</code>, <code class="prettyprint">scanDobMismatch</code> or <code class="prettyprint">ScanNameMismatch</code>.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -6094,7 +6094,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
     </span><span class="nt">"fingerprint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4cf31392f678cb26c62b75096e1a09d4465a801798b3d5c3729de44a4f54c794"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='create-a-funding-source-for-a-customer'>Create a funding source for a customer</h2>
-<p>There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer&rsquo;s bank account information and pass it to Dwolla via the <a href="#new-funding-source-for-a-customer">new Customer funding source</a> endpoint, or you can send the Customer through the the <a href="#instant-account-verification-iav">Instant Account Verification</a> (IAV) flow which will add and verify a bank account within seconds.</p>
+<p>There are two methods available for adding a bank or credit union account to a Customer. You can either collect the Customer&rsquo;s bank account information and pass it to Dwolla via the <a href="#create-a-funding-source-for-a-customer">new Customer funding source</a> endpoint, or you can send the Customer through the the <a href="https://developers.dwolla.com/resources/dwolla-js.html">Instant Account Verification</a> (IAV) flow which will add and verify a bank account within seconds.</p>
 
 <p>Before a Dwolla account or Dwolla API Customer is eligible to transfer money from their bank or credit union account they need to verify ownership of the account, either via Instant Account Verification (IAV) or micro-deposits. For more information on bank account verification, reference this <a href="https://developers.dwolla.com/resources/funding-source-verification.html">funding source verification</a> resource article.</p>
 
@@ -7911,7 +7911,7 @@ HTTP 200 OK
 </tr>
 </tbody></table>
 <h3 id='facilitator-fee-json-object'>Facilitator fee JSON object</h3>
-<p>The facilitator fee is a feature allowing for a flat rate amount to be removed from a payment as a fee, and sent to the creator of the Dwolla application. The fee does not affect the original payment amount, and exists as a separate <a href="#transfer-resource">Transfer resource</a> with a unique transfer ID. Within a transfer request you can specify an optional <code class="prettyprint">fees</code> request parameter, which is an array of <a href="#a-fee-json-object">fee objects</a> that can represent many unique fee transfers.</p>
+<p>The facilitator fee is a feature allowing for a flat rate amount to be removed from a payment as a fee, and sent to the creator of the Dwolla application. The fee does not affect the original payment amount, and exists as a separate <a href="#transfer-resource">Transfer resource</a> with a unique transfer ID. Within a transfer request you can specify an optional <code class="prettyprint">fees</code> request parameter, which is an array of <a href="#facilitator-fee-json-object">fee objects</a> that can represent many unique fee transfers.</p>
 
 <p>For more information on collecting fees on payments, reference the <a href="https://developers.dwolla.com/resources/facilitator-fee.html">facilitator fee</a> resource article.</p>
 
@@ -8070,7 +8070,7 @@ Source specifies the clearing time for the source funding source involved in the
 </tbody></table>
 <h3 id='request-and-response'>Request and response</h3>
 <p>The reference example below shows what a request looks like when sending a transfer.
-Please note this example is using <a href="https://www.dwolla.com/same-day-ach">same-day</a> clearing to a Dwolla API Customer&rsquo;s bank account, part of Dwolla&rsquo;s API.</p>
+Please note this example is using <a href="https://developers.dwolla.com/resources/same-day-ach.html">same-day</a> clearing to a Dwolla API Customer&rsquo;s bank account, part of Dwolla&rsquo;s API.</p>
 <div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -9103,7 +9103,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'transfers'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "cancelled"</span>
 </code></pre></div></div><h2 id='create-an-on-demand-transfer-authorization'>Create an on-demand transfer authorization</h2>
-<p>This section outlines how to create an on-demand bank transfer authorization for your Customer. On-demand authorization allows Customers to authorize Dwolla to transfer variable amounts from their bank account using ACH at a later point in time for products or services delivered. This on-demand authorization is supplied along with the Customer&rsquo;s bank details when creating a <a href="#new-funding-source-for-a-customer">new Customer funding source</a>.</p>
+<p>This section outlines how to create an on-demand bank transfer authorization for your Customer. On-demand authorization allows Customers to authorize Dwolla to transfer variable amounts from their bank account using ACH at a later point in time for products or services delivered. This on-demand authorization is supplied along with the Customer&rsquo;s bank details when creating a <a href="#create-a-funding-source-for-a-customer">new Customer funding source</a>.</p>
 
 <p>When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. <strong>Note:</strong> On-demand payments come as part of our Dwolla API and requires additional approval before getting started. Please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a> for more information on enabling.</p>
 <h3 id='http-request'>HTTP request</h3>
