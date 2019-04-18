@@ -143,7 +143,7 @@ Refer to our [idempotency key](#idempotency-key) section to learn more.
 
 ### Facilitator fee JSON object
 
-The facilitator fee is a feature allowing for a flat rate amount to be removed from a payment as a fee, and sent to the creator of the Dwolla application. The fee does not affect the original payment amount, and exists as a separate [Transfer resource](#transfer-resource) with a unique transfer ID. Within a transfer request you can specify an optional `fees` request parameter, which is an array of [fee objects](#a-fee-json-object) that can represent many unique fee transfers.
+The facilitator fee is a feature allowing for a flat rate amount to be removed from a payment as a fee, and sent to the creator of the Dwolla application. The fee does not affect the original payment amount, and exists as a separate [Transfer resource](#transfer-resource) with a unique transfer ID. Within a transfer request you can specify an optional `fees` request parameter, which is an array of [fee objects](#facilitator-fee-json-object) that can represent many unique fee transfers.
 
 For more information on collecting fees on payments, reference the [facilitator fee](https://developers.dwolla.com/resources/facilitator-fee.html) resource article.
 
@@ -238,7 +238,7 @@ Source specifies the clearing time for the source funding source involved in the
 ### Request and response
 
 The reference example below shows what a request looks like when sending a transfer.
-Please note this example is using [same-day](https://www.dwolla.com/same-day-ach) clearing to a Dwolla API Customer's bank account, part of Dwolla's API.
+Please note this example is using [same-day](https://developers.dwolla.com/resources/same-day-ach.html) clearing to a Dwolla API Customer's bank account, part of Dwolla's API.
 
 ```raw
 POST https://api-sandbox.dwolla.com/transfers
@@ -1008,7 +1008,7 @@ appToken
 
 ## Create an on-demand transfer authorization
 
-This section outlines how to create an on-demand bank transfer authorization for your Customer. On-demand authorization allows Customers to authorize Dwolla to transfer variable amounts from their bank account using ACH at a later point in time for products or services delivered. This on-demand authorization is supplied along with the Customer's bank details when creating a [new Customer funding source](#new-funding-source-for-a-customer).
+This section outlines how to create an on-demand bank transfer authorization for your Customer. On-demand authorization allows Customers to authorize Dwolla to transfer variable amounts from their bank account using ACH at a later point in time for products or services delivered. This on-demand authorization is supplied along with the Customer's bank details when creating a [new Customer funding source](#create-a-funding-source-for-a-customer).
 
 When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. **Note:** On-demand payments come as part of our Dwolla API and requires additional approval before getting started. Please [contact Sales](https://www.dwolla.com/contact?b=apidocs) for more information on enabling.
 
