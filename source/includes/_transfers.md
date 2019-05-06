@@ -118,7 +118,7 @@ Refer to our [idempotency key](#idempotency-key) section to learn more.
 | fees | no | array | An array of fee JSON objects that contain unique fee transfers. [Reference the facilitator fee JSON object to learn more](#facilitator-fee-json-object). |
 | clearing | no | object | A clearing JSON object that contains `source` and `destination` keys to expedite or slow down a transfer. [Reference the clearing JSON object to learn more](#clearing-json-object). |
 | achDetails | no | object | An ACH details JSON object which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [Reference the achDetails JSON object to learn more](#achdetails-object)|
-| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
+| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. |
 
 ### Source and destination types
 
