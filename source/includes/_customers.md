@@ -143,6 +143,7 @@ This section details how to create a new Customer.
 | type | yes | string | Value of `receive-only`. |
 | businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
+| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Request and response - receive-only User
 
@@ -235,6 +236,7 @@ appToken
 | email | yes | string | Customer's email address. |
 | businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
+| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Request and response - unverified Customer
 
@@ -329,6 +331,7 @@ For an in-depth look at personal verified Customers creation and status handling
 | dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
 | ssn | yes | string | Last four digits of the Customer's Social Security Number. |
 | phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
+| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Request and response - verified **personal** Customer
 
@@ -480,6 +483,7 @@ For an in-depth look at business verified Customers creation and status handling
 | ein | no | string | Employer Identification Number. Optional for `soleProprietorship` business Customers |
 | website | no | string | Business’ website |
 | phone | no | string | Business's 10 digit phone number. No hyphens or other separators, e.g. 3334447777. |
+| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Request and response - verified **business** Customer (sole proprietorship only)
 
@@ -632,6 +636,7 @@ A verified business Customer must input information on the controller and the Bu
 | website | no |string | Business’ website |
 | phone | no | string | Business's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 | controller | conditional |object | A controller JSON object. |
+| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Controller JSON object
 
