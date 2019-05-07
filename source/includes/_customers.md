@@ -143,7 +143,7 @@ This section details how to create a new Customer.
 | type | yes | string | Value of `receive-only`. |
 | businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
-| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
+| correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Request and response - receive-only User
 
@@ -236,7 +236,7 @@ appToken
 | email | yes | string | Customer's email address. |
 | businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
-| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
+| correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Request and response - unverified Customer
 
