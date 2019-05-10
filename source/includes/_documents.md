@@ -12,7 +12,7 @@ For more information on handling the Customer verification status of `document`,
 |type | Either `passport`, `license`, `idCard`, or `other`. Must be a color scan of US Government issued identification.|
 |status| Either `pending` or `reviewed`.  When a document has been manually reviewed by Dwolla, its status will be `reviewed`.  A reviewed document does not necessarily indicate that the customer has completed the identity verification process. |
 | created | ISO 8601 Timestamp of document upload time and date. |
-| failureReason | The reason an uploaded document was rejected. Can be: `ScanNotReadable`, `ScanNotUploaded`, `ScanIdTypeNotSupported`, `scanDobMismatch` or `ScanNameMismatch`. |
+| failureReason | The reason an uploaded document was rejected. Can be: `ScanNotReadable`, `ScanNotUploaded`, `ScanIdTypeNotSupported`, `ScanDobMismatch` or `ScanNameMismatch`. |
 
 ```noselect
 {
@@ -60,7 +60,7 @@ Create a document for a Customer pending verification by uploading a color scan 
 | 403         | invalidResourceState     | Resource cannot be modified. Document creation not allowed for already `verified` Customers or non-`verified` Customer types. |
 | 403         | notAuthorized            | Not authorized to create documents. |
 | 404         | notFound                 | Customer not found. Check CustomerId. |
-| 413         | fileTooLarge             | Document requests are limited to 10 mb. |
+| 413         | fileTooLarge             | Document requests are limited to 10 MiB. |
 
 ### Request and response
 

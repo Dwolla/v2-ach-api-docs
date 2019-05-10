@@ -1010,7 +1010,7 @@ appToken
 
 This section outlines how to create an on-demand bank transfer authorization for your Customer. On-demand authorization allows Customers to authorize Dwolla to transfer variable amounts from their bank account using ACH at a later point in time for products or services delivered. This on-demand authorization is supplied along with the Customer's bank details when creating a [new Customer funding source](#create-a-funding-source-for-a-customer).
 
-When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. **Note:** On-demand payments come as part of our Dwolla API and requires additional approval before getting started. Please [contact Sales](https://www.dwolla.com/contact?b=apidocs) for more information on enabling.
+When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. **Note:** On-demand payments come as part of our Dwolla API and requires additional approval before getting started. Please [contact Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling.
 
 ### HTTP request
 `POST https://api.dwolla.com/on-demand-authorizations`

@@ -141,7 +141,7 @@ This section details how to create a new Customer.
 | lastName | yes | string | Customer's last name. |
 | email | yes | string | Customer's email address. |
 | type | yes | string | Value of `receive-only`. |
-| businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
+| businessName | no | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
 | correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
@@ -1053,7 +1053,7 @@ In addition to the table above, business verified Customers can update the follo
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
 | doingBusinessAs | no | string | Name that is different from the officially registered name of Customer’s business. |
-| website | no | string | www.domain.com |
+| website | no | string | https://www.domain.com |
 
 ### Upgrade an unverified Customer to verified Customer
 
@@ -1332,7 +1332,7 @@ appToken
 | lastName | yes | string | Customer's last name. |
 | email | yes | string | Customer's email address. |
 | ipAddress | no | string | Customer's IP address. |
-| type | yes | string | Either `personal` or `business`. If business, [see above](#additional-request-parameters-for-verified-customer-with-typebusiness) for additional required information. |
+| type | yes | string | Either `personal` or `business`. If business, see above for additional required information. |
 | address1 | yes | string | First line of the street address of the Customer's permanent residence. **Note:** PO Boxes are not allowed. |
 | address2 | no | string | Second line of the street address of the Customer's permanent residence. **Note:** PO Boxes are not allowed. |
 | city | yes | string | City of Customer's permanent residence. |
