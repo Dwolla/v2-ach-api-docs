@@ -114,7 +114,7 @@ A verified Customer can be created as a type of either `Personal` or `Business`.
 
 ## Create a customer
 
-This section details how to create a new Customer.
+This section details how to create a new Customer. It is important to prompt your users to provide their full name as it appears on a government issued identification card. This will help ensure a straight-through processing approach. If errors occur in name or date of birth, where you may be prompted for such information, additional manual steps are required, which may add processing time that impedes their experience or may even result in additional cost to you.
 
 [**To create `Receive-only Users`**](/#request-parameters---receive-only-customer), you'll provide the customer's full name and email address, `type` with the value of `receive-only`, and `businessName` if applicable.
 
