@@ -114,7 +114,7 @@ A verified Customer can be created as a type of either `Personal` or `Business`.
 
 ## Create a customer
 
-This section details how to create a new Customer.
+This section details how to create a new Customer. It is important to prompt your users to provide their full name as it appears on a government issued identification card. This will help ensure a straight-through processing approach. If errors occur in name or date of birth, where you may be prompted for such information, additional manual steps are required, which may add processing time that impedes their experience or may even result in additional cost to you.
 
 [**To create `Receive-only Users`**](/#request-parameters---receive-only-customer), you'll provide the customer's full name and email address, `type` with the value of `receive-only`, and `businessName` if applicable.
 
@@ -141,7 +141,7 @@ This section details how to create a new Customer.
 | lastName | yes | string | Customer's last name. |
 | email | yes | string | Customer's email address. |
 | type | yes | string | Value of `receive-only`. |
-| businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
+| businessName | no | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
 | correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
@@ -234,7 +234,7 @@ appToken
 | firstName | yes | string | Customer's first name. |
 | lastName | yes | string | Customer's last name. |
 | email | yes | string | Customer's email address. |
-| businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
+| businessName | no | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
 | correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
@@ -331,7 +331,7 @@ For an in-depth look at personal verified Customers creation and status handling
 | dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
 | ssn | yes | string | Last four digits of the Customer's Social Security Number. |
 | phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
-| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
+| correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Request and response - verified **personal** Customer
 
@@ -481,9 +481,9 @@ For an in-depth look at business verified Customers creation and status handling
 | businessType | yes | string | Business structure. Value of `soleProprietorship`. |
 | businessClassification| yes | string | The industry classification Id that corresponds to Customer’s business. [Reference our Dev Docs](#list-business-classifications) to learn how to generate this Id. |
 | ein | no | string | Employer Identification Number. Optional for `soleProprietorship` business Customers |
-| website | no | string | Business’ website |
+| website | no | string | Business’ website. e.g. https://www.domain.com |
 | phone | no | string | Business's 10 digit phone number. No hyphens or other separators, e.g. 3334447777. |
-| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
+| correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Request and response - verified **business** Customer (sole proprietorship only)
 
@@ -633,10 +633,10 @@ A verified business Customer must input information on the controller and the Bu
 | businessType | yes |string | Business structure. Possible values are `corporation`, `llc`, `partnership`. |
 | businessClassification | yes |string | The industry classification Id that corresponds to Customer’s business. [Reference the next section of our docs](#list-business-classifications) to learn how to generate this Id.  |
 | ein | yes |string | Employer Identification Number. |
-| website | no |string | Business’ website |
+| website | no |string | Business’ website. e.g. https://www.domain.com |
 | phone | no | string | Business's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 | controller | conditional |object | A controller JSON object. |
-| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
+| correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Controller JSON object
 
@@ -1053,7 +1053,7 @@ In addition to the table above, business verified Customers can update the follo
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
 | doingBusinessAs | no | string | Name that is different from the officially registered name of Customer’s business. |
-| website | no | string | www.domain.com |
+| website | no | string | https://www.domain.com |
 
 ### Upgrade an unverified Customer to verified Customer
 
@@ -1332,7 +1332,7 @@ appToken
 | lastName | yes | string | Customer's last name. |
 | email | yes | string | Customer's email address. |
 | ipAddress | no | string | Customer's IP address. |
-| type | yes | string | Either `personal` or `business`. If business, [see above](#additional-request-parameters-for-verified-customer-with-typebusiness) for additional required information. |
+| type | yes | string | Either `personal` or `business`. If business, see above for additional required information. |
 | address1 | yes | string | First line of the street address of the Customer's permanent residence. **Note:** PO Boxes are not allowed. |
 | address2 | no | string | Second line of the street address of the Customer's permanent residence. **Note:** PO Boxes are not allowed. |
 | city | yes | string | City of Customer's permanent residence. |
