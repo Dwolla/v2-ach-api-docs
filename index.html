@@ -70,7 +70,7 @@
              <a class="logo icon-logo-dwolla-white" href="https://www.dwolla.com/">Dwolla</a>
              <img src="images/dwolla-logo-white-all.svg" alt="Dwolla" class="print-only" />
              <div class="hamburger">
-               <a href="https://www.dwolla.com/contact?b=nav">Contact Sales</a>
+               <a href="https://www.dwolla.com/get-started/">Get Started</a>
                <a class="btn primary js-hamburger">Menu</a>
              </div>
            </div>
@@ -81,7 +81,7 @@
              <a href="https://www.dwolla.com/updates/">Resources</a>
              <a href="https://www.dwolla.com/about/">Company</a>
              <a href="https://accounts.dwolla.com/login">Login</a>
-             <a class="btn primary" href="https://www.dwolla.com/contact/">Contact Us</a>
+             <a class="btn primary" href="https://www.dwolla.com/get-started/">Get Started</a>
            </nav>
          </div>
       </div>
@@ -1842,7 +1842,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5554321234"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h2 id='create-a-customer'>Create a customer</h2>
-<p>This section details how to create a new Customer.</p>
+<p>This section details how to create a new Customer. It is important to prompt your users to provide their full name as it appears on a government issued identification card. This will help ensure a straight-through processing approach. If errors occur in name or date of birth, where you may be prompted for such information, additional manual steps are required, which may add processing time that impedes their experience or may even result in additional cost to you.</p>
 
 <p><a href="/#request-parameters---receive-only-customer"><strong>To create <code class="prettyprint">Receive-only Users</code></strong></a>, you&rsquo;ll provide the customer&rsquo;s full name and email address, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
 
@@ -1902,7 +1902,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>businessName</td>
-<td>yes</td>
+<td>no</td>
 <td>string</td>
 <td>Customer&rsquo;s registered business name. (<strong>Optional</strong> if not a business entity)</td>
 </tr>
@@ -2053,7 +2053,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 </tr>
 <tr>
 <td>businessName</td>
-<td>yes</td>
+<td>no</td>
 <td>string</td>
 <td>Customer&rsquo;s registered business name. (<strong>Optional</strong> if not a business entity)</td>
 </tr>
@@ -2260,7 +2260,7 @@ Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
-<td>A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.</td>
+<td>A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.</td>
 </tr>
 </tbody></table>
 <h5 id='request-and-response---verified-strongpersonalstrong-customer'>Request and response - verified <strong>personal</strong> Customer</h5><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -2528,7 +2528,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <td>website</td>
 <td>no</td>
 <td>string</td>
-<td>Business’ website</td>
+<td>Business’ website. e.g. https://www.domain.com</td>
 </tr>
 <tr>
 <td>phone</td>
@@ -2540,7 +2540,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
-<td>A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.</td>
+<td>A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.</td>
 </tr>
 </tbody></table>
 <h5 id='request-and-response---verified-strongbusinessstrong-customer-sole-proprietorship-only'>Request and response - verified <strong>business</strong> Customer (sole proprietorship only)</h5><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -2798,7 +2798,7 @@ A verified business Customer must input information on the controller and the Bu
 <td>website</td>
 <td>no</td>
 <td>string</td>
-<td>Business’ website</td>
+<td>Business’ website. e.g. https://www.domain.com</td>
 </tr>
 <tr>
 <td>phone</td>
@@ -2816,7 +2816,7 @@ A verified business Customer must input information on the controller and the Bu
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
-<td>A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.</td>
+<td>A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.</td>
 </tr>
 </tbody></table>
 <h5 id='controller-json-object'>Controller JSON object</h5>
@@ -3525,7 +3525,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>website</td>
 <td>no</td>
 <td>string</td>
-<td>www.domain.com</td>
+<td>https://www.domain.com</td>
 </tr>
 </tbody></table>
 <h3 id='upgrade-an-unverified-customer-to-verified-customer'>Upgrade an unverified Customer to verified Customer</h3>
@@ -3873,7 +3873,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>type</td>
 <td>yes</td>
 <td>string</td>
-<td>Either <code class="prettyprint">personal</code> or <code class="prettyprint">business</code>. If business, <a href="#additional-request-parameters-for-verified-customer-with-typebusiness">see above</a> for additional required information.</td>
+<td>Either <code class="prettyprint">personal</code> or <code class="prettyprint">business</code>. If business, see above for additional required information.</td>
 </tr>
 <tr>
 <td>address1</td>
@@ -5362,7 +5362,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>failureReason</td>
-<td>The reason an uploaded document was rejected. Can be: <code class="prettyprint">ScanNotReadable</code>, <code class="prettyprint">ScanNotUploaded</code>, <code class="prettyprint">ScanIdTypeNotSupported</code>, <code class="prettyprint">scanDobMismatch</code> or <code class="prettyprint">ScanNameMismatch</code>.</td>
+<td>The reason an uploaded document was rejected. Can be: <code class="prettyprint">ScanNotReadable</code>, <code class="prettyprint">ScanNotUploaded</code>, <code class="prettyprint">ScanIdTypeNotSupported</code>, <code class="prettyprint">ScanDobMismatch</code> or <code class="prettyprint">ScanNameMismatch</code>.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
@@ -5453,7 +5453,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>413</td>
 <td>fileTooLarge</td>
-<td>Document requests are limited to 10 mb.</td>
+<td>Document requests are limited to 10 MiB.</td>
 </tr>
 </tbody></table>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -9135,7 +9135,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </code></pre></div></div><h2 id='create-an-on-demand-transfer-authorization'>Create an on-demand transfer authorization</h2>
 <p>This section outlines how to create an on-demand bank transfer authorization for your Customer. On-demand authorization allows Customers to authorize Dwolla to transfer variable amounts from their bank account using ACH at a later point in time for products or services delivered. This on-demand authorization is supplied along with the Customer&rsquo;s bank details when creating a <a href="#create-a-funding-source-for-a-customer">new Customer funding source</a>.</p>
 
-<p>When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. <strong>Note:</strong> On-demand payments come as part of our Dwolla API and requires additional approval before getting started. Please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a> for more information on enabling.</p>
+<p>When on-demand authorization is enabled for your application the Customer is presented with text on a “add bank account” screen in your user interface(UI) giving authorization to Dwolla for future variable payments. <strong>Note:</strong> On-demand payments come as part of our Dwolla API and requires additional approval before getting started. Please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a> or your account manager for more information on enabling.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/on-demand-authorizations</code></p>
 <h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
