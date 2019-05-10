@@ -234,7 +234,7 @@ appToken
 | firstName | yes | string | Customer's first name. |
 | lastName | yes | string | Customer's last name. |
 | email | yes | string | Customer's email address. |
-| businessName | yes | string | Customer's registered business name. (**Optional** if not a business entity) |
+| businessName | no | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
 | correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
@@ -331,7 +331,7 @@ For an in-depth look at personal verified Customers creation and status handling
 | dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
 | ssn | yes | string | Last four digits of the Customer's Social Security Number. |
 | phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
-| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
+| correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Request and response - verified **personal** Customer
 
@@ -481,9 +481,9 @@ For an in-depth look at business verified Customers creation and status handling
 | businessType | yes | string | Business structure. Value of `soleProprietorship`. |
 | businessClassification| yes | string | The industry classification Id that corresponds to Customer’s business. [Reference our Dev Docs](#list-business-classifications) to learn how to generate this Id. |
 | ein | no | string | Employer Identification Number. Optional for `soleProprietorship` business Customers |
-| website | no | string | Business’ website |
+| website | no | string | Business’ website. e.g. https://www.domain.com |
 | phone | no | string | Business's 10 digit phone number. No hyphens or other separators, e.g. 3334447777. |
-| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
+| correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Request and response - verified **business** Customer (sole proprietorship only)
 
@@ -633,10 +633,10 @@ A verified business Customer must input information on the controller and the Bu
 | businessType | yes |string | Business structure. Possible values are `corporation`, `llc`, `partnership`. |
 | businessClassification | yes |string | The industry classification Id that corresponds to Customer’s business. [Reference the next section of our docs](#list-business-classifications) to learn how to generate this Id.  |
 | ein | yes |string | Employer Identification Number. |
-| website | no |string | Business’ website |
+| website | no |string | Business’ website. e.g. https://www.domain.com |
 | phone | no | string | Business's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 | controller | conditional |object | A controller JSON object. |
-| correlationId | no | string | A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
+| correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Controller JSON object
 
