@@ -3,7 +3,7 @@
 A **Label** represents a designated portion of funds within a [Verified Customer's](https://developers.dwolla.com/resources/account-types.html#verified-customer) balance. To create a label, you’ll specify the ID of a Verified Customer and an amount. Your application will maintain any other Label information or associations. Labels can be created, updated, and deleted. You can also list all Labels for a Verified Customer Record and list all entries for a specified Label. Note that a Verified Customer’s labeled amounts cannot exceed the balance available in such Verified Customer's account.
 
 <ol class="alerts">
-    <li class="alert icon-alert-info">This section outlines a premium feature for the [Dwolla API](https://www.dwolla.com/platform/). To learn more about enabling this functionality, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).</li>
+    <li class="alert icon-alert-info">This section outlines a premium feature for the [Dwolla API](https://www.dwolla.com/platform/). To learn more about pricing and enabling this functionality, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).</li>
 </ol>
 
 ### Label Links
@@ -212,7 +212,7 @@ appToken
 
 ## Create a label ledger entry
 
-To create a new entry on a Label Ledger you’ll specify the ID of the Label, as well as a positive or negative amount value (depending on if the purpose is to increase or decrease the amount tied to a Label). The amount tied to a Label cannot go negative, therefore if the amount of the label ledger entry exceeds the current amount tied to a Label then a validation error will be returned.
+To create a new entry on a Label Ledger you’ll specify the ID of the Label, as well as a positive or negative amount value (depending on if the purpose is to increase or decrease the amount tied to a Label). The amount tied to a Label cannot go negative, therefore if the amount of the label ledger entry exceeds the current amount tied to a Label, then a validation error will be returned.
 
 ### HTTP request
 
@@ -572,12 +572,14 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```php
+<?php
 $customerUrl = 'https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb';
 
 $customersApi = new DwollaSwagger\CustomersApi($apiClient);
 
 $labels = $customersApi->getLabelsForCustomer($customerUrl);
 $labels->_embedded->{'labels'}[0]->id; # => "7e042ffe-e25e-40d2-b86e-748b98845ecc"
+?>
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
