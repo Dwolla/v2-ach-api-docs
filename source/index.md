@@ -24,6 +24,7 @@ includes:
   - fundingsrcs
   - transfers
   - masspay
+  - labels
   - events
   - webhookSubscriptions
   - webhooks

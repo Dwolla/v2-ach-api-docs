@@ -145,6 +145,14 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_mass_payment_cancelled | A Verified Customer's created and deferred mass payment was cancelled. |
 | customer_balance_inquiry_completed | Upon checking a Customer's bank balance, Dwolla will immediately return an HTTP 202 with response body that includes a status of `processing`. This event will be triggered when the bank balance check has completed processing. |
 
+##### Labels
+
+| Topic                  | Description                    |
+|------------------------|-------------------------------------------------------------------|
+| customer_label_created | A Verified Customer’s label was created. |
+| customer_label_ledger_entry_created | A ledger entry was for a Verified Customer’s label was created. |
+| customer_label_removed | A Verified Customer’s label was removed. |
+
 ## List events
 
 Retrieve a list of events for the application. **Note:** Dwolla will only guarantee access to events through the API over a rolling 30-day period.
