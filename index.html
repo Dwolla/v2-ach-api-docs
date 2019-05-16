@@ -10691,6 +10691,1283 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </code></pre></div></div>
 <hr>
 
+            <h1 id='labels'>Labels</h1>
+<p>A <strong>Label</strong> represents a designated portion of funds within a <a href="https://developers.dwolla.com/resources/account-types.html#verified-customer">Verified Customer&rsquo;s</a> balance. To create a label, you’ll specify the ID of a Verified Customer and an amount. Your application will maintain any other Label information or associations. Labels can be created, updated, and deleted. You can also list all Labels for a Verified Customer Record and list all entries for a specified Label. Note that a Verified Customer’s labeled amounts cannot exceed the balance available in such Verified Customer&rsquo;s account.</p>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This section outlines a premium feature for the <a href="https://www.dwolla.com/platform/">Dwolla API</a>. To learn more about pricing and enabling this functionality, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
+</li></ol><h3 id='label-links'>Label Links</h3>
+<table><thead>
+<tr>
+<th>Link</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>self</td>
+<td>URL of the Label resource.</td>
+</tr>
+<tr>
+<td>ledger-entries</td>
+<td>GET this link to list the ledger entries for a Label.</td>
+</tr>
+<tr>
+<td>update</td>
+<td>GET this link to update the ledger for this Verified Customer.</td>
+</tr>
+<tr>
+<td>remove</td>
+<td>GET this link to remove the Label for this Verified Customer.</td>
+</tr>
+</tbody></table>
+<h3 id='label-resource'>Label resource</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>_links</td>
+<td>A _links JSON object that contains links to suggested resources and actions available based on the current context.</td>
+</tr>
+<tr>
+<td>id</td>
+<td>A Label unique identifier.</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>An Amount JSON object that contains value and currency keys. Reference the amount object to learn more.</td>
+</tr>
+<tr>
+<td>created</td>
+<td>ISO-8601 timestamp.</td>
+</tr>
+</tbody></table>
+<h3 id='amount-object'>Amount object</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>value</td>
+<td>Amount of funds.</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>Acceptable values: <code class="prettyprint">USD</code></td>
+</tr>
+</tbody></table>
+<h2 id='create-a-label'>Create a label</h2>
+<p>This section outlines how to create a new Label. When creating a Label you’ll specify an <code class="prettyprint">amount</code> as well as the ID of a Verified Customer that the label is tied to. Upon success, the API will return a <code class="prettyprint">201</code> with a link to the created Label resource in the <code class="prettyprint">location</code> header.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">POST https://api.dwolla.com/customers/{id}/labels</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>A Customer&rsquo;s unique identifier.</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>yes</td>
+<td>object</td>
+<td>Amount of funds to label for a Verified Customer. An amount object. Reference the amount object to learn more.</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>201</td>
+<td>created</td>
+<td>A Label was created.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>ValidationError</td>
+<td>Required - Field is required. <br> InvalidFormat - InvalidFormat. <br> Invalid - Amount can not cause label balance to be negative.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>NotAuthorized</td>
+<td>Not authorized to create Labels. <a href="https://www.dwolla.com/contact/">Contact us</a> to enable this functionality.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>NotFound</td>
+<td>Customer not found. Check CustomerId.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api.dwolla.com/customers/{id}/labels
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+    "amount": {
+        "currency": "USD",
+        "value": "10.00"
+    }
+}
+
+HTTP/1.1 201 Created
+Location: https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$label</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">createLabel</span><span class="p">([</span>
+  <span class="s1">'amount'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">'currency'</span> <span class="o">=&gt;</span> <span class="s1">'USD'</span><span class="p">,</span>
+    <span class="s1">'value'</span> <span class="o">=&gt;</span> <span class="s1">'10.00'</span>
+  <span class="p">]</span>
+<span class="p">],</span> <span class="s2">"https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span><span class="p">);</span>
+<span class="nv">$label</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/labels/375c6781-2a17-476c-84f7-db7d2f6ffb31"
+</span><span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:currency</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span>
+    <span class="ss">:value</span> <span class="o">=&gt;</span> <span class="s2">"10.00"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">label</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/labels"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">label</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/labels/375c6781-2a17-476c-84f7-db7d2f6ffb31"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'amount'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'currency'</span><span class="p">:</span> <span class="s">'USD'</span><span class="p">,</span>
+    <span class="s">'value'</span><span class="p">:</span> <span class="s">'10.00'</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">label</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/labels'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">label</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/labels/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">amount</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">currency</span><span class="p">:</span> <span class="s1">'USD'</span><span class="p">,</span>
+    <span class="na">value</span><span class="p">:</span> <span class="s1">'10.00'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/labels`, requestBody</span><span class="err">)
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/labels/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
+</code></pre></div></div><h2 id='retrieve-a-label'>Retrieve a label</h2>
+<p>This section outlines how to retrieve a label by its unique identifier.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">GET https://api.dwolla.com/labels/{id}</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>A Label&rsquo;s unique identifier.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "label"
+        },
+        "update": {
+            "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc/ledger-entries",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "ledger-entry"
+        },
+        "ledger-entries": {
+            "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc/ledger-entries",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "ledger-entry"
+        },
+        "customer": {
+            "href": "https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        }
+    },
+    "id": "7e042ffe-e25e-40d2-b86e-748b98845ecc",
+    "created": "2019-05-15T22:19:09.635Z",
+    "amount": {
+        "value": "10.00",
+        "currency": "USD"
+    }
+}
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$labelUrl</span> <span class="o">=</span> <span class="s2">"https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc"</span><span class="p">;</span>
+
+<span class="nv">$labelsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\LabelsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$label</span> <span class="o">=</span> <span class="nv">$labelsApi</span><span class="o">-&gt;</span><span class="na">byId</span><span class="p">(</span><span class="nv">$labelUrl</span><span class="p">);</span>
+<span class="nv">$label</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">;</span> <span class="c1"># =&gt; "7e042ffe-e25e-40d2-b86e-748b98845ecc"
+</span><span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">label_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
+
+<span class="n">label</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">label_url</span>
+<span class="n">label</span><span class="p">.</span><span class="nf">id</span> <span class="c1"># =&gt; "7e042ffe-e25e-40d2-b86e-748b98845ecc"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">label_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
+
+<span class="n">label</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">label_url</span><span class="p">)</span>
+<span class="n">label</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'id'</span><span class="p">]</span> <span class="c"># =&gt; '7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">labelUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc'</span><span class="p">;</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">labelUrl</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
+</code></pre></div></div><h2 id='create-a-label-ledger-entry'>Create a label ledger entry</h2>
+<p>To create a new entry on a Label Ledger you’ll specify the ID of the Label, as well as a positive or negative amount value (depending on if the purpose is to increase or decrease the amount tied to a Label). The amount tied to a Label cannot go negative, therefore if the amount of the label ledger entry exceeds the current amount tied to a Label, then a validation error will be returned.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">POST https://api.dwolla.com/labels/{id}/ledger-entries</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>The Id of the Label to update.</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>yes</td>
+<td>object</td>
+<td>Amount of funds to increase or decrease for a Label. To decrease funds in a Label a string numeric value will be supplied and prepended with a “-” operator. An amount object. Reference the amount object to learn more.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f/ledger-entries
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+ "amount": {
+   "value": "-5.00",
+   "currency": "USD"
+ }
+}
+
+HTTP/1.1 201 Created
+Location: https://api.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bececa8
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$labelsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\LabelsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$label</span> <span class="o">=</span> <span class="nv">$labelsApi</span><span class="o">-&gt;</span><span class="na">addLedgerEntry</span><span class="p">([</span>
+  <span class="s1">'amount'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">'currency'</span> <span class="o">=&gt;</span> <span class="s1">'USD'</span><span class="p">,</span>
+    <span class="s1">'value'</span> <span class="o">=&gt;</span> <span class="s1">'-5.00'</span>
+  <span class="p">]</span>
+<span class="p">],</span> <span class="s2">"https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f"</span><span class="p">);</span>
+<span class="nv">$label</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bececa8"
+</span><span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">label_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:currency</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span>
+    <span class="ss">:value</span> <span class="o">=&gt;</span> <span class="s2">"-5.00"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">ledger_entry</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">label_url</span><span class="si">}</span><span class="s2">/ledger-entries"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">ledger_entry</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bececa8"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">label_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'amount'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'currency'</span><span class="p">:</span> <span class="s">'USD'</span><span class="p">,</span>
+    <span class="s">'value'</span><span class="p">:</span> <span class="s">'-5.00'</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">ledger_entry</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/ledger-entries'</span> <span class="o">%</span> <span class="n">label_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">ledger_entry</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bececa8'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">labelUrl</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">amount</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">currency</span><span class="p">:</span> <span class="s1">'USD'</span><span class="p">,</span>
+    <span class="na">value</span><span class="p">:</span> <span class="s1">'-5.00'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">labelUrl</span><span class="p">}</span><span class="sr">/ledger-entries`, requestBody</span><span class="err">)
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bececa8'</span>
+</code></pre></div></div><h2 id='retrieve-a-label-ledger-entry'>Retrieve a label ledger entry</h2>
+<p>This section outlines how to retrieve a Label Ledger entry by its unique identifier</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">GET https://api.dwolla.com/ledger-entries/{id}</code></p>
+
+<p>Request parameters</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>A Label Ledger entry unique identifier.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api.dwolla.com/ledger-entries/32d68709-62dd-43d6-a6df-562f4baec526
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/ledger-entries/32d68709-62dd-43d6-a6df-562f4baec526",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "ledger-entry"
+        },
+        "label": {
+            "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "label"
+        }
+    },
+    "id": "32d68709-62dd-43d6-a6df-562f4baec526",
+    "amount": {
+        "value": "-5.00",
+        "currency": "USD"
+    },
+    "created": "2019-05-16T01:54:58.062Z"
+}
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$ledgerEntryUrl</span> <span class="o">=</span> <span class="s2">"https://api-sandbox.dwolla.com/ledger-entries/32d68709-62dd-43d6-a6df-562f4baec526"</span><span class="p">;</span>
+
+<span class="nv">$ledgerEntriesApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\LedgerentriesApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$ledgerEntry</span> <span class="o">=</span> <span class="nv">$ledgerEntriesApi</span><span class="o">-&gt;</span><span class="na">byId</span><span class="p">(</span><span class="nv">$ledgerEntryUrl</span><span class="p">);</span>
+<span class="nv">$ledgerEntry</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">;</span> <span class="c1"># =&gt; "7e042ffe-e25e-40d2-b86e-748b98845ecc"
+</span><span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">ledger_entry_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/ledger-entries/32d68709-62dd-43d6-a6df-562f4baec526'</span>
+
+<span class="n">ledger_entry</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">ledger_entry_url</span>
+<span class="n">ledger_entry</span><span class="p">.</span><span class="nf">id</span> <span class="c1"># =&gt; "32d68709-62dd-43d6-a6df-562f4baec526"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">ledger_entry_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/ledger-entries/32d68709-62dd-43d6-a6df-562f4baec526'</span>
+
+<span class="n">ledger_entry</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ledger_entry_url</span><span class="p">)</span>
+<span class="n">ledger_entry</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'id'</span><span class="p">]</span> <span class="c"># =&gt; '32d68709-62dd-43d6-a6df-562f4baec526'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">ledgerEntryUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/ledger-entries/32d68709-62dd-43d6-a6df-562f4baec526'</span><span class="p">;</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ledgerEntryUrl</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '32d68709-62dd-43d6-a6df-562f4baec526'</span>
+</code></pre></div></div><h2 id='list-label-ledger-entries'>List label ledger entries</h2>
+<p>This section outlines how to list the history of Label entries. Label ledger entries are sorted by created date in descending order (most recent first).</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">GET https://api.dwolla.com/labels/{id}/ledger-entries</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>The Id of the Label for listing label ledger entries.</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>no</td>
+<td>integer</td>
+<td>Number of results to return. Defaults to 25.</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>no</td>
+<td>integer</td>
+<td>Number of results to skip. Used for pagination.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc/ledger-entries
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc/ledger-entries",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "ledger-entry"
+        },
+        "first": {
+            "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc/ledger-entries?limit=25&amp;offset=0",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "ledger-entry"
+        },
+        "last": {
+            "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc/ledger-entries?limit=25&amp;offset=0",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "ledger-entry"
+        }
+    },
+    "_embedded": {
+        "ledger-entries": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "https://api-sandbox.dwolla.com/ledger-entries/32d68709-62dd-43d6-a6df-562f4baec526",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "ledger-entry"
+                    },
+                    "label": {
+                        "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "label"
+                    }
+                },
+                "id": "32d68709-62dd-43d6-a6df-562f4baec526",
+                "amount": {
+                    "value": "-5.00",
+                    "currency": "USD"
+                },
+                "created": "2019-05-16T01:54:58.062Z"
+            },
+            {
+                "_links": {
+                    "self": {
+                        "href": "https://api-sandbox.dwolla.com/ledger-entries/b71ccd39-6b03-4f16-aff0-1ae29eeadaa8",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "ledger-entry"
+                    },
+                    "label": {
+                        "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "label"
+                    }
+                },
+                "id": "b71ccd39-6b03-4f16-aff0-1ae29eeadaa8",
+                "amount": {
+                    "value": "10.00",
+                    "currency": "USD"
+                },
+                "created": "2019-05-15T22:19:09.635Z"
+            }
+        ]
+    },
+    "total": 2
+}
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$labelUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc'</span><span class="p">;</span>
+
+<span class="nv">$labelsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\LabelsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$ledgerEntries</span> <span class="o">=</span> <span class="nv">$labelsApi</span><span class="o">-&gt;</span><span class="na">getLedgerEntriesForLabel</span><span class="p">(</span><span class="nv">$labelUrl</span><span class="p">);</span>
+<span class="nv">$ledgerEntries</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="p">{</span><span class="s1">'ledger-entries'</span><span class="p">}[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">;</span> <span class="c1"># =&gt; "32d68709-62dd-43d6-a6df-562f4baec526"
+</span><span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">label_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
+
+<span class="n">ledger_entries</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">label_url</span><span class="si">}</span><span class="s2">/ledger-entries"</span>
+<span class="n">ledger_entries</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'ledger-entries'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">id</span> <span class="c1"># =&gt; "32d68709-62dd-43d6-a6df-562f4baec526"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">label_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
+
+<span class="n">ledger_entries</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/ledger-entries'</span> <span class="o">%</span> <span class="n">label_url</span><span class="p">)</span>
+<span class="n">ledger_entries</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_embedded'</span><span class="p">][</span><span class="s">'ledger-entries'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'id'</span><span class="p">]</span> <span class="c"># =&gt; '32d68709-62dd-43d6-a6df-562f4baec526'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">labelUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc'</span><span class="p">;</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">labelUrl</span><span class="p">}</span><span class="sr">/ledger-entries`</span><span class="err">)
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'ledger-entries'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '32d68709-62dd-43d6-a6df-562f4baec526'</span>
+</code></pre></div></div><h2 id='list-labels-for-a-customer'>List labels for a customer</h2>
+<p>List all Labels for a specified Verified Customer. Labels are sorted by created date in descending order (most recent first).</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">GET https://api.dwolla.com/customers/{id}/labels</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>Customer unique identifier to retrieve labels for.</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>no</td>
+<td>integer</td>
+<td>Number of results to return. Defaults to 25.</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>no</td>
+<td>integer</td>
+<td>Number of results to skip. Used for pagination.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb/labels
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb/labels",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "label"
+        },
+        "first": {
+            "href": "https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb/labels?limit=25&amp;offset=0",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "label"
+        },
+        "last": {
+            "href": "https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb/labels?limit=25&amp;offset=0",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "label"
+        },
+        "customer": {
+            "href": "https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        }
+    },
+    "_embedded": {
+        "labels": [
+            {
+                "_links": {
+                    "self": {
+                        "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "label"
+                    },
+                    "update": {
+                        "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc/ledger-entries",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "ledger-entry"
+                    },
+                    "ledger-entries": {
+                        "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc/ledger-entries",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "ledger-entry"
+                    },
+                    "customer": {
+                        "href": "https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb",
+                        "type": "application/vnd.dwolla.v1.hal+json",
+                        "resource-type": "customer"
+                    }
+                },
+                "id": "7e042ffe-e25e-40d2-b86e-748b98845ecc",
+                "created": "2019-05-15T22:19:09.635Z",
+                "amount": {
+                    "value": "5.00",
+                    "currency": "USD"
+                }
+            }
+        ]
+    },
+    "total": 1
+}
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb'</span><span class="p">;</span>
+
+<span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$labels</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">getLabelsForCustomer</span><span class="p">(</span><span class="nv">$customerUrl</span><span class="p">);</span>
+<span class="nv">$labels</span><span class="o">-&gt;</span><span class="na">_embedded</span><span class="o">-&gt;</span><span class="p">{</span><span class="s1">'labels'</span><span class="p">}[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">;</span> <span class="c1"># =&gt; "7e042ffe-e25e-40d2-b86e-748b98845ecc"
+</span><span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb'</span>
+
+<span class="n">labels</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/labels"</span>
+<span class="n">labels</span><span class="p">.</span><span class="nf">_embedded</span><span class="p">[</span><span class="s1">'labels'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nf">id</span> <span class="c1"># =&gt; "7e042ffe-e25e-40d2-b86e-748b98845ecc"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb'</span>
+
+<span class="n">labels</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/labels'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">)</span>
+<span class="n">labels</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'_embedded'</span><span class="p">][</span><span class="s">'labels'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'id'</span><span class="p">]</span> <span class="c"># =&gt; '7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/5b29279d-6359-4c87-a318-e09095532733'</span><span class="p">;</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/labels`</span><span class="err">)
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'labels'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
+</code></pre></div></div><h2 id='create-a-label-reallocation'>Create a label reallocation</h2>
+<p>This section outlines how to create a Label reallocation. When creating a Label reallocation you’ll specify an amount as well as from and to which correspond respectively to a Label that will be reduced and a Label that will be increased. Upon success, the API will return a 201 with a link to the created Label reallocation resource in the Location header. A Label reallocation will only occur if the <code class="prettyprint">from</code> Label has an amount that is equal to or greater than the amount specified in the Label reallocation request. Label ledger entries will be created for both Labels included in the reallocation.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">POST https://api.dwolla.com/label-reallocations</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>_links</td>
+<td>yes</td>
+<td>string</td>
+<td>A _links JSON object that includes the desired <code class="prettyprint">from</code> and <code class="prettyprint">to</code> Label.</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>yes</td>
+<td>object</td>
+<td>Amount of funds to label for a Verified Customer Record. An amount object. Reference the amount object to learn more.</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api.dwolla.com/label-reallocations
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+ "_links":{
+   "from": {
+     "href": "https://api.dwolla.com/labels/c91c501c-f49b-48be-a93b-12b45e152d45"
+   },
+   "to": {
+     "href": "https://api.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc"
+   }
+ },
+ "amount": {
+   "value": "15.00",
+   "currency": "USD"
+ }
+}
+
+HTTP/1.1 201 Created
+Location: https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$labelReallocationsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\LabelreallocationsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$labelReallocation</span> <span class="o">=</span> <span class="nv">$labelReallocationsApi</span><span class="o">-&gt;</span><span class="na">reallocateLabel</span><span class="p">(</span>
+  <span class="s1">'_links'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">'from'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">'href'</span> <span class="o">=&gt;</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/c91c501c-f49b-48be-a93b-12b45e152d45'</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s1">'to'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">'href'</span> <span class="o">=&gt;</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
+    <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s1">'amount'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">'currency'</span> <span class="o">=&gt;</span> <span class="s1">'USD'</span><span class="p">,</span>
+    <span class="s1">'value'</span> <span class="o">=&gt;</span> <span class="s1">'15.00'</span>
+  <span class="p">]</span>
+<span class="p">]);</span>
+<span class="nv">$labelReallocation</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21"
+</span><span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">:_links</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:from</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="ss">:href</span> <span class="o">=&gt;</span> <span class="s2">"https://api-sandbox.dwolla.com/labels/c91c501c-f49b-48be-a93b-12b45e152d45"</span>
+    <span class="p">},</span>
+    <span class="ss">:to</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="ss">:href</span> <span class="o">=&gt;</span> <span class="s2">"https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc"</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:currency</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span>
+    <span class="ss">:value</span> <span class="o">=&gt;</span> <span class="s2">"15.00"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">labelReallocation</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"label-reallocations"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">labelReallocation</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'_links'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'from'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">'href'</span><span class="p">:</span> <span class="s">'https://api-sandbox.dwolla.com/labels/c91c501c-f49b-48be-a93b-12b45e152d45'</span>
+    <span class="p">},</span>
+    <span class="s">'to'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">'href'</span><span class="p">:</span> <span class="s">'https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s">'amount'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'currency'</span><span class="p">:</span> <span class="s">'USD'</span><span class="p">,</span>
+    <span class="s">'value'</span><span class="p">:</span> <span class="s">'15.00'</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">labelReallocation</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'transfers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">labelReallocation</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">from</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/c91c501c-f49b-48be-a93b-12b45e152d45'</span>
+    <span class="p">},</span>
+    <span class="na">to</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">amount</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">currency</span><span class="p">:</span> <span class="s1">'USD'</span><span class="p">,</span>
+    <span class="na">value</span><span class="p">:</span> <span class="s1">'1.00'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'label-reallocations'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21'</span>
+</code></pre></div></div><h2 id='retrieve-a-label-reallocation'>Retrieve a label reallocation</h2>
+<p>This section outlines how to retrieve a Label reallocation by its unique identifier.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">GET https://api.dwolla.com/label-reallocations/{id}</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>Label unique identifier</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+…
+
+{
+    "_links": {
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "label-reallocation"
+        },
+        "to-ledger-entry": {
+            "href": "https://api-sandbox.dwolla.com/ledger-entries/d8a4bf7a-3fa0-48b9-873c-765d7375c59f",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "ledger-entry"
+        },
+        "from-ledger-entry": {
+            "href": "https://api-sandbox.dwolla.com/ledger-entries/f6a44994-b4da-48e3-bd10-d3a168e6a77d",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "ledger-entry"
+        }
+    },
+    "created": "2019-05-16T13:41:31.036Z"
+}
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">$labelReallocationUrl = 'https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21';
+
+$labelreallocationsApi = new DwollaSwagger\LabelreallocationsApi($apiClient);
+
+$labelReallocation = $labelreallocationsApi-&gt;getLabelReallocation($labelReallocationUrl);
+$labelReallocation-&gt;created; # =&gt; "2019-05-16T13:41:31.036Z"
+?&gt;
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">label_reallocation_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21'</span>
+
+<span class="n">label_reallocation</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">label_reallocation_url</span>
+<span class="n">label_reallocation</span><span class="p">.</span><span class="nf">created</span> <span class="c1"># =&gt; "2019-05-16T13:41:31.036Z"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">label_reallocation_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21'</span>
+
+<span class="n">label_reallocation</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">label_reallocation_url</span><span class="p">)</span>
+<span class="n">label_reallocation</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'created'</span><span class="p">]</span> <span class="c"># =&gt; '2019-05-16T13:41:31.036Z'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">labelReallocationUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21'</span><span class="p">;</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">labelReallocationUrl</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">created</span><span class="p">);</span> <span class="c1">// =&gt; '2019-05-16T13:41:31.036Z'</span>
+</code></pre></div></div><h2 id='remove-a-label'>Remove a label</h2>
+<p>This section outlines how to remove a Label by its unique identifier. Removed Labels can still be retrieved by their unique identifier.</p>
+<h3 id='http-request'>HTTP request</h3>
+<p><code class="prettyprint">DELETE https://api.dwolla.com/labels/{id}</code></p>
+<h3 id='request-parameters'>Request parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>yes</td>
+<td>string</td>
+<td>Label unique identifier</td>
+</tr>
+</tbody></table>
+<h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">DELETE https://api.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+
+{
+    "_links": {
+        "ledger-entries": {
+            "href": "https://api-sandbox.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc/ledger-entries",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "ledger-entry"
+        },
+        "self": {
+            "href": "https://api-sandbox.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "label"
+        },
+        "remove": {
+            "href": "https://api-sandbox.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "label"
+        },
+        "customer": {
+            "href": "https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        },
+        "update": {
+            "href": "https://api-sandbox.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc/ledger-entries",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "ledger-entry"
+        }
+    },
+    "id": "30165ded-2f32-4ee9-b340-ac44dda1d7fc",
+    "created": "2019-05-16T14:56:52.629Z",
+    "amount": {
+        "value": "0.00",
+        "currency": "USD"
+    }
+}
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">label_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc'</span>
+
+<span class="n">app_token</span><span class="p">.</span><span class="nf">delete</span> <span class="n">label_url</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">labelUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc'</span><span class="p">;</span>
+
+<span class="nx">appToken</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">labelUrl</span><span class="p">);</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">label_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc'</span>
+
+<span class="n">app_token</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">label_url</span><span class="p">)</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$labelsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\LabelsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+<span class="nv">$labelsApi</span><span class="o">-&gt;</span><span class="na">removeLabel</span><span class="p">(</span><span class="s1">'https://api-sandbox.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc'</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</code></pre></div></div>
+<hr>
+
             <h1 id='events'>Events</h1>
 <p>When the state of a resource changes, Dwolla creates a new event resource to record the change. When an Event is created, a <a href="#webhooks">Webhook</a> will be created to deliver the Event to any URLs specified by your active <a href="#webhook-subscriptions">Webhook Subscriptions</a>.</p>
 <h3 id='events-resource'>Events resource</h3>
@@ -11064,6 +12341,26 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>customer_balance_inquiry_completed</td>
 <td>Upon checking a Customer&rsquo;s bank balance, Dwolla will immediately return an HTTP 202 with response body that includes a status of <code class="prettyprint">processing</code>. This event will be triggered when the bank balance check has completed processing.</td>
+</tr>
+</tbody></table>
+<h5 id='labels'>Labels</h5>
+<table><thead>
+<tr>
+<th>Topic</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>customer_label_created</td>
+<td>A Verified Customer’s label was created.</td>
+</tr>
+<tr>
+<td>customer_label_ledger_entry_created</td>
+<td>A ledger entry was for a Verified Customer’s label was created.</td>
+</tr>
+<tr>
+<td>customer_label_removed</td>
+<td>A Verified Customer’s label was removed.</td>
 </tr>
 </tbody></table>
 <h2 id='list-events'>List events</h2>
