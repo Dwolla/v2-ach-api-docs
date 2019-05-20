@@ -3,7 +3,7 @@
 A **Label** represents a designated portion of funds within a [Verified Customer's](https://developers.dwolla.com/resources/account-types.html#verified-customer) balance. To create a label, you’ll specify the ID of a Verified Customer and an amount. Your application will maintain any other Label information or associations. Labels can be created, updated, and deleted. You can also list all Labels for a Verified Customer Record and list all entries for a specified Label. Note that a Verified Customer’s labeled amounts cannot exceed the balance available in such Verified Customer's account.
 
 <ol class="alerts">
-    <li class="alert icon-alert-info">This section outlines a premium feature for the [Dwolla API](https://www.dwolla.com/platform/). To learn more about enabling this functionality, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).</li>
+    <li class="alert icon-alert-info">This section outlines a premium feature for the [Dwolla API](https://www.dwolla.com/platform/). To learn more about pricing and enabling this functionality, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).</li>
 </ol>
 
 ### Label Links
