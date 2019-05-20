@@ -3,7 +3,7 @@
 A **Label** represents a designated portion of funds within a [Verified Customer's](https://developers.dwolla.com/resources/account-types.html#verified-customer) balance. To create a label, you’ll specify the ID of a Verified Customer and an amount. Your application will maintain any other Label information or associations. Labels can be created, updated, and deleted. You can also list all Labels for a Verified Customer Record and list all entries for a specified Label. Note that a Verified Customer’s labeled amounts cannot exceed the balance available in such Verified Customer's account.
 
 <ol class="alerts">
-    <li class="alert icon-alert-info">This section outlines a premium feature for the [Dwolla API](https://www.dwolla.com/platform/). To learn more about pricing and enabling this functionality, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).</li>
+    <li class="alert icon-alert-info">This section outlines a premium feature for the [Dwolla API](https://www.dwolla.com/platform/). To learn more about enabling this functionality, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).</li>
 </ol>
 
 ### Label Links
@@ -184,7 +184,7 @@ $labelUrl = "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b9
 
 $labelsApi = new DwollaSwagger\LabelsApi($apiClient);
 
-$label = $labelsApi->byId($labelUrl);
+$label = $labelsApi->getLabel($labelUrl);
 $label->id; # => "7e042ffe-e25e-40d2-b86e-748b98845ecc"
 ?>
 ```
@@ -212,7 +212,7 @@ appToken
 
 ## Create a label ledger entry
 
-To create a new entry on a Label Ledger you’ll specify the ID of the Label, as well as a positive or negative amount value (depending on if the purpose is to increase or decrease the amount tied to a Label). The amount tied to a Label cannot go negative, therefore if the amount of the label ledger entry exceeds the current amount tied to a Label, then a validation error will be returned.
+To create a new entry on a Label Ledger you’ll specify the ID of the Label, as well as a positive or negative amount value (depending on if the purpose is to increase or decrease the amount tied to a Label). The amount tied to a Label cannot go negative, therefore if the amount of the label ledger entry exceeds the current amount tied to a Label then a validation error will be returned.
 
 ### HTTP request
 
@@ -342,7 +342,7 @@ $ledgerEntryUrl = "https://api-sandbox.dwolla.com/ledger-entries/32d68709-62dd-4
 
 $ledgerEntriesApi = new DwollaSwagger\LedgerentriesApi($apiClient);
 
-$ledgerEntry = $ledgerEntriesApi->byId($ledgerEntryUrl);
+$ledgerEntry = $ledgerEntriesApi->getLedgerEntry($ledgerEntryUrl);
 $ledgerEntry->id; # => "7e042ffe-e25e-40d2-b86e-748b98845ecc"
 ?>
 ```
@@ -605,7 +605,7 @@ appToken
 
 ## Create a label reallocation
 
-This section outlines how to create a Label reallocation. When creating a Label reallocation you’ll specify an amount as well as from and to which correspond respectively to a Label that will be reduced and a Label that will be increased. Upon success, the API will return a 201 with a link to the created Label reallocation resource in the Location header. A Label reallocation will only occur if the `from` Label has an amount that is equal to or greater than the amount specified in the Label reallocation request. Label ledger entries will be created for both Labels included in the reallocation.
+This section outlines how to create a Label reallocation. When creating a Label reallocation you’ll specify an amount as well as from and to which correspond respectively to a Label that will be reduced and a Label that will be increased. The `from` and `to` Labels must belong to the same Verified Customer. Upon success, the API will return a 201 with a link to the created Label reallocation resource in the Location header. A Label reallocation will only occur if the `from` Label has an amount that is equal to or greater than the amount specified in the Label reallocation request. Label ledger entries will be created for both Labels included in the reallocation.
 
 ### HTTP request
 
@@ -616,7 +616,7 @@ This section outlines how to create a Label reallocation. When creating a Label 
 | Parameter | Required | Type    | Description                |
 |-----------|----------|---------|----------------------------|
 | _links    | yes      | string  | A _links JSON object that includes the desired `from` and `to` Label. |
-| amount    | yes      | object  | Amount of funds to label for a Verified Customer Record. An amount object. Reference the amount object to learn more. |
+| amount    | yes      | object  | Amount of funds to reallocate for single Verified Customer Record. An amount object. Reference the amount object to learn more. |
 
 ### Request and response
 
@@ -648,7 +648,7 @@ Location: https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-
 <?php
 $labelReallocationsApi = new DwollaSwagger\LabelreallocationsApi($apiClient);
 
-$labelReallocation = $labelReallocationsApi->reallocateLabel(
+$labelReallocation = $labelReallocationsApi->reallocateLabel([
   '_links' => [
     'from' => [
       'href' => 'https://api-sandbox.dwolla.com/labels/c91c501c-f49b-48be-a93b-12b45e152d45',
@@ -771,11 +771,12 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 ```
 ```php
+<?php
 $labelReallocationUrl = 'https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21';
 
-$labelreallocationsApi = new DwollaSwagger\LabelreallocationsApi($apiClient);
+$labelReallocationsApi = new DwollaSwagger\LabelreallocationsApi($apiClient);
 
-$labelReallocation = $labelreallocationsApi->getLabelReallocation($labelReallocationUrl);
+$labelReallocation = $labelReallocationsApi->getLabelReallocation($labelReallocationUrl);
 $labelReallocation->created; # => "2019-05-16T13:41:31.036Z"
 ?>
 ```
@@ -804,7 +805,7 @@ appToken
 
 ## Remove a label
 
-This section outlines how to remove a Label by its unique identifier. Removed Labels can still be retrieved by their unique identifier.
+This section outlines how to remove a Label by its unique identifier. The amount of a Label must be reduced to zero prior to removing a label. Once a label is removed it can no longer be retrieved by its unique identifier.
 
 ### HTTP request
 
@@ -882,5 +883,11 @@ $labelsApi = new DwollaSwagger\LabelsApi($apiClient);
 $labelsApi->removeLabel('https://api-sandbox.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc');
 ?>
 ```
+
+### HTTP status and error codes
+
+| HTTP Status | Code                 | Description |
+|-------------|----------------------|--------------
+| 403         | InvalidResourceState | Amount must be zero to remove label. |
 
 * * *
