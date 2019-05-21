@@ -10986,7 +10986,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nv">$labelsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\LabelsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
-<span class="nv">$label</span> <span class="o">=</span> <span class="nv">$labelsApi</span><span class="o">-&gt;</span><span class="na">byId</span><span class="p">(</span><span class="nv">$labelUrl</span><span class="p">);</span>
+<span class="nv">$label</span> <span class="o">=</span> <span class="nv">$labelsApi</span><span class="o">-&gt;</span><span class="na">getLabel</span><span class="p">(</span><span class="nv">$labelUrl</span><span class="p">);</span>
 <span class="nv">$label</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">;</span> <span class="c1"># =&gt; "7e042ffe-e25e-40d2-b86e-748b98845ecc"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -11029,7 +11029,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">labelUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
 </code></pre></div></div><h2 id='create-a-label-ledger-entry'>Create a label ledger entry</h2>
-<p>To create a new entry on a Label Ledger you’ll specify the ID of the Label, as well as a positive or negative amount value (depending on if the purpose is to increase or decrease the amount tied to a Label). The amount tied to a Label cannot go negative, therefore if the amount of the label ledger entry exceeds the current amount tied to a Label, then a validation error will be returned.</p>
+<p>To create a new entry on a Label Ledger you’ll specify the ID of the Label, as well as a positive or negative amount value (depending on if the purpose is to increase or decrease the amount tied to a Label). The amount tied to a Label cannot go negative, therefore if the amount of the label ledger entry exceeds the current amount tied to a Label then a validation error will be returned.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/labels/{id}/ledger-entries</code></p>
 
@@ -11219,7 +11219,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nv">$ledgerEntriesApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\LedgerentriesApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
-<span class="nv">$ledgerEntry</span> <span class="o">=</span> <span class="nv">$ledgerEntriesApi</span><span class="o">-&gt;</span><span class="na">byId</span><span class="p">(</span><span class="nv">$ledgerEntryUrl</span><span class="p">);</span>
+<span class="nv">$ledgerEntry</span> <span class="o">=</span> <span class="nv">$ledgerEntriesApi</span><span class="o">-&gt;</span><span class="na">getLedgerEntry</span><span class="p">(</span><span class="nv">$ledgerEntryUrl</span><span class="p">);</span>
 <span class="nv">$ledgerEntry</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">;</span> <span class="c1"># =&gt; "7e042ffe-e25e-40d2-b86e-748b98845ecc"
 </span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -11583,7 +11583,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/labels`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="s1">'labels'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '7e042ffe-e25e-40d2-b86e-748b98845ecc'</span>
 </code></pre></div></div><h2 id='create-a-label-reallocation'>Create a label reallocation</h2>
-<p>This section outlines how to create a Label reallocation. When creating a Label reallocation you’ll specify an amount as well as from and to which correspond respectively to a Label that will be reduced and a Label that will be increased. Upon success, the API will return a 201 with a link to the created Label reallocation resource in the Location header. A Label reallocation will only occur if the <code class="prettyprint">from</code> Label has an amount that is equal to or greater than the amount specified in the Label reallocation request. Label ledger entries will be created for both Labels included in the reallocation.</p>
+<p>This section outlines how to create a Label reallocation. When creating a Label reallocation you’ll specify an amount as well as from and to which correspond respectively to a Label that will be reduced and a Label that will be increased. The <code class="prettyprint">from</code> and <code class="prettyprint">to</code> Labels must belong to the same Verified Customer. Upon success, the API will return a 201 with a link to the created Label reallocation resource in the Location header. A Label reallocation will only occur if the <code class="prettyprint">from</code> Label has an amount that is equal to or greater than the amount specified in the Label reallocation request. Label ledger entries will be created for both Labels included in the reallocation.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/label-reallocations</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -11605,7 +11605,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>amount</td>
 <td>yes</td>
 <td>object</td>
-<td>Amount of funds to label for a Verified Customer Record. An amount object. Reference the amount object to learn more.</td>
+<td>Amount of funds to reallocate for single Verified Customer Record. An amount object. Reference the amount object to learn more.</td>
 </tr>
 </tbody></table>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -11649,7 +11649,7 @@ Location: https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="nv">$labelReallocationsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\LabelreallocationsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
-<span class="nv">$labelReallocation</span> <span class="o">=</span> <span class="nv">$labelReallocationsApi</span><span class="o">-&gt;</span><span class="na">reallocateLabel</span><span class="p">(</span>
+<span class="nv">$labelReallocation</span> <span class="o">=</span> <span class="nv">$labelReallocationsApi</span><span class="o">-&gt;</span><span class="na">reallocateLabel</span><span class="p">([</span>
   <span class="s1">'_links'</span> <span class="o">=&gt;</span> <span class="p">[</span>
     <span class="s1">'from'</span> <span class="o">=&gt;</span> <span class="p">[</span>
       <span class="s1">'href'</span> <span class="o">=&gt;</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/c91c501c-f49b-48be-a93b-12b45e152d45'</span><span class="p">,</span>
@@ -11805,13 +11805,14 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">$labelReallocationUrl = 'https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21';
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$labelReallocationUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21'</span><span class="p">;</span>
 
-$labelreallocationsApi = new DwollaSwagger\LabelreallocationsApi($apiClient);
+<span class="nv">$labelReallocationsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\LabelreallocationsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
-$labelReallocation = $labelreallocationsApi-&gt;getLabelReallocation($labelReallocationUrl);
-$labelReallocation-&gt;created; # =&gt; "2019-05-16T13:41:31.036Z"
-?&gt;
+<span class="nv">$labelReallocation</span> <span class="o">=</span> <span class="nv">$labelReallocationsApi</span><span class="o">-&gt;</span><span class="na">getLabelReallocation</span><span class="p">(</span><span class="nv">$labelReallocationUrl</span><span class="p">);</span>
+<span class="nv">$labelReallocation</span><span class="o">-&gt;</span><span class="na">created</span><span class="p">;</span> <span class="c1"># =&gt; "2019-05-16T13:41:31.036Z"
+</span><span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -11852,7 +11853,7 @@ $labelReallocation-&gt;created; # =&gt; "2019-05-16T13:41:31.036Z"
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">labelReallocationUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">created</span><span class="p">);</span> <span class="c1">// =&gt; '2019-05-16T13:41:31.036Z'</span>
 </code></pre></div></div><h2 id='remove-a-label'>Remove a label</h2>
-<p>This section outlines how to remove a Label by its unique identifier. Removed Labels can still be retrieved by their unique identifier.</p>
+<p>This section outlines how to remove a Label by its unique identifier. The amount of a Label must be reduced to zero prior to removing a label. Once a label is removed it can no longer be retrieved by its unique identifier.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">DELETE https://api.dwolla.com/labels/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -11965,7 +11966,21 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nv">$labelsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\LabelsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 <span class="nv">$labelsApi</span><span class="o">-&gt;</span><span class="na">removeLabel</span><span class="p">(</span><span class="s1">'https://api-sandbox.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc'</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
-</code></pre></div></div>
+</code></pre></div></div><h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>403</td>
+<td>InvalidResourceState</td>
+<td>Amount must be zero to remove label.</td>
+</tr>
+</tbody></table>
+
 <hr>
 
             <h1 id='events'>Events</h1>
