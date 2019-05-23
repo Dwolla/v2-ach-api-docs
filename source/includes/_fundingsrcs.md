@@ -936,6 +936,13 @@ appToken
 
 Remove a funding source by id. A removed funding source is soft deleted and can still be accessed when retrieved.
 
+<ol class = "alerts">
+    <li class="alert icon-alert-info">
+      We recommend not removing funding sources until all transfers have been `processed`. Removing a funding source prior to a transfer processing may result in funds being processed to a `balance` funding source rather than the intended bank funding source.
+    </li>
+</ol>
+
+
 ### HTTP request
 
 `POST https://api.dwolla.com/funding-sources/{id}`
