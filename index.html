@@ -2586,7 +2586,6 @@ Location: https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
-<span class="nv">$new_customer</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/b70c3194-35fa-49e8-9243-d55a30e06d1e'</span><span class="p">;</span>
 <span class="nv">$new_customer</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">([</span>
     <span class="s1">'firstName'</span> <span class="o">=&gt;</span> <span class="s1">'Business'</span><span class="p">,</span>
     <span class="s1">'lastName'</span> <span class="o">=&gt;</span> <span class="s1">'Owner'</span><span class="p">,</span>
@@ -3005,7 +3004,6 @@ Location: https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
-<span class="nv">$new_customer</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/b70c3194-35fa-49e8-9243-d55a30e06d1e'</span><span class="p">;</span>
 <span class="nv">$new_customer</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">([</span>
   <span class="s1">'firstName'</span> <span class="o">=&gt;</span> <span class="s1">'Account'</span><span class="p">,</span>
   <span class="s1">'lastName'</span> <span class="o">=&gt;</span> <span class="s1">'Admin'</span><span class="p">,</span>
@@ -3636,7 +3634,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
     </span><span class="nt">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NY"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11101"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div><h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+</span></code></pre></div></div><h3 id='request-and-response'>Request and response</h3>
+<p>This example goes through retry verification for a <a href="https://developers.dwolla.com/resources/personal-verified-customer/handling-verification-statuses-personal.html#handling-status-retry">Personal Verified Customer</a>. To learn more about retry for business verified Customers and view further code examples, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer/handling-controller-and-customer-statuses.html#handling-retry-status">business verified Customer developer resource article.</a></p>
+<div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
               <button class="selector_switch" id="php">php</button>
@@ -7259,7 +7259,13 @@ HTTP 200 OK
 <span class="p">);</span>
 <span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='retrieve-a-funding-source-balance'>Retrieve a funding source balance</h2>
-<p>This section covers how to retrieve the <code class="prettyprint">balance</code> of a funding source. The funding source type <code class="prettyprint">balance</code> only exists for <a href="https://developers.dwolla.com/resources/account-types.html#verified-customer">Verified Customer</a> accounts and represents a balance held in the Dwolla network.</p>
+<p>This section covers how to retrieve the total and available amount for a <a href="https://developers.dwolla.com/resources/balance-funding-source.html">Dwolla balance</a> funding source. The funding source type <code class="prettyprint">balance</code> exists for <a href="https://developers.dwolla.com/resources/account-types.html#verified-customer">Verified Customer</a> accounts and represents a balance held in the Dwolla network.</p>
+<h4 id='total-and-available-balance'>Total and Available Balance</h4>
+<p>There are two different amounts returned in the API response when retrieving a balance which correspond to a <code class="prettyprint">total</code> and <code class="prettyprint">available</code> balance. <strong>Note:</strong> Unless your application utilizes <a href="https://docs.dwolla.com/#labels">Labels</a> functionality, the amounts that are returned in both the <code class="prettyprint">balance</code> and <code class="prettyprint">total</code> objects will be the same. Available balance can be accessed via the <code class="prettyprint">balance</code> attribute, whereas total balance can be accessed via the <code class="prettyprint">total</code> attribute within the Balance object. Both <code class="prettyprint">balance</code> and <code class="prettyprint">total</code> are JSON objects that contain key value pairs for <code class="prettyprint">value</code> and <code class="prettyprint">currency</code>.</p>
+<h5 id='available-balance'>Available Balance</h5>
+<p>The amount of funds readily available in a Verified Customer Record’s balance that can be sent, withdrawn, or <a href="https://docs.dwolla.com/#labels">labeled</a>.</p>
+<h5 id='total-balance'>Total Balance</h5>
+<p>Represents the Verified Customer Record’s total balance held in the Dwolla network. This includes both <a href="https://docs.dwolla.com/#labels">labeled</a> funds and the Available Balance, i.e. both labeled and unlabeled funds.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/funding-sources/{id}/balance</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -7320,6 +7326,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "balance": {
     "value": "4616.87",
     "currency": "USD"
+  },
+  "total": {
+      "value": "4616.87",
+      "currency": "USD"
   },
   "lastUpdated": "2017-04-18T15:20:25.880Z"
 }
@@ -7524,7 +7534,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "failed"</span>
 </code></pre></div></div><h2 id='remove-a-funding-source'>Remove a funding source</h2>
 <p>Remove a funding source by id. A removed funding source is soft deleted and can still be accessed when retrieved.</p>
-<h3 id='http-request'>HTTP request</h3>
+<ol class = "alerts"><li class="alert icon-alert-alert"><p>We recommend not removing funding sources until all transfers have been <code>processed</code>. Removing a funding source prior to a transfer processing may result in funds being processed to a <code>balance</code> funding source rather than the intended bank funding source.</p>
+</li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/funding-sources/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
 <table><thead>
