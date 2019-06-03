@@ -774,7 +774,16 @@ $fsApi->microDeposits([
 
 ## Retrieve a funding source balance
 
-This section covers how to retrieve the `balance` of a funding source. The funding source type `balance` only exists for [Verified Customer](https://developers.dwolla.com/resources/account-types.html#verified-customer) accounts and represents a balance held in the Dwolla network.
+This section covers how to retrieve the total and available amount for a [Dwolla balance](https://developers.dwolla.com/resources/balance-funding-source.html) funding source. The funding source type `balance` exists for [Verified Customer](https://developers.dwolla.com/resources/account-types.html#verified-customer) accounts and represents a balance held in the Dwolla network.
+
+#### Total and Available Balance
+There are two different amounts returned in the API response when retrieving a balance which correspond to a `total` and `available` balance. **Note:** Unless your application utilizes [Labels](https://docs.dwolla.com/#labels) functionality, the amounts that are returned in both the `balance` and `total` objects will be the same. Available balance can be accessed via the `balance` attribute, whereas total balance can be accessed via the `total` attribute within the Balance object. Both `balance` and `total` are JSON objects that contain key value pairs for `value` and `currency`.
+
+##### Available Balance
+The amount of funds readily available in a Verified Customer Record’s balance that can be sent, withdrawn, or [labeled](https://docs.dwolla.com/#labels).
+
+##### Total Balance
+Represents the Verified Customer Record’s total balance held in the Dwolla network. This includes both [labeled](https://docs.dwolla.com/#labels) funds and the Available Balance, i.e. both labeled and unlabeled funds.
 
 ### HTTP request
 `GET https://api.dwolla.com/funding-sources/{id}/balance`
@@ -812,6 +821,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "balance": {
     "value": "4616.87",
     "currency": "USD"
+  },
+  "total": {
+      "value": "4616.87",
+      "currency": "USD"
   },
   "lastUpdated": "2017-04-18T15:20:25.880Z"
 }
