@@ -518,7 +518,6 @@ Location: https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304
 ```php
 <?php
 $customersApi = new DwollaSwagger\CustomersApi($apiClient);
-$new_customer = 'https://api-sandbox.dwolla.com/customers/b70c3194-35fa-49e8-9243-d55a30e06d1e';
 $new_customer = $customersApi->create([
     'firstName' => 'Business',
     'lastName' => 'Owner',
@@ -719,7 +718,6 @@ Location: https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304
 ```php
 <?php
 $customersApi = new DwollaSwagger\CustomersApi($apiClient);
-$new_customer = 'https://api-sandbox.dwolla.com/customers/b70c3194-35fa-49e8-9243-d55a30e06d1e';
 $new_customer = $customersApi->create([
   'firstName' => 'Account',
   'lastName' => 'Admin',
@@ -1148,6 +1146,8 @@ If the verified Customer has a status of `retry`, some information may have been
 ```
 
 ### Request and response
+
+This example goes through retry verification for a [Personal Verified Customer](https://developers.dwolla.com/resources/personal-verified-customer/handling-verification-statuses-personal.html#handling-status-retry). To learn more about retry for business verified Customers and view further code examples, refer to our [business verified Customer developer resource article.](https://developers.dwolla.com/resources/business-verified-customer/handling-controller-and-customer-statuses.html#handling-retry-status)
 
 ```raw
 POST https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f
