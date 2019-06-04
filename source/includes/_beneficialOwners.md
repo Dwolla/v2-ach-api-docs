@@ -60,7 +60,7 @@ For more information on how to create a beneficial owner, refer to our [develope
 | lastName | yes | string | The legal last name of the beneficial owner. |
 | ssn | conditional | string | **Full nine digits** of beneficial owner’s social security number. If ssn is omitted, [passport](#passport-json-object) is required. |
 | dateOfBirth | Yes | string | beneficial owner’s date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
-| address | Yes | object |  An [address JSON object](/#address-json-object). Full address of the controller's physical address.  |
+| address | Yes | object |  An [address JSON object](/#address-json-object). Full address of the beneficial owner's physical address.  |
 | passport | conditional | object | An optional [passport JSON object](/#passport-json-object). Required for non-US persons. Includes passport identification number and country. |
 
 ### Address JSON object
@@ -375,7 +375,7 @@ This endpoint can be used to update a beneficial owner's information to `retry` 
 | lastName | yes | string | The legal last name of the beneficial owner. |
 | ssn | conditional | string | **Full nine digits** of beneficial owner’s social security number. If ssn is omitted, [passport](#passport-json-object) is required. |
 | dateOfBirth | Yes | string | beneficial owner’s date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
-| address | Yes | object |  An [address JSON object](/#address-json-object). Full address of the controller's physical address.  |
+| address | Yes | object |  An [address JSON object](/#address-json-object). Full address of the beneficial owner's physical address.  |
 | passport | conditional | object | An optional [passport JSON object](/#passport-json-object). Required for non-US persons. Includes passport identification number and country. |
 
 ### Address JSON object
