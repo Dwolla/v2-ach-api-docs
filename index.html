@@ -4253,7 +4253,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>address</td>
 <td>Yes</td>
 <td>object</td>
-<td>An <a href="/#address-json-object">address JSON object</a>. Full address of the controller&rsquo;s physical address.</td>
+<td>An <a href="/#address-json-object">address JSON object</a>. Full address of the beneficial owner&rsquo;s physical address.</td>
 </tr>
 <tr>
 <td>passport</td>
@@ -4750,7 +4750,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>address</td>
 <td>Yes</td>
 <td>object</td>
-<td>An <a href="/#address-json-object">address JSON object</a>. Full address of the controller&rsquo;s physical address.</td>
+<td>An <a href="/#address-json-object">address JSON object</a>. Full address of the beneficial owner&rsquo;s physical address.</td>
 </tr>
 <tr>
 <td>passport</td>
@@ -5981,7 +5981,19 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='funding-sources'>Funding sources</h1>
-<p>Add and retrieve ACH bank account information via funding sources.  Customers can have a maximum of 6 funding sources. Funding sources can be created for both the <a href="#create-a-funding-source-for-an-account">Accounts</a> and <a href="#create-a-funding-source-for-a-customer">Customers</a> resources.</p>
+<p>Add and retrieve ACH bank account information via funding sources. Funding sources can be created for both the <a href="#create-a-funding-source-for-an-account">Dwolla Master Account</a> and <a href="#create-a-funding-source-for-a-customer">Customer</a> resources.</p>
+<h3 id='funding-source-types'>Funding source types</h3>
+<p>The two funding source types available with a Dwolla integration include a <code class="prettyprint">bank</code>, and the Dwolla <code class="prettyprint">balance</code>. Type <code class="prettyprint">bank</code> represents any bank account attached as a funding source to Account and Customer resources. Type <code class="prettyprint">balance</code> represents the Dwolla Balance made available to Account and Verified Customer resources.</p>
+<h5 id='balance-funding-source'>Balance funding source</h5>
+<p>The <a href="https://developers.dwolla.com/resources/balance-funding-source.html">Dwolla Balance</a> can be utilized as a digital &ldquo;wallet&rdquo;, storing USD funds for the Customer or Account with Dwolla’s financial institution partners. Additionally, the Dwolla Balance can be pre-loaded with funds for quicker outgoing ACH transfers to destination funding sources. To get a more in-depth overview of the Dwolla Balance, including functionality and other benefits, check out our <a href="https://developers.dwolla.com/resources/balance-funding-source.html">developer resource article</a> or view our <a href="https://www.dwolla.com/resources/balance-webinar/">webinar</a>.</p>
+<h5 id='bank-funding-source'>Bank funding source</h5>
+<p>Funding sources of type <code class="prettyprint">bank</code> include an additional attribute, <code class="prettyprint">bankAccountType</code>, denoting the type of the bank account being attached. The bank account types currently supported by Dwolla include <code class="prettyprint">checking</code>, <code class="prettyprint">savings</code>, <code class="prettyprint">general-ledger</code> and <code class="prettyprint">loan</code>.</p>
+
+<ul>
+<li><p><code class="prettyprint">checking</code>, <code class="prettyprint">savings</code> - Checking and savings accounts can be attached to any Customer type. These account types are enabled for all Accounts and Customers, by default.</p></li>
+<li><p><code class="prettyprint">general-ledger</code> - General ledger accounts can only be attached to exempt Business Verified Customers. <strong>Note</strong>: Enabling this account type requires additional Dwolla approvals before getting started. Please contact <a href="https://www.dwolla.com/contact?b=apidocs">Sales</a> or your account manager for more information on enabling this account type.</p></li>
+<li><p><code class="prettyprint">loan</code> - Loan accounts can only be attached to Verified Customers. These funding-sources can only be credited, meaning funds can only be sent to these accounts. <strong>Note</strong>: Enabling this account type requires additional Dwolla approvals before getting started. Please contact <a href="https://www.dwolla.com/contact?b=apidocs">Sales</a> or your account manager for more information on enabling this account type.</p></li>
+</ul>
 <h3 id='funding-source-links'>Funding source links</h3>
 <table><thead>
 <tr>
@@ -6055,7 +6067,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>bankAccountType</td>
-<td>An optional attribute for <code class="prettyprint">bank</code> funding sources that determines the type of account. Possible values are <code class="prettyprint">checking</code> or <code class="prettyprint">savings</code>.</td>
+<td>An attribute for <code class="prettyprint">bank</code> funding sources that determines the type of account. Possible values are <code class="prettyprint">checking</code>, <code class="prettyprint">savings</code>, <code class="prettyprint">general-ledger</code> or <code class="prettyprint">loan</code>.</td>
 </tr>
 <tr>
 <td>name</td>
@@ -6162,7 +6174,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>bankAccountType</td>
 <td>yes</td>
 <td>string</td>
-<td>Type of bank account: <code class="prettyprint">checking</code> or <code class="prettyprint">savings</code>.</td>
+<td>Type of bank account: <code class="prettyprint">checking</code>, <code class="prettyprint">savings</code>, <code class="prettyprint">general-ledger</code> or <code class="prettyprint">loan</code>.</td>
 </tr>
 <tr>
 <td>name</td>
@@ -6847,7 +6859,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>bankAccountType</td>
 <td>no</td>
 <td>string</td>
-<td>Type of bank account: <code class="prettyprint">checking</code> or <code class="prettyprint">savings</code>.</td>
+<td>Type of bank account: <code class="prettyprint">checking</code>, <code class="prettyprint">savings</code>, <code class="prettyprint">general-ledger</code> or <code class="prettyprint">loan</code>.</td>
 </tr>
 <tr>
 <td>routingNumber</td>
