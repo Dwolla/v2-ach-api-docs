@@ -43,7 +43,7 @@ Funding sources of type `bank` include an additional attribute, `bankAccountType
 | id | The funding source unique identifier. |
 | status | Possible values are `unverified` or `verified`. Determines if the funding source has completed verification. |
 | type | Type of funding source. Possible values are `bank` or `balance`. |
-| bankAccountType | An attribute for `bank` funding sources that determines the type of account. Possible values are `checking` or `savings`. |
+| bankAccountType | An attribute for `bank` funding sources that determines the type of account. Possible values are `checking`, `savings`, `general-ledger` or `loan`. |
 | name | Arbitrary nickname for the funding source. |
 | created | ISO-8601 timestamp for when the funding source was created. |
 | balance | An optional object that includes `value` and `currency` parameters. `value` is a string value for the amount available and `currency` is a string value currency code. Only returned for a Dwolla API Customer account balance.   |
@@ -108,7 +108,7 @@ Customers can have a maximum of 6 funding sources.
 | _links | no | object | A <code>_links</code> JSON object containing an `on-demand-authorization` link relation. See example raw request and response below. |
 | routingNumber | yes | string | The bank account's routing number. |
 | accountNumber | yes | string | The bank account number. |
-| bankAccountType | yes | string | Type of bank account: `checking` or `savings`. |
+| bankAccountType | yes | string | Type of bank account: `checking`, `savings`, `general-ledger` or `loan`. |
 | name | yes | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
 | plaidToken | no | string | A processor token obtained from Plaid for `adding and verifying` a bank. Reference our [Plaid Link Developer Resource Article](https://developers.dwolla.com/resources/dwolla-plaid-integration.html) to learn more about this integration. |
 | channels | no | array | An array containing a list of processing channels.  ACH is the default processing channel for bank transfers. Acceptable value for channels is: "wire". e.g. `“channels”: [ “wire” ]`. A funding source (Bank Account) added using the wire channel only supports a funds transfer going to the bank account from a balance. As a result, wire as a destination funding source can only be added where the Customer account type is a Verified Customer. **Note:** `channels` is a premium feature that must be enabled on your account and is only available to select [Dwolla](https://www.dwolla.com/platform) customers. |
@@ -560,7 +560,7 @@ This section covers how to update a `bank` funding source. The `accountNumber`, 
 |-----------|----------|----------------|-------------|
 | id | yes | string | id of funding source to update. |
 | name | no | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
-| bankAccountType | no | string | Type of bank account: `checking` or `savings`. |
+| bankAccountType | no | string | Type of bank account: `checking`, `savings`, `general-ledger` or `loan`. |
 | routingNumber | no | string | The bank account's routing number. |
 | accountNumber | no | string | The bank account number. |
 
