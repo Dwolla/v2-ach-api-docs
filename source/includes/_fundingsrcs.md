@@ -1,6 +1,24 @@
 # Funding sources
 
-Add and retrieve ACH bank account information via funding sources.  Customers can have a maximum of 6 funding sources. Funding sources can be created for both the [Accounts](#create-a-funding-source-for-an-account) and [Customers](#create-a-funding-source-for-a-customer) resources.
+Add and retrieve ACH bank account information via funding sources.  Customers can have a maximum of 6 funding sources. Funding sources can be created for both the [Dwolla Master Account](#create-a-funding-source-for-an-account) and [Customer](#create-a-funding-source-for-a-customer) resources.
+
+### Funding source types
+
+The two funding source types available with a Dwolla integration include a `bank`, and the Dwolla `balance`. Type `bank` represents any bank account attached as a funding source to Account and Customer resources. Type `balance` represents the Dwolla Balance made available to Account and Verified Customer resources.
+
+##### Balance funding source
+
+The [Dwolla Balance](https://developers.dwolla.com/resources/balance-funding-source.html) can be utilized as a digital "wallet", storing USD funds for the Customer or Account. Additionally, the Dwolla Balance can be pre-loaded with funds for quicker outgoing ACH transfers to destination funding sources. To get a more in-depth overview of the Dwolla Balance, including functionality and other benefits, check out our [developer resource article](https://developers.dwolla.com/resources/balance-funding-source.html) or view our [webinar](https://www.dwolla.com/resources/balance-webinar/).
+
+##### Bank funding source
+
+Funding sources of type `bank` include an additional attribute, `bankAccountType`, denoting the type of the bank account being attached. The bank account types currently supported by Dwolla include `checking`, `savings`, `general-ledger` and `loan`.
+
+ - `checking`, `savings` - Checking and savings accounts can be attached to any Customer type. These account types are enabled for all Accounts and Customers, by default.
+
+ - `general-ledger` - General ledger accounts can only be attached to exempt Business Verified Customers. **Note**: Enabling this account type requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account type.
+
+ - `loan` - Loan accounts can only be attached to Verified Customers. These funding-sources can only credited, meaning funds can only be sent to these accounts. **Note**: Enabling this account type requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account type.
 
 ### Funding source links
 
@@ -25,7 +43,7 @@ Add and retrieve ACH bank account information via funding sources.  Customers ca
 | id | The funding source unique identifier. |
 | status | Possible values are `unverified` or `verified`. Determines if the funding source has completed verification. |
 | type | Type of funding source. Possible values are `bank` or `balance`. |
-| bankAccountType | An optional attribute for `bank` funding sources that determines the type of account. Possible values are `checking` or `savings`. |
+| bankAccountType | An attribute for `bank` funding sources that determines the type of account. Possible values are `checking` or `savings`. |
 | name | Arbitrary nickname for the funding source. |
 | created | ISO-8601 timestamp for when the funding source was created. |
 | balance | An optional object that includes `value` and `currency` parameters. `value` is a string value for the amount available and `currency` is a string value currency code. Only returned for a Dwolla API Customer account balance.   |
