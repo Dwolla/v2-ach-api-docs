@@ -1,6 +1,6 @@
 # Funding sources
 
-Add and retrieve ACH bank account information via funding sources.  Customers can have a maximum of 6 funding sources. Funding sources can be created for both the [Dwolla Master Account](#create-a-funding-source-for-an-account) and [Customer](#create-a-funding-source-for-a-customer) resources.
+Add and retrieve ACH bank account information via funding sources. Funding sources can be created for both the [Dwolla Master Account](#create-a-funding-source-for-an-account) and [Customer](#create-a-funding-source-for-a-customer) resources.
 
 ### Funding source types
 
