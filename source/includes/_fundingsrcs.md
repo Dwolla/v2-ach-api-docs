@@ -8,7 +8,7 @@ The two funding source types available with a Dwolla integration include a `bank
 
 ##### Balance funding source
 
-The [Dwolla Balance](https://developers.dwolla.com/resources/balance-funding-source.html) can be utilized as a digital "wallet", storing USD funds for the Customer or Account. Additionally, the Dwolla Balance can be pre-loaded with funds for quicker outgoing ACH transfers to destination funding sources. To get a more in-depth overview of the Dwolla Balance, including functionality and other benefits, check out our [developer resource article](https://developers.dwolla.com/resources/balance-funding-source.html) or view our [webinar](https://www.dwolla.com/resources/balance-webinar/).
+The [Dwolla Balance](https://developers.dwolla.com/resources/balance-funding-source.html) can be utilized as a digital "wallet", storing USD funds for the Customer or Account with Dwolla’s financial institution partners. Additionally, the Dwolla Balance can be pre-loaded with funds for quicker outgoing ACH transfers to destination funding sources. To get a more in-depth overview of the Dwolla Balance, including functionality and other benefits, check out our [developer resource article](https://developers.dwolla.com/resources/balance-funding-source.html) or view our [webinar](https://www.dwolla.com/resources/balance-webinar/).
 
 ##### Bank funding source
 
@@ -18,7 +18,7 @@ Funding sources of type `bank` include an additional attribute, `bankAccountType
 
  - `general-ledger` - General ledger accounts can only be attached to exempt Business Verified Customers. **Note**: Enabling this account type requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account type.
 
- - `loan` - Loan accounts can only be attached to Verified Customers. These funding-sources can only credited, meaning funds can only be sent to these accounts. **Note**: Enabling this account type requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account type.
+ - `loan` - Loan accounts can only be attached to Verified Customers. These funding-sources can only be credited, meaning funds can only be sent to these accounts. **Note**: Enabling this account type requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account type.
 
 ### Funding source links
 
