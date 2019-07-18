@@ -64,10 +64,10 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | bank_transfer_cancelled | A pending bank transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a Dwolla Master Account’s bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s  bank. |
 | bank_transfer_failed | A transfer failed to clear successfully. Usually, this is a result of an ACH failure (insufficient funds, etc.). Represents funds failing to clear either from a Dwolla Master Account’s  bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s  bank. |
 | bank_transfer_completed | A bank transfer has cleared successfully. Represents funds clearing either from a Dwolla Master Account’s  bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s  bank. |
-| transfer_created | A transfer was created. Represents fund moving either from a Dwolla Master Account’s `balance` to a verified Customer’s `balance` or from a Dwolla Master Account’s `balance` to a verified Customer’s `balance`. |
-| transfer_cancelled | A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a Dwolla Master Account’s `balance` to a verified Customer’s `balance` or from a Dwolla Master Account’s `balance` to a verified Customer’s `balance`. |
-| transfer_failed | A transfer failed to clear successfully. Represents funds failing to clear either from a Dwolla Master Account’s `balance` to a verified Customer’s `balance` or from a Dwolla Master Account’s `balance` to a verified Customer’s `balance`. |
-| transfer_completed | A transfer has cleared successfully. Represents funds clearing either from a Dwolla Master Account’s `balance` to a verified Customer’s `balance` or from a Dwolla Master Account’s `balance` to a verified Customer’s `balance`. |
+| transfer_created | A transfer was created. Represents fund moving either from a Dwolla Master Account’s `balance` to a verified Customer’s `balance` or from a verified Customer’s `balance` to a Dwolla Master Account’s `balance`. |
+| transfer_cancelled | A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a Dwolla Master Account’s `balance` to a verified Customer’s `balance` or from a verified Customer’s `balance` to a Dwolla Master Account’s `balance`. |
+| transfer_failed | A transfer failed to clear successfully. Represents funds failing to clear either from a Dwolla Master Account’s `balance` to a verified Customer’s `balance` or from a verified Customer’s `balance` to a Dwolla Master Account’s `balance`. |
+| transfer_completed | A transfer has cleared successfully. Represents funds clearing either from a Dwolla Master Account’s `balance` to a verified Customer’s `balance` or from a verified Customer’s `balance` to a Dwolla Master Account’s `balance`. |
 
 ##### Mass Payments
 
@@ -76,6 +76,12 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | mass_payment_created | A mass payment was created. |
 | mass_payment_completed | A mass payment completed. |
 | mass_payment_cancelled | A created and deferred mass payment was cancelled. |
+
+##### Statements
+
+| Topic                  | Description                    |
+|------------------------|--------------------------------------------------------------------|
+| statement_created      | A monthly balance summary and a detailed transaction record for the previous month was created for a Dwolla Master Account. |
 
 ### Customer Account Event topics
 

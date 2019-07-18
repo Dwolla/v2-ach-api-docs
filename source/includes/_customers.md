@@ -143,7 +143,7 @@ This section details how to create a new Customer. It is important to prompt you
 | type | yes | string | Value of `receive-only`. |
 | businessName | no | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
-| correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
+| correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. **Note:** A correlationId is not a replacement for an [idempotency-key](#idempotency-key). <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
 ##### Request and response - receive-only User
 
@@ -1147,7 +1147,7 @@ If the verified Customer has a status of `retry`, some information may have been
 
 ### Request and response
 
-This example goes through retry verification for a [Personal Verified Customer](https://developers.dwolla.com/resources/personal-verified-customer/handling-verification-statuses-personal.html#handling-status-retry). To learn more about retry for business verified Customers and view further code examples, refer to our [business verified Customer developer resource article.](https://developers.dwolla.com/resources/business-verified-customer/handling-controller-and-customer-statuses.html#handling-retry-status)
+This example goes through retry verification for a [Personal Verified Customer](https://developers.dwolla.com/resources/personal-verified-customer/handling-verification-statuses-personal.html#handling-status-retry). For a Business Verified Customer in `retry` status, all fields that were required in the initial Customer creation attempt will be required in the retry attempt, along with the full 9-digit SSN. To learn more about retry for business verified Customers and view further code examples, refer to our [business verified Customer developer resource article](https://developers.dwolla.com/resources/business-verified-customer/handling-controller-and-customer-statuses.html#handling-retry-status).
 
 ```raw
 POST https://api-sandbox.dwolla.com/customers/53863b11-1758-47c8-821f-00e6a126f97f
@@ -1325,7 +1325,7 @@ appToken
 }
 ```
 
-### Request parameters - retry verified Customer
+### Request parameters - retry verified **personal** Customer
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
 | firstName | yes | string | Customer's first name. |
