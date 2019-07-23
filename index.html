@@ -1916,7 +1916,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
-<td>A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.</td>
+<td>A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <strong>Note:</strong> A correlationId is not a replacement for an <a href="#idempotency-key">idempotency-key</a>. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.</td>
 </tr>
 </tbody></table>
 <h5 id='request-and-response---receive-only-user'>Request and response - receive-only User</h5><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -3276,9 +3276,25 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">customerUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">firstName</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane'</span>
 </code></pre></div></div><h2 id='list-and-search-customers'>List and search customers</h2>
-<p>This section outlines how to retrieve your list of created Customers.</p>
-<h3 id='http-request'>HTTP request</h3>
+<p>This section outlines how to retrieve your list of created Customers. Customer search is supported by passing an additional <code class="prettyprint">search</code> query string parameter which searches on <code class="prettyprint">firstName</code>, <code class="prettyprint">lastName</code>, and <code class="prettyprint">email</code> fields of a Customer.</p>
+<h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/customers</code></p>
+<h3 id='pagination'>Pagination</h3>
+<p>By default, an embedded list of 25 customers are returned and are sorted by created timestamp. To page through the remaining list, you’ll specify a combination of <code class="prettyprint">limit</code> and <code class="prettyprint">offset</code> as query string parameters. Limit can have a max value of 200 customer objects. It is recommended to use the <code class="prettyprint">_links</code> object in the response which includes the following relational links for paging. Check out the <a href="#links">Links</a> section for more information.</p>
+
+<ul>
+<li><code class="prettyprint">next</code> includes the URL to list the next set of Customers as defined by Limit</li>
+<li><code class="prettyprint">prev</code> includes the URL to list the previous set of Customers as defined by Limit</li>
+<li><code class="prettyprint">first</code> includes the URL to list the first set of Customers as defined by Limit</li>
+<li><code class="prettyprint">last</code> includes the URL to list the last set of Customers as defined by Limit</li>
+<li><code class="prettyprint">self</code> link indicates the URL of the resource itself</li>
+</ul>
+<h5 id='example-http-request'>Example HTTP Request</h5>
+<p><code class="prettyprint">GET https://api.dwolla.com/customers?limit=5&amp;offset=25</code></p>
+<h3 id='searching-customers'>Searching Customers</h3>
+<p>You can search for Customers based on <code class="prettyprint">firstName</code>, <code class="prettyprint">lastName</code>, or <code class="prettyprint">email</code> by appending the <code class="prettyprint">search</code> query string parameter to the endpoint. For example, if you would like to search for Customers with the first name “Jane”, you can append the additional parameter <code class="prettyprint">search</code> to the request URL.</p>
+<h5 id='example-http-request'>Example HTTP Request</h5>
+<p><code class="prettyprint">GET https://api.dwolla.com/customers?search=Jane</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
 <table><thead>
 <tr>
@@ -3635,7 +3651,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
     </span><span class="nt">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11101"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h3 id='request-and-response'>Request and response</h3>
-<p>This example goes through retry verification for a <a href="https://developers.dwolla.com/resources/personal-verified-customer/handling-verification-statuses-personal.html#handling-status-retry">Personal Verified Customer</a>. To learn more about retry for business verified Customers and view further code examples, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer/handling-controller-and-customer-statuses.html#handling-retry-status">business verified Customer developer resource article.</a></p>
+<p>This example goes through retry verification for a <a href="https://developers.dwolla.com/resources/personal-verified-customer/handling-verification-statuses-personal.html#handling-status-retry">Personal Verified Customer</a>. For a Business Verified Customer in <code class="prettyprint">retry</code> status, all fields that were required in the initial Customer creation attempt will be required in the retry attempt, along with the full 9-digit SSN. To learn more about retry for business verified Customers and view further code examples, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer/handling-controller-and-customer-statuses.html#handling-retry-status">business verified Customer developer resource article</a>.</p>
 <div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -3836,7 +3852,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   </span><span class="nt">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"InvalidResourceState"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Resource cannot be modified."</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div><h3 id='request-parameters---retry-verified-customer'>Request parameters - retry verified Customer</h3>
+</span></code></pre></div></div><h3 id='request-parameters---retry-verified-strongpersonalstrong-customer'>Request parameters - retry verified <strong>personal</strong> Customer</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -6162,13 +6178,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>routingNumber</td>
 <td>yes</td>
 <td>string</td>
-<td>The bank account&rsquo;s routing number.</td>
+<td>A bank routing number that identifies a bank or credit union in the U.S. <strong>Note:</strong> Validation of the routing number includes: a checksum, the first two digits of the routing number must fall within the range &ldquo;01&rdquo; through &ldquo;12&rdquo;, or &ldquo;21&rdquo; through &ldquo;32&rdquo;, and the string value must consist of nine digits.</td>
 </tr>
 <tr>
 <td>accountNumber</td>
 <td>yes</td>
 <td>string</td>
-<td>The bank account number.</td>
+<td>The bank account number. <strong>Note:</strong> The account number is validated to check if it is a numeric string of 4-17 digits.</td>
 </tr>
 <tr>
 <td>bankAccountType</td>
@@ -7910,7 +7926,7 @@ HTTP 200 OK
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
-<td>A unique string value attached to a transfer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID.</td>
+<td>A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <strong>Note:</strong> A correlationId is not a replacement for an <a href="#idempotency-key">idempotency-key</a>. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-types'>Source and destination types</h3><h5 id='source-types'>Source types</h5>
@@ -9378,7 +9394,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
-<td>A unique string value attached to a mass payment which can be used for traceability between Dwolla and your application. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID.</td>
+<td>A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <strong>Note:</strong> A correlationId is not a replacement for an <a href="#idempotency-key">idempotency key</a>. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-values'>Source and destination values</h3><h5 id='source-types'>Source types</h5>
@@ -12142,19 +12158,19 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>transfer_created</td>
-<td>A transfer was created. Represents fund moving either from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code> or from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code>.</td>
+<td>A transfer was created. Represents funds moving either to or from a Dwolla Master Account&rsquo;s <code class="prettyprint">balance</code> or <code class="prettyprint">bank</code>.</td>
 </tr>
 <tr>
 <td>transfer_cancelled</td>
-<td>A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code> or from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code>.</td>
+<td>A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds transferring either to or from a Dwolla Master Account’s <code class="prettyprint">balance</code> or <code class="prettyprint">bank</code>.</td>
 </tr>
 <tr>
 <td>transfer_failed</td>
-<td>A transfer failed to clear successfully. Represents funds failing to clear either from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code> or from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code>.</td>
+<td>A transfer failed to clear successfully. Represents funds failing to clear either to or from a Dwolla Master Account’s <code class="prettyprint">balance</code> or <code class="prettyprint">bank</code>.</td>
 </tr>
 <tr>
 <td>transfer_completed</td>
-<td>A transfer has cleared successfully. Represents funds clearing either from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code> or from a Dwolla Master Account’s <code class="prettyprint">balance</code> to a verified Customer’s <code class="prettyprint">balance</code>.</td>
+<td>A transfer has cleared successfully. Represents funds clearing either to or from a Dwolla Master Account’s <code class="prettyprint">balance</code> or <code class="prettyprint">bank</code>.</td>
 </tr>
 </tbody></table>
 <h5 id='mass-payments'>Mass Payments</h5>
@@ -12175,6 +12191,18 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>mass_payment_cancelled</td>
 <td>A created and deferred mass payment was cancelled.</td>
+</tr>
+</tbody></table>
+<h5 id='statements'>Statements</h5>
+<table><thead>
+<tr>
+<th>Topic</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>statement_created</td>
+<td>A monthly balance summary and a detailed transaction record for the previous month was created for a Dwolla Master Account.</td>
 </tr>
 </tbody></table>
 <h3 id='customer-account-event-topics'>Customer Account Event topics</h3><h5 id='customers'>Customers</h5>
@@ -12704,6 +12732,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 3xx, or your application fails to respond within 10 seconds of the attempt, another attempt will be made. Dwolla will not follow redirects and will treat them as a failure.</p>
 
 <p>Dwolla will re-attempt delivery 8 times over the course of 72 hours according to the backoff schedule below. If a webhook was successfully received but you would like the information again, you can call <a href="#retrieve-a-webhook">retrieve a webhook by its Id</a>.</p>
+<h3 id='delivery-rate'>Delivery rate</h3>
+<p>Webhooks are delivered in near real-time as events tied to your application are created. If there is a large number of events created for your application within a short timeframe, Dwolla may deliver bursts of 10 concurrent webhook requests to your subscribed URL. We encourage applications to make their webhook handler do as little as possible and only perform a high level validation of the request. Once initial validation is performed, immediately acknowledge the webhook request and process it in the background later. If your subscribed webhook URL is unable to handle the volume of concurrent requests, please contact Dwolla developer support and the delivery rate can be adjusted.</p>
 
 <table><thead>
 <tr>
