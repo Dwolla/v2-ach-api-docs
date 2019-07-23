@@ -933,10 +933,30 @@ appToken
 
 ## List and search customers
 
-This section outlines how to retrieve your list of created Customers.
+This section outlines how to retrieve your list of created Customers. Customer search is supported by passing an additional `search` query string parameter which searches on `firstName`, `lastName`, and `email` fields of a Customer.
 
-### HTTP request
+### HTTP Request
 `GET https://api.dwolla.com/customers`
+
+### Pagination
+
+By default, an embedded list of 25 customers are returned and are sorted by created timestamp. To page through the remaining list, you’ll specify a combination of `limit` and `offset` as query string parameters. Limit can have a max value of 200 customer objects. It is recommended to use the `_links` object in the response which includes the following relational links for paging. Check out the [Links](#links) section for more information.
+
+- `next` includes the URL to list the next set of Customers as defined by Limit
+- `prev` includes the URL to list the previous set of Customers as defined by Limit
+- `first` includes the URL to list the first set of Customers as defined by Limit
+- `last` includes the URL to list the last set of Customers as defined by Limit
+- `self` link indicates the URL of the resource itself
+
+##### Example HTTP Request
+`GET https://api.dwolla.com/customers?limit=5&offset=25`
+
+### Searching Customers
+
+You can search for Customers based on `firstName`, `lastName`, or `email` by appending the `search` query string parameter to the endpoint. For example, if you would like to search for Customers with the first name “Jane”, you can append the additional parameter `search` to the request URL.
+
+##### Example HTTP Request
+`GET https://api.dwolla.com/customers?search=Jane`
 
 ### Request parameters
 | Parameter | Required | Type | Description |
