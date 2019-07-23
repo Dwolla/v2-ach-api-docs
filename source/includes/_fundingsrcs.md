@@ -106,8 +106,8 @@ Customers can have a maximum of 6 funding sources.
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
 | _links | no | object | A <code>_links</code> JSON object containing an `on-demand-authorization` link relation. See example raw request and response below. |
-| routingNumber | yes | string | The bank account's routing number. |
-| accountNumber | yes | string | The bank account number. |
+| routingNumber | yes | string | A bank routing number that identifies a bank or credit union in the U.S. **Note:** Validation of the routing number includes: a checksum, the first two digits of the routing number must fall within the range "01" through "12", or "21" through "32", and the string value must consist of nine digits. |
+| accountNumber | yes | string | The bank account number. **Note:** The account number is validated to check if it is a numeric string of 4-17 digits. |
 | bankAccountType | yes | string | Type of bank account: `checking`, `savings`, `general-ledger` or `loan`. |
 | name | yes | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
 | plaidToken | no | string | A processor token obtained from Plaid for `adding and verifying` a bank. Reference our [Plaid Link Developer Resource Article](https://developers.dwolla.com/resources/dwolla-plaid-integration.html) to learn more about this integration. |
