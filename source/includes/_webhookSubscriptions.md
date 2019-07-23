@@ -10,6 +10,10 @@ When your application receives a [webhook](#webhooks), it should respond with a 
 
 Dwolla will re-attempt delivery 8 times over the course of 72 hours according to the backoff schedule below. If a webhook was successfully received but you would like the information again, you can call [retrieve a webhook by its Id](#retrieve-a-webhook).
 
+### Delivery rate
+
+Webhooks are delivered in near real-time as events tied to your application are created. If there is a large number of events created for your application within a short timeframe, Dwolla may deliver bursts of 10 concurrent webhook requests to your subscribed URL. We encourage applications to make their webhook handler do as little as possible and only perform a high level validation of the request. Once initial validation is performed, immediately acknowledge the webhook request and process it in the background later. If your subscribed webhook URL is unable to handle the volume of concurrent requests, please contact Dwolla developer support and the delivery rate can be adjusted.
+
 | Retry number | Interval (relative to last retry) | Interval (relative to original attempt) |
 |:------------:|:---------------------------------:|:---------------------------------------:|
 |       1      |              15 min               |                  15 min                 |
