@@ -15,7 +15,7 @@
         GROUPABLE_LANGS = ['ruby',
                              'python',
                              'javascript',
-                             'java',
+                             'kotlin',
                              'php',
                              'raw'];
 

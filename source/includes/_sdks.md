@@ -133,36 +133,78 @@ var rootRes = (await client.GetAsync<RootResponse>(new Uri(client.ApiBaseAddress
 var customers = await client.GetAsync<GetCustomersResponse>(rootRes.Links["customers"].Href, headers);
 ```
 
-## Java
+## Kotlin
 
-`dwolla-swagger-java` is not actively maintained by Dwolla, however [source code](https://github.com/Dwolla/dwolla-swagger-java) is available on our GitHub page and community contribution is encouraged. More information is available on the project's README.
+`dwolla-v2-kotlin` is an actively maintained client library for Java/Kotlin applications and is used to facilitate interactions with the Dwolla API. The [source code](https://github.com/Dwolla/dwolla-v2-kotlin) is available on our GitHub page. More information is available on the project’s README. **Note:** The library is currently in **preview mode** for developers. Any feedback as well as community contribution is encouraged.
 
 ### Installation
 
-You will be required to install from source, please have `Git` and `mvn` installed and in your path, then:
+##### Maven
 
-```bashnoselect
-git clone https://github.com/Dwolla/dwolla-swagger-java
-cd dwolla-swagger-java
-mvn install package
+Add this to your project's POM:
+
+```htmlnoselect
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependency>
+    <groupId>com.github.Dwolla</groupId>
+    <artifactId>dwolla-v2-kotlin</artifactId>
+    <version>master-SNAPSHOT</version>
+</dependency>
+```
+
+##### Gradle
+
+Add this to your project's build file:
+
+```javanoselect
+repositories {
+    // ...
+    maven(url = "https://jitpack.io") {
+        name = "jitpack"
+    }
+}
+
+dependencies {
+    implementation("com.github.Dwolla:dwolla-v2-kotlin:master-SNAPSHOT")
+}
 ```
 
 ### Quickstart
 
-Let's list some `Customer` objects:
+Let's set up a Dwolla client using our application key and secret:
 
+##### Kotlin
 ```javanoselect
-import io.swagger.client.ApiClient;
-import io.swagger.client.api.*;
-import io.swagger.client.model.*;
+import com.dwolla.Client
+import com.dwolla.Environment
 
-ApiClient a = new ApiClient();
-a.setBasePath("https://api-sandbox.dwolla.com");
-a.setAccessToken("a token");
-
-CustomersApi c = new CustomersApi(a);
-CustomerListResponse custies = c.list(10);
+val dwolla = Client(
+    key = "yourClientKey",       // see dashboard.dwolla.com
+    secret = "yourClientSecret", // for your client credentials
+    environment = Environment.SANDBOX
+)
 ```
+
+##### Java
+```javanoselect
+import com.dwolla.Client;
+import com.dwolla.Environment;
+
+Client dwolla = new Client(
+    "yourClientKey",    // see dashboard.dwolla.com
+    "yourClientSecret", // for your client credentials
+    Environment.SANDBOX
+);
+```
+### dwolla-swagger-java
+
+`dwolla-swagger-java` is not actively maintained by Dwolla, however [source code](https://github.com/Dwolla/dwolla-swagger-java) is available on our GitHub page and community contribution is encouraged. More information is available on the project's README.
 
 ## JavaScript
 
