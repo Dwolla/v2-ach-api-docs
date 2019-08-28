@@ -5407,7 +5407,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>failureReason</td>
-<td>The reason an uploaded document was rejected. Can be: <code class="prettyprint">ScanNotReadable</code>, <code class="prettyprint">ScanNotUploaded</code>, <code class="prettyprint">ScanIdTypeNotSupported</code>, <code class="prettyprint">ScanDobMismatch</code> or <code class="prettyprint">ScanNameMismatch</code>.</td>
+<td>The reason an uploaded document was rejected. Can be: <code class="prettyprint">ScanNotReadable</code>, <code class="prettyprint">ScanNotUploaded</code>, <code class="prettyprint">ScanIdExpired</code>, <code class="prettyprint">ScanIdTypeNotSupported</code>, <code class="prettyprint">ScanDobMismatch</code> or <code class="prettyprint">ScanNameMismatch</code>.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">{
@@ -12756,7 +12756,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
             <h1 id='webhook-subscriptions'>Webhook subscriptions</h1>
 <p>Create a webhook subscription to receive <code class="prettyprint">POST</code> requests from Dwolla (called webhooks) when events associated with your application occur.  <a href="#webhooks">Webhooks</a> are sent to a URL which you provide when creating a webhook subscription. While we see most applications maintain one webhook subscription, you can have up to <strong>ten</strong> active webhook subscriptions in Sandbox, and up to <strong>five</strong> in Production at a time. Refer to the <a href="#events">events</a> section for the list of events that trigger webhooks.</p>
 <h3 id='strongautomatic-pause-of-a-webhook-subscriptionstrong'><strong>Automatic pause of a webhook subscription</strong></h3>
-<p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong>. This will help us ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API customers. Webhook subscriptions can be unpaused by calling <a href="#update-a-webhook-subscription">this endpoint</a>.</p>
+<p>Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after <strong>400 consecutive failures</strong> and <strong>24 hours since the last success</strong>. This will help us ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API customers. Webhook subscriptions can be unpaused by calling <a href="#update-a-webhook-subscription">this endpoint</a>.</p>
 <h3 id='acknowledgement-and-retries'>Acknowledgement and retries</h3>
 <p>When your application receives a <a href="#webhooks">webhook</a>, it should respond with a HTTP 2xx status code to indicate successful receipt. If Dwolla receives a status code greater than or equal to 3xx, or your application fails to respond within 10 seconds of the attempt, another attempt will be made. Dwolla will not follow redirects and will treat them as a failure.</p>
 
