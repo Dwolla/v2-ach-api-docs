@@ -12,7 +12,7 @@ For more information on handling the Customer verification status of `document`,
 |type | Either `passport`, `license`, `idCard`, or `other`. Must be a color scan of US Government issued identification.|
 |status| Either `pending` or `reviewed`.  When a document has been manually reviewed by Dwolla, its status will be `reviewed`.  A reviewed document does not necessarily indicate that the customer has completed the identity verification process. |
 | created | ISO 8601 Timestamp of document upload time and date. |
-| failureReason | The reason an uploaded document was rejected. Can be: `ScanNotReadable`, `ScanNotUploaded`, `ScanIdTypeNotSupported`, `ScanDobMismatch` or `ScanNameMismatch`. |
+| failureReason | The reason an uploaded document was rejected. Can be: `ScanNotReadable`, `ScanNotUploaded`, `ScanIdExpired`, `ScanIdTypeNotSupported`, `ScanDobMismatch` or `ScanNameMismatch`. |
 
 ```noselect
 {
