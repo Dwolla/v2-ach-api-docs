@@ -13,6 +13,7 @@ For more information on handling the Customer verification status of `document`,
 |status| Either `pending` or `reviewed`.  When a document has been manually reviewed by Dwolla, its status will be `reviewed`.  A reviewed document does not necessarily indicate that the customer has completed the identity verification process. |
 | created | ISO 8601 Timestamp of document upload time and date. |
 | failureReason | The reason an uploaded document was rejected. Can be: `ScanNotReadable`, `ScanNotUploaded`, `ScanIdExpired`, `ScanIdTypeNotSupported`, `ScanDobMismatch` or `ScanNameMismatch`. |
+| allFailureReasons | An array of `reason`s and `description`s for when an uploaded document is rejected for multiple reasons. |
 
 ```noselect
 {
@@ -22,9 +23,20 @@ For more information on handling the Customer verification status of `document`,
     }
   },
   "id": "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc",
-  "status": "pending",
+  "status": "reviewed",
   "type": "passport",
-  "created": "2015-09-29T21:42:16.000Z"
+  "created": "2015-09-29T21:42:16.000Z",
+  "failureReason": "ScanDobMismatch",
+  "allFailureReasons": [
+      {
+          "reason": "ScanDobMismatch",
+          "description": "Date of Birth mismatch"
+      },
+      {
+          "reason": "ScanIdExpired",
+          "description": "ID is expired"
+      }
+  ]
 }
 ```
 
@@ -156,14 +168,27 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       },
       {
         "_links": {
-          "self": {
-            "href": "https://api-sandbox.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0"
-          }
+            "self": {
+                "href": "https://api-sandbox.dwolla.com/documents/20988444-c7e1-40cf-ab1a-a20da878e568",
+                "type": "application/vnd.dwolla.v1.hal+json",
+                "resource-type": "document"
+            }
         },
-        "id": "11fe0bab-39bd-42ee-bb39-275afcc050d0",
-        "status": "pending",
-        "type": "passport",
-        "created": "2015-09-29T21:45:37.000Z"
+        "id": "20988444-c7e1-40cf-ab1a-a20da878e568",
+        "status": "reviewed",
+        "type": "license",
+        "created": "2019-05-30T22:01:40.000Z",
+        "failureReason": "ScanDobMismatch",
+        "allFailureReasons": [
+            {
+                "reason": "ScanDobMismatch",
+                "description": "Date of Birth mismatch"
+            },
+            {
+                "reason": "ScanIdExpired",
+                "description": "ID is expired"
+            }
+        ]
       }
     ]
   },
@@ -314,9 +339,20 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           }
         },
         "id": "11fe0bab-39bd-42ee-bb39-275afcc050d0",
-        "status": "pending",
+        "status": "reviewed",
         "type": "passport",
-        "created": "2015-09-29T21:45:37.000Z"
+        "created": "2015-09-29T21:45:37.000Z",
+        "failureReason": "ScanDobMismatch",
+        "allFailureReasons": [
+            {
+                "reason": "ScanDobMismatch",
+                "description": "Date of Birth mismatch"
+            },
+            {
+                "reason": "ScanIdExpired",
+                "description": "ID is expired"
+            }
+        ]
       }
     ]
   },
@@ -380,9 +416,20 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
     }
   },
   "id": "56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc",
-  "status": "pending",
+  "status": "reviewed",
   "type": "passport",
-  "created": "2015-09-29T21:42:16.000Z"
+  "created": "2015-09-29T21:42:16.000Z",
+  "failureReason": "ScanDobMismatch",
+  "allFailureReasons": [
+      {
+          "reason": "ScanDobMismatch",
+          "description": "Date of Birth mismatch"
+      },
+      {
+          "reason": "ScanIdExpired",
+          "description": "ID is expired"
+      }
+  ]
 }
 ```
 ```ruby
