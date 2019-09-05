@@ -7801,7 +7801,7 @@ HTTP 200 OK
 </tr>
 <tr>
 <td>correlationId</td>
-<td>A unique string value attached to a transfer resource which can be used for traceability between Dwolla and your application.</td>
+<td>A string value attached to a transfer resource which can be used for traceability between Dwolla and your application.</td>
 </tr>
 <tr>
 <td>individualAchId</td>
@@ -7955,7 +7955,7 @@ HTTP 200 OK
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
-<td>A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <strong>Note:</strong> A correlationId is not a replacement for an <a href="#idempotency-key">idempotency-key</a>. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.</td>
+<td>A string value attached to a customer which can be used for traceability between Dwolla and your application. <strong>Note:</strong> A correlationId is not a replacement for an <a href="#idempotency-key">idempotency-key</a>. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-types'>Source and destination types</h3><h5 id='source-types'>Source types</h5>
@@ -9331,7 +9331,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>correlationId</td>
-<td>A unique string value attached to a mass payment resource which can be used for traceability between Dwolla and your application.</td>
+<td>A string value attached to a mass payment resource which can be used for traceability between Dwolla and your application.</td>
 </tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">{
@@ -9423,7 +9423,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>correlationId</td>
 <td>no</td>
 <td>string</td>
-<td>A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <strong>Note:</strong> A correlationId is not a replacement for an <a href="#idempotency-key">idempotency key</a>. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.</td>
+<td>A string value attached to a customer which can be used for traceability between Dwolla and your application. <strong>Note:</strong> A correlationId is not a replacement for an <a href="#idempotency-key">idempotency key</a>. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID.</td>
 </tr>
 </tbody></table>
 <h3 id='source-and-destination-values'>Source and destination values</h3><h5 id='source-types'>Source types</h5>
@@ -9475,7 +9475,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>correlationId</td>
-<td>A unique string value attached to a mass payment item which can be used for traceability between Dwolla and your application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
+<td>A string value attached to a mass payment item which can be used for traceability between Dwolla and your application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>.</td>
 </tr>
 <tr>
 <td>achDetails</td>
