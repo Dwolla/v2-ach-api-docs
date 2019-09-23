@@ -549,7 +549,7 @@ appToken
 
 ## Update a funding source
 
-This section covers how to update a `bank` funding source. The `accountNumber`, `routingNumber`, `type` and `name` are all optional attributes that can be updated on a funding source when it has an `unverified` status. You can choose to update only name, name and routingNumber, name and accountNumber, name and type or all four attributes. Any attribute that isn't updated remains the same as it was prior to update, including the funding source id. The `name` attribute can be updated when a funding source has either an `unverified` or `verified` status.
+This section covers how to update a `bank` funding source. The `accountNumber`, `routingNumber` and `bankAccountType` are all optional attributes that can be updated on a funding source when it has an `unverified` status. You can choose to update only name, name and routingNumber, name and accountNumber, name and type or all four attributes. Any attribute that isn't updated remains the same as it was prior to update, including the funding source id. The `name` attribute can be updated when a funding source has either an `unverified` or `verified` status.
 
 ### HTTP request
 
@@ -559,7 +559,7 @@ This section covers how to update a `bank` funding source. The `accountNumber`, 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | id of funding source to update. |
-| name | no | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
+| name | yes | string | Arbitrary nickname for the funding source. Must be 50 characters or less. |
 | bankAccountType | no | string | Type of bank account: `checking`, `savings`, `general-ledger` or `loan`. |
 | routingNumber | no | string | The bank account's routing number. |
 | accountNumber | no | string | The bank account number. |
