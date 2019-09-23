@@ -6926,7 +6926,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="nx">customerUrl</span><span class="p">}</span><span class="s2">/funding-sources`</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="dl">'</span><span class="s1">funding-sources</span><span class="dl">'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane Doe’s Checking'</span>
 </code></pre></div></div><h2 id='update-a-funding-source'>Update a funding source</h2>
-<p>This section covers how to update a <code class="prettyprint">bank</code> funding source. The <code class="prettyprint">accountNumber</code>, <code class="prettyprint">routingNumber</code>, <code class="prettyprint">type</code> and <code class="prettyprint">name</code> are all optional attributes that can be updated on a funding source when it has an <code class="prettyprint">unverified</code> status. You can choose to update only name, name and routingNumber, name and accountNumber, name and type or all four attributes. Any attribute that isn&rsquo;t updated remains the same as it was prior to update, including the funding source id. The <code class="prettyprint">name</code> attribute can be updated when a funding source has either an <code class="prettyprint">unverified</code> or <code class="prettyprint">verified</code> status.</p>
+<p>This section covers how to update a <code class="prettyprint">bank</code> funding source. The <code class="prettyprint">accountNumber</code>, <code class="prettyprint">routingNumber</code> and <code class="prettyprint">bankAccountType</code> are all optional attributes that can be updated on a funding source when it has an <code class="prettyprint">unverified</code> status. You can choose to update only name, name and routingNumber, name and accountNumber, name and type or all four attributes. Any attribute that isn&rsquo;t updated remains the same as it was prior to update, including the funding source id. The <code class="prettyprint">name</code> attribute can be updated when a funding source has either an <code class="prettyprint">unverified</code> or <code class="prettyprint">verified</code> status.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/funding-sources/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -6946,7 +6946,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>name</td>
-<td>no</td>
+<td>yes</td>
 <td>string</td>
 <td>Arbitrary nickname for the funding source. Must be 50 characters or less.</td>
 </tr>
