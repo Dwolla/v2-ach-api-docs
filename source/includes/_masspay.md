@@ -1,6 +1,6 @@
 # Mass payments
 
-Dwolla mass payments allows you to easily send up to 5,000 payments one API request. The payments are funded from a single user's specified funding source and processed asynchronously upon submission.
+Dwolla mass payments allows you to easily send up to 5,000 payments in one API request. The payments are funded from a single user's specified funding source and processed asynchronously upon submission.
 
 <ol class = "alerts">
     <li class="alert icon-alert-info">
