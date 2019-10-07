@@ -125,6 +125,27 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | value     |   yes    | string | Amount of money        |
 | currency  |   yes    | string | Possible values: `USD` |
 
+### clearing JSON object
+
+The `clearing` object is used in tandem with our expedited transfer feature.
+Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH.
+
+> **Note:** The clearing request parameter is a premium feature available for [Dwolla](https://www.dwolla.com/platform) customers. Enabling Next-day ACH and Same-day ACH requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account setting.
+
+| Parameter | Required | Type | Description |
+|-----------|------------|------|-----------|
+| source | no | string | Represents a clearing object for `standard` debits into the Dwolla network. Used to downgrade the clearing time from the default of Next-day ACH. <br> Possible values: `standard` |
+| destination | no | string | Represents a clearing object for `same-day` credits out of the Dwolla network to a bank funding source. <br> Possible values: `next-available` |
+
+#### Clearing example:
+
+```noselect
+"clearing": {
+  "source": "standard",
+  "destination": "next-available"
+}
+```
+
 ### achDetails and addenda object
 
 The addendum record is used to provide additional information to the payment recipient about the payment. This value will be passed in on a transfer request and can be exposed on a customer’s bank statement. Addenda records provide a unique opportunity to supply your customers with more information about their transactions. Allowing businesses to include additional details about the transaction—such as invoice numbers—provides their end users with more information about the transaction in the comfort of their own banking application.
@@ -207,6 +228,10 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
             "currency": "USD",
             "value": "1.00"
         },
+        "clearing": {
+        	"source": "standard",
+          "destination": "next-available"
+        },
         "metadata": {
             "payment1": "payment1"
         },
@@ -228,6 +253,9 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         "amount": {
             "currency": "USD",
             "value": "5.00"
+        },
+        "clearing": {
+          "destination": "next-available"
         },
         "metadata": {
             "payment2": "payment2"
@@ -278,6 +306,10 @@ request_body = {
         :currency => "USD",
         :value => "1.00"
       },
+      :clearing => {
+        :source => "standard",
+        :destination => "next-available"
+      },
       :metadata => {
         :payment1 => "payment1"
       },
@@ -299,6 +331,9 @@ request_body = {
       :amount => {
         :currency => "USD",
         :value => "5.00"
+      },
+      :clearing => {
+        :destination => "next-available"
       },
       :metadata => {
         :payment2 => "payment2"
@@ -356,6 +391,11 @@ $massPayment = $massPaymentsApi->create([
         'currency' => 'USD',
         'value' => '1.00',
       ],
+      'clearing' =>
+      [
+        'source' => 'standard',
+        'destination' => 'next-available'
+      ],
       'metadata' =>
       [
         'payment1' => 'payment1',
@@ -382,6 +422,10 @@ $massPayment = $massPaymentsApi->create([
       [
         'currency' => 'USD',
         'value' => '5.00',
+      ],
+      'clearing' =>
+      [
+        'destination' => 'next-available'
       ],
       'metadata' =>
       [
@@ -430,6 +474,10 @@ request_body = {
         'currency': 'USD',
         'value': '1.00'
       },
+      'clearing': {
+        'source': 'standard',
+        'destination': 'next-available'
+      },
       'metadata': {
         'payment1': 'payment1'
       },
@@ -449,6 +497,9 @@ request_body = {
       'amount': {
         'currency': 'USD',
         'value': '5.00'
+      },
+      'clearing': {
+        'destination': 'next-available'
       },
       'metadata': {
         'payment2': 'payment2'
@@ -494,6 +545,10 @@ var requestBody = {
         currency: 'USD',
         value: '1.00'
       },
+      clearing: {
+        source: 'standard',
+        destination : 'next-available'
+      },
       metadata: {
         payment1: 'payment1'
       },
@@ -515,6 +570,9 @@ var requestBody = {
       amount: {
         currency: 'USD',
         value: '5.00'
+      },
+      clearing: {
+        destination: 'next-available'
       },
       metadata: {
         payment2: 'payment2'
