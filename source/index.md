@@ -19,6 +19,7 @@ includes:
   - root
   - accounts
   - customers
+  - kba
   - beneficialOwners
   - documents
   - fundingsrcs

@@ -90,6 +90,9 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | Topic          | Description                    |
 |------------------|-------------------------------------------------------------------|
 | customer_created | A Customer was created. |
+| customer_kba_verification_needed | The retry identity verification attempt failed due insufficient scores on the submitted data. The end-user will have a single kba attempt to answer a set of “out of wallet” questions about themselves for identity verification. |
+| customer_kba_verification_failed | The end-user failed KBA verification and were unable to correctly answer at least three KBA questions. |
+| customer_kba_verification_approved | The end-user was able to correctly answer at least three KBA questions. |
 | customer_verification_document_needed | Additional documentation is needed to verify a Customer. |
 | customer_verification_document_uploaded | A verification document was uploaded for a Customer. |
 | customer_verification_document_failed | A verification document has been rejected for a Customer. |
