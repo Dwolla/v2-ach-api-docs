@@ -24,7 +24,7 @@ This section covers how to generate a new KBA identifier which is used to repres
 |-----------|-----------|-----------|-------------------------------------------|
 | id        | yes       | string    | The ID of the Customer to verify via KBA. |
 
-### Example resquest and response
+### Example request and response
 
 ```raw
 POST https://api.dwolla.com/customers/33aa88b1-97df-424a-9043-d5f85809858b/kba
@@ -87,7 +87,7 @@ This section covers how to retrieve KBA questions after you have created the KBA
 |-----------|-----------|-----------|------------------------------------------------------|
 | id        | yes       | string    | The id of the KBA session to retrieve questions for. |
 
-### Example resquest and response
+### Example request and response
 
 ```raw
 GET https://api.dwolla.com/kba/33aa88b1-97df-424a-9043-d5f85809858b
@@ -244,7 +244,7 @@ This section covers how to verify the KBA questions for Customer verification.
 | questionId | yes       | string    | The id of a question in a KBA session.               |
 | answerId   | yes       | string    | The id of an answer to the corresponding question in a KBA session. |
 
-### Example resquest and response
+### Example request and response
 
 ```raw
 POST https://api.dwolla.com/kba/33aa88b1-97df-424a-9043-d5f85809858b
