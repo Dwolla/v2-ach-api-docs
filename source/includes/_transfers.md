@@ -28,29 +28,6 @@ A transfer represents money being transferred from a `source` to a `destination`
 | correlationId | A string value attached to a transfer resource which can be used for traceability between Dwolla and your application. |
 | individualAchId | A unique string value matching the value on bank line related to the transfer. Appears when the debit entry clears out of the bank. The individual identifier for that ACH entry. |
 
-#### amount JSON object
-
-| Parameter   |   Description                      |
-|-------------|------------------------------------|
-| value       | Amount of money                    |
-| currency    | `USD`                              |
-
-#### clearing JSON object
-
-Can be used to upgrade or downgrade the clearing time from the default ACH processing.
-
-| Parameter   |   Description                      |
-|-------------|------------------------------------|
-| source      | Represents a clearing object for next-day debits into the Dwolla network. |
-| destination | Represents a clearing object for same-day credits out of the Dwolla network to a bank funding source. |
-
-#### achDetails JSON object
-
-| Parameter   |   Description                      |
-|-------------|------------------------------------|
-| addenda     | A string value passed on a [transfer request](#initiate-a-transfer) and can be exposed on a Customer’s bank statement. |
-| traceId     | A unique string value that identifies a transaction from the source funding source to the destination funding source. This value is often used to determine where a transaction's funds lie at a certain time.  |
-
 ```noselect
 {
   "_links": {},
@@ -91,34 +68,6 @@ Can be used to upgrade or downgrade the clearing time from the default ACH proce
   "individualAchId": "string"
 }
 ```
-
-## Initiate a transfer
-
-This section covers how to initiate a transfer from either a Dwolla [Account](#accounts) or Dwolla API [Customer](#customers) resource.
-
-### Prevent duplicate transfers with idempotency key
-
-To prevent an operation from being performed more than once, Dwolla supports passing in an `Idempotency-Key` header with a unique key as the value. Multiple `POSTs` with the same idempotency key won't result in multiple resources being created.
-
-For example, if a request to initiate a transfer fails due to a network connection issue, you can reattempt the request with the same idempotency key to ensure that only a single transfer is created.
-
-Refer to our [idempotency key](#idempotency-key) section to learn more.
-
-### HTTP request
-
-`POST https://api.dwolla.com/transfers`
-
-### Request parameters
-
-| Parameter | Required | Type | Description |
-|-----------|----------|----------------|-------------|
-| _links | yes | object | A _links JSON object describing the desired `source` and `destination` of a transfer. [Reference the Source and Destination object to learn more](#source-and-destination-types) about possible values for `source` and `destination`. |
-| amount | yes | object | An amount JSON object. [Reference the amount JSON object to learn more](#amount-json-object). |
-| metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
-| fees | no | array | An array of fee JSON objects that contain unique fee transfers. [Reference the facilitator fee JSON object to learn more](#facilitator-fee-json-object). |
-| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys to expedite or slow down a transfer. [Reference the clearing JSON object to learn more](#clearing-json-object). |
-| achDetails | no | object | An ACH details JSON object which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [Reference the achDetails JSON object to learn more](#achdetails-object)|
-| correlationId | no | string | A string value attached to a customer which can be used for traceability between Dwolla and your application. **Note:** A correlationId is not a replacement for an [idempotency-key](#idempotency-key). <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. |
 
 ### Source and destination types
 
@@ -173,11 +122,13 @@ For more information on collecting fees on payments, reference the [facilitator 
 ### clearing JSON object
 
 The `clearing` object is used in tandem with our expedited transfer feature.
-Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH. **Note:** The clearing request parameter is a premium feature available for [Dwolla](https://www.dwolla.com/platform) customers. Next-day ACH functionality must be enabled.
+Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH.
+
+> **Note:** The clearing request parameter is a premium feature available for [Dwolla](https://www.dwolla.com/platform) customers. Enabling Next-day ACH and Same-day ACH requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account setting.
 
 | Parameter | Required | Type | Description |
 |-----------|------------|------|-----------|
-| source | no | string | Represents a clearing object for `next-day` debits into the Dwolla network. <br> Possible values: `standard` |
+| source | no | string | Represents a clearing object for `standard` debits into the Dwolla network. Used to downgrade the clearing time from the default of Next-day ACH. <br> Possible values: `standard` |
 | destination | no | string | Represents a clearing object for `same-day` credits out of the Dwolla network to a bank funding source. <br> Possible values: `next-available` |
 
 #### Clearing example:
@@ -222,6 +173,34 @@ Source specifies the clearing time for the source funding source involved in the
   }
 }
 ```
+
+## Initiate a transfer
+
+This section covers how to initiate a transfer from either a Dwolla [Account](#accounts) or Dwolla API [Customer](#customers) resource.
+
+### Prevent duplicate transfers with idempotency key
+
+To prevent an operation from being performed more than once, Dwolla supports passing in an `Idempotency-Key` header with a unique key as the value. Multiple `POSTs` with the same idempotency key won't result in multiple resources being created.
+
+For example, if a request to initiate a transfer fails due to a network connection issue, you can reattempt the request with the same idempotency key to ensure that only a single transfer is created.
+
+Refer to our [idempotency key](#idempotency-key) section to learn more.
+
+### HTTP request
+
+`POST https://api.dwolla.com/transfers`
+
+### Request parameters
+
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| _links | yes | object | A _links JSON object describing the desired `source` and `destination` of a transfer. [Reference the Source and Destination object to learn more](#source-and-destination-types) about possible values for `source` and `destination`. |
+| amount | yes | object | An amount JSON object. [Reference the amount JSON object to learn more](#amount-json-object). |
+| metadata | no | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters). |
+| fees | no | array | An array of fee JSON objects that contain unique fee transfers. [Reference the facilitator fee JSON object to learn more](#facilitator-fee-json-object). |
+| clearing | no | object | A clearing JSON object that contains `source` and `destination` keys to slow down or expedite a transfer. [Reference the clearing JSON object to learn more](#clearing-json-object). |
+| achDetails | no | object | An ACH details JSON object which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [Reference the achDetails JSON object to learn more](#achdetails-object)|
+| correlationId | no | string | A string value attached to a customer which can be used for traceability between Dwolla and your application. **Note:** A correlationId is not a replacement for an [idempotency-key](#idempotency-key). <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. |
 
 ### HTTP status and error codes
 

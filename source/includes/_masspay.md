@@ -1,6 +1,6 @@
 # Mass payments
 
-Dwolla mass payments allows you to easily send up to 5,000 payments one API request. The payments are funded from a single user's specified funding source and processed asynchronously upon submission.
+Dwolla mass payments allows you to easily send up to 5,000 payments in one API request. The payments are funded from a single user's specified funding source and processed asynchronously upon submission.
 
 <ol class = "alerts">
     <li class="alert icon-alert-info">
@@ -20,6 +20,7 @@ A mass payment offers a significant advantage over repeatedly calling the [Trans
 | status        | Either `deferred`: A created mass payment that can be processed at a later time. `pending`: A mass payment that is pending and awaiting processing. A mass payment has a pending status for a brief period of time and cannot be cancelled. `processing`:  A mass payment that is processing. `complete`: A mass payment successfully completed processing. |
 | created       | ISO-8601 timestamp.                                                                                                |
 | metadata      | A metadata JSON object.                                                                                            |
+| clearing      | A clearing JSON object.                                                                                            |
 | total         | The sum amount of all items in the mass payment.                                                                   |
 | totalFees     | The sum amount of all fees charged for the mass payment.                                                           |
 | correlationId | A string value attached to a mass payment resource which can be used for traceability between Dwolla and your application.            |
@@ -89,6 +90,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | items         | yes      | array  | an array of item JSON objects that contain unique payments. [See below](#mass-payment-item)        |
 | metadata      | no       | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters).     |
 | status        | no       | string | Acceptable value is: `deferred`. |
+| clearing      | no       | object | A clearing JSON object that contains `source` and `destination` keys to expedite or slow down a transfer. [Reference the clearing JSON object to learn more](#clearing-json-object). |
 | achDetails    | no       | object | An ACH details JSON object which represents additional information sent along with a transfer created from a mass payment item to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [See below](#achdetails-and-addenda-object) |
 | correlationId | no       | string | A string value attached to a customer which can be used for traceability between Dwolla and your application. **Note:** A correlationId is not a replacement for an [idempotency key](#idempotency-key). <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. |
 
@@ -122,6 +124,27 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 |-----------|----------|--------|------------------------|
 | value     |   yes    | string | Amount of money        |
 | currency  |   yes    | string | Possible values: `USD` |
+
+### clearing JSON object
+
+The `clearing` object is used in tandem with our expedited transfer feature.
+Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH.
+
+> **Note:** The clearing request parameter is a premium feature available for [Dwolla](https://www.dwolla.com/platform) customers. Enabling Next-day ACH and Same-day ACH requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account setting.
+
+| Parameter | Required | Type | Description |
+|-----------|------------|------|-----------|
+| source | no | string | Represents a clearing object for `standard` debits into the Dwolla network. Used to downgrade the clearing time from the default of Next-day ACH. <br> Possible values: `standard` |
+| destination | no | string | Represents a clearing object for `same-day` credits out of the Dwolla network to a bank funding source. <br> Possible values: `next-available` |
+
+#### Clearing example:
+
+```noselect
+"clearing": {
+  "source": "standard",
+  "destination": "next-available"
+}
+```
 
 ### achDetails and addenda object
 
@@ -205,6 +228,10 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
             "currency": "USD",
             "value": "1.00"
         },
+        "clearing": {
+        	"source": "standard",
+          "destination": "next-available"
+        },
         "metadata": {
             "payment1": "payment1"
         },
@@ -226,6 +253,9 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         "amount": {
             "currency": "USD",
             "value": "5.00"
+        },
+        "clearing": {
+          "destination": "next-available"
         },
         "metadata": {
             "payment2": "payment2"
@@ -276,6 +306,10 @@ request_body = {
         :currency => "USD",
         :value => "1.00"
       },
+      :clearing => {
+        :source => "standard",
+        :destination => "next-available"
+      },
       :metadata => {
         :payment1 => "payment1"
       },
@@ -297,6 +331,9 @@ request_body = {
       :amount => {
         :currency => "USD",
         :value => "5.00"
+      },
+      :clearing => {
+        :destination => "next-available"
       },
       :metadata => {
         :payment2 => "payment2"
@@ -354,6 +391,11 @@ $massPayment = $massPaymentsApi->create([
         'currency' => 'USD',
         'value' => '1.00',
       ],
+      'clearing' =>
+      [
+        'source' => 'standard',
+        'destination' => 'next-available'
+      ],
       'metadata' =>
       [
         'payment1' => 'payment1',
@@ -380,6 +422,10 @@ $massPayment = $massPaymentsApi->create([
       [
         'currency' => 'USD',
         'value' => '5.00',
+      ],
+      'clearing' =>
+      [
+        'destination' => 'next-available'
       ],
       'metadata' =>
       [
@@ -428,6 +474,10 @@ request_body = {
         'currency': 'USD',
         'value': '1.00'
       },
+      'clearing': {
+        'source': 'standard',
+        'destination': 'next-available'
+      },
       'metadata': {
         'payment1': 'payment1'
       },
@@ -447,6 +497,9 @@ request_body = {
       'amount': {
         'currency': 'USD',
         'value': '5.00'
+      },
+      'clearing': {
+        'destination': 'next-available'
       },
       'metadata': {
         'payment2': 'payment2'
@@ -492,6 +545,10 @@ var requestBody = {
         currency: 'USD',
         value: '1.00'
       },
+      clearing: {
+        source: 'standard',
+        destination : 'next-available'
+      },
       metadata: {
         payment1: 'payment1'
       },
@@ -513,6 +570,9 @@ var requestBody = {
       amount: {
         currency: 'USD',
         value: '5.00'
+      },
+      clearing: {
+        destination: 'next-available'
       },
       metadata: {
         payment2: 'payment2'
