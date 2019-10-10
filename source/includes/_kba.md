@@ -2,7 +2,7 @@
 
 Knowledge-based authentication, commonly referred to as KBA, is a method of authentication which seeks to prove the identity of an individual. KBA requires the knowledge of private information of the individual to prove that the person providing the identity information is the owner of the identity. Questions are compiled from public and private data such as marketing data, credit reports or transaction history.
 
-> **Note:** KBA as a method of verifying an identity is only available to Personal Verified Customers at this time. 
+> **Note:** KBA as a method of verifying an identity is only available to [Personal Verified Customers](https://developers.dwolla.com/resources/account-types.html#verified-customer) at this time. 
 
 ### KBA Links
 
@@ -75,7 +75,7 @@ appToken
 ## Retrieve KBA Questions
 
 On KBA question creation, Dwolla will return a 201 HTTP statusCode and a link to the KBA session from which to retrieve questions.
-This section covers how to retrieve KBA questions after you have created the KBA session. 
+This section covers how to retrieve KBA questions after you have created the KBA session.
 
 ### HTTP Request
 
