@@ -44,17 +44,25 @@ customer_url = 'https://api-sandbox.dwolla.com/customers/ca22d192-48f1-4b72-b29d
 kba = app_token.post "#{customer_url}/kba"
 kba.response_headers[:location] # => "https://api-sandbox.dwolla.com/kba/70b0e9cc-020d-4de2-9a82-a2281afa4c31"
 ```
+
 ```php
-/**
- * No example for this language yet. Coming soon to the dwolla-swagger-php SDK.
- **/
+<?php
+$customersApi = new DwollaSwagger\CustomersApi($apiClient);
+
+$customerUrl = "https://api.dwolla.com/customers/ca22d192-48f1-4b72-b29d-681e9e20795d"
+
+$kba = $customersApi->initiateKba($customer_url);
+$kba; # => "https://api-sandbox.dwolla.com/kba/70b0e9cc-020d-4de2-9a82-a2281afa4c31"
+?>
 ```
+
 ```python
 customer_url = 'https://api-sandbox.dwolla.com/customers/61a74e62-e27d-46f1-9fa6-a8e57226bb3e'
 
 kba = app_token.post('%s/kba' % customer_url)
 kba.headers['location'] # => "https://api-sandbox.dwolla.com/kba/70b0e9cc-020d-4de2-9a82-a2281afa4c31"
 ```
+
 ```javascript
 var customerUrl = 'https://api-sandbox.dwolla.com/customers/61a74e62-e27d-46f1-9fa6-a8e57226bb3e';
 
@@ -194,17 +202,25 @@ kba_url = 'https://api-sandbox.dwolla.com/kba/70b0e9cc-020d-4de2-9a82-a2281afa4c
 kba_questions = app_token.get kba_url
 kba_questions.id # => "70b0e9cc-020d-4de2-9a82-a2281afa4c31"
 ```
+
 ```php
-/**
- * No example for this language yet. Coming soon to the dwolla-swagger-php SDK.
- **/
+<?php
+$kbaApi = new DwollaSwagger\KbaApi($apiClient);
+
+kba_url = "https://api-sandbox.dwolla.com/kba/70b0e9cc-020d-4de2-9a82-a2281afa4c31";
+
+$kbaQuestions = $kbaApi->getKbaQuestions($kbaUrl);
+print $kbaQuestions->id; # => "70b0e9cc-020d-4de2-9a82-a2281afa4c31"
+?>
 ```
+
 ```python
 kba_url = 'https://api-sandbox.dwolla.com/kba/70b0e9cc-020d-4de2-9a82-a2281afa4c31'
 
 kba_questions = app_token.get(kba_url)
 kba_questions.id # => '70b0e9cc-020d-4de2-9a82-a2281afa4c31'
 ```
+
 ```javascript
 var kbaUrl = 'https://api-sandbox.dwolla.com/kba/70b0e9cc-020d-4de2-9a82-a2281afa4c31';
 
@@ -274,6 +290,7 @@ Authorization: Bearer cRahPzURfaIrTewKL18tmslWPqKdzkLeYJm0oB1hGJ1vMPArft1v
     ]
 }
 ```
+
 ```ruby
 kba_url = 'https://api-sandbox.dwolla.com/kba/70b0e9cc-020d-4de2-9a82-a2281afa4c31'
 
@@ -300,11 +317,36 @@ request_body = {
 
 kba_answers = app_token.post kba_url, request_body
 ```
+
 ```php
-/**
- * No example for this language yet. Coming soon to the dwolla-swagger-php SDK.
- **/
+<?php
+$kbaApi = new DwollaSwagger\KbaApi($apiClient);
+
+$kbaUrl = "https://api-sandbox.dwolla.com/kba/70b0e9cc-020d-4de2-9a82-a2281afa4c31";
+
+$kbaAnswers = $kbaApi->answerKbaQuestions([
+    "answers" => [
+         [
+             "questionId" => "2355953375",
+             "answerId" => "2687969335"
+         ],
+         [
+             "questionId" => "2355953385",
+             "answerId" => "2687969385"
+         ],
+         [
+             "questionId" => "2355953395",
+             "answerId" => "2687969435"
+         ],
+         [
+             "questionId" => "2355953405",
+             "answerId" => "2687969485"
+         ]
+    ]
+  ], $kbaUrl);
+?>
 ```
+
 ```python
 kba_url = 'https://api-sandbox.dwolla.com/kba/70b0e9cc-020d-4de2-9a82-a2281afa4c31'
 
@@ -331,6 +373,7 @@ request_body = {
 
 kba_answers = app_token.post (kba_url, request_body)
 ```
+
 ```javascript
 var kbaUrl = 'https://api.dwolla.com/kba/70b0e9cc-020d-4de2-9a82-a2281afa4c31';
 var requestBody = {
