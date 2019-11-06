@@ -89,8 +89,8 @@ request_body = {
   'url': 'http://myapplication.com/webhooks',
   'secret': 'sshhhhhh'
 }
-retries = app_token.post('webhook-subscriptions', request_body)
-retries.body['total'] # => 1
+subscription = app_token.post('webhook-subscriptions', request_body)
+subscription.headers['location'] # => 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 ```
 ```php
 <?php
