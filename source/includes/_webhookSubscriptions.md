@@ -200,7 +200,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
-request_body = {
+request_body = {f
   :paused => true
 }
 
@@ -242,7 +242,7 @@ $subscription = $webhookApi->updateSubscription(array (
 
 ## List webhook subscriptions
 
-This section covers how to retrieve a list of webhook subscriptions that belong to an application.
+This section covers how to retrieve a list of webhook subscriptions that belong to an application. 
 
 ### HTTP request
 `GET https://api.dwolla.com/webhook-subscriptions`
@@ -356,7 +356,7 @@ $webhookApi->deleteById('https://api-sandbox.dwolla.com/webhook-subscriptions/5a
 
 ## List webhooks for a webhook subscription
 
-This section covers how to view all fired [webhooks](#webhooks) for a webhook subscription. **Note:** Dwolla will only guarantee access to webhook data through the API over a rolling 30-day period.
+This section covers how to view all fired [webhooks](#webhooks) for a webhook subscription. Webhook search is supported by passing in optional querystring parameters such as: `search` which represents a term to search on, `startDate` and `endDate`. **Note:** Dwolla will only guarantee access to webhook data through the API over a rolling 30-day period.
 
 ### HTTP request
 `GET https://api.dwolla.com/webhook-subscriptions/{id}/webhooks`
@@ -367,6 +367,8 @@ This section covers how to view all fired [webhooks](#webhooks) for a webhook su
 | id | yes | string | Webhook subscription unique identifier. |
 | limit | no | integer | How many results to return. Defaults to 25. |
 | offset | no | integer | How many results to skip. |
+| startDate | no | string | Only include webhooks sent after this date. ISO-8601 format: YYYY-MM-DD. Can optionally be used with endDate to specify a date range. |
+| endDate | no | string | Only include webhooks sent before this date. ISO-8601 format: YYYY-MM-DD. Can optionally be used with startDate to specify a date range. |
 
 ### Request and response
 
