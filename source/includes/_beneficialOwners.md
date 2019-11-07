@@ -58,10 +58,10 @@ For more information on how to create a beneficial owner, refer to our [develope
 | ---------------|--------------|--------|----------------|
 | firstName | yes  |  string |  The legal first name of the beneficial owner. |
 | lastName | yes | string | The legal last name of the beneficial owner. |
-| ssn | conditional | string | **Full nine digits** of beneficial owner’s social security number. If ssn is omitted, [passport](#passport-json-object) is required. |
+| ssn | conditional | string | **Full nine digits** of beneficial owner’s social security number. **Required** for US persons. If ssn is omitted, [passport](#passport-json-object) is required. |
 | dateOfBirth | Yes | string | beneficial owner’s date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
 | address | Yes | object |  An [address JSON object](/#address-json-object). Full address of the beneficial owner's physical address.  |
-| passport | conditional | object | An optional [passport JSON object](/#passport-json-object). Required for non-US persons. Includes passport identification number and country. |
+| passport | conditional | object | An optional [passport JSON object](/#passport-json-object). **Required** for non-US persons. Includes passport identification number and country. If [passport](#passport-json-object) is omitted, ssn is required. |
 
 ### Address JSON object
 
@@ -71,9 +71,9 @@ For more information on how to create a beneficial owner, refer to our [develope
 | address2 | no | string | Second line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
 | address3 | no | string | Third line of the street address of the beneficial owner's permanent residence. **Note:** PO Boxes are not allowed. |
 | city | yes | string | City of beneficial owner's permanent residence. |
-| stateProvinceRegion | yes | string | Two-letter US state or territory abbreviation code of beneficial owner’s physical address. For two-letter abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). |
+| stateProvinceRegion | yes | string |  **US persons** - Two-letter US state abbreviation code of Beneficial Owner’s physical address. For two-letter US state abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). <br> **Non-US persons** - Two-letter state, province, or region ISO abbreviation code of Beneficial Owner's physical address. For two-letter ISO abbreviation reference, check out the [ISO guide](https://en.wikipedia.org/wiki/ISO_3166-1). |
 | country | yes | string | Country of beneficial owner's permanent residence. Two digit ISO code, e.g. `US`. |
-| postalCode | yes | string | Postal code of beneficial owner's permanent residence. Should be a five digit postal code, e.g. `50314`. |
+| postalCode | conditional | string | Postal code of beneficial owner's permanent residence. Should be a five digit postal code, e.g. `50314`. Optional if beneficial owner is a non-US person. |
 
 ### Passport JSON object
 
