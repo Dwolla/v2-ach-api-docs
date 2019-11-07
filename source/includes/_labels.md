@@ -58,7 +58,7 @@ This section outlines how to create a new Label. When creating a Label you’ll 
 ### Request and response
 
 ```raw
-POST https://api.dwolla.com/customers/{id}/labels
+POST https://api-sandbox.dwolla.com/customers/{id}/labels
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -71,7 +71,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f
+Location: https://api-sandbox.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f
 ```
 ```php
 <?php
@@ -226,7 +226,7 @@ To create a new entry on a Label Ledger you’ll specify the ID of the Label, as
 ### Request and response
 
 ```raw
-POST https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f/ledger-entries
+POST https://api-sandbox.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f/ledger-entries
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -239,7 +239,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bececa8
+Location: https://api-sandbox.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bececa8
 ```
 ```php
 <?php
@@ -250,13 +250,13 @@ $label = $labelsApi->addLedgerEntry([
     'currency' => 'USD',
     'value' => '-5.00'
   ]
-], "https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f");
+], "https://api-sandbox.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f");
 $label; # => "https://api-sandbox.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bececa8"
 ?>
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-label_url = 'https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f'
+label_url = 'https://api-sandbox.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f'
 request_body = {
   :amount => {
     :currency => "USD",
@@ -269,7 +269,7 @@ ledger_entry.response_headers[:location] # => "https://api-sandbox.dwolla.com/le
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-label_url = 'https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f'
+label_url = 'https://api-sandbox.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f'
 request_body = {
   'amount': {
     'currency': 'USD',
@@ -281,7 +281,7 @@ ledger_entry = app_token.post('%s/ledger-entries' % label_url, request_body)
 ledger_entry.headers['location'] # => 'https://api-sandbox.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bececa8'
 ```
 ```javascript
-var labelUrl = 'https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f';
+var labelUrl = 'https://api-sandbox.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f';
 var requestBody = {
   amount: {
     currency: 'USD',
@@ -311,7 +311,7 @@ Request parameters
 ### Request and response
 
 ```raw
-GET https://api.dwolla.com/ledger-entries/32d68709-62dd-43d6-a6df-562f4baec526
+GET https://api-sandbox.dwolla.com/ledger-entries/32d68709-62dd-43d6-a6df-562f4baec526
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -507,7 +507,7 @@ List all Labels for a specified Verified Customer. Labels are sorted by created 
 ### Request and response
 
 ```raw
-GET https://api.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb/labels
+GET https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb/labels
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -621,7 +621,7 @@ This section outlines how to create a Label reallocation. When creating a Label 
 ### Request and response
 
 ```raw
-POST https://api.dwolla.com/label-reallocations
+POST https://api-sandbox.dwolla.com/label-reallocations
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -629,10 +629,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
  "_links":{
    "from": {
-     "href": "https://api.dwolla.com/labels/c91c501c-f49b-48be-a93b-12b45e152d45"
+     "href": "https://api-sandbox.dwolla.com/labels/c91c501c-f49b-48be-a93b-12b45e152d45"
    },
    "to": {
-     "href": "https://api.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc"
+     "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc"
    }
  },
  "amount": {
@@ -743,7 +743,7 @@ This section outlines how to retrieve a Label reallocation by its unique identif
 ### Request and response
 
 ```raw
-GET https://api.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21
+GET https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -820,7 +820,7 @@ This section outlines how to remove a Label by its unique identifier. The amount
 ### Request and response
 
 ```raw
-DELETE https://api.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc
+DELETE https://api-sandbox.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
