@@ -1,6 +1,6 @@
 # Events
 
-When the state of a resource changes, Dwolla creates a new event resource to record the change. When an Event is created, a [Webhook](#webhooks) will be created to deliver the Event to any URLs specified by your active [Webhook Subscriptions](#webhook-subscriptions).
+When the state of a resource changes, Dwolla creates a new event resource to record the change. When an Event is created, a [Webhook](#webhooks) will be created to deliver the Event to any URLs specified by your active [Webhook Subscriptions](#webhook-subscriptions). To view example payloads for Customer related events, refer to the [Webhooks Events](https://developers.dwolla.com/resources/webhook-events.html) resource within the Developer Docs. 
 
 ### Events resource
 

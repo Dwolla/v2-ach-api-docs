@@ -1,6 +1,6 @@
 # Webhook subscriptions
 
-Create a webhook subscription to receive `POST` requests from Dwolla (called webhooks) when events associated with your application occur.  [Webhooks](#webhooks) are sent to a URL which you provide when creating a webhook subscription. While we see most applications maintain one webhook subscription, you can have up to **ten** active webhook subscriptions in Sandbox, and up to **five** in Production at a time. Refer to the [events](#events) section for the list of events that trigger webhooks.
+Create a webhook subscription to receive `POST` requests from Dwolla (called webhooks) when events associated with your application occur.  [Webhooks](#webhooks) are sent to a URL which you provide when creating a webhook subscription. While we see most applications maintain one webhook subscription, you can have up to **ten** active webhook subscriptions in Sandbox, and up to **five** in Production at a time. Refer to the [events](#events) section for the complete list of events that trigger webhooks. To view example payloads for Customer related events, refer to the [Webhooks Events](https://developers.dwolla.com/resources/webhook-events.html) resource within the Developer Docs. 
 
 ### **Automatic pause of a webhook subscription**
 Dwolla will automatically pause subscribed webhook endpoints that are no longer reachable. The webhook subscription will be paused after **400 consecutive failures** and **24 hours since the last success**. This will help us ensure that unavailable endpoints don’t cause delays or issues in delivery of notifications for other API customers. Webhook subscriptions can be unpaused by calling [this endpoint](#update-a-webhook-subscription).
@@ -89,8 +89,8 @@ request_body = {
   'url': 'http://myapplication.com/webhooks',
   'secret': 'sshhhhhh'
 }
-retries = app_token.post('webhook-subscriptions', request_body)
-retries.body['total'] # => 1
+subscription = app_token.post('webhook-subscriptions', request_body)
+subscription.headers['location'] # => 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 ```
 ```php
 <?php
@@ -242,7 +242,7 @@ $subscription = $webhookApi->updateSubscription(array (
 
 ## List webhook subscriptions
 
-This section covers how to retrieve a list of webhook subscriptions that belong to an application.
+This section covers how to retrieve a list of webhook subscriptions that belong to an application. 
 
 ### HTTP request
 `GET https://api.dwolla.com/webhook-subscriptions`
@@ -356,7 +356,7 @@ $webhookApi->deleteById('https://api-sandbox.dwolla.com/webhook-subscriptions/5a
 
 ## List webhooks for a webhook subscription
 
-This section covers how to view all fired [webhooks](#webhooks) for a webhook subscription. **Note:** Dwolla will only guarantee access to webhook data through the API over a rolling 30-day period.
+This section covers how to view all fired [webhooks](#webhooks) for a webhook subscription. Webhook search is supported by passing in optional querystring parameters such as: `search` which represents a term to search on, `startDate` and `endDate`. **Note:** Dwolla will only guarantee access to webhook data through the API over a rolling 30-day period.
 
 ### HTTP request
 `GET https://api.dwolla.com/webhook-subscriptions/{id}/webhooks`
@@ -367,6 +367,8 @@ This section covers how to view all fired [webhooks](#webhooks) for a webhook su
 | id | yes | string | Webhook subscription unique identifier. |
 | limit | no | integer | How many results to return. Defaults to 25. |
 | offset | no | integer | How many results to skip. |
+| startDate | no | string | Only include webhooks sent after this date. ISO-8601 format: YYYY-MM-DD. Can optionally be used with endDate to specify a date range. |
+| endDate | no | string | Only include webhooks sent before this date. ISO-8601 format: YYYY-MM-DD. Can optionally be used with startDate to specify a date range. |
 
 ### Request and response
 
