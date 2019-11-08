@@ -200,7 +200,7 @@ Authorization: Bearer 0Sn0W6kzNicvoWhDbQcVSKLRUpGjIdlPSEYyrHqrDDoRnQwE7Q
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
 webhook_subscription_url = 'https://api-sandbox.dwolla.com/webhook-subscriptions/5af4c10a-f6de-4ac8-840d-42cb65454216'
 
-request_body = {f
+request_body = {
   :paused => true
 }
 
