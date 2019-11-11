@@ -2879,7 +2879,7 @@ A verified business Customer must input information on the controller and the Bu
 <td>ssn</td>
 <td>conditional</td>
 <td>String</td>
-<td>Last four-digits of controller’s social security number. Required for US persons.</td>
+<td>Last four-digits of controller’s social security number. <strong>Required</strong> for US persons. If ssn is omitted, <a href="#controller-passport-json-object">passport</a> is required.</td>
 </tr>
 <tr>
 <td>address</td>
@@ -2891,7 +2891,7 @@ A verified business Customer must input information on the controller and the Bu
 <td>passport</td>
 <td>conditional</td>
 <td>object</td>
-<td>An <a href="/#controller-passport-json-object">optional passport JSON object</a>. Required for non-US persons. Includes passport identification number and country.</td>
+<td>An <a href="/#controller-passport-json-object">optional passport JSON object</a>. <strong>Required</strong> for non-US persons. Includes passport identification number and country. If <a href="#passport-json-object">passport</a> is omitted, ssn is required.</td>
 </tr>
 </tbody></table>
 <h5 id='controller-address-json-object'>Controller address JSON object</h5>
@@ -2907,19 +2907,19 @@ A verified business Customer must input information on the controller and the Bu
 <td>address1</td>
 <td>yes</td>
 <td>string</td>
-<td>Street number, street name of controller’s physical address.</td>
+<td>Street number, street name of controller’s physical address. <strong>Note:</strong> PO Boxes are not allowed.</td>
 </tr>
 <tr>
 <td>address2</td>
 <td>no</td>
 <td>string</td>
-<td>Apartment, floor, suite, bldg. # of controller’s physical address.</td>
+<td>Apartment, floor, suite, bldg. # of controller’s physical address. <strong>Note:</strong> PO Boxes are not allowed.</td>
 </tr>
 <tr>
 <td>address3</td>
 <td>no</td>
 <td>string</td>
-<td>Third line of the street address of the controller&rsquo;s physical address.</td>
+<td>Third line of the street address of the controller&rsquo;s physical address. <strong>Note:</strong> PO Boxes are not allowed.</td>
 </tr>
 <tr>
 <td>city</td>
@@ -2931,19 +2931,19 @@ A verified business Customer must input information on the controller and the Bu
 <td>stateProvinceRegion</td>
 <td>yes</td>
 <td>string</td>
-<td>Two-letter US state or territory abbreviation code of controller’s physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
+<td><strong>US persons</strong> - Two-letter US state abbreviation code of controller’s physical address. For two-letter US state abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>. <br> <strong>Non-US persons</strong> - Two-letter state, province, or region ISO abbreviation code of controller&rsquo;s physical address. For two-letter ISO abbreviation reference, check out the <a href="https://en.wikipedia.org/wiki/ISO_3166-1">ISO guide</a>.</td>
 </tr>
 <tr>
 <td>postalCode</td>
-<td>no</td>
+<td>conditional</td>
 <td>string</td>
-<td>Controller’s’ US five-digit ZIP or ZIP + 4 code.</td>
+<td>Controller’s’ US five-digit ZIP or ZIP + 4 code. Optional if controller is a non-US person.</td>
 </tr>
 <tr>
 <td>country</td>
 <td>yes</td>
 <td>string</td>
-<td>Country of controller’s physical address</td>
+<td>Country of controller’s physical address. Two digit ISO code, e.g. <code class="prettyprint">US</code>.</td>
 </tr>
 </tbody></table>
 <h5 id='controller-passport-json-object'>Controller passport JSON object</h5>
@@ -4867,7 +4867,7 @@ Authorization: Bearer cRahPzURfaIrTewKL18tmslWPqKdzkLeYJm0oB1hGJ1vMPArft1v
 <td>ssn</td>
 <td>conditional</td>
 <td>string</td>
-<td><strong>Full nine digits</strong> of beneficial owner’s social security number. If ssn is omitted, <a href="#passport-json-object">passport</a> is required.</td>
+<td><strong>Full nine digits</strong> of beneficial owner’s social security number. <strong>Required</strong> for US persons. If ssn is omitted, <a href="#passport-json-object">passport</a> is required.</td>
 </tr>
 <tr>
 <td>dateOfBirth</td>
@@ -4885,7 +4885,7 @@ Authorization: Bearer cRahPzURfaIrTewKL18tmslWPqKdzkLeYJm0oB1hGJ1vMPArft1v
 <td>passport</td>
 <td>conditional</td>
 <td>object</td>
-<td>An optional <a href="/#passport-json-object">passport JSON object</a>. Required for non-US persons. Includes passport identification number and country.</td>
+<td>An optional <a href="/#passport-json-object">passport JSON object</a>. <strong>Required</strong> for non-US persons. Includes passport identification number and country. If <a href="#passport-json-object">passport</a> is omitted, ssn is required.</td>
 </tr>
 </tbody></table>
 <h3 id='address-json-object'>Address JSON object</h3>
@@ -4925,7 +4925,7 @@ Authorization: Bearer cRahPzURfaIrTewKL18tmslWPqKdzkLeYJm0oB1hGJ1vMPArft1v
 <td>stateProvinceRegion</td>
 <td>yes</td>
 <td>string</td>
-<td>Two-letter US state or territory abbreviation code of beneficial owner’s physical address. For two-letter abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>.</td>
+<td><strong>US persons</strong> - Two-letter US state abbreviation code of Beneficial Owner’s physical address. For two-letter US state abbreviation reference, check out the <a href="https://pe.usps.com/text/pub28/28apb.htm">US Postal Service guide</a>. <br> <strong>Non-US persons</strong> - Two-letter state, province, or region ISO abbreviation code of Beneficial Owner&rsquo;s physical address. For two-letter ISO abbreviation reference, check out the <a href="https://en.wikipedia.org/wiki/ISO_3166-1">ISO guide</a>.</td>
 </tr>
 <tr>
 <td>country</td>
@@ -4935,9 +4935,9 @@ Authorization: Bearer cRahPzURfaIrTewKL18tmslWPqKdzkLeYJm0oB1hGJ1vMPArft1v
 </tr>
 <tr>
 <td>postalCode</td>
-<td>yes</td>
+<td>conditional</td>
 <td>string</td>
-<td>Postal code of beneficial owner&rsquo;s permanent residence. Should be a five digit postal code, e.g. <code class="prettyprint">50314</code>.</td>
+<td>Postal code of beneficial owner&rsquo;s permanent residence. Should be a five digit postal code, e.g. <code class="prettyprint">50314</code>. Optional if beneficial owner is a non-US person.</td>
 </tr>
 </tbody></table>
 <h3 id='passport-json-object'>Passport JSON object</h3>
@@ -6018,7 +6018,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   ]
 }
 </code></pre></div></div><h2 id='create-a-document-for-a-customer'>Create a document for a customer</h2>
-<p>Create a document for a Customer pending verification by uploading a color scan or photo of government issued identification (see below for acceptable document types). This requires a multipart form-data POST request. The uploaded file must be a color image, in a <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, or <code class="prettyprint">.pdf</code> format, and less than 10MB in size.</p>
+<p>Create a document for a Customer pending verification by uploading a color scan or photo of government issued identification (see below for acceptable document types). This requires a multipart form-data POST request. The uploaded file must be a color image, in a <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, or <code class="prettyprint">.png</code> format, and less than 10MB in size. Additionally, Business Documents can also be uploaded in a <code class="prettyprint">.pdf</code> format.</p>
 <h3 id='acceptable-documents'>Acceptable documents</h3>
 <table><thead>
 <tr>
@@ -6032,7 +6032,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>Business Verified Customer</td>
-<td>Controller documents - <code class="prettyprint">passport</code>, <code class="prettyprint">license</code>, <code class="prettyprint">idCard</code>, or <code class="prettyprint">other</code>. Must be a color scan of US Government issued identification. <br> Business documents - Refer to our guide on <a href="https://developers.dwolla.com/resources/business-verified-customer/handling-controller-and-customer-statuses.html#document-types">Handling Document status for Business Verified Customers</a> for acceptable documents.<br> Beneficial Owner documents - Refer to our guide on <a href="https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html#handling-document-status">Handling Document status for Beneficial Owners</a> for acceptable documents.</td>
+<td>Controller documents - <code class="prettyprint">passport</code>, <code class="prettyprint">license</code>, or <code class="prettyprint">idCard</code>. Must be a color scan of US Government issued identification. <br> Business documents - <code class="prettyprint">other</code>. Refer to our guide on <a href="https://developers.dwolla.com/resources/business-verified-customer/handling-controller-and-customer-statuses.html#document-types">Handling Document status for Business Verified Customers</a> for acceptable documents.<br> Beneficial Owner documents - <code class="prettyprint">passport</code>, <code class="prettyprint">license</code>, or <code class="prettyprint">idCard</code>. Refer to our guide on <a href="https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html#handling-document-status">Handling Document status for Beneficial Owners</a> for acceptable documents.</td>
 </tr>
 </tbody></table>
 <h3 id='http-request'>HTTP request</h3>
@@ -6074,7 +6074,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>400</td>
 <td>invalidFileType</td>
-<td>File types supported: <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, or <code class="prettyprint">.pdf</code>.</td>
+<td>File types supported: <br> Personal IDs - <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code> or <code class="prettyprint">.png</code>. <br> Business Documents - <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, or <code class="prettyprint">.pdf</code>.</td>
 </tr>
 <tr>
 <td>403</td>
@@ -6313,7 +6313,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="nx">customerUrl</span><span class="p">}</span><span class="s2">/documents`</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="dl">'</span><span class="s1">documents</span><span class="dl">'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '56502f7a-fa59-4a2f-8579-0f8bc9d7b9cc'</span>
 </code></pre></div></div><h2 id='create-a-document-for-a-beneficial-owner'>Create a document for a beneficial owner</h2>
-<p>Create a document for a beneficial owner pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, or <code class="prettyprint">.pdf</code> up to 10MB in size.</p>
+<p>Create a document for a beneficial owner pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, or <code class="prettyprint">.png</code>, up to 10MB in size.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/beneficial-owners/{id}/documents</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -8540,7 +8540,7 @@ HTTP 200 OK
 </thead><tbody>
 <tr>
 <td>_links</td>
-<td>Contains a <code class="prettyprint">charge-to</code> JSON object with a link to the associated source or destination <code class="prettyprint">Customer</code> or <code class="prettyprint">Account</code> resource.</td>
+<td>Contains a <code class="prettyprint">charge-to</code> JSON object with a link to the associated source or destination <code class="prettyprint">Customer</code> resource.</td>
 </tr>
 <tr>
 <td>amount</td>
@@ -11554,7 +11554,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api.dwolla.com/customers/{id}/labels
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/customers/{id}/labels
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -11567,7 +11567,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f
+Location: https://api-sandbox.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -11795,7 +11795,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f/ledger-entries
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f/ledger-entries
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -11808,7 +11808,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bececa8
+Location: https://api-sandbox.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bececa8
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -11825,7 +11825,7 @@ Location: https://api.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bec
     <span class="s1">'currency'</span> <span class="o">=&gt;</span> <span class="s1">'USD'</span><span class="p">,</span>
     <span class="s1">'value'</span> <span class="o">=&gt;</span> <span class="s1">'-5.00'</span>
   <span class="p">]</span>
-<span class="p">],</span> <span class="s2">"https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f"</span><span class="p">);</span>
+<span class="p">],</span> <span class="s2">"https://api-sandbox.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f"</span><span class="p">);</span>
 <span class="nv">$label</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bececa8"</span>
 <span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -11837,7 +11837,7 @@ Location: https://api.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bec
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
-<span class="n">label_url</span> <span class="o">=</span> <span class="s1">'https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f'</span>
+<span class="n">label_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="ss">:currency</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span>
@@ -11856,7 +11856,7 @@ Location: https://api.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bec
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-</span><span class="n">label_url</span> <span class="o">=</span> <span class="s">'https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f'</span>
+</span><span class="n">label_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f'</span>
 <span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'amount'</span><span class="p">:</span> <span class="p">{</span>
     <span class="s">'currency'</span><span class="p">:</span> <span class="s">'USD'</span><span class="p">,</span>
@@ -11874,7 +11874,7 @@ Location: https://api.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bec
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">labelUrl</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f</span><span class="dl">'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">labelUrl</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api-sandbox.dwolla.com/labels/e217bcac-628a-456d-a375-6cc51230616f</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">amount</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">currency</span><span class="p">:</span> <span class="dl">'</span><span class="s1">USD</span><span class="dl">'</span><span class="p">,</span>
@@ -11915,7 +11915,7 @@ Location: https://api.dwolla.com/ledger-entries/76e5541d-18f4-e811-8112-e8dd3bec
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api.dwolla.com/ledger-entries/32d68709-62dd-43d6-a6df-562f4baec526
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/ledger-entries/32d68709-62dd-43d6-a6df-562f4baec526
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -12197,7 +12197,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb/labels
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/customers/315a9456-3750-44bf-8b41-487b10d1d4bb/labels
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -12349,7 +12349,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api.dwolla.com/label-reallocations
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/label-reallocations
 Content-Type: application/vnd.dwolla.v1.hal+json
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -12357,10 +12357,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 {
  "_links":{
    "from": {
-     "href": "https://api.dwolla.com/labels/c91c501c-f49b-48be-a93b-12b45e152d45"
+     "href": "https://api-sandbox.dwolla.com/labels/c91c501c-f49b-48be-a93b-12b45e152d45"
    },
    "to": {
-     "href": "https://api.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc"
+     "href": "https://api-sandbox.dwolla.com/labels/7e042ffe-e25e-40d2-b86e-748b98845ecc"
    }
  },
  "amount": {
@@ -12504,7 +12504,7 @@ Location: https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
@@ -12613,7 +12613,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">DELETE https://api.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">DELETE https://api-sandbox.dwolla.com/labels/30165ded-2f32-4ee9-b340-ac44dda1d7fc
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
