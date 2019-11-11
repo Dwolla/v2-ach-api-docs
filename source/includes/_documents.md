@@ -42,14 +42,14 @@ For more information on handling the Customer verification status of `document`,
 
 ## Create a document for a customer
 
-Create a document for a Customer pending verification by uploading a color scan or photo of government issued identification (see below for acceptable document types). This requires a multipart form-data POST request. The uploaded file must be a color image, in a `.jpg`, `.jpeg`, `.png`, or `.pdf` format, and less than 10MB in size.
+Create a document for a Customer pending verification by uploading a color scan or photo of government issued identification (see below for acceptable document types). This requires a multipart form-data POST request. The uploaded file must be a color image, in a `.jpg`, `.jpeg`, or `.png` format, and less than 10MB in size. Additionally, Business Documents can also be uploaded in a `.pdf` format.
 
 ### Acceptable documents
 
 |    Customer type                  |   Acceptable documents       |
 |-----------------------------------|------------------------------|
 | Personal Verified Customer        | `passport`, `license`, or `idCard`. Must be a color scan of US Government issued identification. |
-| Business Verified Customer        | Controller documents - `passport`, `license`, `idCard`, or `other`. Must be a color scan of US Government issued identification. <br> Business documents - Refer to our guide on [Handling Document status for Business Verified Customers](https://developers.dwolla.com/resources/business-verified-customer/handling-controller-and-customer-statuses.html#document-types) for acceptable documents.<br> Beneficial Owner documents - Refer to our guide on [Handling Document status for Beneficial Owners](https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html#handling-document-status) for acceptable documents.|
+| Business Verified Customer        | Controller documents - `passport`, `license`, or `idCard`. Must be a color scan of US Government issued identification. <br> Business documents - `other`. Refer to our guide on [Handling Document status for Business Verified Customers](https://developers.dwolla.com/resources/business-verified-customer/handling-controller-and-customer-statuses.html#document-types) for acceptable documents.<br> Beneficial Owner documents - `passport`, `license`, or `idCard`. Refer to our guide on [Handling Document status for Beneficial Owners](https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html#handling-document-status) for acceptable documents.|
 
 ### HTTP request
 
@@ -68,7 +68,7 @@ Create a document for a Customer pending verification by uploading a color scan 
 |-------------|--------------------------|---------------------|
 | 201         | Created                  | A document resource was created.    |
 | 400         | maximumNumberOfResources | Max of four files upload allowed. Please wait for Dwolla to manually check the documents. |
-| 400         | invalidFileType          | File types supported: `.jpg`, `.jpeg`, `.png`, or `.pdf`. |
+| 400         | invalidFileType          | File types supported: <br> Personal IDs - `.jpg`, `.jpeg` or `.png`. <br> Business Documents - `.jpg`, `.jpeg`, `.png`, or `.pdf`. |
 | 403         | invalidResourceState     | Resource cannot be modified. Document creation not allowed for already `verified` Customers or non-`verified` Customer types. |
 | 403         | notAuthorized            | Not authorized to create documents. |
 | 404         | notFound                 | Customer not found. Check CustomerId. |
@@ -229,7 +229,7 @@ token
 
 ## Create a document for a beneficial owner
 
-Create a document for a beneficial owner pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a `.jpg`, `.jpeg`, `.png`, or `.pdf` up to 10MB in size.
+Create a document for a beneficial owner pending verification by uploading a photo of the document.  This requires a multipart form-data POST request.  The file must be either a `.jpg`, `.jpeg`, or `.png`, up to 10MB in size.
 
 ### HTTP request
 `POST https://api.dwolla.com/beneficial-owners/{id}/documents`

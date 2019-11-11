@@ -98,7 +98,7 @@ For more information on collecting fees on payments, reference the [facilitator 
 
 | Parameter | Description |
 |-----------|------------|
-|_links | Contains a `charge-to` JSON object with a link to the associated source or destination `Customer` or `Account` resource. |
+|_links | Contains a `charge-to` JSON object with a link to the associated source or destination `Customer` resource. |
 |amount | Amount of fee to charge. An amount JSON object. [See above](#amount-json-object) |
 
 #### Facilitator fee example:

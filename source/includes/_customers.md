@@ -647,21 +647,21 @@ A controller is any natural individual who holds significant responsibilities to
 |  lastName | yes  |  String |  The legal last name of the controller. |
 |  title | yes | String | Job title of the business verified Customer’s controller.  IE - Chief Financial Officer |
 |  dateOfBirth | yes  |  String |  The date of birth of the controller. Formatted in YYYY-MM-DD format. Must be 18 years or older. |
-|  ssn | conditional  |  String | Last four-digits of controller’s social security number. Required for US persons. |
+|  ssn | conditional  |  String | Last four-digits of controller’s social security number. **Required** for US persons. If ssn is omitted, [passport](#controller-passport-json-object) is required.|
 |  address | yes | object | An [address JSON object](/#controller-address-json-object). Full address of the controller's physical address. |
-|  passport | conditional | object | An [optional passport JSON object](/#controller-passport-json-object). Required for non-US persons. Includes passport identification number and country. |
+|  passport | conditional | object | An [optional passport JSON object](/#controller-passport-json-object). **Required** for non-US persons. Includes passport identification number and country. If [passport](#passport-json-object) is omitted, ssn is required. |
 
 ##### Controller address JSON object
 
 | Parameter | Required | Type | Description |
 |----------------|--------------|--------|----------------|
-|  address1 | yes | string | Street number, street name of controller’s physical address. |
-|  address2 | no | string | Apartment, floor, suite, bldg. # of controller’s physical address. |
-|  address3 | no | string | Third line of the street address of the controller's physical address. |
+|  address1 | yes | string | Street number, street name of controller’s physical address. **Note:** PO Boxes are not allowed.|
+|  address2 | no | string | Apartment, floor, suite, bldg. # of controller’s physical address. **Note:** PO Boxes are not allowed.|
+|  address3 | no | string | Third line of the street address of the controller's physical address. **Note:** PO Boxes are not allowed.|
 |  city | yes | string | City of controller’s physical address. |
-|  stateProvinceRegion | yes | string | Two-letter US state or territory abbreviation code of controller’s physical address. For two-letter abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). |
-|  postalCode | no | string | Controller’s’ US five-digit ZIP or ZIP + 4 code. |
-|  country | yes | string | Country of controller’s physical address |
+|  stateProvinceRegion | yes | string | **US persons** - Two-letter US state abbreviation code of controller’s physical address. For two-letter US state abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). <br> **Non-US persons** - Two-letter state, province, or region ISO abbreviation code of controller's physical address. For two-letter ISO abbreviation reference, check out the [ISO guide](https://en.wikipedia.org/wiki/ISO_3166-1). |
+|  postalCode | conditional | string | Controller’s’ US five-digit ZIP or ZIP + 4 code. Optional if controller is a non-US person. |
+|  country | yes | string | Country of controller’s physical address. Two digit ISO code, e.g. `US`. |
 
 ##### Controller passport JSON object
 
