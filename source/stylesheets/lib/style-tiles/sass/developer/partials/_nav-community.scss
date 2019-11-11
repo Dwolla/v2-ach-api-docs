@@ -1,0 +1,5 @@
+// Hide element when screen size shrinks to 901px
+
+@media screen and (max-width: 901px) {
+    .mobile-hide { display: none; }
+}
