@@ -163,7 +163,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
+Location: https://api.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f
 ```
 
 ```ruby
@@ -178,7 +178,7 @@ request_body = {
 }
 
 customer = app_token.post "customers", request_body
-customer.response_headers[:location] # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+customer.response_headers[:location] # => "https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f"
 ```
 
 ```php
@@ -193,7 +193,7 @@ $customer = $customersApi->create([
   'businessName' => 'Jane Corp llc',
   'ipAddress' => '99.99.99.99'
 ]);
-$customer; # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+$customer; # => "https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f"
 ?>
 ```
 
@@ -209,7 +209,7 @@ request_body = {
 }
 
 customer = app_token.post('customers', request_body)
-customer.headers['location'] # => 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
+customer.headers['location'] # => 'https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f'
 ```
 
 ```javascript
@@ -224,7 +224,7 @@ var requestBody = {
 
 appToken
   .post('customers', requestBody)
-  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f'
 ```
 
 ### Request parameters - unverified Customer
@@ -255,7 +255,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 201 Created
-Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
+Location: https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f
 ```
 
 ```ruby
@@ -268,7 +268,7 @@ request_body = {
 }
 
 customer = app_token.post "customers", request_body
-customer.headers[:location] # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+customer.headers[:location] # => "https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f"
 ```
 
 ```php
@@ -282,7 +282,7 @@ $customer = $customersApi->create([
   'ipAddress' => '99.99.99.99'
 ]);
 
-$customer; # => "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+$customer; # => "https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f"
 ?>
 ```
 
@@ -296,7 +296,7 @@ request_body = {
 }
 
 customer = app_token.post('customers', request_body)
-customer.headers['location'] # => 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+customer.headers['location'] # => 'https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f'
 ```
 
 ```javascript
@@ -309,7 +309,7 @@ var requestBody = {
 
 appToken
   .post('customers', requestBody)
-  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f'
 ```
 
 ### Request parameters - verified **personal** Customer
@@ -329,7 +329,7 @@ For an in-depth look at personal verified Customers creation and status handling
 | state | yes | string | Two letter abbreviation of the state in which the Customer resides, e.g. `CA`. |
 | postalCode | yes | string | Postal code of Customer's permanent residence. US five-digit ZIP or ZIP + 4 code. e.g. `50314`. |
 | dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
-| ssn | yes | string | Last four digits of the Customer's Social Security Number. |
+| ssn | yes | string | Last four digits of the Customer's Social Security Number. <br> **Note:** Submitting all 9 digits of the SSN is also accepted. |
 | phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 | correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
@@ -356,7 +356,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
+Location: https://api.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f
 ```
 
 ```php
@@ -382,7 +382,7 @@ $customer = $customersApi->create([
   'ssn' => '1234'
 ]);
 
-$customer; # => "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"
+$customer; # => "https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f"
 ?>
 ```
 
@@ -409,7 +409,7 @@ request_body = {
 }
 
 customer = app_token.post "customers", request_body
-customer.response_headers[:location] # => "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"
+customer.response_headers[:location] # => "https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f"
 ```
 
 ```python
@@ -432,7 +432,7 @@ request_body = {
 }
 
 customer = app_token.post('customers', request_body)
-customer.headers['location'] # => 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
+customer.headers['location'] # => 'https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f'
 ```
 
 ```javascript
@@ -455,7 +455,7 @@ var requestBody = {
 
 appToken
   .post('customers', requestBody)
-  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f'
 ```
 
 ### Request parameters - verified **business** Customer (sole proprietorship only)
@@ -470,7 +470,7 @@ For an in-depth look at business verified Customers creation and status handling
 | ipAddress | no | string | ipAddress of registering user is recommended. |
 | type | yes | string | Value of: `business` |
 | dateOfBirth | yes  |  string |  The date of birth of the business owner. Formatted in YYYY-MM-DD format. Must be 18 years or older. |
-| ssn | yes | string | Last four-digits of the business owner's social security number.  |
+| ssn | yes | string | Last four-digits of the business owner's social security number. <br> **Note:** Submitting all 9 digits of the SSN is also accepted. |
 | address1 | yes | string | Street number, street name of business’ physical address. |
 | address2 | no | string | Apartment, floor, suite, bldg. # of business’ physical address |
 | city| yes | string | City of business’ physical address. |
@@ -647,7 +647,7 @@ A controller is any natural individual who holds significant responsibilities to
 |  lastName | yes  |  String |  The legal last name of the controller. |
 |  title | yes | String | Job title of the business verified Customer’s controller.  IE - Chief Financial Officer |
 |  dateOfBirth | yes  |  String |  The date of birth of the controller. Formatted in YYYY-MM-DD format. Must be 18 years or older. |
-|  ssn | conditional  |  String | Last four-digits of controller’s social security number. **Required** for US persons. If ssn is omitted, [passport](#controller-passport-json-object) is required.|
+|  ssn | conditional  |  String | Last four-digits of controller’s social security number. **Required** for US persons. If ssn is omitted, [passport](#controller-passport-json-object) is required. <br> **Note:** Submitting all 9 digits of the SSN is also accepted. |
 |  address | yes | object | An [address JSON object](/#controller-address-json-object). Full address of the controller's physical address. |
 |  passport | conditional | object | An [optional passport JSON object](/#controller-passport-json-object). **Required** for non-US persons. Includes passport identification number and country. If [passport](#passport-json-object) is omitted, ssn is required. |
 
@@ -880,17 +880,17 @@ This section shows you how to retrieve a Customer belonging to the authorized Dw
 ### Request and response
 
 ```raw
-GET https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8
+GET https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
   "_links": {
     "self": {
-      "href": "https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
+      "href": "https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8"
     }
   },
-  "id": "FC451A7A-AE30-4404-AB95-E3553FCD733F",
+  "id": "07d59716-ef22-4fe6-98e8-f3190233dfb8",
   "firstName": "Jane",
   "lastName": "Doe",
   "email": "janedoe@nomail.com",
@@ -901,14 +901,14 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 ```
 ```ruby
 # Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
-customer_url = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
+customer_url = 'https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8'
 
 customer = app_token.get customer_url
 customer.firstName # => "Jane"
 ```
 ```php
 <?php
-$customerUrl = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8';
+$customerUrl = 'https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8';
 
 $customersApi = new DwollaSwagger\CustomersApi($apiClient);
 
@@ -918,13 +918,13 @@ $customer->firstName; # => "Jane"
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-customer_url = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'
+customer_url = 'https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8'
 
 customer = app_token.get(customer_url)
 customer.body['firstName']
 ```
 ```javascript
-var customerUrl = 'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8';
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8';
 
 appToken
   .get(customerUrl)
@@ -990,10 +990,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+            "href": "https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8"
           }
         },
-        "id": "FC451A7A-AE30-4404-AB95-E3553FCD733F",
+        "id": "07d59716-ef22-4fe6-98e8-f3190233dfb8",
         "firstName": "Jane",
         "lastName": "Doe",
         "email": "janedoe@nomail.com",
@@ -1507,7 +1507,7 @@ $businessClassificationUrl = 'https://api-sandbox.dwolla.com/business-classifica
 
 $businessClassificationsApi = new DwollaSwagger\BusinessclassificationsApi($apiClient);
 
-$busClassifications = $customersApi->getBusinessClassification($businessClassificationUrl);
+$busClassifications = $businessClassificationsApi->getBusinessClassification($businessClassificationUrl);
 $busClassifications->name; # => "Entertainment and media"
 ?>
 ```
