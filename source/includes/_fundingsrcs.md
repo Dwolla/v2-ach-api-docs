@@ -680,7 +680,7 @@ $fsApi->microDeposits(null, $fundingSourceUrl);
 
 ## Verify micro-deposits
 
-This section covers how to verify micro-deposits for bank verification. Reference the [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article for more information on the micro-deposit method of bank account verification.
+This section covers how to verify micro-deposits for bank verification. Reference the [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article for more information on the micro-deposit method of bank account verification. **Note:** Micro-deposits do not expire. They can be verified anytime after they have cleared into a bank account. 
 
 ### HTTP request
 `POST https://api.dwolla.com/funding-sources/{id}/micro-deposits`
@@ -698,6 +698,7 @@ This section covers how to verify micro-deposits for bank verification. Referenc
 | 200 | OK | Micro-deposits successfully verified.  |
 | 202 | TryAgainLater | Micro-deposits have not have not settled to destination bank. A Customer can verify these amounts after micro-deposits have processed to their bank. |
 | 400 | ValidationError | InvalidAmount, "Wrong amount(s)." |
+| 400 | MaxNumberOfResources | Micro-deposits already initiated for this funding source. |
 | 403 | InvalidResourceState | "Too many attempts.", "Bank already verified." |
 | 404 | NotFound | Micro-deposits not initiated,Funding source not found |
 | 500 | Unknown | "Verify micro-deposits returned an unknown error." |
