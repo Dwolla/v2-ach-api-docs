@@ -680,7 +680,7 @@ $fsApi->microDeposits(null, $fundingSourceUrl);
 
 ## Verify micro-deposits
 
-This section covers how to verify micro-deposits for bank verification. Reference the [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article for more information on the micro-deposit method of bank account verification. **Note:** Micro-deposits do not expire. They can be verified anytime after they have cleared into a bank account. 
+This section covers how to verify micro-deposits for bank verification. Reference the [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article for more information on the micro-deposit method of bank account verification. **Note:** Micro-deposits do not expire. Micro-deposits can be verified anytime in the future after they have a `processed` status in the Dwolla system. 
 
 ### HTTP request
 `POST https://api.dwolla.com/funding-sources/{id}/micro-deposits`

@@ -59,7 +59,7 @@ Create a document for a Customer pending verification by uploading a color scan 
 
 |Form Field| Description|
 |----------|-------------|
-| documentType | Acceptable values of: `passport`, `license`, `idCard`, or `other`. Refer to the [acceptable documents](#acceptable-documents) section for more information on what each type is used for. |
+| documentType | Acceptable values of: `passport`, `license`, `idCard`, or `other`. Refer to the [acceptable documents](#acceptable-documents) section for more information on how these document types apply to each Customer type. |
 | file | File contents. |
 
 ### HTTP status and error codes
