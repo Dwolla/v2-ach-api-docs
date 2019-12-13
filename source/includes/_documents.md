@@ -9,7 +9,7 @@ For more information on handling the Customer verification status of `document`,
 | Parameter | Description |
 |-----------|------------|
 |id | Document unique identifier |
-|type | Either `passport`, `license`, `idCard`, or `other`. Must be a color scan of US Government issued identification.|
+|type | Either `passport`, `license`, `idCard`, or `other`. Must be a color scan of US Government issued identification. <br> Refer to the [acceptable documents](#acceptable-documents) section for more information on what each type is used for.|
 |status| Either `pending` or `reviewed`.  When a document has been manually reviewed by Dwolla, its status will be `reviewed`.  A reviewed document does not necessarily indicate that the customer has completed the identity verification process. |
 | created | ISO 8601 Timestamp of document upload time and date. |
 | failureReason | The reason an uploaded document was rejected. Can be: `ScanNotReadable`, `ScanNotUploaded`, `ScanIdExpired`, `ScanIdTypeNotSupported`, `ScanDobMismatch`, `ScanNameMismatch` or `ScanFailedOther`. |
@@ -59,7 +59,7 @@ Create a document for a Customer pending verification by uploading a color scan 
 
 |Form Field| Description|
 |----------|-------------|
-| documentType | Acceptable values of: `passport`, `license`, `idCard`, or `other` |
+| documentType | Acceptable values of: `passport`, `license`, `idCard`, or `other`. Refer to the [acceptable documents](#acceptable-documents) section for more information on how these document types apply to each Customer type. |
 | file | File contents. |
 
 ### HTTP status and error codes
