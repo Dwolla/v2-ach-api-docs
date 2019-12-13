@@ -90,7 +90,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | items         | yes      | array  | an array of item JSON objects that contain unique payments. [See below](#mass-payment-item)        |
 | metadata      | no       | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters).     |
 | status        | no       | string | Acceptable value is: `deferred`. |
-| clearing      | no       | object | A clearing JSON object that contains `source` and `destination` keys to expedite or slow down a transfer. [Reference the clearing JSON object to learn more](#clearing-json-object). |
+| clearing      | no       | object | A clearing JSON object describing the desired `source` timing to slow down the debit portion of the masspayment from a bank funding-source to the Dwolla network.  [Reference the clearing JSON object to learn more](#clearing-json-object-mass-payment). |
 | achDetails    | no       | object | An ACH details JSON object which represents additional information sent along with a transfer created from a mass payment item to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [See below](#achdetails-and-addenda-object) |
 | correlationId | no       | string | A string value attached to a customer which can be used for traceability between Dwolla and your application. **Note:** A correlationId is not a replacement for an [idempotency key](#idempotency-key). <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. |
 
@@ -125,17 +125,17 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | value     |   yes    | string | Amount of money        |
 | currency  |   yes    | string | Possible values: `USD` |
 
-### clearing JSON object
+### clearing JSON object (mass payment)
 
 The `clearing` object is used in tandem with our expedited transfer feature.
-Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH.
+Source specifies the clearing time for the source bank funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH on the debit portion of the masspayment into the Dwolla Network. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH on each mass payment item. 
 
 > **Note:** The clearing request parameter is a premium feature available for [Dwolla](https://www.dwolla.com/platform) customers. Enabling Next-day ACH and Same-day ACH requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account setting.
 
 | Parameter | Required | Type | Description |
 |-----------|------------|------|-----------|
-| source | no | string | Represents a clearing object for `standard` debits into the Dwolla network. Used to downgrade the clearing time from the default of Next-day ACH. <br> Possible values: `standard` |
-| destination | no | string | Represents a clearing object for `same-day` credits out of the Dwolla network to a bank funding source. <br> Possible values: `next-available` |
+| source | no | string | Represents a clearing object for `standard` debits into the Dwolla network. Used to downgrade the clearing time from the default of Next-day ACH. <br> Possible values: `standard` <br> **Note:** Cannot be used on individual [mass payment items](#mass-payment-item). See [example masspayment request](#request-and-response-mass-payment-from-account-to-customers).  |
+| destination | no | string | Represents a clearing object for `same-day` credits out of the Dwolla network to a bank funding source. <br> Possible values: `next-available` <br> **Note:** Can only be used on individual [mass payment items](#mass-payment-item). See [example masspayment request](#request-and-response-mass-payment-from-account-to-customers)|
 
 #### Clearing example:
 
@@ -217,6 +217,9 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         }
       }
     },
+    "clearing": {
+      "source": "standard"
+    },
     "items": [
       {
         "_links": {
@@ -229,7 +232,6 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
             "value": "1.00"
         },
         "clearing": {
-        	"source": "standard",
           "destination": "next-available"
         },
         "metadata": {
@@ -295,6 +297,9 @@ request_body = {
       }
     }
   },
+  :clearing => {
+    :source => "standard"
+  },
   :items => [
     {
       :_links => {
@@ -307,7 +312,6 @@ request_body = {
         :value => "1.00"
       },
       :clearing => {
-        :source => "standard",
         :destination => "next-available"
       },
       :metadata => {
@@ -376,6 +380,10 @@ $massPayment = $massPaymentsApi->create([
       ]
     ]
   ],
+  'clearing' =>
+  [
+    'source' => 'standard'
+  ],
   'items' =>
   [
     [
@@ -393,7 +401,6 @@ $massPayment = $massPaymentsApi->create([
       ],
       'clearing' =>
       [
-        'source' => 'standard',
         'destination' => 'next-available'
       ],
       'metadata' =>
@@ -463,6 +470,9 @@ request_body = {
       'values': ['ABC123_AddendaValue']
     }
   },
+  'clearing': {
+    'source': 'standard'
+  },
   'items': [
     {
       '_links': {
@@ -475,7 +485,6 @@ request_body = {
         'value': '1.00'
       },
       'clearing': {
-        'source': 'standard',
         'destination': 'next-available'
       },
       'metadata': {
@@ -533,7 +542,10 @@ var requestBody = {
         values: ['ABC123_AddendaValue']
       }
     }
-  }
+  },
+  clearing: {
+    source: 'standard'
+  },
   items: [
     {
       _links: {
@@ -546,7 +558,6 @@ var requestBody = {
         value: '1.00'
       },
       clearing: {
-        source: 'standard',
         destination : 'next-available'
       },
       metadata: {
