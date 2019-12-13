@@ -1970,7 +1970,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
+Location: https://api.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -1990,7 +1990,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">customer</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
+<span class="n">customer</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2010,7 +2010,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="s1">'businessName'</span> <span class="o">=&gt;</span> <span class="s1">'Jane Corp llc'</span><span class="p">,</span>
   <span class="s1">'ipAddress'</span> <span class="o">=&gt;</span> <span class="s1">'99.99.99.99'</span>
 <span class="p">]);</span>
-<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
+<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f"</span>
 <span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -2031,7 +2031,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c1"># =&gt; 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
+<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c1"># =&gt; 'https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f'
 </span></code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2051,7 +2051,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">customers</span><span class="dl">'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">location</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">location</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f'</span>
 </code></pre></div></div><h3 id='request-parameters---unverified-customer'>Request parameters - unverified Customer</h3>
 <table><thead>
 <tr>
@@ -2120,7 +2120,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 201 Created
-Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
+Location: https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2138,7 +2138,7 @@ Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553
 <span class="p">}</span>
 
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
+<span class="n">customer</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2157,7 +2157,7 @@ Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553
   <span class="s1">'ipAddress'</span> <span class="o">=&gt;</span> <span class="s1">'99.99.99.99'</span>
 <span class="p">]);</span>
 
-<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"</span>
+<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f"</span>
 <span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -2176,7 +2176,7 @@ Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553
 <span class="p">}</span>
 
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c1"># =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'
+<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c1"># =&gt; 'https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f'
 </span></code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2194,7 +2194,7 @@ Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">customers</span><span class="dl">'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">location</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">location</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f'</span>
 </code></pre></div></div><h3 id='request-parameters---verified-strongpersonalstrong-customer'>Request parameters - verified <strong>personal</strong> Customer</h3>
 <p>For an in-depth look at personal verified Customers creation and status handling, refer to our <a href="https://developers.dwolla.com/resources/personal-verified-customer.html">developer resource article</a>.</p>
 
@@ -2276,7 +2276,7 @@ Location: https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553
 <td>ssn</td>
 <td>yes</td>
 <td>string</td>
-<td>Last four digits of the Customer&rsquo;s Social Security Number.</td>
+<td>Last four digits of the Customer&rsquo;s Social Security Number. <br> <strong>Note:</strong> Submitting all 9 digits of the SSN is also accepted.</td>
 </tr>
 <tr>
 <td>phone</td>
@@ -2319,7 +2319,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 }
 
 HTTP/1.1 201 Created
-Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
+Location: https://api.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f
 </code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2350,7 +2350,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
   <span class="s1">'ssn'</span> <span class="o">=&gt;</span> <span class="s1">'1234'</span>
 <span class="p">]);</span>
 
-<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span>
+<span class="nv">$customer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f"</span>
 <span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -2382,7 +2382,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"customers"</span><span class="p">,</span> <span class="n">request_body</span>
-<span class="n">customer</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span>
+<span class="n">customer</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f"</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2410,7 +2410,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <span class="p">}</span>
 
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'customers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
-<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c1"># =&gt; 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
+<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c1"># =&gt; 'https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f'
 </span></code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -2438,7 +2438,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">customers</span><span class="dl">'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">location</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F'</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">location</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f'</span>
 </code></pre></div></div><h3 id='request-parameters---verified-strongbusinessstrong-customer-sole-proprietorship-only'>Request parameters - verified <strong>business</strong> Customer (sole proprietorship only)</h3>
 <p>For an in-depth look at business verified Customers creation and status handling, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer.html">developer resource article</a>. Dwolla will verify the identity of both the Business Owner and the Business entity.</p>
 
@@ -2490,7 +2490,7 @@ Location: https://api.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F
 <td>ssn</td>
 <td>yes</td>
 <td>string</td>
-<td>Last four-digits of the business owner&rsquo;s social security number.</td>
+<td>Last four-digits of the business owner&rsquo;s social security number. <br> <strong>Note:</strong> Submitting all 9 digits of the SSN is also accepted.</td>
 </tr>
 <tr>
 <td>address1</td>
@@ -2885,7 +2885,7 @@ A verified business Customer must input information on the controller and the Bu
 <td>ssn</td>
 <td>conditional</td>
 <td>String</td>
-<td>Last four-digits of controller’s social security number. <strong>Required</strong> for US persons. If ssn is omitted, <a href="#controller-passport-json-object">passport</a> is required.</td>
+<td>Last four-digits of controller’s social security number. <strong>Required</strong> for US persons. If ssn is omitted, <a href="#controller-passport-json-object">passport</a> is required. <br> <strong>Note:</strong> Submitting all 9 digits of the SSN is also accepted.</td>
 </tr>
 <tr>
 <td>address</td>
@@ -3230,17 +3230,17 @@ Location: https://api-sandbox.dwolla.com/customers/62c3aa1b-3a1b-46d0-ae90-17304
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
   "_links": {
     "self": {
-      "href": "https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8"
+      "href": "https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8"
     }
   },
-  "id": "FC451A7A-AE30-4404-AB95-E3553FCD733F",
+  "id": "07d59716-ef22-4fe6-98e8-f3190233dfb8",
   "firstName": "Jane",
   "lastName": "Doe",
   "email": "janedoe@nomail.com",
@@ -3257,7 +3257,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
-<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8'</span>
 
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">get</span> <span class="n">customer_url</span>
 <span class="n">customer</span><span class="p">.</span><span class="nf">firstName</span> <span class="c1"># =&gt; "Jane"</span>
@@ -3270,7 +3270,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="nv">$customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span><span class="p">;</span>
+<span class="nv">$customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8'</span><span class="p">;</span>
 
 <span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
@@ -3286,7 +3286,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
         </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-</span><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8'</span>
+</span><span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8'</span>
 
 <span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">customer_url</span><span class="p">)</span>
 <span class="n">customer</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'firstName'</span><span class="p">]</span>
@@ -3298,7 +3298,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api-sandbox.dwolla.com/customers/07D59716-EF22-4FE6-98E8-F3190233DFB8</span><span class="dl">'</span><span class="p">;</span>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">customerUrl</span><span class="p">)</span>
@@ -3386,10 +3386,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
       {
         "_links": {
           "self": {
-            "href": "https://api-sandbox.dwolla.com/customers/FC451A7A-AE30-4404-AB95-E3553FCD733F"
+            "href": "https://api-sandbox.dwolla.com/customers/07d59716-ef22-4fe6-98e8-f3190233dfb8"
           }
         },
-        "id": "FC451A7A-AE30-4404-AB95-E3553FCD733F",
+        "id": "07d59716-ef22-4fe6-98e8-f3190233dfb8",
         "firstName": "Jane",
         "lastName": "Doe",
         "email": "janedoe@nomail.com",
@@ -4162,7 +4162,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nv">$businessClassificationsApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\BusinessclassificationsApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 
-<span class="nv">$busClassifications</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">getBusinessClassification</span><span class="p">(</span><span class="nv">$businessClassificationUrl</span><span class="p">);</span>
+<span class="nv">$busClassifications</span> <span class="o">=</span> <span class="nv">$businessClassificationsApi</span><span class="o">-&gt;</span><span class="na">getBusinessClassification</span><span class="p">(</span><span class="nv">$businessClassificationUrl</span><span class="p">);</span>
 <span class="nv">$busClassifications</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span> <span class="c1"># =&gt; "Entertainment and media"</span>
 <span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -5982,7 +5982,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>type</td>
-<td>Either <code class="prettyprint">passport</code>, <code class="prettyprint">license</code>, <code class="prettyprint">idCard</code>, or <code class="prettyprint">other</code>. Must be a color scan of US Government issued identification.</td>
+<td>Either <code class="prettyprint">passport</code>, <code class="prettyprint">license</code>, <code class="prettyprint">idCard</code>, or <code class="prettyprint">other</code>. Must be a color scan of US Government issued identification. <br> Refer to the <a href="#acceptable-documents">acceptable documents</a> section for more information on what each type is used for.</td>
 </tr>
 <tr>
 <td>status</td>
@@ -6052,7 +6052,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </thead><tbody>
 <tr>
 <td>documentType</td>
-<td>Acceptable values of: <code class="prettyprint">passport</code>, <code class="prettyprint">license</code>, <code class="prettyprint">idCard</code>, or <code class="prettyprint">other</code></td>
+<td>Acceptable values of: <code class="prettyprint">passport</code>, <code class="prettyprint">license</code>, <code class="prettyprint">idCard</code>, or <code class="prettyprint">other</code>. Refer to the <a href="#acceptable-documents">acceptable documents</a> section for more information on how these document types apply to each Customer type.</td>
 </tr>
 <tr>
 <td>file</td>
@@ -7767,7 +7767,7 @@ Location: https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5
 <span class="nv">$fsApi</span><span class="o">-&gt;</span><span class="na">microDeposits</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nv">$fundingSourceUrl</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='verify-micro-deposits'>Verify micro-deposits</h2>
-<p>This section covers how to verify micro-deposits for bank verification. Reference the <a href="https://developers.dwolla.com/resources/funding-source-verification.html">funding source verification</a> resource article for more information on the micro-deposit method of bank account verification.</p>
+<p>This section covers how to verify micro-deposits for bank verification. Reference the <a href="https://developers.dwolla.com/resources/funding-source-verification.html">funding source verification</a> resource article for more information on the micro-deposit method of bank account verification. <strong>Note:</strong> Micro-deposits do not expire. Micro-deposits can be verified anytime in the future after they have a <code class="prettyprint">processed</code> status in the Dwolla system. </p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/funding-sources/{id}/micro-deposits</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -7820,6 +7820,11 @@ Location: https://api-sandbox.dwolla.com/funding-sources/e52006c3-7560-4ff1-99d5
 <td>400</td>
 <td>ValidationError</td>
 <td>InvalidAmount, &ldquo;Wrong amount(s).&rdquo;</td>
+</tr>
+<tr>
+<td>400</td>
+<td>MaxNumberOfResources</td>
+<td>Micro-deposits already initiated for this funding source.</td>
 </tr>
 <tr>
 <td>403</td>
@@ -10012,7 +10017,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>clearing</td>
 <td>no</td>
 <td>object</td>
-<td>A clearing JSON object that contains <code class="prettyprint">source</code> and <code class="prettyprint">destination</code> keys to expedite or slow down a transfer. <a href="#clearing-json-object">Reference the clearing JSON object to learn more</a>.</td>
+<td>A clearing JSON object describing the desired <code class="prettyprint">source</code> processing time. Utilize this parameter for bank sourced mass payments that you wish to configure the proccessing time for the ACH debit from Next-day ACH to standard ACH. <a href="#clearing-json-object-mass-payment">Reference the clearing JSON object to learn more</a>.</td>
 </tr>
 <tr>
 <td>achDetails</td>
@@ -10105,9 +10110,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Possible values: <code class="prettyprint">USD</code></td>
 </tr>
 </tbody></table>
-<h3 id='clearing-json-object'>clearing JSON object</h3>
-<p>The <code class="prettyprint">clearing</code> object is used in tandem with our expedited transfer feature.
-Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH.</p>
+<h3 id='clearing-json-object-mass-payment'>clearing JSON object (mass payment)</h3>
+<p>The <code class="prettyprint">clearing</code> object is used in tandem with our expedited transfers feature.
+Source specifies the processing time for the source bank funding source involved in the transfer, and can be used to downgrade the processing time from the default of Next-day ACH on the debit portion of the mass payment into the Dwolla Network. Destination specifies the processing time for the destination funding source involved in the transfer, and can be used to upgrade the processing time from the default of Standard ACH to Same-day ACH on each mass payment item. </p>
 
 <blockquote>
 <p><strong>Note:</strong> The clearing request parameter is a premium feature available for <a href="https://www.dwolla.com/platform">Dwolla</a> customers. Enabling Next-day ACH and Same-day ACH requires additional Dwolla approvals before getting started. Please contact <a href="https://www.dwolla.com/contact?b=apidocs">Sales</a> or your account manager for more information on enabling this account setting.</p>
@@ -10125,17 +10130,16 @@ Source specifies the clearing time for the source funding source involved in the
 <td>source</td>
 <td>no</td>
 <td>string</td>
-<td>Represents a clearing object for <code class="prettyprint">standard</code> debits into the Dwolla network. Used to downgrade the clearing time from the default of Next-day ACH. <br> Possible values: <code class="prettyprint">standard</code></td>
+<td>Represents a clearing object for <code class="prettyprint">standard</code> debits into the Dwolla network. Used to downgrade the processing time from the default of Next-day ACH. <br> Possible values: <code class="prettyprint">standard</code> <br> <strong>Note:</strong> Cannot be used on individual <a href="#mass-payment-item">mass payment items</a> as items represent a destination for the funds transfer. See <a href="#request-and-response-mass-payment-from-account-to-customers">example masspayment request</a>.</td>
 </tr>
 <tr>
 <td>destination</td>
 <td>no</td>
 <td>string</td>
-<td>Represents a clearing object for <code class="prettyprint">same-day</code> credits out of the Dwolla network to a bank funding source. <br> Possible values: <code class="prettyprint">next-available</code></td>
+<td>Represents a clearing object for <code class="prettyprint">same-day</code> credits out of the Dwolla network to a bank funding source. <br> Possible values: <code class="prettyprint">next-available</code> <br> <strong>Note:</strong> Can only be used on individual <a href="#mass-payment-item">mass payment items</a>. See <a href="#request-and-response-mass-payment-from-account-to-customers">example masspayment request</a></td>
 </tr>
 </tbody></table>
 <h4 id='clearing-example'>Clearing example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">"clearing": {
-  "source": "standard",
   "destination": "next-available"
 }
 </code></pre></div></div><h3 id='achdetails-and-addenda-object'>achDetails and addenda object</h3>
@@ -10243,6 +10247,9 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         }
       }
     },
+    "clearing": {
+      "source": "standard"
+    },
     "items": [
       {
         "_links": {
@@ -10255,7 +10262,6 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
             "value": "1.00"
         },
         "clearing": {
-            "source": "standard",
           "destination": "next-available"
         },
         "metadata": {
@@ -10327,6 +10333,9 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">},</span>
+  <span class="ss">:clearing</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:source</span> <span class="o">=&gt;</span> <span class="s2">"standard"</span>
+  <span class="p">},</span>
   <span class="ss">:items</span> <span class="o">=&gt;</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="ss">:_links</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -10339,7 +10348,6 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
         <span class="ss">:value</span> <span class="o">=&gt;</span> <span class="s2">"1.00"</span>
       <span class="p">},</span>
       <span class="ss">:clearing</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="ss">:source</span> <span class="o">=&gt;</span> <span class="s2">"standard"</span><span class="p">,</span>
         <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="s2">"next-available"</span>
       <span class="p">},</span>
       <span class="ss">:metadata</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -10414,6 +10422,10 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
       <span class="p">]</span>
     <span class="p">]</span>
   <span class="p">],</span>
+  <span class="s1">'clearing'</span> <span class="o">=&gt;</span>
+  <span class="p">[</span>
+    <span class="s1">'source'</span> <span class="o">=&gt;</span> <span class="s1">'standard'</span>
+  <span class="p">],</span>
   <span class="s1">'items'</span> <span class="o">=&gt;</span>
   <span class="p">[</span>
     <span class="p">[</span>
@@ -10431,7 +10443,6 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
       <span class="p">],</span>
       <span class="s1">'clearing'</span> <span class="o">=&gt;</span>
       <span class="p">[</span>
-        <span class="s1">'source'</span> <span class="o">=&gt;</span> <span class="s1">'standard'</span><span class="p">,</span>
         <span class="s1">'destination'</span> <span class="o">=&gt;</span> <span class="s1">'next-available'</span>
       <span class="p">],</span>
       <span class="s1">'metadata'</span> <span class="o">=&gt;</span>
@@ -10507,6 +10518,9 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
       <span class="s">'values'</span><span class="p">:</span> <span class="p">[</span><span class="s">'ABC123_AddendaValue'</span><span class="p">]</span>
     <span class="p">}</span>
   <span class="p">},</span>
+  <span class="s">'clearing'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'source'</span><span class="p">:</span> <span class="s">'standard'</span>
+  <span class="p">},</span>
   <span class="s">'items'</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="s">'_links'</span><span class="p">:</span> <span class="p">{</span>
@@ -10519,7 +10533,6 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
         <span class="s">'value'</span><span class="p">:</span> <span class="s">'1.00'</span>
       <span class="p">},</span>
       <span class="s">'clearing'</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">'source'</span><span class="p">:</span> <span class="s">'standard'</span><span class="p">,</span>
         <span class="s">'destination'</span><span class="p">:</span> <span class="s">'next-available'</span>
       <span class="p">},</span>
       <span class="s">'metadata'</span><span class="p">:</span> <span class="p">{</span>
@@ -10583,8 +10596,11 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
         <span class="na">values</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">ABC123_AddendaValue</span><span class="dl">'</span><span class="p">]</span>
       <span class="p">}</span>
     <span class="p">}</span>
-  <span class="p">}</span>
-  <span class="nl">items</span><span class="p">:</span> <span class="p">[</span>
+  <span class="p">},</span>
+  <span class="na">clearing</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">source</span><span class="p">:</span> <span class="dl">'</span><span class="s1">standard</span><span class="dl">'</span>
+  <span class="p">},</span>
+  <span class="na">items</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
@@ -10596,7 +10612,6 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
         <span class="na">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1.00</span><span class="dl">'</span>
       <span class="p">},</span>
       <span class="na">clearing</span><span class="p">:</span> <span class="p">{</span>
-        <span class="na">source</span><span class="p">:</span> <span class="dl">'</span><span class="s1">standard</span><span class="dl">'</span><span class="p">,</span>
         <span class="na">destination</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">next-available</span><span class="dl">'</span>
       <span class="p">},</span>
       <span class="na">metadata</span><span class="p">:</span> <span class="p">{</span>
