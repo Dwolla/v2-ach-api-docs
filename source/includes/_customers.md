@@ -1,6 +1,6 @@
 # Customers
 
-A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla [Master account](#accounts) via the API. In order for a Dwolla `Account` to create and manage Customers, an application must obtain permission from Dwolla before being enabled in production.
+A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla [Master account](#accounts) via the API. In order for a Dwolla `Account` to create and manage Customers, an application must obtain permission from Dwolla before being enabled in production. **Note:** Customers can only be US persons. Business Verified Customers may have non-US [Controllers](#controller-json-object) or [Beneficial Owners](#beneficial-owners).
 
 ### Customer types
 
@@ -114,13 +114,13 @@ A verified Customer can be created as a type of either `Personal` or `Business`.
 
 ## Create a customer
 
-This section details how to create a new Customer. It is important to prompt your users to provide their full name as it appears on a government issued identification card. This will help ensure a straight-through processing approach. If errors occur in name or date of birth, where you may be prompted for such information, additional manual steps are required, which may add processing time that impedes their experience or may even result in additional cost to you.
+This section details how to create a new Customer. It is important to prompt your users to provide their full name as it appears on a US government issued identification card. This will help ensure a straight-through processing approach. If errors occur in name or date of birth, where you may be prompted for such information, additional manual steps are required, which may add processing time that impedes their experience or may even result in additional cost to you.
 
-[**To create `Receive-only Users`**](/#request-parameters---receive-only-customer), you'll provide the customer's full name and email address, `type` with the value of `receive-only`, and `businessName` if applicable.
+[**To create `Receive-only Users`**](/#request-parameters---receive-only-user), you'll provide the customer's full name and email address, `type` with the value of `receive-only`, and `businessName` if applicable. Must be a US person.
 
-[**To create `Unverified Customers`**](/#request-parameters---unverified-customer), you will only need to provide the customer's full name and email address, as well as a `businessName` if applicable.
+[**To create `Unverified Customers`**](/#request-parameters---unverified-customer), you will only need to provide the customer's full name and email address, as well as a `businessName` if applicable. Must be a US person.
 
-[**To create `Verified Customers`**](/#request-parameters---verified-strongpersonalstrong-customer), Dwolla will require additional information to confirm the identity of the individual or business. Verified Customers can include type `business` or `personal`. For [businesses](/#request-parameters---verified-strongbusinessstrong-customer-sole-proprietorship-only), Dwolla will need to verify information about both the business and the controller for that business. Dwolla does not identity verify the Account Admin.
+[**To create `Verified Customers`**](/#request-parameters---verified-strongpersonalstrong-customer), Dwolla will require additional information to confirm the identity of the individual or business. Must be a US person. Verified Customers can include type `business` or `personal`. For [businesses](/#request-parameters---verified-business-customer-businesstypellc-corporation-or-partnership), Dwolla will need to verify information about both the business and the controller for that business. Dwolla does not identity verify the Account Admin. The controller may be a non-US person.
 
 ### HTTP request
 
@@ -479,7 +479,7 @@ For an in-depth look at business verified Customers creation and status handling
 | businessName | yes | string | Registered business name. |
 | doingBusinessAs | no | string | Preferred business name -- also known as fictitious name, or assumed name. |
 | businessType | yes | string | Business structure. Value of `soleProprietorship`. |
-| businessClassification| yes | string | The industry classification Id that corresponds to Customer’s business. [Reference our Dev Docs](#list-business-classifications) to learn how to generate this Id. |
+| businessClassification| yes | string | The industry classification Id that corresponds to Customer’s business. Reference the [Business Classifications section](#list-business-classifications) to learn how to generate this Id. |
 | ein | no | string | Employer Identification Number. Optional for `soleProprietorship` business Customers |
 | website | no | string | Business’ website. e.g. https://www.domain.com |
 | phone | no | string | Business's 10 digit phone number. No hyphens or other separators, e.g. 3334447777. |
@@ -630,7 +630,7 @@ A verified business Customer must input information on the controller and the Bu
 | businessName | yes |string | Registered business name. |
 | doingBusinessAs | no |string | Preferred business name – also known as fictitious name, or assumed name. |
 | businessType | yes |string | Business structure. Possible values are `corporation`, `llc`, `partnership`. |
-| businessClassification | yes |string | The industry classification Id that corresponds to Customer’s business. [Reference the next section of our docs](#list-business-classifications) to learn how to generate this Id.  |
+| businessClassification | yes |string | The industry classification Id that corresponds to Customer’s business. Reference the [Business Classifications section](#list-business-classifications) to learn how to generate this Id.  |
 | ein | yes |string | Employer Identification Number. |
 | website | no |string | Business’ website. e.g. https://www.domain.com |
 | phone | no | string | Business's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
@@ -639,7 +639,7 @@ A verified business Customer must input information on the controller and the Bu
 
 ##### Controller JSON object
 
-A controller is any natural individual who holds significant responsibilities to control, manage, or direct a company or other corporate entity (i.e. CEO, CFO, General Partner, President, etc). A company may have more than one controller, but only one controller’s information must be collected.
+A controller is any natural individual who holds significant responsibilities to control, manage, or direct a company or other corporate entity (i.e. CEO, CFO, General Partner, President, etc). A company may have more than one controller, but only one controller’s information must be collected. A controller may be a non-US person. 
 
 | Parameter | Required | Type | Description |
 |----------------|--------------|--------|----------------|
@@ -1370,7 +1370,7 @@ appToken
 
 ## List business classifications
 
-Retrieve an `_embedded` list of business classifications that contains an `_embedded` list of industry classifications. An industry classification is used to identify the Customer's business and is required by Dwolla when verifying a `business` in order to better analyze the nature of a business.
+Retrieve an `_embedded` list of business classifications that contains an `_embedded` list of industry classifications. The appropriate Id from the list of industry classifications must be passed in the `businessClassification` parameter when [creating a Business Verified Customer](#request-parameters---verified-strongbusinessstrong-customer-sole-proprietorship-only). The industry classification is used to identify the Customer's business and is required by Dwolla when verifying a `business` in order to better analyze the nature of a business.
 
 
 ### HTTP request
@@ -1448,7 +1448,7 @@ appToken
 
 ## Retrieve a business classification
 
-This section shows you how to retrieve a business classification from a list of industry classifications. An industry classification id is needed in order to verify a `business` Customer.
+This section shows you how to retrieve an Id from a list of industry classifications to be passed in the `businessClassification` parameter when [creating a Business Verified Customer](#request-parameters---verified-strongbusinessstrong-customer-sole-proprietorship-only).
 
 ### HTTP request
 
