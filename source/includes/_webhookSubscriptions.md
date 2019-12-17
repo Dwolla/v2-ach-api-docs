@@ -310,6 +310,13 @@ $retrieved->total; # => 1
 
 Delete a Webhook Subscription to stop receiving Webhooks at the URL specified. If using an SDK, the request was successful unless an exception was thrown stating otherwise.
 
+
+<ol class = "alerts">
+    <li class="alert icon-alert-info">
+      Deleting a Webhook Subscription removes all webhooks data associated with that subscription. This will make it unable to replay any previous webhooks that were sent to the subscribed URL. To temporarily disable webhooks while retaining all webhooks data, a Webhook Subscription may be [`paused`](https://docs.dwolla.com/#update-a-webhook-subscription) instead of being `deleted`. 
+    </li>
+</ol>
+
 ### HTTP request
 `DELETE https://api.dwolla.com/webhook-subscriptions/{id}`
 
