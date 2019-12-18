@@ -6,7 +6,7 @@ Verified Customers of type `business` are required to verify the identity of ben
 * LLC
 * Partnership
 
-For more information on how to add beneficial owners, or to learn more on whether certain business types are exempt, check out our [beneficial owner developer resource article](https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html). Beneficial owners may be non-US persons. 
+For more information on how to add beneficial owners, or to learn more on whether certain business types are exempt, check out our [beneficial owner developer resource article](https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html).
 
 ### Beneficial owners resource
 
