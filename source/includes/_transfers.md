@@ -211,7 +211,8 @@ Refer to our [idempotency key](#idempotency-key) section to learn more.
 |    400      | Invalid funding source.| The `source` funding source must be verified in order to send funds. Make sure your `source` funding source is `verified`. |
 |    400      | Metadata not supported for this type of transfer. | Metadata is unable to be passed in on transfers with a Balance Funding Source. |
 |    400      | Sender // Receiver Restricted. | The `source` or `destination` Customer is either `deactivated` or `suspended` and not eligible for transfers. |
-|    400      | Invalid amount         | The amount exceeds the transaction limit. |
+|    400      | Invalid amount         | he amount exceeds the transaction limit. For more information on transaction limits for various Customer types, check out our [Customer Types article](https://developers.dwolla.com/resources/account-types.html). |
+|    400      | Invalid amount         | The supplied amount must be a positive number. |
 |    401      | Invalid access token   | Access token not valid. Generate a new one and try again. |
 |    403      | Forbidden              | Not authorized to create a transfer. |
 
