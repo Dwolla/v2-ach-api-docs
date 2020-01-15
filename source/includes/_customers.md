@@ -639,7 +639,7 @@ A verified business Customer must input information on the controller and the Bu
 
 ##### Controller JSON object
 
-A controller is any natural individual who holds significant responsibilities to control, manage, or direct a company or other corporate entity (i.e. CEO, CFO, General Partner, President, etc). A company may have more than one controller, but only one controller’s information must be collected. A controller may be a non-US person. 
+A controller is any natural individual who holds significant responsibilities to control, manage, or direct a company or other corporate entity (i.e. CEO, CFO, General Partner, President, etc). A company may have more than one controller, but only one controller’s information must be collected. A controller may be a non-US person.
 
 | Parameter | Required | Type | Description |
 |----------------|--------------|--------|----------------|
@@ -933,7 +933,7 @@ appToken
 
 ## List and search customers
 
-This section outlines how to retrieve your list of created Customers. Customer search is supported by passing an additional `search` query string parameter which searches on `firstName`, `lastName`, and `email` fields of a Customer.
+This section outlines how to retrieve your list of created Customers. This endpoint contains optional query string parameters allowing you to filter by `email` and `status`, as well as search on key fields such as `firstName`, `lastName`, and `businessName`.
 
 ### HTTP Request
 `GET https://api.dwolla.com/customers`
@@ -951,20 +951,35 @@ By default, an embedded list of 25 customers are returned and are sorted by crea
 ##### Example HTTP Request
 `GET https://api.dwolla.com/customers?limit=5&offset=25`
 
-### Searching Customers
+### Searching and filtering Customers
 
-You can search for Customers based on `firstName`, `lastName`, or `email` by appending the `search` query string parameter to the endpoint. For example, if you would like to search for Customers with the first name “Jane”, you can append the additional parameter `search` to the request URL.
+The `search` query string parameter contains a fuzzy search query across `firstName`, `lastName`, `businessName`, and `email` fields. Scoring is performed on the search term which looks for approximate spellings that match the entered search string and results are returned accordingly in an embedded customers array.  **Note:** For exact match on `email` string value, the email filter should be used.
 
-##### Example HTTP Request
+The `email` query string parameter is a filter that returns an embedded customers array based on an exact match of the filter value. For example, if you would like to search for a Customer with the email address “jane@email.com”, you can append the additional parameter `email` to the request URL as shown in the example HTTP request below. **Note:** The email filter string value must be URL-encoded.
+
+The `status` query string parameter can be used to list an embedded customers array based on the status field. For example, if you would like to list all Customers that are in `document` status, you can append the additional parameter `status` to the request URL with the value "document". Check out all possible values listed in the table below.
+
+##### Example Request URL using `email` filter
+
+`GET https://api.dwolla.com/customers?email=jane%40email.com`
+
+##### Example Request URL using `search`
+
 `GET https://api.dwolla.com/customers?search=Jane`
+
+##### Example Request URL using `status` filter
+
+`GET https://api.dwolla.com/customers?status=document`
+
 
 ### Request parameters
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
-| limit | no | integer | How many results to return. |
+| limit  | no | integer | How many results to return. |
 | offset | no | integer | How many results to skip. |
-| search | no | string | Searches on `firstName`, `lastName`, and `email` fields. (`/customers?search=Doe`) |
-| status | no | string | Filter by Customer status or multiple Customer statuses. Possible values: `unverified`, `retry`, `document`, `verified`, `suspended`, or `deactivated`. (e.g. `/customers?status=retry&status=document`)
+| search | no | string | Searches on `firstName`, `lastName`, and `email` fields. <strong>Note:</strong> Value must be URL encoded. (`/customers?search=Doe`) |
+| email  | no | string | Filter by `email` field. <strong>Note:</strong> Value must be URL encoded. (``/customers?email=jane.doe%40email.com`) |
+| status | no | string | Filter by Customer status or multiple Customer statuses. Possible values: `unverified`, `retry`, `kba`, `document`, `verified`, `suspended`, or `deactivated`. (e.g. `/customers?status=retry&status=document`)
 
 ### Request and response
 
