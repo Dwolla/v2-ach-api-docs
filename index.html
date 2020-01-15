@@ -632,7 +632,7 @@ grant_type=client_credentials
 <span class="c1">// This example assumes you've already initialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html</span>
 <span class="nx">client</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nx">client</span><span class="p">()</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">appToken</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">appToken</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">webhook-subscriptions</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">appToken</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">);</span>
   <span class="p">})</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
@@ -1694,7 +1694,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='customers'>Customers</h1>
-<p>A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla <a href="#accounts">Master account</a> via the API. In order for a Dwolla <code class="prettyprint">Account</code> to create and manage Customers, an application must obtain permission from Dwolla before being enabled in production.</p>
+<p>A Customer represents an individual or business with whom you intend to transact with and is programmatically created and managed by a Dwolla <a href="#accounts">Master account</a> via the API. In order for a Dwolla <code class="prettyprint">Account</code> to create and manage Customers, an application must obtain permission from Dwolla before being enabled in production. <strong>Note:</strong> Customers can only be US persons. Business Verified Customers may have non-US <a href="#controller-json-object">Controllers</a> or <a href="#beneficial-owners">Beneficial Owners</a>.</p>
 <h3 id='customer-types'>Customer types</h3>
 <p>With a transfer of money, <em>at least one party must complete the identity verification process</em>, either the sender or the receiver. This can be either the Dwolla Master Account itself or a <code class="prettyprint">verified</code> Customer type. Based on your business model and funds flow, it’s your decision about which party completes this process&ndash; you may even want to have both parties complete the identity verification process. A brief description of each Customer type is below, but for a more in-depth overview of each Customer type and what their capabilities are, check out our <a href="https://developers.dwolla.com/resources/account-types.html">developer resource article</a>.</p>
 <h5 id='receive-only-users'>Receive-only Users</h5>
@@ -1870,13 +1870,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   "phone": "5554321234"
 }
 </code></pre></div></div><h2 id='create-a-customer'>Create a customer</h2>
-<p>This section details how to create a new Customer. It is important to prompt your users to provide their full name as it appears on a government issued identification card. This will help ensure a straight-through processing approach. If errors occur in name or date of birth, where you may be prompted for such information, additional manual steps are required, which may add processing time that impedes their experience or may even result in additional cost to you.</p>
+<p>This section details how to create a new Customer. It is important to prompt your users to provide their full name as it appears on a US government issued identification card. This will help ensure a straight-through processing approach. If errors occur in name or date of birth, where you may be prompted for such information, additional manual steps are required, which may add processing time that impedes their experience or may even result in additional cost to you.</p>
 
-<p><a href="/#request-parameters---receive-only-customer"><strong>To create <code class="prettyprint">Receive-only Users</code></strong></a>, you&rsquo;ll provide the customer&rsquo;s full name and email address, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable.</p>
+<p><a href="/#request-parameters---receive-only-user"><strong>To create <code class="prettyprint">Receive-only Users</code></strong></a>, you&rsquo;ll provide the customer&rsquo;s full name and email address, <code class="prettyprint">type</code> with the value of <code class="prettyprint">receive-only</code>, and <code class="prettyprint">businessName</code> if applicable. Must be a US person.</p>
 
-<p><a href="/#request-parameters---unverified-customer"><strong>To create <code class="prettyprint">Unverified Customers</code></strong></a>, you will only need to provide the customer&rsquo;s full name and email address, as well as a <code class="prettyprint">businessName</code> if applicable.</p>
+<p><a href="/#request-parameters---unverified-customer"><strong>To create <code class="prettyprint">Unverified Customers</code></strong></a>, you will only need to provide the customer&rsquo;s full name and email address, as well as a <code class="prettyprint">businessName</code> if applicable. Must be a US person.</p>
 
-<p><a href="/#request-parameters---verified-strongpersonalstrong-customer"><strong>To create <code class="prettyprint">Verified Customers</code></strong></a>, Dwolla will require additional information to confirm the identity of the individual or business. Verified Customers can include type <code class="prettyprint">business</code> or <code class="prettyprint">personal</code>. For <a href="/#request-parameters---verified-strongbusinessstrong-customer-sole-proprietorship-only">businesses</a>, Dwolla will need to verify information about both the business and the controller for that business. Dwolla does not identity verify the Account Admin.</p>
+<p><a href="/#request-parameters---verified-strongpersonalstrong-customer"><strong>To create <code class="prettyprint">Verified Customers</code></strong></a>, Dwolla will require additional information to confirm the identity of the individual or business. Must be a US person. Verified Customers can include type <code class="prettyprint">business</code> or <code class="prettyprint">personal</code>. For <a href="/#request-parameters---verified-business-customer-businesstypellc-corporation-or-partnership">businesses</a>, Dwolla will need to verify information about both the business and the controller for that business. Dwolla does not identity verify the Account Admin. The controller may be a non-US person.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/customers</code></p>
 <h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
@@ -2544,7 +2544,7 @@ Location: https://api.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f
 <td>businessClassification</td>
 <td>yes</td>
 <td>string</td>
-<td>The industry classification Id that corresponds to Customer’s business. <a href="#list-business-classifications">Reference our Dev Docs</a> to learn how to generate this Id.</td>
+<td>The industry classification Id that corresponds to Customer’s business. Reference the <a href="#list-business-classifications">Business Classifications section</a> to learn how to generate this Id.</td>
 </tr>
 <tr>
 <td>ein</td>
@@ -2813,7 +2813,7 @@ A verified business Customer must input information on the controller and the Bu
 <td>businessClassification</td>
 <td>yes</td>
 <td>string</td>
-<td>The industry classification Id that corresponds to Customer’s business. <a href="#list-business-classifications">Reference the next section of our docs</a> to learn how to generate this Id.</td>
+<td>The industry classification Id that corresponds to Customer’s business. Reference the <a href="#list-business-classifications">Business Classifications section</a> to learn how to generate this Id.</td>
 </tr>
 <tr>
 <td>ein</td>
@@ -2847,7 +2847,7 @@ A verified business Customer must input information on the controller and the Bu
 </tr>
 </tbody></table>
 <h5 id='controller-json-object'>Controller JSON object</h5>
-<p>A controller is any natural individual who holds significant responsibilities to control, manage, or direct a company or other corporate entity (i.e. CEO, CFO, General Partner, President, etc). A company may have more than one controller, but only one controller’s information must be collected.</p>
+<p>A controller is any natural individual who holds significant responsibilities to control, manage, or direct a company or other corporate entity (i.e. CEO, CFO, General Partner, President, etc). A company may have more than one controller, but only one controller’s information must be collected. A controller may be a non-US person. </p>
 
 <table><thead>
 <tr>
@@ -3985,7 +3985,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 </tbody></table>
 <h2 id='list-business-classifications'>List business classifications</h2>
-<p>Retrieve an <code class="prettyprint">_embedded</code> list of business classifications that contains an <code class="prettyprint">_embedded</code> list of industry classifications. An industry classification is used to identify the Customer&rsquo;s business and is required by Dwolla when verifying a <code class="prettyprint">business</code> in order to better analyze the nature of a business.</p>
+<p>Retrieve an <code class="prettyprint">_embedded</code> list of business classifications that contains an <code class="prettyprint">_embedded</code> list of industry classifications. The appropriate Id from the list of industry classifications must be passed in the <code class="prettyprint">businessClassification</code> parameter when <a href="#request-parameters---verified-strongbusinessstrong-customer-sole-proprietorship-only">creating a Business Verified Customer</a>. The industry classification is used to identify the Customer&rsquo;s business and is required by Dwolla when verifying a <code class="prettyprint">business</code> in order to better analyze the nature of a business.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/business-classifications</code></p>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -4081,7 +4081,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">business-classifications</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">_embedded</span><span class="p">[</span><span class="dl">'</span><span class="s1">business-classifications</span><span class="dl">'</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// =&gt; 'Food retail and service'</span>
 </code></pre></div></div><h2 id='retrieve-a-business-classification'>Retrieve a business classification</h2>
-<p>This section shows you how to retrieve a business classification from a list of industry classifications. An industry classification id is needed in order to verify a <code class="prettyprint">business</code> Customer.</p>
+<p>This section shows you how to retrieve an Id from a list of industry classifications to be passed in the <code class="prettyprint">businessClassification</code> parameter when <a href="#request-parameters---verified-strongbusinessstrong-customer-sole-proprietorship-only">creating a Business Verified Customer</a>.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/business-classifications/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
@@ -4843,7 +4843,7 @@ Authorization: Bearer cRahPzURfaIrTewKL18tmslWPqKdzkLeYJm0oB1hGJ1vMPArft1v
     "verificationStatus": "verified"
 }
 </code></pre></div></div><h2 id='create-a-beneficial-owner'>Create a beneficial owner</h2>
-<p>This section details how to create a new beneficial owner. To create <code class="prettyprint">beneficial owners</code>, you need to collect the beneficial owner&rsquo;s full name, ssn, date of birth, and permanent address. Optionally, passport information must be included for foreign individuals that do not have a US issued SSN. <code class="prettyprint">Beneficial owners</code> require additional information that will give Dwolla the ability to confirm the identity of the individual.</p>
+<p>This section details how to create a new beneficial owner. To create <code class="prettyprint">beneficial owners</code>, you need to collect the beneficial owner&rsquo;s full name, ssn, date of birth, and permanent address. Optionally, passport information must be included for non-US persons that do not have a US issued SSN. <code class="prettyprint">Beneficial owners</code> require additional information that will give Dwolla the ability to confirm the identity of the individual.</p>
 
 <p>For more information on how to create a beneficial owner, refer to our <a href="https://developers.dwolla.com/resources/business-verified-customer/adding-beneficial-owners.html">developer resource article</a>.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -8232,7 +8232,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="nx">fundingSourceUrl</span><span class="p">}</span><span class="s2">/micro-deposits`</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span> <span class="c1">// =&gt; "failed"</span>
 </code></pre></div></div><h2 id='remove-a-funding-source'>Remove a funding source</h2>
-<p>Remove a funding source by id. A removed funding source is soft deleted and can still be accessed when retrieved.</p>
+<p>Remove a funding source by id. A removed funding source is soft deleted and can still be accessed when retrieved. When a funding source with an <code class="prettyprint">unverified</code> status is removed, an attempt to re-add it within 48 hours of the initial created date will re-activate the removed funding source and maintain the same <code class="prettyprint">id</code>.</p>
 <ol class = "alerts"><li class="alert icon-alert-alert"><p>We recommend not removing funding sources until all transfers have been <code>processed</code>. Removing a funding source prior to a transfer processing may result in funds being processed to a <code>balance</code> funding source rather than the intended bank funding source.</p>
 </li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/funding-sources/{id}</code></p>
@@ -8529,7 +8529,7 @@ HTTP 200 OK
 <td>value</td>
 <td>yes</td>
 <td>string</td>
-<td>Amount of money</td>
+<td>Amount of money. If the entered amount has more than two decimal places, Dwolla will automatically round it to the nearest even integer using <a href="http://wiki.c2.com/?BankersRounding">Banker&rsquo;s Rounding</a>.</td>
 </tr>
 <tr>
 <td>currency</td>
@@ -8750,6 +8750,16 @@ Source specifies the clearing time for the source funding source involved in the
 <td>400</td>
 <td>Sender // Receiver Restricted.</td>
 <td>The <code class="prettyprint">source</code> or <code class="prettyprint">destination</code> Customer is either <code class="prettyprint">deactivated</code> or <code class="prettyprint">suspended</code> and not eligible for transfers.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Invalid amount</td>
+<td>The amount exceeds the transaction limit. For more information on transaction limits for various Customer types, check out our <a href="https://developers.dwolla.com/resources/account-types.html">Customer Types article</a>.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Invalid amount</td>
+<td>The supplied amount must be a positive number.</td>
 </tr>
 <tr>
 <td>401</td>
@@ -13963,7 +13973,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="cp">?&gt;</span>
 </code></pre></div></div><h2 id='delete-a-webhook-subscription'>Delete a webhook subscription</h2>
 <p>Delete a Webhook Subscription to stop receiving Webhooks at the URL specified. If using an SDK, the request was successful unless an exception was thrown stating otherwise.</p>
-<h3 id='http-request'>HTTP request</h3>
+<ol class = "alerts"><li class="alert icon-alert-alert"><p>Deleting a Webhook Subscription removes all webhooks data associated with that subscription. This will make it unable to replay any previous webhooks that were sent to the subscribed URL. To temporarily disable webhooks while retaining all webhooks data, a Webhook Subscription may be <a href="https://docs.dwolla.com/#update-a-webhook-subscription"><code>paused</code></a> instead of being <code>deleted</code>.</p>
+</li></ol><h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">DELETE https://api.dwolla.com/webhook-subscriptions/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
 <table><thead>
