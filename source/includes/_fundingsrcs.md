@@ -966,7 +966,7 @@ appToken
 
 ## Remove a funding source
 
-Remove a funding source by id. A removed funding source is soft deleted and can still be accessed when retrieved.
+Remove a funding source by id. A removed funding source is soft deleted and can still be accessed when retrieved. When a funding source with an `unverified` status is removed, an attempt to re-add it within 48 hours of the initial created date will re-activate the removed funding source and maintain the same `id`.
 
 <ol class = "alerts">
     <li class="alert icon-alert-info">

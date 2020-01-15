@@ -57,7 +57,7 @@ app_token = client.Auth.client()
 // This example assumes you've already initialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html
 client.auth.client()
   .then(function(appToken) {
-    return appToken.get('webhook-subscriptions');
+    return appToken.get('/');
   })
   .then(function(res) {
     console.log(JSON.stringify(res.body));
