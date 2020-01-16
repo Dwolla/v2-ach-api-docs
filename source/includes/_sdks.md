@@ -154,7 +154,7 @@ Add this to your project's POM:
 <dependency>
     <groupId>com.github.Dwolla</groupId>
     <artifactId>dwolla-v2-kotlin</artifactId>
-    <version>master-SNAPSHOT</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
@@ -171,7 +171,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.Dwolla:dwolla-v2-kotlin:master-SNAPSHOT")
+    implementation("com.github.Dwolla:dwolla-v2-kotlin:0.1.1")
 }
 ```
 
