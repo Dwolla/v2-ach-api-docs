@@ -49,7 +49,7 @@ If you reattempt a `POST` request with the same value for the `Idempotency-Key`,
 </ol>
 
 #### Example transfer using an Idempotency Key
-```noselect
+```raw
 POST https://api-sandbox.dwolla.com/transfers
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
@@ -70,6 +70,110 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         "value": "1337.00"
     }
 }
+...
+
+HTTP/1.1 201 Created
+Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
+```
+
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+headers = {
+  "Idempotency-Key" => "19051a62-3403-11e6-ac61-9e71128cae77"
+}
+
+request_body = {
+  :_links => {
+    :source => {
+      :href => "https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"
+    },
+    :destination => {
+      :href => "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+    }
+  },
+  :amount => {
+    :currency => "USD",
+    :value => "1.00"
+  }
+}
+
+transfer = app_token.post "transfers", request_body, headers
+transfer.response_headers[:location] # => "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
+```
+
+```php
+<?php
+$transfersApi = new DwollaSwagger\TransfersApi($apiClient);
+
+$transfer = $transfersApi->create([
+  '_links' => [
+    'source' => [
+      'href' => 'https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3',
+    ],
+    'destination' => [
+      'href' => 'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
+    ]
+  ],
+  'amount' => [
+    'currency' => 'USD',
+    'value' => '1.00'
+  ]
+],
+[
+    'Idempotency-Key' => '19051a62-3403-11e6-ac61-9e71128cae77'
+]);
+
+$transfer; # => "https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"
+?>
+```
+
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+headers = {
+  'Idempotency-Key': '19051a62-3403-11e6-ac61-9e71128cae77'
+}
+
+request_body = {
+  '_links': {
+    'source': {
+      'href': 'https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3'
+    },
+    'destination': {
+      'href': 'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
+    }
+  },
+  'amount': {
+    'currency': 'USD',
+    'value': '1.00'
+  }
+}
+
+transfer = app_token.post('transfers', request_body, headers)
+transfer.headers['location'] # => 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
+```
+
+```javascript
+var headers = {
+  'Idempotency-Key': '19051a62-3403-11e6-ac61-9e71128cae77'
+}
+var requestBody = {
+  _links: {
+    source: {
+      href: 'https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3'
+    },
+    destination: {
+      href: 'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'
+    }
+  },
+  amount: {
+    currency: 'USD',
+    value: '1.00'
+  }
+};
+
+appToken
+  .post('transfers', requestBody, headers)
+  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
 ```
 
 ## Errors
