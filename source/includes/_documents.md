@@ -84,7 +84,7 @@ curl -X POST
 \ -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
 \ -F "documentType=passport"
 \ -F "file=@foo.png"
-\ 'https://api-sandbox.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE/documents'
+\ 'https://api-sandbox.dwolla.com/customers/1de32eC7-ff0b-4c0c-9f09-19629e6788ce/documents'
 
 ...
 
@@ -92,7 +92,7 @@ HTTP/1.1 201 Created
 Location: https://api-sandbox.dwolla.com/documents/11fe0bab-39bd-42ee-bb39-275afcc050d0
 ```
 ```ruby
-customer_url = 'https://api-sandbox.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'
+customer_url = 'https://api-sandbox.dwolla.com/customers/1de32eC7-ff0b-4c0c-9f09-19629e6788ce'
 
 file = Faraday::UploadIO.new('mclovin.jpg', 'image/jpeg')
 document = app_token.post "#{customer_url}/documents", file: file, documentType: 'license'
@@ -100,7 +100,7 @@ document.response_headers[:location] # => "https://api.dwolla.com/documents/fb91
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
-customer_url = 'https://api-sandbox.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE'
+customer_url = 'https://api-sandbox.dwolla.com/customers/1de32eC7-ff0b-4c0c-9f09-19629e6788ce'
 
 document = app_token.post('%s/documents' % customer_url, file = open('mclovin.jpg', 'rb'), documentType = 'license')
 document.headers['location'] # => 'https://api-sandbox.dwolla.com/documents/fb919e0b-ffbe-4268-b1e2-947b44328a16'
@@ -111,15 +111,15 @@ document.headers['location'] # => 'https://api-sandbox.dwolla.com/documents/fb91
  **/
 ```
 ```javascript
-var customerUrl = 'https://api-sandbox.dwolla.com/customers/1DE32EC7-FF0B-4C0C-9F09-19629E6788CE';
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/1de32eC7-ff0b-4c0c-9f09-19629e6788ce';
 
 var requestBody = new FormData();
-body.append('file', fs.createReadStream('mclovin.jpg'), {
+requestBody.append('file', fs.createReadStream('mclovin.jpg'), {
   filename: 'mclovin.jpg',
   contentType: 'image/jpeg',
   knownLength: fs.statSync('mclovin.jpg').size
 });
-body.append('documentType', 'license');
+requestBody.append('documentType', 'license');
 
 appToken
   .post(`${customerUrl}/documents`, requestBody)
@@ -143,7 +143,7 @@ This section contains information on how to retrieve a list of documents that be
 ```raw
 GET https://api-sandbox.dwolla.com/customers/176878b8-ecdb-469b-a82b-43ba5e8704b2/documents
 Accept: application/vnd.dwolla.v1.hal+json
-Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+Authorization: Bearer pBA9fVDBEyYZCEsLfwKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 ...
 
