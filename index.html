@@ -175,7 +175,15 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 
 <p>If you reattempt a <code class="prettyprint">POST</code> request with the same value for the <code class="prettyprint">Idempotency-Key</code>, rather than creating new or potentially duplicate resources, you will receive a <code class="prettyprint">201 Created</code>, with the original response of the created resource. If the Dwolla server is still processing the original <code class="prettyprint">POST</code> request, you will receive a <code class="prettyprint">409 Conflict</code> error response on the subsequent request. Idempotency keys are intended to prevent conflicts over a short period of time, therefore keys will expire after 24 hours.</p>
 <ol class = "alerts"><li class="alert icon-alert-alert"><p>To prevent resources from being created more than once, we highly recommend making all requests idempotent.</p>
-</li></ol><h4 id='example-transfer-using-an-idempotency-key'>Example transfer using an Idempotency Key</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://api-sandbox.dwolla.com/transfers
+</li></ol><h4 id='example-transfer-using-an-idempotency-key'>Example transfer using an Idempotency Key</h4><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/transfers
 Accept: application/vnd.dwolla.v1.hal+json
 Content-Type: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
@@ -195,6 +203,130 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
         "value": "1337.00"
     }
 }
+...
+
+HTTP/1.1 201 Created
+Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"Idempotency-Key"</span> <span class="o">=&gt;</span> <span class="s2">"19051a62-3403-11e6-ac61-9e71128cae77"</span>
+<span class="p">}</span>
+
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">:_links</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:source</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="ss">:href</span> <span class="o">=&gt;</span> <span class="s2">"https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3"</span>
+    <span class="p">},</span>
+    <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="ss">:href</span> <span class="o">=&gt;</span> <span class="s2">"https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:currency</span> <span class="o">=&gt;</span> <span class="s2">"USD"</span><span class="p">,</span>
+    <span class="ss">:value</span> <span class="o">=&gt;</span> <span class="s2">"1.00"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">transfer</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"transfers"</span><span class="p">,</span> <span class="n">request_body</span><span class="p">,</span> <span class="n">headers</span>
+<span class="n">transfer</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$transfersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\TransfersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$transfer</span> <span class="o">=</span> <span class="nv">$transfersApi</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">([</span>
+  <span class="s1">'_links'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">'source'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">'href'</span> <span class="o">=&gt;</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3'</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s1">'destination'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">'href'</span> <span class="o">=&gt;</span> <span class="s1">'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'</span>
+    <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s1">'amount'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">'currency'</span> <span class="o">=&gt;</span> <span class="s1">'USD'</span><span class="p">,</span>
+    <span class="s1">'value'</span> <span class="o">=&gt;</span> <span class="s1">'1.00'</span>
+  <span class="p">]</span>
+<span class="p">],</span>
+<span class="p">[</span>
+    <span class="s1">'Idempotency-Key'</span> <span class="o">=&gt;</span> <span class="s1">'19051a62-3403-11e6-ac61-9e71128cae77'</span>
+<span class="p">]);</span>
+
+<span class="nv">$transfer</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388"</span>
+<span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+</span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Idempotency-Key'</span><span class="p">:</span> <span class="s">'19051a62-3403-11e6-ac61-9e71128cae77'</span>
+<span class="p">}</span>
+
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'_links'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'source'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">'href'</span><span class="p">:</span> <span class="s">'https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3'</span>
+    <span class="p">},</span>
+    <span class="s">'destination'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">'href'</span><span class="p">:</span> <span class="s">'https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4'</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s">'amount'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'currency'</span><span class="p">:</span> <span class="s">'USD'</span><span class="p">,</span>
+    <span class="s">'value'</span><span class="p">:</span> <span class="s">'1.00'</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">transfer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'transfers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
+<span class="n">transfer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c1"># =&gt; 'https://api.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'
+</span></code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="dl">'</span><span class="s1">Idempotency-Key</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">19051a62-3403-11e6-ac61-9e71128cae77</span><span class="dl">'</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">source</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">href</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://api-sandbox.dwolla.com/funding-sources/04173e17-6398-4d36-a167-9d98c4b1f1c3</span><span class="dl">'</span>
+    <span class="p">},</span>
+    <span class="na">destination</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">href</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4</span><span class="dl">'</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">amount</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">currency</span><span class="p">:</span> <span class="dl">'</span><span class="s1">USD</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1.00</span><span class="dl">'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">transfers</span><span class="dl">'</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">,</span> <span class="nx">headers</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">location</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34a9b2388'</span>
 </code></pre></div></div><h2 id='errors'>Errors</h2>
 <p>Error responses use HTTP status codes to indicate the type of error. The JSON response body will contain a top-level error code and a message with a detailed description of the error. Errors will contain their own media type and will closely align with <a href="https://github.com/blongden/vnd.error">this spec</a>.</p>
 <h3 id='example-http-401-error'>Example HTTP 401 error</h3><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">{
@@ -475,7 +607,7 @@ information is available on the project&rsquo;s README.</p>
 <span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>com.github.Dwolla<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>dwolla-v2-kotlin<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>master-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.1.1<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </code></pre></div></div><h5 id='gradle'>Gradle</h5>
 <p>Add this to your project&rsquo;s build file:</p>
@@ -487,7 +619,7 @@ information is available on the project&rsquo;s README.</p>
 <span class="o">}</span>
 
 <span class="n">dependencies</span> <span class="o">{</span>
-    <span class="n">implementation</span><span class="o">(</span><span class="s">"com.github.Dwolla:dwolla-v2-kotlin:master-SNAPSHOT"</span><span class="o">)</span>
+    <span class="n">implementation</span><span class="o">(</span><span class="s">"com.github.Dwolla:dwolla-v2-kotlin:0.1.1"</span><span class="o">)</span>
 <span class="o">}</span>
 </code></pre></div></div><h3 id='quickstart'>Quickstart</h3>
 <p>Let&rsquo;s set up a Dwolla client using our application key and secret:</p>
@@ -2847,7 +2979,7 @@ A verified business Customer must input information on the controller and the Bu
 </tr>
 </tbody></table>
 <h5 id='controller-json-object'>Controller JSON object</h5>
-<p>A controller is any natural individual who holds significant responsibilities to control, manage, or direct a company or other corporate entity (i.e. CEO, CFO, General Partner, President, etc). A company may have more than one controller, but only one controller’s information must be collected. A controller may be a non-US person. </p>
+<p>A controller is any natural individual who holds significant responsibilities to control, manage, or direct a company or other corporate entity (i.e. CEO, CFO, General Partner, President, etc). A company may have more than one controller, but only one controller’s information must be collected. A controller may be a non-US person.</p>
 
 <table><thead>
 <tr>
@@ -3304,7 +3436,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">customerUrl</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">firstName</span><span class="p">);</span> <span class="c1">// =&gt; 'Jane'</span>
 </code></pre></div></div><h2 id='list-and-search-customers'>List and search customers</h2>
-<p>This section outlines how to retrieve your list of created Customers. Customer search is supported by passing an additional <code class="prettyprint">search</code> query string parameter which searches on <code class="prettyprint">firstName</code>, <code class="prettyprint">lastName</code>, and <code class="prettyprint">email</code> fields of a Customer.</p>
+<p>This section outlines how to retrieve your list of created Customers. This endpoint contains optional query string parameters allowing you to filter by <code class="prettyprint">email</code> and <code class="prettyprint">status</code>, as well as search on key fields such as <code class="prettyprint">firstName</code>, <code class="prettyprint">lastName</code>, and <code class="prettyprint">businessName</code>.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/customers</code></p>
 <h3 id='pagination'>Pagination</h3>
@@ -3319,10 +3451,18 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </ul>
 <h5 id='example-http-request'>Example HTTP Request</h5>
 <p><code class="prettyprint">GET https://api.dwolla.com/customers?limit=5&amp;offset=25</code></p>
-<h3 id='searching-customers'>Searching Customers</h3>
-<p>You can search for Customers based on <code class="prettyprint">firstName</code>, <code class="prettyprint">lastName</code>, or <code class="prettyprint">email</code> by appending the <code class="prettyprint">search</code> query string parameter to the endpoint. For example, if you would like to search for Customers with the first name “Jane”, you can append the additional parameter <code class="prettyprint">search</code> to the request URL.</p>
-<h5 id='example-http-request'>Example HTTP Request</h5>
+<h3 id='searching-and-filtering-customers'>Searching and filtering Customers</h3>
+<p>The <code class="prettyprint">search</code> query string parameter contains a fuzzy search query across <code class="prettyprint">firstName</code>, <code class="prettyprint">lastName</code>, <code class="prettyprint">businessName</code>, and <code class="prettyprint">email</code> fields. Scoring is performed on the search term which looks for approximate spellings that match the entered search string and results are returned accordingly in an embedded customers array.  <strong>Note:</strong> For exact match on <code class="prettyprint">email</code> string value, the email filter should be used.</p>
+
+<p>The <code class="prettyprint">email</code> query string parameter is a filter that returns an embedded customers array based on an exact match of the filter value. For example, if you would like to search for a Customer with the email address “jane@email.com”, you can append the additional parameter <code class="prettyprint">email</code> to the request URL as shown in the example HTTP request below. <strong>Note:</strong> The email filter string value must be URL-encoded.</p>
+
+<p>The <code class="prettyprint">status</code> query string parameter can be used to list an embedded customers array based on the status field. For example, if you would like to list all Customers that are in <code class="prettyprint">document</code> status, you can append the additional parameter <code class="prettyprint">status</code> to the request URL with the value &ldquo;document&rdquo;. Check out all possible values listed in the table below.</p>
+<h5 id='example-request-url-using-code-classprettyprintemailcode-filter'>Example Request URL using <code class="prettyprint">email</code> filter</h5>
+<p><code class="prettyprint">GET https://api.dwolla.com/customers?email=jane%40email.com</code></p>
+<h5 id='example-request-url-using-code-classprettyprintsearchcode'>Example Request URL using <code class="prettyprint">search</code></h5>
 <p><code class="prettyprint">GET https://api.dwolla.com/customers?search=Jane</code></p>
+<h5 id='example-request-url-using-code-classprettyprintstatuscode-filter'>Example Request URL using <code class="prettyprint">status</code> filter</h5>
+<p><code class="prettyprint">GET https://api.dwolla.com/customers?status=document</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
 <table><thead>
 <tr>
@@ -3348,13 +3488,19 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>search</td>
 <td>no</td>
 <td>string</td>
-<td>Searches on <code class="prettyprint">firstName</code>, <code class="prettyprint">lastName</code>, and <code class="prettyprint">email</code> fields. (<code class="prettyprint">/customers?search=Doe</code>)</td>
+<td>Searches on <code class="prettyprint">firstName</code>, <code class="prettyprint">lastName</code>, and <code class="prettyprint">email</code> fields. <strong>Note:</strong> Value must be URL encoded. (<code class="prettyprint">/customers?search=Doe</code>)</td>
+</tr>
+<tr>
+<td>email</td>
+<td>no</td>
+<td>string</td>
+<td>Filter by <code class="prettyprint">email</code> field. <strong>Note:</strong> Value must be URL encoded. (`<code class="prettyprint">/customers?email=jane.doe%40email.com</code>)</td>
 </tr>
 <tr>
 <td>status</td>
 <td>no</td>
 <td>string</td>
-<td>Filter by Customer status or multiple Customer statuses. Possible values: <code class="prettyprint">unverified</code>, <code class="prettyprint">retry</code>, <code class="prettyprint">document</code>, <code class="prettyprint">verified</code>, <code class="prettyprint">suspended</code>, or <code class="prettyprint">deactivated</code>. (e.g. <code class="prettyprint">/customers?status=retry&amp;status=document</code>)</td>
+<td>Filter by Customer status or multiple Customer statuses. Possible values: <code class="prettyprint">unverified</code>, <code class="prettyprint">retry</code>, <code class="prettyprint">kba</code>, <code class="prettyprint">document</code>, <code class="prettyprint">verified</code>, <code class="prettyprint">suspended</code>, or <code class="prettyprint">deactivated</code>. (e.g. <code class="prettyprint">/customers?status=retry&amp;status=document</code>)</td>
 </tr>
 </tbody></table>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
