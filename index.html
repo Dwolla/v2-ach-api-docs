@@ -147,7 +147,7 @@
 <h2 id='making-requests'>Making requests</h2>
 <p>All requests should supply the <code class="prettyprint">Accept: application/vnd.dwolla.v1.hal+json</code> header. <code class="prettyprint">POST</code> requests must specify the <code class="prettyprint">Content-Type: application/vnd.dwolla.v1.hal+json</code> header. Request and response bodies are JSON encoded.</p>
 
-<p>Requests must be made over HTTPS.  Any non-secure requests are met with a redirect (HTTP 302) to the HTTPS equivalent URI.</p>
+<p>Requests must be made over HTTPS. Any non-secure requests are met with a redirect (HTTP 302) to the HTTPS equivalent URI.</p>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">POST https://api.dwolla.com/customers
 Content-Type: application/json
 Accept: application/vnd.dwolla.v1.hal+json
@@ -161,7 +161,7 @@ Authorization: Bearer myOAuthAccessToken123
 
 GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfers
 </code></pre></div></div><h3 id='authorization'>Authorization</h3>
-<p>All requests require either an OAuth access token or a <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code>.  OAuth access tokens are passed via the <code class="prettyprint">Authorization</code> HTTP header:</p>
+<p>All requests require either an OAuth access token or a <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code>. OAuth access tokens are passed via the <code class="prettyprint">Authorization</code> HTTP header:</p>
 
 <p><code class="prettyprint">Authorization: Bearer {access_token_here}</code></p>
 <h3 id='api-host'>API Host</h3>
@@ -169,11 +169,11 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 
 <p><strong>Sandbox:</strong> <code class="prettyprint">https://api-sandbox.dwolla.com</code></p>
 <h2 id='idempotency-key'>Idempotency key</h2>
-<p>To prevent an operation from being performed more than once, Dwolla supports passing in an <code class="prettyprint">Idempotency-Key</code> header with a unique key as the value. Multiple <code class="prettyprint">POSTs</code> with the same idempotency key won&rsquo;t result in multiple resources being created. It is recommended to use a random value for the idempotency key, like a UUID (i.e. - <code class="prettyprint">Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a</code>).</p>
+<p>To prevent an operation from being performed more than once, Dwolla supports passing in an <code class="prettyprint">Idempotency-Key</code> header with a unique key as the value. Multiple <code class="prettyprint">POSTs</code> with the same idempotency key and request body won&rsquo;t result in multiple resources being created. It is recommended to use a random value for the idempotency key, like a UUID (i.e. - <code class="prettyprint">Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a</code>).</p>
 
 <p>For example, if a request to <a href="#initiate-a-transfer">initiate a transfer</a> fails due to a network connection issue, you can reattempt the request with the same idempotency key to guarantee that only a single transfer is created.</p>
 
-<p>If you reattempt a <code class="prettyprint">POST</code> request with the same value for the <code class="prettyprint">Idempotency-Key</code>, rather than creating new or potentially duplicate resources, you will receive a <code class="prettyprint">201 Created</code>, with the original response of the created resource. If the Dwolla server is still processing the original <code class="prettyprint">POST</code> request, you will receive a <code class="prettyprint">409 Conflict</code> error response on the subsequent request. Idempotency keys are intended to prevent conflicts over a short period of time, therefore keys will expire after 24 hours.</p>
+<p>If you reattempt a <code class="prettyprint">POST</code> request with the same value for the <code class="prettyprint">Idempotency-Key</code>, rather than creating new or potentially duplicate resources, you will receive a <code class="prettyprint">201 Created</code>, with the original response of the created resource. If the Dwolla server is still processing the original <code class="prettyprint">POST</code> request, you will receive a <code class="prettyprint">409 Conflict</code> error response on the subsequent request. Multiple <code class="prettyprint">POST</code>s with the same idempotency key including an <strong>exact match</strong> request body won’t result in multiple resources being created. Idempotency keys are intended to prevent conflicts over a short period of time, therefore keys which are paired with a request body expire after 24 hours.</p>
 <ol class = "alerts"><li class="alert icon-alert-alert"><p>To prevent resources from being created more than once, we highly recommend making all requests idempotent.</p>
 </li></ol><h4 id='example-transfer-using-an-idempotency-key'>Example transfer using an Idempotency Key</h4><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
