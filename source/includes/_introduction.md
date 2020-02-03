@@ -6,7 +6,7 @@ Welcome to the [Dwolla API](https://www.dwolla.com/platform) documentation. This
 
 All requests should supply the `Accept: application/vnd.dwolla.v1.hal+json` header. `POST` requests must specify the `Content-Type: application/vnd.dwolla.v1.hal+json` header. Request and response bodies are JSON encoded.
 
-Requests must be made over HTTPS.  Any non-secure requests are met with a redirect (HTTP 302) to the HTTPS equivalent URI.
+Requests must be made over HTTPS. Any non-secure requests are met with a redirect (HTTP 302) to the HTTPS equivalent URI.
 
 ```noselect
 POST https://api.dwolla.com/customers
@@ -25,7 +25,7 @@ GET https://api.dwolla.com/accounts/a84222d5-31d2-4290-9a96-089813ef96b3/transfe
 
 ### Authorization
 
-All requests require either an OAuth access token or a `client_id` and `client_secret`.  OAuth access tokens are passed via the `Authorization` HTTP header:
+All requests require either an OAuth access token or a `client_id` and `client_secret`. OAuth access tokens are passed via the `Authorization` HTTP header:
 
 `Authorization: Bearer {access_token_here}`
 
@@ -36,11 +36,11 @@ All requests require either an OAuth access token or a `client_id` and `client_s
 
 ## Idempotency key
 
-To prevent an operation from being performed more than once, Dwolla supports passing in an `Idempotency-Key` header with a unique key as the value. Multiple `POSTs` with the same idempotency key won't result in multiple resources being created. It is recommended to use a random value for the idempotency key, like a UUID (i.e. - `Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a`).
+To prevent an operation from being performed more than once, Dwolla supports passing in an `Idempotency-Key` header with a unique key as the value. Multiple `POSTs` with the same idempotency key and request body won't result in multiple resources being created. It is recommended to use a random value for the idempotency key, like a UUID (i.e. - `Idempotency-Key: d2adcbab-4e4e-430b-9181-ac9346be723a`).
 
 For example, if a request to [initiate a transfer](#initiate-a-transfer) fails due to a network connection issue, you can reattempt the request with the same idempotency key to guarantee that only a single transfer is created.
 
-If you reattempt a `POST` request with the same value for the `Idempotency-Key`, rather than creating new or potentially duplicate resources, you will receive a `201 Created`, with the original response of the created resource. If the Dwolla server is still processing the original `POST` request, you will receive a `409 Conflict` error response on the subsequent request. Idempotency keys are intended to prevent conflicts over a short period of time, therefore keys will expire after 24 hours.
+If you reattempt a `POST` request with the same value for the `Idempotency-Key`, rather than creating new or potentially duplicate resources, you will receive a `201 Created`, with the original response of the created resource. If the Dwolla server is still processing the original `POST` request, you will receive a `409 Conflict` error response on the subsequent request. Multiple `POST`s with the same idempotency key including an **exact match** request body won’t result in multiple resources being created. Idempotency keys are intended to prevent conflicts over a short period of time, therefore keys which are paired with a request body expire after 24 hours.
 
 <ol class = "alerts">
    <li class="alert icon-alert-info">
