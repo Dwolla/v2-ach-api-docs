@@ -87,7 +87,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 
 | Parameter | Required |  Type  | Description            |
 |-----------|----------|--------|------------------------|
-| value     |   yes    | string | Amount of money. If the entered amount has more than two decimal places, Dwolla will automatically round it to the nearest even integer using [Banker's Rounding](http://wiki.c2.com/?BankersRounding). |
+| value     |   yes    | string | Amount of money. If the entered amount has more than two decimal places, Dwolla will automatically round it to the nearest even integer using [Banker's Rounding](http://wiki.c2.com/?BankersRounding). <br> Maximum limit: Default transaction limits based on [Customer type](https://developers.dwolla.com/resources/account-types.html) or custom transaction limits as defined in the services agreement with Dwolla. <br> Minimum limit: $0.01.|
 | currency  |   yes    | string | Possible values: `USD` |
 
 ### Facilitator fee JSON object
