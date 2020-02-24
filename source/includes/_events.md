@@ -1,6 +1,6 @@
 # Events
 
-When the state of a resource changes, Dwolla creates a new event resource to record the change. When an Event is created, a [Webhook](#webhooks) will be created to deliver the Event to any URLs specified by your active [Webhook Subscriptions](#webhook-subscriptions). To view example payloads for Customer related events, refer to the [Webhooks Events](https://developers.dwolla.com/resources/webhook-events.html) resource within the Developer Docs. 
+When the state of a resource changes, Dwolla creates a new event resource to record the change. When an Event is created, a [Webhook](#webhooks) will be created to deliver the Event to any URLs specified by your active [Webhook Subscriptions](#webhook-subscriptions). To view example payloads for Customer related events, refer to the [Webhooks Events](https://developers.dwolla.com/resources/webhook-events.html) resource within the Developer Docs.
 
 ### Events resource
 
@@ -61,6 +61,7 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | Topic          | Description           |
 |--------------|-------------------------|
 | bank_transfer_created | A bank transfer was created. Represents funds moving either from a Dwolla Master Account’s bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s bank. |
+| bank_transfer_creation_failed | An attempt to initiate a transfer to a Master Account’s bank was made, but failed. Transfers initiated to a Master Account’s bank must pass through the Master Account’s balance before being sent to a receiving bank. Dwolla will fail to create a transaction intended for a Master Account’s bank if the funds available in the balance are less than the transfer amount. |
 | bank_transfer_cancelled | A pending bank transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a Dwolla Master Account’s bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s  bank. |
 | bank_transfer_failed | A transfer failed to clear successfully. Usually, this is a result of an ACH failure (insufficient funds, etc.). Represents funds failing to clear either from a Dwolla Master Account’s  bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s  bank. |
 | bank_transfer_completed | A bank transfer has cleared successfully. Represents funds clearing either from a Dwolla Master Account’s  bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s  bank. |
