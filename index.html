@@ -12894,7 +12894,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='events'>Events</h1>
-<p>When the state of a resource changes, Dwolla creates a new event resource to record the change. When an Event is created, a <a href="#webhooks">Webhook</a> will be created to deliver the Event to any URLs specified by your active <a href="#webhook-subscriptions">Webhook Subscriptions</a>. To view example payloads for Customer related events, refer to the <a href="https://developers.dwolla.com/resources/webhook-events.html">Webhooks Events</a> resource within the Developer Docs. </p>
+<p>When the state of a resource changes, Dwolla creates a new event resource to record the change. When an Event is created, a <a href="#webhooks">Webhook</a> will be created to deliver the Event to any URLs specified by your active <a href="#webhook-subscriptions">Webhook Subscriptions</a>. To view example payloads for Customer related events, refer to the <a href="https://developers.dwolla.com/resources/webhook-events.html">Webhooks Events</a> resource within the Developer Docs.</p>
 <h3 id='events-resource'>Events resource</h3>
 <table><thead>
 <tr>
@@ -13014,6 +13014,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <tr>
 <td>bank_transfer_created</td>
 <td>A bank transfer was created. Represents funds moving either from a Dwolla Master Account’s bank to the Dwolla network or from the Dwolla network to a Dwolla Master Account’s bank.</td>
+</tr>
+<tr>
+<td>bank_transfer_creation_failed</td>
+<td>An attempt to initiate a transfer to a Master Account’s bank was made, but failed. Transfers initiated to a Master Account’s bank must pass through the Master Account’s balance before being sent to a receiving bank. Dwolla will fail to create a transaction intended for a Master Account’s bank if the funds available in the balance are less than the transfer amount.</td>
 </tr>
 <tr>
 <td>bank_transfer_cancelled</td>
