@@ -6229,6 +6229,11 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>File types supported: <br> Personal IDs - <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code> or <code class="prettyprint">.png</code>. <br> Business Documents - <code class="prettyprint">.jpg</code>, <code class="prettyprint">.jpeg</code>, <code class="prettyprint">.png</code>, or <code class="prettyprint">.pdf</code>.</td>
 </tr>
 <tr>
+<td>400</td>
+<td>DuplicateResource</td>
+<td>Document already exists. Follow the link to find the existing document for the Customer.</td>
+</tr>
+<tr>
 <td>403</td>
 <td>invalidResourceState</td>
 <td>Resource cannot be modified. Document creation not allowed for already <code class="prettyprint">verified</code> Customers or non-<code class="prettyprint">verified</code> Customer types.</td>
@@ -8900,7 +8905,7 @@ Source specifies the clearing time for the source funding source involved in the
 <tr>
 <td>400</td>
 <td>Invalid amount</td>
-<td>The amount exceeds the transaction limit. For more information on transaction limits for various Customer types, check out our <a href="https://developers.dwolla.com/resources/account-types.html">Customer Types article</a>.</td>
+<td>The supplied amount is greater than your transaction limit. For more information on transaction limits for various Customer types, check out our <a href="https://developers.dwolla.com/resources/account-types.html">Customer Types article</a>.</td>
 </tr>
 <tr>
 <td>400</td>
