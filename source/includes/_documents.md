@@ -69,6 +69,7 @@ Create a document for a Customer pending verification by uploading a color scan 
 | 201         | Created                  | A document resource was created.    |
 | 400         | maximumNumberOfResources | Max of four files upload allowed. Please wait for Dwolla to manually check the documents. |
 | 400         | invalidFileType          | File types supported: <br> Personal IDs - `.jpg`, `.jpeg` or `.png`. <br> Business Documents - `.jpg`, `.jpeg`, `.png`, or `.pdf`. |
+| 400         | DuplicateResource        | Document already exists. Follow the link to find the existing document for the Customer. |   
 | 403         | invalidResourceState     | Resource cannot be modified. Document creation not allowed for already `verified` Customers or non-`verified` Customer types. |
 | 403         | notAuthorized            | Not authorized to create documents. |
 | 404         | notFound                 | Customer not found. Check CustomerId. |
