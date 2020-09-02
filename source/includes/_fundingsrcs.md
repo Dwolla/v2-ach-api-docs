@@ -95,7 +95,7 @@ There are two methods available for adding a bank or credit union account to a C
 
 Before a Dwolla account or Dwolla API Customer is eligible to transfer money from their bank or credit union account they need to verify ownership of the account, either via Instant Account Verification (IAV) or micro-deposits. For more information on bank account verification, reference this [funding source verification](https://developers.dwolla.com/resources/funding-source-verification.html) resource article.
 
-Customers can have a maximum of 6 funding sources.
+Customers can have a maximum of 2 active funding sources. 
 
 ### HTTP request
 
