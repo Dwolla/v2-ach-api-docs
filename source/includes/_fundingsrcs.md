@@ -901,6 +901,7 @@ This section shows how to retrieve the status of micro-deposits and check if mic
 | HTTP Status | Code | Description
 |--------------|-------------|-----------|
 | 200 | Ok | Pending micro-deposits exist. |
+| 404 | NotFound | The requested resource was not found. |
 
 ### Request and response
 
