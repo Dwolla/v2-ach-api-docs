@@ -215,6 +215,8 @@ Refer to our [idempotency key](#idempotency-key) section to learn more.
 |    400      | Invalid amount         | The supplied amount must be a positive number. |
 |    401      | Invalid access token   | Access token not valid. Generate a new one and try again. |
 |    403      | Forbidden              | Not authorized to create a transfer. |
+|    429      | TooManyRequests        | Concurrent transfers with the given funding source are not supported. Please wait a short period of time before re-attempting the request. <br /> **Note:** We don’t support concurrent transfers sourced from a Dwolla balance. |
+
 
 ### Request and response
 
@@ -724,10 +726,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           "href": "https://api-sandbox.dwolla.com/transfers/416a2857-c887-4cca-bd02-8c3f75c4bb0e"
         },
         "source": {
-          "href": "https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB3111C"
+          "href": "https://api-sandbox.dwolla.com/customers/ac6d4c2a-fda8-49f6-805d-468066dd474c"
         },
         "destination": {
-          "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+          "href": "https://api-sandbox.dwolla.com/accounts/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
         },
         "created-from-transfer": {
           "href": "https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388"
@@ -747,10 +749,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           "href": "https://api-sandbox.dwolla.com/transfers/e58ae1f1-7007-47d3-a308-7e9aa6266d53"
         },
         "source": {
-          "href": "https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB3111C"
+          "href": "https://api-sandbox.dwolla.com/customers/ac6d4c2a-fda8-49f6-805d-468066dd474c"
         },
         "destination": {
-          "href": "https://api-sandbox.dwolla.com/funding-sources/ac6d4c2a-fda8-49f6-805d-468066dd474c"
+          "href": "https://api-sandbox.dwolla.com/accounts/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
         },
         "created-from-transfer": {
           "href": "https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388"

@@ -105,7 +105,7 @@ Customers can have a maximum of 2 active funding sources.
 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
-| _links | no | object | A <code>_links</code> JSON object containing an `on-demand-authorization` link relation. See example raw request and response below. |
+| _links | no | object | A <code>_links</code> JSON object containing an [`on-demand-authorization`](#create-an-on-demand-transfer-authorization) link relation. See example raw request and response below. |
 | routingNumber | yes | string | A bank routing number that identifies a bank or credit union in the U.S. **Note:** Validation of the routing number includes: a checksum, the first two digits of the routing number must fall within the range "01" through "12", or "21" through "32", and the string value must consist of nine digits. |
 | accountNumber | yes | string | The bank account number. **Note:** The account number is validated to check if it is a numeric string of 4-17 digits. |
 | bankAccountType | yes | string | Type of bank account: `checking`, `savings`, `general-ledger` or `loan`. |
@@ -179,6 +179,101 @@ customer.headers['location'] # => 'https://api-sandbox.dwolla.com/funding-source
 ```javascript
 var customerUrl = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C';
 var requestBody = {
+  'routingNumber': '222222226',
+  'accountNumber': '123456789',
+  'bankAccountType': 'checking',
+  'name': 'Jane Doe’s Checking'
+};
+
+appToken
+  .post(`${customerUrl}/funding-sources`, requestBody)
+  .then(res => res.headers.get('location')); // => 'https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'
+```
+
+### Request and response - using [on-demand authorization](#create-an-on-demand-transfer-authorization)
+
+```raw
+POST https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/funding-sources
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+{
+  "_links": {
+    "on-demand-authorization": {
+      "href": "https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
+    }
+  },
+  "routingNumber": "222222226",
+  "accountNumber": "123456789",
+  "type": "checking",
+  "name": "Jane Doe - Checking"
+}
+
+HTTP/1.1 201 Created
+Location: https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB3111C
+```
+```php
+<?php
+$fundingApi = new DwollaSwagger\FundingsourcesApi($apiClient);
+
+$fundingSource = $fundingApi->createCustomerFundingSource([
+  "_links" => [
+    "on-demand-authorization" => [
+      "href" => "https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
+    ]
+  ],
+  "routingNumber" => "222222226",
+  "accountNumber" => "123456789",
+  "bankAccountType" => "checking",
+  "name" => "Jane Doe’s Checking"
+], "https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C");
+$fundingSource; # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
+?>
+```
+```ruby
+# Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby
+customer_url = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
+request_body = {
+  _links: {
+    'on-demand-authorization': {
+      href: "https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
+    }
+  },
+  routingNumber: '222222226',
+  accountNumber: '123456789',
+  bankAccountType: 'checking',
+  name: 'Jane Doe’s Checking'
+}
+
+funding_source = app_token.post "#{customer_url}/funding-sources", request_body
+funding_source.response_headers[:location] # => "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
+```
+```python
+# Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python
+customer_url = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'
+request_body = {
+  '_links': {
+    'on-demand-authorization': {
+      'href': 'https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388'
+    }
+  },
+  'routingNumber': '222222226',
+  'accountNumber': '123456789',
+  'bankAccountType': 'checking',
+  'name': 'Jane Doe’s Checking'
+}
+
+customer = app_token.post('%s/funding-sources' % customer_url, request_body)
+customer.headers['location'] # => 'https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'
+```
+```javascript
+var customerUrl = 'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C';
+var requestBody = {
+  '_links': {
+    'on-demand-authorization': {
+      'href': 'https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388'
+    }
+  },
   'routingNumber': '222222226',
   'accountNumber': '123456789',
   'bankAccountType': 'checking',
@@ -901,6 +996,7 @@ This section shows how to retrieve the status of micro-deposits and check if mic
 | HTTP Status | Code | Description
 |--------------|-------------|-----------|
 | 200 | Ok | Pending micro-deposits exist. |
+| 404 | NotFound | The requested resource was not found. |
 
 ### Request and response
 
