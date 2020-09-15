@@ -145,6 +145,10 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_transfer_cancelled | A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds transferring either to an unverified Customer's bank or to a verified Customer's balance. |
 | customer_transfer_failed | A Customer transfer failed to clear successfully. Represents funds failing to clear either to an unverified Customer's bank or to a verified Customer's balance. |
 | customer_transfer_completed | A Customer transfer has cleared successfully. Represents funds clearing either to an unverified Customer's bank or to a verified Customer's balance. |
+| customer_card_transfer_created | A card transfer was created for a Customer. Represents funds transferring from a Master Accout's balance to a Customer's debit card.  |
+| customer_card_transfer_cancelled | A pending push to debit card transfer was cancelled for a Customer. Represents a cancellation of funds transferring from a Master Accout's balance to a Customer's debit card.  |
+| customer_card_transfer_failed | A push to debit card transfer failed to complete for a Customer. Represents funds failing to complete to a Customer's debit card.  |
+
 
 ##### Mass Payments
 
