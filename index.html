@@ -6989,7 +6989,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>_links</td>
 <td>no</td>
 <td>object</td>
-<td>A <code>_links</code> JSON object containing an <code class="prettyprint">on-demand-authorization</code> link relation. See example raw request and response below.</td>
+<td>A <code>_links</code> JSON object containing an <a href="#create-an-on-demand-transfer-authorization"><code class="prettyprint">on-demand-authorization</code></a> link relation. See example raw request and response below.</td>
 </tr>
 <tr>
 <td>routingNumber</td>
@@ -7139,6 +7139,128 @@ Location: https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4
   <span class="s1">'accountNumber'</span><span class="p">:</span> <span class="s1">'123456789'</span><span class="p">,</span>
   <span class="s1">'bankAccountType'</span><span class="p">:</span> <span class="s1">'checking'</span><span class="p">,</span>
   <span class="s1">'name'</span><span class="p">:</span> <span class="s1">'Jane Doe’s Checking'</span>
+<span class="p">};</span>
+
+<span class="nx">appToken</span>
+  <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">customerUrl</span><span class="p">}</span><span class="sr">/funding-sources`, requestBody</span><span class="err">)
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'location'</span><span class="p">));</span> <span class="c1">// =&gt; 'https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
+</code></pre></div></div><h3 id='request-and-response---using-a-hrefcreate-an-on-demand-transfer-authorizationon-demand-authorizationa'>Request and response - using <a href="#create-an-on-demand-transfer-authorization">on-demand authorization</a></h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/customers/99bfb139-eadd-4cdf-b346-7504f0c16c60/funding-sources
+Content-Type: application/vnd.dwolla.v1.hal+json
+Accept: application/vnd.dwolla.v1.hal+json
+Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
+{
+  "_links": {
+    "on-demand-authorization": {
+      "href": "https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"
+    }
+  },
+  "routingNumber": "222222226",
+  "accountNumber": "123456789",
+  "type": "checking",
+  "name": "Jane Doe - Checking"
+}
+
+HTTP/1.1 201 Created
+Location: https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB3111C
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$fundingApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\FundingsourcesApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+
+<span class="nv">$fundingSource</span> <span class="o">=</span> <span class="nv">$fundingApi</span><span class="o">-&gt;</span><span class="na">createCustomerFundingSource</span><span class="p">([</span>
+  <span class="s2">"_links"</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s2">"on-demand-authorization"</span> <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s2">"href"</span> <span class="o">=&gt;</span> <span class="s2">"https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"</span>
+    <span class="p">]</span>
+  <span class="p">],</span>
+  <span class="s2">"routingNumber"</span> <span class="o">=&gt;</span> <span class="s2">"222222226"</span><span class="p">,</span>
+  <span class="s2">"accountNumber"</span> <span class="o">=&gt;</span> <span class="s2">"123456789"</span><span class="p">,</span>
+  <span class="s2">"bankAccountType"</span> <span class="o">=&gt;</span> <span class="s2">"checking"</span><span class="p">,</span>
+  <span class="s2">"name"</span> <span class="o">=&gt;</span> <span class="s2">"Jane Doe’s Checking"</span>
+<span class="p">],</span> <span class="s2">"https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C"</span><span class="p">);</span>
+<span class="nv">$fundingSource</span><span class="p">;</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"
+</span><span class="cp">?&gt;</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">_links: </span><span class="p">{</span>
+    <span class="s1">'on-demand-authorization'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="ss">href: </span><span class="s2">"https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388"</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="ss">routingNumber: </span><span class="s1">'222222226'</span><span class="p">,</span>
+  <span class="ss">accountNumber: </span><span class="s1">'123456789'</span><span class="p">,</span>
+  <span class="ss">bankAccountType: </span><span class="s1">'checking'</span><span class="p">,</span>
+  <span class="ss">name: </span><span class="s1">'Jane Doe’s Checking'</span>
+<span class="p">}</span>
+
+<span class="n">funding_source</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"</span><span class="si">#{</span><span class="n">customer_url</span><span class="si">}</span><span class="s2">/funding-sources"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">funding_source</span><span class="p">.</span><span class="nf">response_headers</span><span class="p">[</span><span class="ss">:location</span><span class="p">]</span> <span class="c1"># =&gt; "https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">customer_url</span> <span class="o">=</span> <span class="s">'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'_links'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'on-demand-authorization'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">'href'</span><span class="p">:</span> <span class="s">'https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388'</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s">'routingNumber'</span><span class="p">:</span> <span class="s">'222222226'</span><span class="p">,</span>
+  <span class="s">'accountNumber'</span><span class="p">:</span> <span class="s">'123456789'</span><span class="p">,</span>
+  <span class="s">'bankAccountType'</span><span class="p">:</span> <span class="s">'checking'</span><span class="p">,</span>
+  <span class="s">'name'</span><span class="p">:</span> <span class="s">'Jane Doe’s Checking'</span>
+<span class="p">}</span>
+
+<span class="n">customer</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s/funding-sources'</span> <span class="o">%</span> <span class="n">customer_url</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">customer</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/funding-sources/375c6781-2a17-476c-84f7-db7d2f6ffb31'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">customerUrl</span> <span class="o">=</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/AB443D36-3757-44C1-A1B4-29727FB3111C'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'_links'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">'on-demand-authorization'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s1">'href'</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/on-demand-authorizations/30e7c028-0bdf-e511-80de-0aa34a9b2388'</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s1">'routingNumber'</span><span class="err">:</span> <span class="s1">'222222226'</span><span class="p">,</span>
+  <span class="s1">'accountNumber'</span><span class="err">:</span> <span class="s1">'123456789'</span><span class="p">,</span>
+  <span class="s1">'bankAccountType'</span><span class="err">:</span> <span class="s1">'checking'</span><span class="p">,</span>
+  <span class="s1">'name'</span><span class="err">:</span> <span class="s1">'Jane Doe’s Checking'</span>
 <span class="p">};</span>
 
 <span class="nx">appToken</span>
@@ -8292,6 +8414,11 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>Ok</td>
 <td>Pending micro-deposits exist.</td>
 </tr>
+<tr>
+<td>404</td>
+<td>NotFound</td>
+<td>The requested resource was not found.</td>
+</tr>
 </tbody></table>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -8921,6 +9048,11 @@ Source specifies the clearing time for the source funding source involved in the
 <td>403</td>
 <td>Forbidden</td>
 <td>Not authorized to create a transfer.</td>
+</tr>
+<tr>
+<td>429</td>
+<td>TooManyRequests</td>
+<td>Concurrent transfers with the given funding source are not supported. Please wait a short period of time before re-attempting the request. <br /> <strong>Note:</strong> We don’t support concurrent transfers sourced from a Dwolla balance.</td>
 </tr>
 </tbody></table>
 <h3 id='request-and-response'>Request and response</h3>
@@ -9606,10 +9738,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           "href": "https://api-sandbox.dwolla.com/transfers/416a2857-c887-4cca-bd02-8c3f75c4bb0e"
         },
         "source": {
-          "href": "https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB3111C"
+          "href": "https://api-sandbox.dwolla.com/customers/ac6d4c2a-fda8-49f6-805d-468066dd474c"
         },
         "destination": {
-          "href": "https://api-sandbox.dwolla.com/funding-sources/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
+          "href": "https://api-sandbox.dwolla.com/accounts/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
         },
         "created-from-transfer": {
           "href": "https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388"
@@ -9629,10 +9761,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           "href": "https://api-sandbox.dwolla.com/transfers/e58ae1f1-7007-47d3-a308-7e9aa6266d53"
         },
         "source": {
-          "href": "https://api-sandbox.dwolla.com/funding-sources/AB443D36-3757-44C1-A1B4-29727FB3111C"
+          "href": "https://api-sandbox.dwolla.com/customers/ac6d4c2a-fda8-49f6-805d-468066dd474c"
         },
         "destination": {
-          "href": "https://api-sandbox.dwolla.com/funding-sources/ac6d4c2a-fda8-49f6-805d-468066dd474c"
+          "href": "https://api-sandbox.dwolla.com/accounts/707177c3-bf15-4e7e-b37c-55c3898d9bf4"
         },
         "created-from-transfer": {
           "href": "https://api-sandbox.dwolla.com/transfers/83eb4b5e-a5d9-e511-80de-0aa34a9b2388"
@@ -13276,6 +13408,18 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>customer_transfer_completed</td>
 <td>A Customer transfer has cleared successfully. Represents funds clearing either to an unverified Customer&rsquo;s bank or to a verified Customer&rsquo;s balance.</td>
 </tr>
+<tr>
+<td>customer_card_transfer_created</td>
+<td>A card transfer was created for a Customer. Represents funds transferring from a Master Accout&rsquo;s balance to a Customer&rsquo;s debit card.</td>
+</tr>
+<tr>
+<td>customer_card_transfer_cancelled</td>
+<td>A pending push to debit card transfer was cancelled for a Customer. Represents a cancellation of funds transferring from a Master Accout&rsquo;s balance to a Customer&rsquo;s debit card.</td>
+</tr>
+<tr>
+<td>customer_card_transfer_failed</td>
+<td>A push to debit card transfer failed to complete for a Customer. Represents funds failing to complete to a Customer&rsquo;s debit card.</td>
+</tr>
 </tbody></table>
 <h5 id='mass-payments'>Mass Payments</h5>
 <table><thead>
@@ -14893,6 +15037,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
             <div class="page-wrap">
               <h5>Financial institutions play an important role in the Dwolla network.</h5>
               <p>Dwolla, Inc. is an agent of Veridian Credit Union and all funds associated with your account in our network are held in one or more pooled accounts at Veridian Credit Union. These funds may not be eligible for share insurance by the National Credit Union Share Insurance Fund. Dwolla, Inc. is the operator of a software platform that communicates user instructions for funds transfers to Veridian Credit Union.</p>
+              <p>Sponsorship and Settlement of Push-to-Debit payment services provided
+              by <span style=" white-space: nowrap;"> MetaBank®, N.A. </span> <br />
+              Push-to-Debit payments are typically available within 30 minutes.</p>
             </div>
           </section>
           <section class="copyright">
