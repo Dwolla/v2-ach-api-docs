@@ -328,7 +328,7 @@ For an in-depth look at personal verified Customers creation and status handling
 | city | yes | string | City of Customer's permanent residence. |
 | state | yes | string | Two letter abbreviation of the state in which the Customer resides, e.g. `CA`. |
 | postalCode | yes | string | Postal code of Customer's permanent residence. US five-digit ZIP or ZIP + 4 code. e.g. `50314`. |
-| dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. Must be 18 years or older. |
+| dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. Must be between 18 to 125 years of age. |
 | ssn | yes | string | Last four digits of the Customer's Social Security Number. <br> **Note:** Submitting all 9 digits of the SSN is also accepted. |
 | phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 | correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
@@ -469,7 +469,7 @@ For an in-depth look at business verified Customers creation and status handling
 | email | yes | string | email address of the business owner. |
 | ipAddress | no | string | ipAddress of registering user is recommended. |
 | type | yes | string | Value of: `business` |
-| dateOfBirth | yes  |  string |  The date of birth of the business owner. Formatted in YYYY-MM-DD format. Must be 18 years or older. |
+| dateOfBirth | yes  |  string |  The date of birth of the business owner. Formatted in YYYY-MM-DD format. Must be between 18 to 125 years of age. |
 | ssn | yes | string | Last four-digits of the business owner's social security number. <br> **Note:** Submitting all 9 digits of the SSN is also accepted. |
 | address1 | yes | string | Street number, street name of business’ physical address. |
 | address2 | no | string | Apartment, floor, suite, bldg. # of business’ physical address |
@@ -646,7 +646,7 @@ A controller is any natural individual who holds significant responsibilities to
 |  firstName | yes  |  String |  The legal first name of the controller. |
 |  lastName | yes  |  String |  The legal last name of the controller. |
 |  title | yes | String | Job title of the business verified Customer’s controller.  IE - Chief Financial Officer |
-|  dateOfBirth | yes  |  String |  The date of birth of the controller. Formatted in YYYY-MM-DD format. Must be 18 years or older. |
+|  dateOfBirth | yes  |  String |  The date of birth of the controller. Formatted in YYYY-MM-DD format. Must be between 18 to 125 years of age. |
 |  ssn | conditional  |  String | Last four-digits of controller’s social security number. **Required** for US persons. If ssn is omitted, [passport](#controller-passport-json-object) is required. <br> **Note:** Submitting all 9 digits of the SSN is also accepted. |
 |  address | yes | object | An [address JSON object](/#controller-address-json-object). Full address of the controller's physical address. |
 |  passport | conditional | object | An [optional passport JSON object](/#controller-passport-json-object). **Required** for non-US persons. Includes passport identification number and country. If [passport](#passport-json-object) is omitted, ssn is required. |
@@ -1373,7 +1373,7 @@ appToken
 | city | yes | string | City of Customer's permanent residence. |
 | state | yes | string | Two letter abbreviation of the state in which the customer resides, e.g. `CA`. |
 | postalCode | yes | string | Postal code of Customer's permanent residence. Should be a five digit postal code, e.g. `50314`. |
-| dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. Must be 18 years or older.|
+| dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. Must be between 18 to 125 years of age. |
 | ssn | yes | string | Customer's **full** Social Security Number. |
 | phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 
