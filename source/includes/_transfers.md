@@ -215,6 +215,7 @@ Refer to our [idempotency key](#idempotency-key) section to learn more.
 |    400      | Invalid amount         | The supplied amount must be a positive number. |
 |    401      | Invalid access token   | Access token not valid. Generate a new one and try again. |
 |    403      | Forbidden              | Not authorized to create a transfer. |
+|    403      | Forbidden              | Invalid Funds Flow: this operation requires the funds flow (`facilitate`/`receive`/`send`) to be enabled. |
 |    429      | TooManyRequests        | Concurrent transfers with the given funding source are not supported. Please wait a short period of time before re-attempting the request. <br /> **Note:** We don’t support concurrent transfers sourced from a Dwolla balance. |
 
 
