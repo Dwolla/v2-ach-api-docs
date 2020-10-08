@@ -820,18 +820,31 @@ When a bank transfer fails for an Account or Customer, Dwolla returns a `failure
 ### Request and Response
 
 ```raw
-GET https://api-sandbox.dwolla.com/transfers/e6d9a950-ac9e-e511-80dc-0aa34a9b2388/failure
+GET https://api-sandbox.dwolla.com/transfers/8997ebed-69be-e611-80ea-0aa34a9b2388/failure
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
-  "_links": {
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/transfers/E6D9A950-AC9E-E511-80DC-0AA34A9B2388/failure"
-    }
-  },
-  "code": "R01",
-  "description": "Insufficient Funds"
+    "_links": {
+        "self": {
+            "href": "https://api.dwolla.com/transfers/8997ebed-69be-e611-80ea-0aa34a9b2388/failure",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "failure"
+        },
+        "failed-funding-source": {
+            "href": "https://api.dwolla.com/funding-sources/285ea6f4-c45d-4e15-ad33-21f51461f437",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "funding-source"
+        },
+        "customer": {
+            "href": "https://api.dwolla.com/customers/be2d2322-fdee-4361-8722-4289f5601604",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        }
+    },
+    "code": "R03",
+    "description": "No Account/Unable to Locate Account",
+    "explanation": "The account number does not correspond to the individual identified in the entry or a valid account."
 }
 ```
 ```ruby
