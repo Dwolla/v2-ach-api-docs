@@ -128,17 +128,20 @@ This section details how to create a new Customer. It is important to prompt you
 
 ### HTTP status and error codes
 
-| HTTP Status | Message |
-|--------------|-------------|
-| 400 | Duplicate customer or validation error.
-| 403 | Not authorized to create customers.
+| HTTP Status | Code | Description |
+|--------------|-------------|------|
+| 201 | Created | Customer created. |
+| 400 | BadRequest | The request body contains bad syntax or is incomplete. |
+| 400 | ValidationError | Reference the [errors section](#validation-errors) for list of possible _embedded validation errors. |
+| 403 | Forbidden | Not authorized to create customers. |
+| 404 | NotFound | Customer not found. |
 
 ### Request parameters - receive-only User
 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
-| firstName | yes | string | Customer's first name. |
-| lastName | yes | string | Customer's last name. |
+| firstName | yes | string | Customer's first name. Must be less than or equal to 50 characters and contain no special characters. |
+| lastName | yes | string | Customer's last name. Must be less than or equal to 50 characters and contain no special characters. |
 | email | yes | string | Customer's email address. |
 | type | yes | string | Value of `receive-only`. |
 | businessName | no | string | Customer's registered business name. (**Optional** if not a business entity) |
@@ -231,8 +234,8 @@ appToken
 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
-| firstName | yes | string | Customer's first name. |
-| lastName | yes | string | Customer's last name. |
+| firstName | yes | string | Customer's first name. Must be less than or equal to 50 characters and contain no special characters. |
+| lastName | yes | string | Customer's last name. Must be less than or equal to 50 characters and contain no special characters. |
 | email | yes | string | Customer's email address. |
 | businessName | no | string | Customer's registered business name. (**Optional** if not a business entity) |
 | ipAddress | no | string | Customer's IP address. |
@@ -318,18 +321,18 @@ For an in-depth look at personal verified Customers creation and status handling
 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
-| firstName | yes | string | An individual Customer's first name. |
-| lastName | yes | string | An individual Customer's last name. |
+| firstName | yes | string | An individual Customer's first name. Must be less than or equal to 50 characters and contain no special characters. |
+| lastName | yes | string | An individual Customer's last name. Must be less than or equal to 50 characters and contain no special characters. |
 | email | yes | string | Customer's email address. |
 | ipAddress | no | string | Customer's IP address. |
 | type | yes | string | The Verified Customer type. Set to `personal` if creating a verified personal Customer. |
-| address1 | yes | string | First line of the street address of the Customer's permanent residence. Must be 50 characters or less. **Note:** PO Boxes are not allowed. |
-| address2 | no | string | Second line of the street address of the Customer's permanent residence. Must be 50 characters or less. **Note:** PO Boxes are not allowed. |
+| address1 | yes | string | First line of the street address of the Customer's permanent residence. Must be less than or equal to 50 characters and contain no special characters. **Note:** PO Boxes are not allowed. |
+| address2 | no | string | Second line of the street address of the Customer's permanent residence. Must be less than or equal to 50 characters and contain no special characters. **Note:** PO Boxes are not allowed. |
 | city | yes | string | City of Customer's permanent residence. |
 | state | yes | string | Two letter abbreviation of the state in which the Customer resides, e.g. `CA`. |
 | postalCode | yes | string | Postal code of Customer's permanent residence. US five-digit ZIP or ZIP + 4 code. e.g. `50314`. |
 | dateOfBirth | yes | string | Customer's date of birth in `YYYY-MM-DD` format. Must be between 18 to 125 years of age. |
-| ssn | yes | string | Last four digits of the Customer's Social Security Number. <br> **Note:** Submitting all 9 digits of the SSN is also accepted. |
+| ssn | yes | string | Last four or full 9 digits of the Customer's Social Security Number. |
 | phone | no | string | Customer's 10 digit phone number.  No hyphens or other separators, e.g. `3334447777`. |
 | correlationId | no | string | A unique string value attached to a customer which can be used for traceability between Dwolla and your application. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. Uniqueness is enforced on correlationId across Customers.|
 
@@ -464,15 +467,15 @@ For an in-depth look at business verified Customers creation and status handling
 
 | Parameter | Required | Type | Description |
 | ---------------|--------------|--------|----------------|
-| firstName | yes | string | The legal first name of the business owner. |
-| lastName | yes | string | The legal last name of the business owner. |
+| firstName | yes | string | The legal first name of the business owner. Must be less than or equal to 50 characters and contain no special characters.|
+| lastName | yes | string | The legal last name of the business owner. Must be less than or equal to 50 characters and contain no special characters. |
 | email | yes | string | email address of the business owner. |
 | ipAddress | no | string | ipAddress of registering user is recommended. |
 | type | yes | string | Value of: `business` |
-| dateOfBirth | yes  |  string |  The date of birth of the business owner. Formatted in YYYY-MM-DD format. Must be between 18 to 125 years of age. |
-| ssn | yes | string | Last four-digits of the business owner's social security number. <br> **Note:** Submitting all 9 digits of the SSN is also accepted. |
-| address1 | yes | string | Street number, street name of business’ physical address. |
-| address2 | no | string | Apartment, floor, suite, bldg. # of business’ physical address |
+| dateOfBirth | yes  |  string |  The date of birth of the business owner. Formatted in `YYYY-MM-DD` format. Must be between 18 to 125 years of age. |
+| ssn | yes | string | Last four or full 9 digits of the business owner's Social Security Number. |
+| address1 | yes | string | Street number, street name of business’ physical address. Must be less than or equal to 50 characters and contain no special characters. |
+| address2 | no | string | Apartment, floor, suite, bldg. # of business’ physical address Must be less than or equal to 50 characters and contain no special characters. |
 | city| yes | string | City of business’ physical address. |
 | state| yes | string | Two-letter US state or territory abbreviation code of business’ physical address. For two-letter abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). |
 | postalCode | yes| string | Business’ US five-digit ZIP or ZIP + 4 code. |
@@ -617,13 +620,13 @@ A verified business Customer must input information on the controller and the Bu
 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-----------|
-| firstName | yes | string |The legal first name of the Account Admin or business owner signing up the business verified Customer. |
-| lastName | yes | string | The legal last name of the Account Admin or individual signing up the business verified Customer. |
+| firstName | yes | string |The legal first name of the Account Admin or business owner signing up the business verified Customer. Must be less than or equal to 50 characters and contain no special characters. |
+| lastName | yes | string | The legal last name of the Account Admin or individual signing up the business verified Customer. Must be less than or equal to 50 characters and contain no special characters. |
 | email | yes |string | email address of individual creating and managing the Customer account. |
 | ipAddress | no |string | ipAddress of registering user is recommended. |
 | type | yes | string | Value of: `business` |
-| address1 | yes |string | Street number, street name of business’ physical address. |
-| address2 | no |string | Apartment, floor, suite, bldg. # of business’ physical address. |
+| address1 | yes |string | Street number, street name of business’ physical address. Must be less than or equal to 50 characters and contain no special characters. |
+| address2 | no |string | Apartment, floor, suite, bldg. # of business’ physical address. Must be less than or equal to 50 characters and contain no special characters. |
 | city | yes |string | City of business’ physical address. |
 | state | yes |string | Two-letter US state or territory abbreviation code of business’ physical address. For two-letter abbreviation reference, check out the [US Postal Service guide](https://pe.usps.com/text/pub28/28apb.htm). |
 | postalCode | yes |string | Business’ US five-digit ZIP or ZIP + 4 code. |
@@ -647,9 +650,9 @@ A controller is any natural individual who holds significant responsibilities to
 |  lastName | yes  |  String |  The legal last name of the controller. |
 |  title | yes | String | Job title of the business verified Customer’s controller.  IE - Chief Financial Officer |
 |  dateOfBirth | yes  |  String |  The date of birth of the controller. Formatted in YYYY-MM-DD format. Must be between 18 to 125 years of age. |
-|  ssn | conditional  |  String | Last four-digits of controller’s social security number. **Required** for US persons. If ssn is omitted, [passport](#controller-passport-json-object) is required. <br> **Note:** Submitting all 9 digits of the SSN is also accepted. |
+|  ssn | conditional  |  String | Last four or full 9 digits of controller’s Social Security Number. **Required** for US persons. If SSN is omitted, [passport](#controller-passport-json-object) is required. |
 |  address | yes | object | An [address JSON object](/#controller-address-json-object). Full address of the controller's physical address. |
-|  passport | conditional | object | An [optional passport JSON object](/#controller-passport-json-object). **Required** for non-US persons. Includes passport identification number and country. If [passport](#passport-json-object) is omitted, ssn is required. |
+|  passport | conditional | object | An [optional passport JSON object](/#controller-passport-json-object). **Required** for non-US persons. Includes Passport Identification Number and Country. If [passport](#passport-json-object) is omitted, SSN is required. |
 
 ##### Controller address JSON object
 
@@ -665,11 +668,11 @@ A controller is any natural individual who holds significant responsibilities to
 
 ##### Controller passport JSON object
 
-A controller will only need to input Passport information if they are non-US persons and do not have a social security number.
+A controller will only need to input passport information if they are non-US persons and do not have a Social Security Number.
 
 | Parameter | Required | Type | Description |
 |----------------|--------------|--------|----------------|
-|  number  | conditional | string | Required if controller is a non-US person and has no Social Security number. |
+|  number  | conditional | string | Required if controller is a non-US person and has no Social Security Number. |
 |  country | conditional | string | Country of issued passport. |
 
 ### Verified Business Customer (businessType= llc, corporation or partnership)

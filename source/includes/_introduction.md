@@ -207,7 +207,7 @@ The following errors are common across all API endpoints.
 | 404 | NotFound | The requested resource was not found. |
 | 405 | MethodNotAllowed | (varies) |
 | 406 | InvalidVersion | Missing or invalid API version. |
-| 500 | ServerError | A server error occurred. Error ID: 63e92a2a-fb48-4a23-ab4c-24a6764f1593. |
+| 500 | ServerError | A server error occurred. Error ID: {ID} |
 | 500 | RequestTimeout | The request timed out. |
 
 ### Validation errors
@@ -221,9 +221,9 @@ Responses with a top-level error code of `ValidationError` are returned when itâ
 
 The `path` field is a JSON pointer to the specific field in the request that has a problem. The `message` is a human readable description of the problem. The `code` is a detailed error code that can have one of the following values:
 
-- Required
-- Invalid - not a valid value for this field
-- InvalidFormat - chars in an amount field, for instance
+- Required - {field name} is required. For example, null or empty string in required field.
+- Invalid - {field name} invalid. 
+- InvalidFormat - {field name} is not in a valid format. For example, characters in the amount field.
 - Duplicate - "A customer with the specified email already exists."
 - ReadOnly - this field is not allowed to be modified
 - NotAllowed - value, while valid/exists, is not allowed to be used
