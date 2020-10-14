@@ -155,7 +155,7 @@ Source specifies the clearing time for the source funding source involved in the
 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
-| addenda | no | object | An addenda object contains a `values` key which is an array of comma separated string addenda values. Addenda record information is used for the purpose of transmitting transfer-related information from a business. <br> Values must be less than or equal to 80 characters and can include spaces. <br> Acceptable characters are: a-Z, 0-9, and special characters `- _ . ~ ! * ' ( ) ; : @ & = + $ , / ? % # [ ]`. <br> *Transfers must be sent to/from a business entity's bank to guarantee addenda delivery.* |
+| addenda | no | object | An addenda object contains a `values` key where its value is an array containing a **single** string addenda value. Addenda record information is used for the purpose of transmitting transfer-related information from a business. <br> Addenda value must be less than or equal to 80 characters and can include spaces. <br> Acceptable characters are: a-Z, 0-9, and special characters `- _ . ~ ! * ' ( ) ; : @ & = + $ , / ? % # [ ]`. <br> *Transfers must be sent to/from a business entity's bank to guarantee addenda delivery.* |
 
 #### achDetails with addenda example:
 
