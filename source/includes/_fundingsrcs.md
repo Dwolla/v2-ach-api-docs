@@ -969,7 +969,7 @@ var fundingSourceUrl = 'https://api-sandbox.dwolla.com/funding-sources/c2eb3f03-
 
 appToken
   .get(`${fundingSourceUrl}/balance`)
-  .then(res => res.body.balance.amount);
+  .then(res => res.body.balance.value);
 ```
 
 ## Retrieve micro-deposits details
