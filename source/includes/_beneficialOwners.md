@@ -201,9 +201,16 @@ This section contains information on how to retrieve a beneficial owner which be
 `GET https://api.dwolla.com/beneficial-owners/{id}`
 
 ### Request parameters
+
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | Beneficial owner unique identifier. |
+
+### HTTP status and error codes
+
+| HTTP Status | Message    |
+| ----------- | ---------- |
+| 404         | Not found. |
 
 ### Request and response
 
@@ -397,6 +404,15 @@ This endpoint can be used to update a beneficial owner's information to `retry` 
 | number | conditional | string | Required if beneficial owner is a non-US person and has no Social Security number. |
 | country | conditional | string | Country of issued passport. |
 
+### HTTP status and error codes
+
+| HTTP Status | Message    |
+| ----------- | ---------- |
+| 200         | Owner Updated. |
+| 400         | Validation error. |
+| 403         | Owner cannot be updated. |
+| 404         | Owner not found. |
+
 ### Request and response
 
 ```raw
@@ -529,12 +545,6 @@ appToken
   .then(res => res.body.id); // => '00cb67f2-768c-4ee3-ac81-73bc4faf9c2b'
 ```
 
-### HTTP status and error codes
-| HTTP Status | Message |
-|--------------|-------------|
-| 400 | Duplicate customer or validation error. |
-| 403 | Not authorized to create customers. |
-
 ## Remove a beneficial owner
 
 Delete a beneficial owner. A removed beneficial owner cannot be retrieved after being removed.
@@ -624,6 +634,14 @@ This section contains information on how to retrieve a Customer's beneficial own
 |-----------|----------|----------------|-------------|
 | id | yes | string | Customer unique identifier. |
 
+### HTTP status and error codes
+
+| HTTP Status | Message    |
+| ----------- | ---------- |
+| 200         | Ownership certification status found. |
+| 403         | Not authorized to get certification status. |
+| 404         | Ownership certification status not found. |
+
 ### Request and response
 
 ```raw
@@ -686,6 +704,14 @@ This section contains information on how to certify beneficial ownership for a b
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
 | id | yes | string | Customer unique identifier. |
+
+### HTTP status and error codes
+
+| HTTP Status | Message    |
+| ----------- | ---------- |
+| 200         | Beneficial ownership status updated. |
+| 400         | Validation error. |
+| 403         | Forbidden from updating beneficial ownership status for this customer. |
 
 ### Request and response
 
