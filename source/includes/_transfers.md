@@ -11,7 +11,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 | destination                | GET this link to [retrieve the Customer](#retrieve-a-customer) that was the `destination` of the transfer. |
 | source-funding-source      | GET this link to [retrieve the funding source](#retrieve-a-funding-source) that was the `source` of the transfer. |
 | destination-funding-source | GET this link to [retrieve the funding source](#retrieve-a-funding-source) that was the `destination` of the transfer. |
-| cancel                     | POST to this link to [cancel the transfer](#cancel-a-transfer) (A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.) |
+| cancel                     | POST to this link to [cancel the transfer](#cancel-a-transfer) (A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4pm CT. If a transfer was initiated after 4pm CT, it can be cancelled before 4pm CT on the following business day.) |
 | fees                       | GET this link to [retrieve the facilitator fees](#list-fees-for-a-transfer) associated with the transfer. |
 
 ### Transfer resource
@@ -881,7 +881,7 @@ appToken
 
 ## Cancel a transfer
 
-When a bank transfer is eligible for cancellation, Dwolla returns a `cancel` link  when [getting the transfer by Id](#retrieve-a-transfer). This cancel link is used to trigger the cancellation, preventing the bank transfer from processing further. A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.
+When a bank transfer is eligible for cancellation, Dwolla returns a `cancel` link  when [getting the transfer by Id](#retrieve-a-transfer). This cancel link is used to trigger the cancellation, preventing the bank transfer from processing further. A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4pm CT. If a transfer was initiated after 4pm CT, it can be cancelled before 4pm CT on the following business day. **Note:** This is not a hard cut off. Occassionally, the export out of the Dwolla Network may be delayed or could take some time to process. This may cause transfers created close after 4pm CT to be exported the same business day. It is recommended to rely on the `cancel` link returned on the transfer resource to determine if a transfer is cancellable rather than relying on the export timing. 
 
 ### HTTP Request
 `POST https://api.dwolla.com/transfers/{id}`
