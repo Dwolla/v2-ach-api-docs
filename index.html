@@ -411,7 +411,7 @@ Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34
 <tr>
 <td>500</td>
 <td>ServerError</td>
-<td>A server error occurred. Error ID: 63e92a2a-fb48-4a23-ab4c-24a6764f1593.</td>
+<td>A server error occurred. Error ID: {ID}</td>
 </tr>
 <tr>
 <td>500</td>
@@ -437,9 +437,9 @@ Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34
 <p>The <code class="prettyprint">path</code> field is a JSON pointer to the specific field in the request that has a problem. The <code class="prettyprint">message</code> is a human readable description of the problem. The <code class="prettyprint">code</code> is a detailed error code that can have one of the following values:</p>
 
 <ul>
-<li>Required</li>
-<li>Invalid - not a valid value for this field</li>
-<li>InvalidFormat - chars in an amount field, for instance</li>
+<li>Required - {field name} is required. For example, null or empty string in required field.</li>
+<li>Invalid - {field name} invalid. </li>
+<li>InvalidFormat - {field name} is not in a valid format. For example, characters in the amount field.</li>
 <li>Duplicate - &ldquo;A customer with the specified email already exists.&rdquo;</li>
 <li>ReadOnly - this field is not allowed to be modified</li>
 <li>NotAllowed - value, while valid/exists, is not allowed to be used</li>
@@ -2015,16 +2015,34 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <table><thead>
 <tr>
 <th>HTTP Status</th>
-<th>Message</th>
+<th>Code</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
+<td>201</td>
+<td>Created</td>
+<td>Customer created.</td>
+</tr>
+<tr>
 <td>400</td>
-<td>Duplicate customer or validation error.</td>
+<td>BadRequest</td>
+<td>The request body contains bad syntax or is incomplete.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>ValidationError</td>
+<td>Reference the <a href="#validation-errors">errors section</a> for list of possible _embedded validation errors.</td>
 </tr>
 <tr>
 <td>403</td>
+<td>Forbidden</td>
 <td>Not authorized to create customers.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>NotFound</td>
+<td>Customer not found.</td>
 </tr>
 </tbody></table>
 <h3 id='request-parameters---receive-only-user'>Request parameters - receive-only User</h3>
@@ -2040,13 +2058,13 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>firstName</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer&rsquo;s first name.</td>
+<td>Customer&rsquo;s first name. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>lastName</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer&rsquo;s last name.</td>
+<td>Customer&rsquo;s last name. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>email</td>
@@ -2197,13 +2215,13 @@ Location: https://api.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f
 <td>firstName</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer&rsquo;s first name.</td>
+<td>Customer&rsquo;s first name. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>lastName</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer&rsquo;s last name.</td>
+<td>Customer&rsquo;s last name. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>email</td>
@@ -2342,13 +2360,13 @@ Location: https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553
 <td>firstName</td>
 <td>yes</td>
 <td>string</td>
-<td>An individual Customer&rsquo;s first name.</td>
+<td>An individual Customer&rsquo;s first name. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>lastName</td>
 <td>yes</td>
 <td>string</td>
-<td>An individual Customer&rsquo;s last name.</td>
+<td>An individual Customer&rsquo;s last name. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>email</td>
@@ -2372,13 +2390,13 @@ Location: https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553
 <td>address1</td>
 <td>yes</td>
 <td>string</td>
-<td>First line of the street address of the Customer&rsquo;s permanent residence. Must be 50 characters or less. <strong>Note:</strong> PO Boxes are not allowed.</td>
+<td>First line of the street address of the Customer&rsquo;s permanent residence. Must be less than or equal to 50 characters and contain no special characters. <strong>Note:</strong> PO Boxes are not allowed.</td>
 </tr>
 <tr>
 <td>address2</td>
 <td>no</td>
 <td>string</td>
-<td>Second line of the street address of the Customer&rsquo;s permanent residence. Must be 50 characters or less. <strong>Note:</strong> PO Boxes are not allowed.</td>
+<td>Second line of the street address of the Customer&rsquo;s permanent residence. Must be less than or equal to 50 characters and contain no special characters. <strong>Note:</strong> PO Boxes are not allowed.</td>
 </tr>
 <tr>
 <td>city</td>
@@ -2402,13 +2420,13 @@ Location: https://api-sandbox.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553
 <td>dateOfBirth</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
+<td>Customer&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be between 18 to 125 years of age.</td>
 </tr>
 <tr>
 <td>ssn</td>
 <td>yes</td>
 <td>string</td>
-<td>Last four digits of the Customer&rsquo;s Social Security Number. <br> <strong>Note:</strong> Submitting all 9 digits of the SSN is also accepted.</td>
+<td>Last four or full 9 digits of the Customer&rsquo;s Social Security Number.</td>
 </tr>
 <tr>
 <td>phone</td>
@@ -2586,13 +2604,13 @@ Location: https://api.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f
 <td>firstName</td>
 <td>yes</td>
 <td>string</td>
-<td>The legal first name of the business owner.</td>
+<td>The legal first name of the business owner. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>lastName</td>
 <td>yes</td>
 <td>string</td>
-<td>The legal last name of the business owner.</td>
+<td>The legal last name of the business owner. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>email</td>
@@ -2616,25 +2634,25 @@ Location: https://api.dwolla.com/customers/fc451a7a-ae30-4404-aB95-e3553fcd733f
 <td>dateOfBirth</td>
 <td>yes</td>
 <td>string</td>
-<td>The date of birth of the business owner. Formatted in YYYY-MM-DD format. Must be 18 years or older.</td>
+<td>The date of birth of the business owner. Formatted in <code class="prettyprint">YYYY-MM-DD</code> format. Must be between 18 to 125 years of age.</td>
 </tr>
 <tr>
 <td>ssn</td>
 <td>yes</td>
 <td>string</td>
-<td>Last four-digits of the business owner&rsquo;s social security number. <br> <strong>Note:</strong> Submitting all 9 digits of the SSN is also accepted.</td>
+<td>Last four or full 9 digits of the business owner&rsquo;s Social Security Number.</td>
 </tr>
 <tr>
 <td>address1</td>
 <td>yes</td>
 <td>string</td>
-<td>Street number, street name of business’ physical address.</td>
+<td>Street number, street name of business’ physical address. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>address2</td>
 <td>no</td>
 <td>string</td>
-<td>Apartment, floor, suite, bldg. # of business’ physical address</td>
+<td>Apartment, floor, suite, bldg. # of business’ physical address Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>city</td>
@@ -2867,13 +2885,13 @@ A verified business Customer must input information on the controller and the Bu
 <td>firstName</td>
 <td>yes</td>
 <td>string</td>
-<td>The legal first name of the Account Admin or business owner signing up the business verified Customer.</td>
+<td>The legal first name of the Account Admin or business owner signing up the business verified Customer. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>lastName</td>
 <td>yes</td>
 <td>string</td>
-<td>The legal last name of the Account Admin or individual signing up the business verified Customer.</td>
+<td>The legal last name of the Account Admin or individual signing up the business verified Customer. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>email</td>
@@ -2897,13 +2915,13 @@ A verified business Customer must input information on the controller and the Bu
 <td>address1</td>
 <td>yes</td>
 <td>string</td>
-<td>Street number, street name of business’ physical address.</td>
+<td>Street number, street name of business’ physical address. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>address2</td>
 <td>no</td>
 <td>string</td>
-<td>Apartment, floor, suite, bldg. # of business’ physical address.</td>
+<td>Apartment, floor, suite, bldg. # of business’ physical address. Must be less than or equal to 50 characters and contain no special characters.</td>
 </tr>
 <tr>
 <td>city</td>
@@ -3011,13 +3029,13 @@ A verified business Customer must input information on the controller and the Bu
 <td>dateOfBirth</td>
 <td>yes</td>
 <td>String</td>
-<td>The date of birth of the controller. Formatted in YYYY-MM-DD format. Must be 18 years or older.</td>
+<td>The date of birth of the controller. Formatted in YYYY-MM-DD format. Must be between 18 to 125 years of age.</td>
 </tr>
 <tr>
 <td>ssn</td>
 <td>conditional</td>
 <td>String</td>
-<td>Last four-digits of controller’s social security number. <strong>Required</strong> for US persons. If ssn is omitted, <a href="#controller-passport-json-object">passport</a> is required. <br> <strong>Note:</strong> Submitting all 9 digits of the SSN is also accepted.</td>
+<td>Last four or full 9 digits of controller’s Social Security Number. <strong>Required</strong> for US persons. If SSN is omitted, <a href="#controller-passport-json-object">passport</a> is required.</td>
 </tr>
 <tr>
 <td>address</td>
@@ -3029,7 +3047,7 @@ A verified business Customer must input information on the controller and the Bu
 <td>passport</td>
 <td>conditional</td>
 <td>object</td>
-<td>An <a href="/#controller-passport-json-object">optional passport JSON object</a>. <strong>Required</strong> for non-US persons. Includes passport identification number and country. If <a href="#passport-json-object">passport</a> is omitted, ssn is required.</td>
+<td>An <a href="/#controller-passport-json-object">optional passport JSON object</a>. <strong>Required</strong> for non-US persons. Includes Passport Identification Number and Country. If <a href="#passport-json-object">passport</a> is omitted, SSN is required.</td>
 </tr>
 </tbody></table>
 <h5 id='controller-address-json-object'>Controller address JSON object</h5>
@@ -3085,7 +3103,7 @@ A verified business Customer must input information on the controller and the Bu
 </tr>
 </tbody></table>
 <h5 id='controller-passport-json-object'>Controller passport JSON object</h5>
-<p>A controller will only need to input Passport information if they are non-US persons and do not have a social security number.</p>
+<p>A controller will only need to input passport information if they are non-US persons and do not have a Social Security Number.</p>
 
 <table><thead>
 <tr>
@@ -3099,7 +3117,7 @@ A verified business Customer must input information on the controller and the Bu
 <td>number</td>
 <td>conditional</td>
 <td>string</td>
-<td>Required if controller is a non-US person and has no Social Security number.</td>
+<td>Required if controller is a non-US person and has no Social Security Number.</td>
 </tr>
 <tr>
 <td>country</td>
@@ -4099,7 +4117,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>dateOfBirth</td>
 <td>yes</td>
 <td>string</td>
-<td>Customer&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
+<td>Customer&rsquo;s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be between 18 to 125 years of age.</td>
 </tr>
 <tr>
 <td>ssn</td>
@@ -5025,7 +5043,7 @@ Authorization: Bearer cRahPzURfaIrTewKL18tmslWPqKdzkLeYJm0oB1hGJ1vMPArft1v
 <td>dateOfBirth</td>
 <td>Yes</td>
 <td>string</td>
-<td>beneficial owner’s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
+<td>beneficial owner’s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be between 18 to 125 years of age.</td>
 </tr>
 <tr>
 <td>address</td>
@@ -5268,6 +5286,18 @@ Location: https://api.dwolla.com/beneficial-owners/FC451A7A-AE30-4404-AB95-E3553
 <td>yes</td>
 <td>string</td>
 <td>Beneficial owner unique identifier.</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>404</td>
+<td>Not found.</td>
 </tr>
 </tbody></table>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -5522,7 +5552,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>dateOfBirth</td>
 <td>Yes</td>
 <td>string</td>
-<td>beneficial owner’s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be 18 years or older.</td>
+<td>beneficial owner’s date of birth in <code class="prettyprint">YYYY-MM-DD</code> format. Must be between 18 to 125 years of age.</td>
 </tr>
 <tr>
 <td>address</td>
@@ -5609,6 +5639,30 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>conditional</td>
 <td>string</td>
 <td>Country of issued passport.</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Owner Updated.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Validation error.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Owner cannot be updated.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Owner not found.</td>
 </tr>
 </tbody></table>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -5770,23 +5824,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">beneficialOwnerUrl</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// =&gt; '00cb67f2-768c-4ee3-ac81-73bc4faf9c2b'</span>
-</code></pre></div></div><h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
-<table><thead>
-<tr>
-<th>HTTP Status</th>
-<th>Message</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>400</td>
-<td>Duplicate customer or validation error.</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Not authorized to create customers.</td>
-</tr>
-</tbody></table>
-<h2 id='remove-a-beneficial-owner'>Remove a beneficial owner</h2>
+</code></pre></div></div><h2 id='remove-a-beneficial-owner'>Remove a beneficial owner</h2>
 <p>Delete a beneficial owner. A removed beneficial owner cannot be retrieved after being removed.</p>
 <h3 id='http-request'>HTTP request</h3>
 <p><code class="prettyprint">DELETE https://api.dwolla.com/beneficial-owners/{id}</code></p>
@@ -5924,6 +5962,26 @@ HTTP 200 OK
 <td>Customer unique identifier.</td>
 </tr>
 </tbody></table>
+<h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Ownership certification status found.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Not authorized to get certification status.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Ownership certification status not found.</td>
+</tr>
+</tbody></table>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -6020,6 +6078,26 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>yes</td>
 <td>string</td>
 <td>Customer unique identifier.</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Message</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Beneficial ownership status updated.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Validation error.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden from updating beneficial ownership status for this customer.</td>
 </tr>
 </tbody></table>
 <h3 id='request-and-response'>Request and response</h3><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
@@ -8356,7 +8434,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 <span class="nx">appToken</span>
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">fundingSourceUrl</span><span class="p">}</span><span class="sr">/balance`</span><span class="err">)
-</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">balance</span><span class="p">.</span><span class="nx">amount</span><span class="p">);</span>
+</span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">balance</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
 </code></pre></div></div><h2 id='retrieve-micro-deposits-details'>Retrieve micro-deposits details</h2>
 <p>This section shows how to retrieve the status of micro-deposits and check if micro-deposits are eligible for verification. If the status of micro-deposits is <code class="prettyprint">failed</code>, a <code class="prettyprint">failure</code> object will be returned in the response body which includes the ACH return code and description.</p>
 <h3 id='http-request'>HTTP request</h3>
@@ -8677,7 +8755,7 @@ HTTP 200 OK
 </tr>
 <tr>
 <td>cancel</td>
-<td>POST to this link to <a href="#cancel-a-transfer">cancel the transfer</a> (A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.)</td>
+<td>POST to this link to <a href="#cancel-a-transfer">cancel the transfer</a> (A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4pm CT. If a transfer was initiated after 4pm CT, it can be cancelled before 4pm CT on the following business day.)</td>
 </tr>
 <tr>
 <td>fees</td>
@@ -8919,7 +8997,7 @@ Source specifies the clearing time for the source funding source involved in the
 <td>addenda</td>
 <td>no</td>
 <td>object</td>
-<td>An addenda object contains a <code class="prettyprint">values</code> key which is an array of comma separated string addenda values. Addenda record information is used for the purpose of transmitting transfer-related information from a business. <br> Values must be less than or equal to 80 characters and can include spaces. <br> Acceptable characters are: a-Z, 0-9, and special characters <code class="prettyprint">- _ . ~ ! * &#39; ( ) ; : @ &amp; = + $ , / ? % # [ ]</code>. <br> <em>Transfers must be sent to/from a business entity&rsquo;s bank to guarantee addenda delivery.</em></td>
+<td>An addenda object contains a <code class="prettyprint">values</code> key where its value is an array containing a <strong>single</strong> string addenda value. Addenda record information is used for the purpose of transmitting transfer-related information from a business. <br> Addenda value must be less than or equal to 80 characters and can include spaces. <br> Acceptable characters are: a-Z, 0-9, and special characters <code class="prettyprint">- _ . ~ ! * &#39; ( ) ; : @ &amp; = + $ , / ? % # [ ]</code>. <br> <em>Transfers must be sent to/from a business entity&rsquo;s bank to guarantee addenda delivery.</em></td>
 </tr>
 </tbody></table>
 <h4 id='achdetails-with-addenda-example'>achDetails with addenda example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">"achDetails": {
@@ -9048,6 +9126,11 @@ Source specifies the clearing time for the source funding source involved in the
 <td>403</td>
 <td>Forbidden</td>
 <td>Not authorized to create a transfer.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden</td>
+<td>Invalid Funds Flow: this operation requires the funds flow (<code class="prettyprint">facilitate</code>/<code class="prettyprint">receive</code>/<code class="prettyprint">send</code>) to be enabled.</td>
 </tr>
 <tr>
 <td>429</td>
@@ -9866,18 +9949,31 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/transfers/e6d9a950-ac9e-e511-80dc-0aa34a9b2388/failure
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">GET https://api-sandbox.dwolla.com/transfers/8997ebed-69be-e611-80ea-0aa34a9b2388/failure
 Accept: application/vnd.dwolla.v1.hal+json
 Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 
 {
-  "_links": {
-    "self": {
-      "href": "https://api-sandbox.dwolla.com/transfers/E6D9A950-AC9E-E511-80DC-0AA34A9B2388/failure"
-    }
-  },
-  "code": "R01",
-  "description": "Insufficient Funds"
+    "_links": {
+        "self": {
+            "href": "https://api.dwolla.com/transfers/8997ebed-69be-e611-80ea-0aa34a9b2388/failure",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "failure"
+        },
+        "failed-funding-source": {
+            "href": "https://api.dwolla.com/funding-sources/285ea6f4-c45d-4e15-ad33-21f51461f437",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "funding-source"
+        },
+        "customer": {
+            "href": "https://api.dwolla.com/customers/be2d2322-fdee-4361-8722-4289f5601604",
+            "type": "application/vnd.dwolla.v1.hal+json",
+            "resource-type": "customer"
+        }
+    },
+    "code": "R03",
+    "description": "No Account/Unable to Locate Account",
+    "explanation": "The account number does not correspond to the individual identified in the entry or a valid account."
 }
 </code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
@@ -9935,7 +10031,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
   <span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">transferUrl</span><span class="p">}</span><span class="sr">/failure`</span><span class="err">)
 </span>  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">code</span><span class="p">);</span> <span class="c1">// =&gt; 'R01'</span>
 </code></pre></div></div><h2 id='cancel-a-transfer'>Cancel a transfer</h2>
-<p>When a bank transfer is eligible for cancellation, Dwolla returns a <code class="prettyprint">cancel</code> link  when <a href="#retrieve-a-transfer">getting the transfer by Id</a>. This cancel link is used to trigger the cancellation, preventing the bank transfer from processing further. A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4PM CT. If a transfer was initiated after 4pm CT, it can be cancelled anytime before 4pm CT on the following business day.</p>
+<p>When a bank transfer is eligible for cancellation, Dwolla returns a <code class="prettyprint">cancel</code> link  when <a href="#retrieve-a-transfer">getting the transfer by Id</a>. This cancel link is used to trigger the cancellation, preventing the bank transfer from processing further. A bank transfer is cancellable up until 4pm CT on that same business day if the transfer was initiated prior to 4pm CT. If a transfer was initiated after 4pm CT, it can be cancelled before 4pm CT on the following business day. <strong>Note:</strong> This is not a hard cut off. Occasionally, the export out of the Dwolla Network may be delayed or could take some time to process. This may cause transfers created close to after 4pm CT to be exported the same business day. It is recommended to rely on the <code class="prettyprint">cancel</code> link returned on the transfer resource to determine if a transfer is cancellable rather than relying on the export timing. </p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://api.dwolla.com/transfers/{id}</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
