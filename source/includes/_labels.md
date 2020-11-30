@@ -702,7 +702,7 @@ request_body = {
   }
 }
 
-labelReallocation = app_token.post('transfers', request_body)
+labelReallocation = app_token.post('label-reallocations', request_body)
 labelReallocation.headers['location'] # => 'https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21'
 ```
 ```javascript
