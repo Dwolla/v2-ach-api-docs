@@ -30,8 +30,8 @@ The client token API request requires an `action` as well as a `link` which poin
 
 | Parameter | Required | Type | Description |
 |-----------|----------|----------------|-------------|
-| action | yes | object | A granular permission for the Customer perform an action within a drop-in component. [Reference the client token actions to learn more](#client-token-actions). |
-| _links | yes | object | A _links JSON object that contains a link the desired `customer` to perform the action within the drop-in component. |
+| action | yes | object | A granular permission for the Customer performing an action within a drop-in component. [Reference the client token actions to learn more](#client-token-actions). |
+| _links | yes | object | A _links JSON object that contains a link the desired `customer` performing the action within the drop-in component. |
 
 #### Request and response
 
