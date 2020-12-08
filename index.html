@@ -664,6 +664,173 @@ information is available on the project&rsquo;s README.</p>
 </code></pre></div></div>
 <hr>
 
+            <h1 id='drop-in-components'>Drop-in Components</h1>
+<p>Dwolla’s UI drop-in components library allows developers to leverage isolated functions or build connected flows in their web applications, which expedites the integration process with the Dwolla Platform. Each component within this library includes HTML, CSS and JavaScript that developers can drop-in and customize to fit the look and feel of their application.</p>
+
+<p>Dwolla&rsquo;s <a href="https://developers/dwolla.com/concepts/drop-in-components">UI components library</a>, dwolla-web.js, requires a unique client-side token that is generated using a server-side SDK. The client token contains granular permissions to perform a specific action on behalf of a <a href="#customers">Customer</a>. </p>
+<h4 id='client-token-lifetime'>Client Token lifetime</h4>
+<p><strong>Client-tokens</strong> are single-use tokens that are valid for up to 1 hour after being generated. More than one client token can be generated and valid at one time.</p>
+<h2 id='create-a-client-token'>Create a client token</h2>
+<p>The client token API request requires an <code class="prettyprint">action</code> as well as a <code class="prettyprint">link</code> which points to the Customer that identifies the end-user performing the action within the drop-in component. The <code class="prettyprint">action</code> is a string that contains a granular permission for the Customer performing the action within a drop-in component. <strong>Note:</strong> This endpoint requires <a href="#application-authorization">application authorization</a>.</p>
+<h4 id='client-token-actions'>Client token actions</h4>
+<table><thead>
+<tr>
+<th>Component</th>
+<th>Component Name</th>
+<th>Action</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Create an Unverified Customer</td>
+<td>dwolla-customer-create</td>
+<td>customer.create</td>
+</tr>
+<tr>
+<td>Upgrade an Unverified Customer</td>
+<td>dwolla-customer-update</td>
+<td>customer.update</td>
+</tr>
+<tr>
+<td>Create a personal Verified Customer</td>
+<td>dwolla-personal-vcr</td>
+<td>customer.create</td>
+</tr>
+<tr>
+<td>Document upload for a Customer</td>
+<td>dwolla-document-upload</td>
+<td>customer.documents.create</td>
+</tr>
+<tr>
+<td>Display a Verified Customer’s Balance</td>
+<td>dwolla-balance-display</td>
+<td>customer.fundingsources.read</td>
+</tr>
+</tbody></table>
+<h4 id='http-request'>HTTP request</h4>
+<p><code class="prettyprint">POST https://api.dwolla.com/client-tokens</code></p>
+<h4 id='request-parameters'>Request parameters</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>action</td>
+<td>yes</td>
+<td>object</td>
+<td>A granular permission for the Customer performing an action within a drop-in component. <a href="#client-token-actions">Reference the client token actions to learn more</a>.</td>
+</tr>
+<tr>
+<td>_links</td>
+<td>yes</td>
+<td>object</td>
+<td>A _links JSON object that contains a link to the desired <code class="prettyprint">customer</code> performing the action within the drop-in component.</td>
+</tr>
+</tbody></table>
+<h4 id='request-and-response'>Request and response</h4><div class="code-snippet js-code-snippet language-raw"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-raw" data-lang="raw">POST https://api-sandbox.dwolla.com/client-tokens 
+Accept: application/vnd.dwolla.v1.hal+json 
+Content-Type: application/json
+Authorization: Bearer {{token}}
+{
+"action": "customer.update”,
+  "_links": {
+    “customer”: {
+        “href”: “https://api-sandbox.dwolla.com/customers/{{customerId}}” 
+    }
+  }
+}
+
+...
+
+{
+ "token": "4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY"
+}
+</code></pre></div></div><div class="code-snippet js-code-snippet language-ruby"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-ruby</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">:_links</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="ss">:customer</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="ss">:href</span> <span class="o">=&gt;</span> <span class="s2">"https://api-sandbox.dwolla.com/customers/707177c3-bf15-4e7e-b37c-55c3898d9bf4"</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="ss">:action</span> <span class="o">=&gt;</span> <span class="s2">"customer.update"</span>
+<span class="p">}</span>
+
+<span class="n">client_token</span> <span class="o">=</span> <span class="n">app_token</span><span class="p">.</span><span class="nf">post</span> <span class="s2">"client-tokens"</span><span class="p">,</span> <span class="n">request_body</span>
+<span class="n">client_token</span><span class="p">.</span><span class="nf">token</span> <span class="c1"># =&gt; "4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY"</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-php"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
+ * No example for this language yet.
+ **/
+</code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python</span>
+<span class="n">request_body</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'_links'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">'customer'</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s">'href'</span><span class="p">:</span> <span class="s">'https://api-sandbox.dwolla.com/customers/707177c3-bf15-4e7e-b37c-55c3898d9bf4'</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s">'action'</span><span class="p">:</span> <span class="s">'customer.update'</span>
+<span class="p">}</span>
+
+<span class="n">client_token</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'client-tokens'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">client_token</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">'token'</span><span class="p">]</span> <span class="c"># =&gt; '4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY'</span>
+</code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
+          <nav>
+              <button class="selector_switch" id="raw">raw</button>
+              <button class="selector_switch" id="php">php</button>
+              <button class="selector_switch" id="ruby">ruby</button>
+              <button class="selector_switch" id="python">python</button>
+              <button class="selector_switch" id="javascript">javascript</button>
+          </nav>
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Using DwollaV2 - https://github.com/Dwolla/dwolla-v2-node</span>
+<span class="kd">var</span> <span class="nx">requestBody</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">_links</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">customer</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">href</span><span class="p">:</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/707177c3-bf15-4e7e-b37c-55c3898d9bf4'</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">action</span><span class="p">:</span> <span class="s1">'customer.update'</span>
+<span class="p">};</span>
+
+<span class="nx">appToken</span>
+ <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="o">/</span><span class="nx">client</span><span class="o">-</span><span class="nx">tokens</span><span class="err">`</span><span class="p">)</span>
+ <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">token</span><span class="p">);</span> <span class="c1">// =&gt; '4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY'</span>
+</code></pre></div></div>
+<hr>
+
             <h1 id='authorization'>Authorization</h1>
 <p>Dwolla utilizes the <a href="https://oauth.net/2/">OAuth 2 protocol</a> to facilitate authorization. OAuth is an authorization framework that enables a third-party application to obtain access to protected resources (Transfers, Funding Sources, Customers etc.) in the Dwolla API. Access to the Dwolla API can be granted to an application either on behalf of a user or on behalf of the application itself. This section covers application auth which is meant for server-to-server applications using the Dwolla API.</p>
 <h4 id='creating-an-application'>Creating an application</h4>
@@ -12858,7 +13025,7 @@ Location: https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="n">labelReallocation</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'transfers'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
+<span class="n">labelReallocation</span> <span class="o">=</span> <span class="n">app_token</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'label-reallocations'</span><span class="p">,</span> <span class="n">request_body</span><span class="p">)</span>
 <span class="n">labelReallocation</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span> <span class="c"># =&gt; 'https://api-sandbox.dwolla.com/label-reallocations/fd36b78c-42f3-4e21-8efb-09196fccbd21'</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-javascript"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
