@@ -826,7 +826,7 @@ Authorization: Bearer {{token}}
 <span class="p">};</span>
 
 <span class="nx">appToken</span>
- <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="err">`</span><span class="o">/</span><span class="nx">client</span><span class="o">-</span><span class="nx">tokens</span><span class="err">`</span><span class="p">)</span>
+ <span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">"/client-tokens"</span><span class="p">,</span> <span class="nx">requestBody</span><span class="p">)</span>
  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">token</span><span class="p">);</span> <span class="c1">// =&gt; '4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY'</span>
 </code></pre></div></div>
 <hr>
