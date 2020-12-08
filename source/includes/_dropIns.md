@@ -100,7 +100,7 @@ var requestBody = {
 };
 
 appToken
- .post(`/client-tokens`)
+ .post("/client-tokens", requestBody)
  .then(res => res.body.token); // => '4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY'
 ```
 
