@@ -2,7 +2,7 @@
 
 Dwolla’s UI drop-in components library allows developers to leverage isolated functions or build connected flows in their web applications, which expedites the integration process with the Dwolla Platform. Each component within this library includes HTML, CSS and JavaScript that developers can drop-in and customize to fit the look and feel of their application.
 
-Dwolla's [UI components library](https://developers/dwolla.com/concepts/drop-in-components), dwolla-web.js, requires a unique client-side token that is generated using a server-side SDK. The client token contains granular permissions to perform a specific action on behalf of a [Customer](#customers). 
+Dwolla's [UI components library](https://developers.dwolla.com/concepts/drop-in-components), dwolla-web.js, requires a unique client-side token that is generated using a server-side SDK. The client token contains granular permissions to perform a specific action on behalf of a [Customer](#customers). 
 
 #### Client Token lifetime
 
