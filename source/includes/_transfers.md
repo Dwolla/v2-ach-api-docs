@@ -807,7 +807,7 @@ appToken
 
 When a bank transfer fails for an Account or Customer, Dwolla returns a `failure` link when [retrieving the transfer by its Id](#retrieve-a-transfer). This failure link is used to retrieve the ACH return code and description. For reference, the list of possible failure codes and descriptions are shown in the [Transfer failures](https://developers.dwolla.com/resources/bank-transfer-workflow/transfer-failures.html) resource article.
 
-**Note:** If a transfer fails to/from a bank account then the `bank` will automatically be removed from the Dwolla system for all ACH return codes except an `R01`.
+**Note:** If a transfer fails to/from a bank account then the `bank` will automatically be removed from the Dwolla system for all ACH return codes except `R01`, `R09` and `R20`.
 
 ### HTTP Request
 `GET https://api.dwolla.com/transfers/{id}/failure`
