@@ -10089,7 +10089,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </code></pre></div></div><h2 id='retrieve-a-transfer-failure-reason'>Retrieve a transfer failure reason</h2>
 <p>When a bank transfer fails for an Account or Customer, Dwolla returns a <code class="prettyprint">failure</code> link when <a href="#retrieve-a-transfer">retrieving the transfer by its Id</a>. This failure link is used to retrieve the ACH return code and description. For reference, the list of possible failure codes and descriptions are shown in the <a href="https://developers.dwolla.com/resources/bank-transfer-workflow/transfer-failures.html">Transfer failures</a> resource article.</p>
 
-<p><strong>Note:</strong> If a transfer fails to/from a bank account then the <code class="prettyprint">bank</code> will automatically be removed from the Dwolla system for all ACH return codes except an <code class="prettyprint">R01</code>.</p>
+<p><strong>Note:</strong> If a transfer fails to/from a bank account then the <code class="prettyprint">bank</code> will automatically be removed from the Dwolla system for all ACH return codes except <code class="prettyprint">R01</code>, <code class="prettyprint">R09</code> and <code class="prettyprint">R20</code>.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://api.dwolla.com/transfers/{id}/failure</code></p>
 <h3 id='request-parameters'>Request parameters</h3>
