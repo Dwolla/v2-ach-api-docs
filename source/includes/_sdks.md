@@ -93,8 +93,16 @@ Let's list some `Customer` objects:
 <?php
 require('../path/to/vendor/autoload.php');
 
-DwollaSwagger\Configuration::$access_token = 'a token';
-$apiClient = new DwollaSwagger\ApiClient("https://api-sandbox.dwolla.com/");
+DwollaSwagger\Configuration::$username = 'API_KEY';
+DwollaSwagger\Configuration::$password = 'API_SECRET';
+
+// For Sandbox
+$apiClient = new DwollaSwagger\ApiClient("https://api-sandbox.dwolla.com");
+// For production
+// $apiClient = new DwollaSwagger\ApiClient("https://api.dwolla.com");
+
+$tokensApi = new DwollaSwagger\TokensApi($apiClient);
+$appToken = $tokensApi->token();
 
 $customersApi = new DwollaSwagger\CustomersApi($apiClient);
 $myCusties = $customersApi->_list(10);
