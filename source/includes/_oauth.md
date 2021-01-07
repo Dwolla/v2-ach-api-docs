@@ -71,20 +71,12 @@ app_token = $dwolla.auths.client
 ```
 ```php
 <?php
-// Using dwollav2 - https://github.com/Dwolla/dwolla-swagger-php
+// Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-php
 // This example assumes you've already intialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html
-require('../path/to/vendor/autoload.php');
-	
-DwollaSwagger\Configuration::$username = 'API_KEY';
-DwollaSwagger\Configuration::$password = 'API_SECRET';
-
-// For Sandbox
-$apiClient = new DwollaSwagger\ApiClient("https://api-sandbox.dwolla.com");
-// For production
-// $apiClient = new DwollaSwagger\ApiClient("https://api.dwolla.com");
-
 $tokensApi = new DwollaSwagger\TokensApi($apiClient);
 $appToken = $tokensApi->token();
+
+DwollaSwagger\Configuration::$access_token = $appToken->access_token;
 ?>
 ```
 

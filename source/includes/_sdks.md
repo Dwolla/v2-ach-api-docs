@@ -104,6 +104,8 @@ $apiClient = new DwollaSwagger\ApiClient("https://api-sandbox.dwolla.com");
 $tokensApi = new DwollaSwagger\TokensApi($apiClient);
 $appToken = $tokensApi->token();
 
+DwollaSwagger\Configuration::$access_token = $appToken->access_token;
+
 $customersApi = new DwollaSwagger\CustomersApi($apiClient);
 $myCusties = $customersApi->_list(10);
 

@@ -71,7 +71,7 @@ client_token.token # => "4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY"
 ```
 ```php
 <?php
-// Using dwollav2 - https://github.com/Dwolla/dwolla-swagger-php
+// Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-php
 $request_body = array (
   '_links' =>
   array (
