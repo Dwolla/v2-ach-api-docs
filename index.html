@@ -568,8 +568,18 @@ composer install
 <div class="code-snippet js-code-snippet language-phpnohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-phpnohide" data-lang="phpnohide"><span class="cp">&lt;?php</span>
 <span class="k">require</span><span class="p">(</span><span class="s1">'../path/to/vendor/autoload.php'</span><span class="p">);</span>
 
-<span class="nx">DwollaSwagger\Configuration</span><span class="o">::</span><span class="nv">$access_token</span> <span class="o">=</span> <span class="s1">'a token'</span><span class="p">;</span>
-<span class="nv">$apiClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\ApiClient</span><span class="p">(</span><span class="s2">"https://api-sandbox.dwolla.com/"</span><span class="p">);</span>
+<span class="nx">DwollaSwagger\Configuration</span><span class="o">::</span><span class="nv">$username</span> <span class="o">=</span> <span class="s1">'API_KEY'</span><span class="p">;</span>
+<span class="nx">DwollaSwagger\Configuration</span><span class="o">::</span><span class="nv">$password</span> <span class="o">=</span> <span class="s1">'API_SECRET'</span><span class="p">;</span>
+
+<span class="c1">// For Sandbox
+</span><span class="nv">$apiClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\ApiClient</span><span class="p">(</span><span class="s2">"https://api-sandbox.dwolla.com"</span><span class="p">);</span>
+<span class="c1">// For production
+// $apiClient = new DwollaSwagger\ApiClient("https://api.dwolla.com");
+</span>
+<span class="nv">$tokensApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\TokensApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+<span class="nv">$appToken</span> <span class="o">=</span> <span class="nv">$tokensApi</span><span class="o">-&gt;</span><span class="na">token</span><span class="p">();</span>
+
+<span class="nx">DwollaSwagger\Configuration</span><span class="o">::</span><span class="nv">$access_token</span> <span class="o">=</span> <span class="nv">$appToken</span><span class="o">-&gt;</span><span class="na">access_token</span><span class="p">;</span>
 
 <span class="nv">$customersApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\CustomersApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
 <span class="nv">$myCusties</span> <span class="o">=</span> <span class="nv">$customersApi</span><span class="o">-&gt;</span><span class="na">_list</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
@@ -784,9 +794,21 @@ Authorization: Bearer {{token}}
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
- * No example for this language yet.
- **/
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-php
+</span><span class="nv">$request_body</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span>
+  <span class="s1">'_links'</span> <span class="o">=&gt;</span>
+  <span class="k">array</span> <span class="p">(</span>
+    <span class="s1">'customer'</span> <span class="o">=&gt;</span>
+    <span class="k">array</span> <span class="p">(</span>
+      <span class="s1">'href'</span> <span class="o">=&gt;</span> <span class="s1">'https://api-sandbox.dwolla.com/customers/8779a1f7-7a98-4a86-921e-83539f6c895e'</span><span class="p">,</span>
+    <span class="p">),</span>
+  <span class="p">),</span>
+  <span class="s1">'action'</span> <span class="o">=&gt;</span> <span class="s1">'customer.update'</span>
+<span class="p">);</span>
+<span class="nv">$clientTokensApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\TokensApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+<span class="nv">$clientToken</span> <span class="o">=</span> <span class="nv">$clientTokensApi</span><span class="o">-&gt;</span><span class="na">clientTokens</span><span class="p">(</span><span class="nv">$request_body</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </code></pre></div></div><div class="code-snippet js-code-snippet language-python"><button class="btn alternative">copy</button><div class="code-snippet__selector">
           <nav>
               <button class="selector_switch" id="raw">raw</button>
@@ -956,9 +978,14 @@ grant_type=client_credentials
               <button class="selector_switch" id="python">python</button>
               <button class="selector_switch" id="javascript">javascript</button>
           </nav>
-        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php">/**
- *  No support for this language yet. We recommend using an external REST client for making OAuth requests.
- **/
+        </div><div class="code-snippet__cnt highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-php
+// This example assumes you've already intialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html
+</span><span class="nv">$tokensApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaSwagger\TokensApi</span><span class="p">(</span><span class="nv">$apiClient</span><span class="p">);</span>
+<span class="nv">$appToken</span> <span class="o">=</span> <span class="nv">$tokensApi</span><span class="o">-&gt;</span><span class="na">token</span><span class="p">();</span>
+
+<span class="nx">DwollaSwagger\Configuration</span><span class="o">::</span><span class="nv">$access_token</span> <span class="o">=</span> <span class="nv">$appToken</span><span class="o">-&gt;</span><span class="na">access_token</span><span class="p">;</span>
+<span class="cp">?&gt;</span>
 </code></pre></div></div><h4 id='successful-response'>Successful response</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SF8Vxx6H644lekdVKAAHFnqRCFy8WGqltzitpii6w2MVaZp1Nw"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bearer"</span><span class="p">,</span><span class="w">
@@ -15308,7 +15335,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
           <section class="copyright">
             <div class="page-wrap">
               <div>
-                <span>© 2020 Dwolla, Inc.</span>
+                <span>© 2021 Dwolla, Inc.</span>
                 <a href="https://www.dwolla.com/legal/about-our-financial-institution-partner/">Dwolla, Inc. is an agent of its Financial Institution Partner(s)</a>
               </div>
             </div>
