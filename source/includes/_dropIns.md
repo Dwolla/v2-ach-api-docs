@@ -70,9 +70,21 @@ client_token = app_token.post "client-tokens", request_body
 client_token.token # => "4adF858jPeQ9RnojMHdqSD2KwsvmhO7Ti7cI5woOiBGCpH5krY"
 ```
 ```php
-/**
- * No example for this language yet.
- **/
+<?php
+// Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-php
+$request_body = array (
+  '_links' =>
+  array (
+    'customer' =>
+    array (
+      'href' => 'https://api-sandbox.dwolla.com/customers/8779a1f7-7a98-4a86-921e-83539f6c895e',
+    ),
+  ),
+  'action' => 'customer.update'
+);
+$clientTokensApi = new DwollaSwagger\TokensApi($apiClient);
+$clientToken = $clientTokensApi->clientTokens($request_body);
+?>
 ```
 ```python
 # Using dwollav2 - https://github.com/Dwolla/dwolla-v2-python

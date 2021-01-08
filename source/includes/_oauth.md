@@ -70,9 +70,14 @@ app_token = $dwolla.auths.client
 # => #<DwollaV2::Token client=#<DwollaV2::Client id="..." secret="..." environment=:sandbox> access_token="..." expires_in=3600 scope="...">
 ```
 ```php
-/**
- *  No support for this language yet. We recommend using an external REST client for making OAuth requests.
- **/
+<?php
+// Using dwollaswagger - https://github.com/Dwolla/dwolla-swagger-php
+// This example assumes you've already intialized the client. Reference the SDKs page for more information: https://developers.dwolla.com/pages/sdks.html
+$tokensApi = new DwollaSwagger\TokensApi($apiClient);
+$appToken = $tokensApi->token();
+
+DwollaSwagger\Configuration::$access_token = $appToken->access_token;
+?>
 ```
 
 #### Successful response
