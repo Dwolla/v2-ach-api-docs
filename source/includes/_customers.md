@@ -43,7 +43,7 @@ A verified Customer can be created as a type of either `Personal` or `Business`.
 |lastName | Customer's last name. |
 |email | Customer's email address. |
 |type | Either `unverified`, `personal`, `business`, or `receive-only`. |
-|status | If type is **unverified** or **receive-only**: status can be `unverified` or `suspended`. <br> If type is **personal** or **business**: status can be `retry`, `document`, `verified`, or `suspended`. |
+|status | If type is **unverified** or **receive-only**: status can be `unverified`, `deactivated`, or `suspended`. <br> If type is **personal**: status can be `retry`, `kba`, `document`, `verified`, `deactivated`, or `suspended`. <br> If type is **business**: status can be `retry`, `document`, `verified`,`deactivated`, or `suspended`.|
 |created | ISO-8601 timestamp. |
 
 ### Customer statuses

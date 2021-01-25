@@ -4,6 +4,10 @@ Knowledge-based authentication, commonly referred to as KBA, is a method of auth
 
 > **Note:** KBA as a method of verifying an identity is only available to [Personal Verified Customers](https://developers.dwolla.com/resources/account-types.html#verified-customer) at this time. 
 
+<ol class="alerts">
+    <li class="alert icon-alert-info">This section outlines a premium feature for the [Dwolla API](https://www.dwolla.com/platform/). To learn more about pricing and enabling this functionality, please [contact Sales](https://www.dwolla.com/contact?b=apidocs).</li>
+</ol>
+
 ### KBA Links
 
 | Links  | Description |
