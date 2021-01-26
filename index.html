@@ -2104,7 +2104,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>status</td>
-<td>If type is <strong>unverified</strong> or <strong>receive-only</strong>: status can be <code class="prettyprint">unverified</code> or <code class="prettyprint">suspended</code>. <br> If type is <strong>personal</strong> or <strong>business</strong>: status can be <code class="prettyprint">retry</code>, <code class="prettyprint">document</code>, <code class="prettyprint">verified</code>, or <code class="prettyprint">suspended</code>.</td>
+<td>If type is <strong>unverified</strong> or <strong>receive-only</strong>: status can be <code class="prettyprint">unverified</code>, <code class="prettyprint">deactivated</code>, or <code class="prettyprint">suspended</code>. <br> If type is <strong>personal</strong>: status can be <code class="prettyprint">retry</code>, <code class="prettyprint">kba</code>, <code class="prettyprint">document</code>, <code class="prettyprint">verified</code>, <code class="prettyprint">deactivated</code>, or <code class="prettyprint">suspended</code>. <br> If type is <strong>business</strong>: status can be <code class="prettyprint">retry</code>, <code class="prettyprint">document</code>, <code class="prettyprint">verified</code>,<code class="prettyprint">deactivated</code>, or <code class="prettyprint">suspended</code>.</td>
 </tr>
 <tr>
 <td>created</td>
@@ -4558,7 +4558,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <blockquote>
 <p><strong>Note:</strong> KBA as a method of verifying an identity is only available to <a href="https://developers.dwolla.com/resources/account-types.html#verified-customer">Personal Verified Customers</a> at this time. </p>
 </blockquote>
-<h3 id='kba-links'>KBA Links</h3>
+<ol class="alerts"><li class="alert icon-alert-alert"><p>This section outlines a premium feature for the <a href="https://www.dwolla.com/platform/">Dwolla API</a>. To learn more about pricing and enabling this functionality, please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a>.</p>
+</li></ol><h3 id='kba-links'>KBA Links</h3>
 <table><thead>
 <tr>
 <th>Links</th>
