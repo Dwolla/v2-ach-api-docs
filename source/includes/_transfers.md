@@ -418,7 +418,7 @@ var requestBody = {
   clearing: {
     destination: 'next-available'
   },
-  addenda: {
+  achDetails: {
     source: {
       addenda: {
         values: ['ABC123_AddendaValue']
