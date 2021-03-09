@@ -13,11 +13,14 @@ Dwolla's [UI components library](https://developers.dwolla.com/concepts/drop-in-
 The client token API request requires an `action` as well as a `link` which points to the Customer that identifies the end-user performing the action within the drop-in component. The `action` is a string that contains a granular permission for the Customer performing the action within a drop-in component. **Note:** This endpoint requires [application authorization](#application-authorization).
 
 #### Client token actions
-| Component | Component Name | Action |
+| Component | Component Name | Possible Actions |
 |-----------|----------------|--------|
+| Create a Receive-only User | dwolla-customer-create | customer.create |
 | Create an Unverified Customer | dwolla-customer-create | customer.create |
 | Upgrade an Unverified Customer | dwolla-customer-update | customer.update |
 | Create a personal Verified Customer | dwolla-personal-vcr | customer.create |
+| Create a business Verified Customer | dwolla-business-vcr | customer.create <br /> businessclassifications.read <br /> customer.read <br /> customer.update <br /> customer.documents.create  |
+| Create Beneficial Owners | dwolla-beneficial-owners | beneficialowners.create <br /> beneficialownership.read <br /> customer.read <br /> beneficialownership.certify <br /> beneficialowners.update <br /> beneficialowner.documents.create <br /> beneficialowner.delete |
 | Document upload for a Customer | dwolla-document-upload | customer.documents.create |
 | Display a Verified Customer’s Balance | dwolla-balance-display | customer.fundingsources.read |
 
