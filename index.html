@@ -687,9 +687,14 @@ information is available on the project&rsquo;s README.</p>
 <tr>
 <th>Component</th>
 <th>Component Name</th>
-<th>Action</th>
+<th>Possible Actions</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>Create a Receive-only User</td>
+<td>dwolla-customer-create</td>
+<td>customer.create</td>
+</tr>
 <tr>
 <td>Create an Unverified Customer</td>
 <td>dwolla-customer-create</td>
@@ -704,6 +709,16 @@ information is available on the project&rsquo;s README.</p>
 <td>Create a personal Verified Customer</td>
 <td>dwolla-personal-vcr</td>
 <td>customer.create</td>
+</tr>
+<tr>
+<td>Create a business Verified Customer</td>
+<td>dwolla-business-vcr</td>
+<td>customer.create <br /> businessclassifications.read <br /> customer.read <br /> customer.update <br /> customer.documents.create</td>
+</tr>
+<tr>
+<td>Create Beneficial Owners</td>
+<td>dwolla-beneficial-owners</td>
+<td>beneficialowners.create <br /> beneficialownership.read <br /> customer.read <br /> beneficialownership.certify <br /> beneficialowners.update <br /> beneficialowner.documents.create <br /> beneficialowner.delete</td>
 </tr>
 <tr>
 <td>Document upload for a Customer</td>
@@ -9557,7 +9572,7 @@ Location: https://api-sandbox.dwolla.com/transfers/74c9129b-d14a-e511-80da-0aa34
   <span class="na">clearing</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">destination</span><span class="p">:</span> <span class="s1">'next-available'</span>
   <span class="p">},</span>
-  <span class="na">addenda</span><span class="p">:</span> <span class="p">{</span>
+  <span class="na">achDetails</span><span class="p">:</span> <span class="p">{</span>
     <span class="na">source</span><span class="p">:</span> <span class="p">{</span>
       <span class="na">addenda</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">values</span><span class="p">:</span> <span class="p">[</span><span class="s1">'ABC123_AddendaValue'</span><span class="p">]</span>
