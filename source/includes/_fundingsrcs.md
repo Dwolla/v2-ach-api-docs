@@ -1064,11 +1064,11 @@ appToken
 
 Remove a funding source by id. A removed funding source is soft deleted and can still be accessed when retrieved. When a funding source with an `unverified` status is removed, an attempt to re-add it within 48 hours of the initial created date will re-activate the removed funding source and maintain the same `id`.
 
-<ol class = "alerts">
-    <li class="alert icon-alert-info">
-      We recommend not removing funding sources until all transfers have been `processed`. Removing a funding source prior to a transfer processing may result in funds being processed to a `balance` funding source rather than the intended bank funding source.
-    </li>
-</ol>
+##### Best Practices
+
+If a funding-source has an **outgoing** transfer, we recommend not removing it until the transfer has been [exported](https://developers.dwolla.com/concepts/transfer-processing-times#transfer-processing-times). Doing so will result in the cancellation of the transfer. Determining if a transfer has been exported or not can be done by retrieving the transfer resource and looking for the [`cancel`](https://docs.dwolla.com/#cancel-a-transfer) link in the response -- if the transfer has exported, the `cancel` link is removed.
+
+If a funding source has an **incoming** transfer, we recommend not removing it until the transfer has been `processed`. If the recipient Customer has multiple funding sources attached, doing so will result in the funds processing to a randomly chosen bank funding source. If the recipient is a [Verified Customer type](https://developers.dwolla.com/concepts/customer-types#verified-customer) with only one bank funding source attached, removing it prior to an incoming transfer processing will result in the funds settling to the [balance funding source](https://developers.dwolla.com/concepts/balance-funding-source#the-dwolla-balance) rather than the intended bank funding source.
 
 
 ### HTTP request
