@@ -27,7 +27,7 @@ A transfer represents money being transferred from a `source` to a `destination`
 | achDetails | An achDetails JSON object. See below. |
 | correlationId | A string value attached to a transfer resource which can be used for traceability between Dwolla and your application. |
 | individualAchId | A unique string value matching the value on bank line related to the transfer. Appears when the debit entry clears out of the bank. The individual identifier for that ACH entry. |
-| processingChannel | A processing JSON object that contains a key-value pair with a string key and string value of `destination` and `real-time-payments`. |
+| processingChannel | A processingChannel JSON object that contains a key-value pair with a string key and string value of `destination` and `real-time-payments`. |
 
 ```noselect
 {
@@ -205,7 +205,7 @@ Refer to our [idempotency key](#idempotency-key) section to learn more.
 | clearing | no | object | A clearing JSON object that contains `source` and `destination` keys to slow down or expedite a transfer. [Reference the clearing JSON object to learn more](#clearing-json-object). |
 | achDetails | no | object | An ACH details JSON object which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [Reference the achDetails JSON object to learn more](#achdetails-object)|
 | correlationId | no | string | A string value attached to a customer which can be used for traceability between Dwolla and your application. **Note:** A correlationId is not a replacement for an [idempotency-key](#idempotency-key). <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. |
-| processingChannel | no | object | A processing JSON object that contains a key-value pair with a string key and string value of `destination` and `real-time-payments`.
+| processingChannel | no | object | A processingChannel JSON object that contains a key-value pair with a string key and string value of `destination` and `real-time-payments`.
 
 ### HTTP status and error codes
 
