@@ -7102,9 +7102,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <hr>
 
             <h1 id='funding-sources'>Funding sources</h1>
-<p>Add and retrieve ACH bank account information via funding sources. Funding sources can be created for both the <a href="#create-a-funding-source-for-an-account">Dwolla Master Account</a> and <a href="#create-a-funding-source-for-a-customer">Customer</a> resources.</p>
+<p>The Funding Sources resource represents payment accounts that can be used to send and/or receive funds. Funding sources are relational to either a <a href="#create-a-funding-source-for-an-account">Dwolla Master Account</a> or <a href="#create-a-funding-source-for-a-customer">Customer</a> and can be used to reference details on a payment account. </p>
 <h3 id='funding-source-types'>Funding source types</h3>
-<p>The two funding source types available with a Dwolla integration include a <code class="prettyprint">bank</code>, and the Dwolla <code class="prettyprint">balance</code>. Type <code class="prettyprint">bank</code> represents any bank account attached as a funding source to Account and Customer resources. Type <code class="prettyprint">balance</code> represents the Dwolla Balance made available to Account and Verified Customer resources.</p>
+<p>The three funding source types available with a Dwolla integration include a <code class="prettyprint">bank</code>, the Dwolla <code class="prettyprint">balance</code>, and a debit <code class="prettyprint">card</code>. Type <code class="prettyprint">bank</code> represents any bank account attached as a funding source to Account and Customer resources. Type <code class="prettyprint">balance</code> represents the Dwolla Balance made available to Account and Verified Customer resources. Type <code class="prettyprint">card</code> represents a reloadable prepaid or bank-issued debit card that can be used as a funding source type to receive funds in near real-time.</p>
 <h5 id='balance-funding-source'>Balance funding source</h5>
 <p>The <a href="https://developers.dwolla.com/resources/balance-funding-source.html">Dwolla Balance</a> can be utilized as a digital &ldquo;wallet&rdquo;, storing USD funds for the Customer or Account with Dwolla’s financial institution partners. Additionally, the Dwolla Balance can be pre-loaded with funds for quicker outgoing ACH transfers to destination funding sources. To get a more in-depth overview of the Dwolla Balance, including functionality and other benefits, check out our <a href="https://developers.dwolla.com/resources/balance-funding-source.html">developer resource article</a> or view our <a href="https://www.dwolla.com/resources/balance-webinar/">webinar</a>.</p>
 <h5 id='bank-funding-source'>Bank funding source</h5>
@@ -7115,6 +7115,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <li><p><code class="prettyprint">general-ledger</code> - General ledger accounts can only be attached to exempt Business Verified Customers. <strong>Note</strong>: Enabling this account type requires additional Dwolla approvals before getting started. Please contact <a href="https://www.dwolla.com/contact?b=apidocs">Sales</a> or your account manager for more information on enabling this account type.</p></li>
 <li><p><code class="prettyprint">loan</code> - Loan accounts can only be attached to Verified Customers. These funding-sources can only be credited, meaning funds can only be sent to these accounts. <strong>Note</strong>: Enabling this account type requires additional Dwolla approvals before getting started. Please contact <a href="https://www.dwolla.com/contact?b=apidocs">Sales</a> or your account manager for more information on enabling this account type.</p></li>
 </ul>
+<h5 id='card-funding-source'>Card funding source</h5>
+<p>Adding a debit <code class="prettyprint">card</code> as a funding source type allows your <a href="#customers">Customers</a> to receive funds typically within 30 minutes rather than hours or days. By sending funds from your Master Dwolla Balance funding source, you can directly “push” these funds out in near real-time to a customer’s reloadable prepaid card or bank-issued debit card. To get a more in-depth overview of debit <code class="prettyprint">cards</code>, including functionality and other benefits, check out our <a href="https://developers.dwolla.com/concepts/debit-cards">developer resource article</a>.</p>
 <h3 id='funding-source-links'>Funding source links</h3>
 <table><thead>
 <tr>
@@ -7184,7 +7186,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>type</td>
-<td>Type of funding source. Possible values are <code class="prettyprint">bank</code> or <code class="prettyprint">balance</code>.</td>
+<td>Type of funding source. Possible values are <code class="prettyprint">bank</code>, <code class="prettyprint">balance</code>, or <code class="prettyprint">card</code>.</td>
 </tr>
 <tr>
 <td>bankAccountType</td>
@@ -7208,7 +7210,7 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </tr>
 <tr>
 <td>channels</td>
-<td>List of processing channels.  ACH is the default processing channel for bank transfers. Possible values are <code class="prettyprint">ach</code> or <code class="prettyprint">wire</code>.</td>
+<td>List of processing channels.  ACH is the default processing channel for bank transfers. Possible values are <code class="prettyprint">ach</code>, <code class="prettyprint">real-time-payments</code> or <code class="prettyprint">wire</code>.</td>
 </tr>
 <tr>
 <td>bankName</td>
@@ -7244,7 +7246,8 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
     </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-08-16T20:06:34.000Z"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"removed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="nt">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"ach"</span><span class="w">
+        </span><span class="s2">"ach"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"real-time-payments"</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="nt">"bankName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SANDBOX TEST BANK"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"iavAccountHolders"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -9018,6 +9021,10 @@ HTTP 200 OK
 <td>individualAchId</td>
 <td>A unique string value matching the value on bank line related to the transfer. Appears when the debit entry clears out of the bank. The individual identifier for that ACH entry.</td>
 </tr>
+<tr>
+<td>processingChannel</td>
+<td>A processingChannel JSON object that contains a key-value pair with a string key and string value of <code class="prettyprint">destination</code> and <code class="prettyprint">real-time-payments</code>.</td>
+</tr>
 </tbody></table>
 <div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide"><span class="p">{</span><span class="w">
   </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
@@ -9055,7 +9062,10 @@ HTTP 200 OK
             </span><span class="p">}</span><span class="w">
         </span><span class="p">},</span><span class="w">
   </span><span class="nt">"correlationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"individualAchId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="nt">"individualAchId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"processingChannel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="s2">"real-time-payments"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div><h3 id='source-and-destination-types'>Source and destination types</h3><h5 id='source-types'>Source types</h5>
 <table><thead>
@@ -9285,6 +9295,12 @@ Source specifies the clearing time for the source funding source involved in the
 <td>no</td>
 <td>string</td>
 <td>A string value attached to a customer which can be used for traceability between Dwolla and your application. <strong>Note:</strong> A correlationId is not a replacement for an <a href="#idempotency-key">idempotency-key</a>. <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: <code class="prettyprint">a-Z</code>, <code class="prettyprint">0-9</code>, <code class="prettyprint">-</code>, <code class="prettyprint">.</code>, and <code class="prettyprint">_</code>. <br> <strong>Note:</strong> Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID.</td>
+</tr>
+<tr>
+<td>processingChannel</td>
+<td>no</td>
+<td>object</td>
+<td>A processingChannel JSON object that contains a key-value pair with a string key and string value of <code class="prettyprint">destination</code> and <code class="prettyprint">real-time-payments</code>.</td>
 </tr>
 </tbody></table>
 <h3 id='http-status-and-error-codes'>HTTP status and error codes</h3>
