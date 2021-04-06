@@ -1,10 +1,10 @@
 # Funding sources
 
-Add and retrieve ACH bank account information via funding sources. Funding sources can be created for both the [Dwolla Master Account](#create-a-funding-source-for-an-account) and [Customer](#create-a-funding-source-for-a-customer) resources.
+The Funding Sources resource represents payment accounts that can be used to send and/or receive funds transfers. Funding sources are relational to either a [Dwolla Master Account](#create-a-funding-source-for-an-account) or [Customer](#create-a-funding-source-for-a-customer) and can be used to reference details on a payment account. 
 
 ### Funding source types
 
-The two funding source types available with a Dwolla integration include a `bank`, and the Dwolla `balance`. Type `bank` represents any bank account attached as a funding source to Account and Customer resources. Type `balance` represents the Dwolla Balance made available to Account and Verified Customer resources.
+The three funding source types available with a Dwolla integration include a `bank`, the Dwolla `balance`, and a debit `card`. Type `bank` represents any bank account attached as a funding source to Account and Customer resources. Type `balance` represents the Dwolla Balance made available to Account and Verified Customer resources. Type `card` represents a reloadable prepaid or bank-issued debit card that can be used as a funding source type to receive funds in near real-time.
 
 ##### Balance funding source
 
@@ -19,6 +19,11 @@ Funding sources of type `bank` include an additional attribute, `bankAccountType
  - `general-ledger` - General ledger accounts can only be attached to exempt Business Verified Customers. **Note**: Enabling this account type requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account type.
 
  - `loan` - Loan accounts can only be attached to Verified Customers. These funding-sources can only be credited, meaning funds can only be sent to these accounts. **Note**: Enabling this account type requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account type.
+
+
+###### Card funding source
+
+Adding a debit `card` as a funding source type allows your [Customers](#customers) to receive funds in typically within 30 minutes rather than hours or days. By sending funds from your Master Dwolla Balance funding source, you can directly “push” these funds out in near real-time to a customer’s reloadable prepaid card or bank-issued debit card. To get a more in-depth overview of debit `cards`, including functionality and other benefits, check out our [developer resource article](https://developers.dwolla.com/concepts/debit-cards).
 
 ### Funding source links
 
@@ -42,13 +47,13 @@ Funding sources of type `bank` include an additional attribute, `bankAccountType
 |-----------|-------------|
 | id | The funding source unique identifier. |
 | status | Possible values are `unverified` or `verified`. Determines if the funding source has completed verification. |
-| type | Type of funding source. Possible values are `bank` or `balance`. |
+| type | Type of funding source. Possible values are `bank`, `balance`, or `card`. |
 | bankAccountType | An attribute for `bank` funding sources that determines the type of account. Possible values are `checking`, `savings`, `general-ledger` or `loan`. |
 | name | Arbitrary nickname for the funding source. |
 | created | ISO-8601 timestamp for when the funding source was created. |
 | balance | An optional object that includes `value` and `currency` parameters. `value` is a string value for the amount available and `currency` is a string value currency code. Only returned for a Dwolla API Customer account balance.   |
 | removed | Determines if the funding source has been [removed](#remove-a-funding-source). A boolean `true` if the funding source was removed or `false` if the funding source is not removed. |
-| channels | List of processing channels.  ACH is the default processing channel for bank transfers. Possible values are `ach` or `wire`. |
+| channels | List of processing channels.  ACH is the default processing channel for bank transfers. Possible values are `ach`, `real-time-payments` or `wire`. |
 | bankName | The financial institution name. |
 | iavAccountHolders | An optional object that includes optional `selected` and `other` parameters. `selected`, a string with the account holder name(s) on file with the financial institution for the IAV selected account. `other`, a list of strings with name(s) of other accounts on file. Only returned for a Customer that added a bank using Dwolla IAV, and if names are returned for the selected bank account. |
 | fingerprint | Fingerprint is an optional unique identifying string value returned for funding sources of type `bank`. This attribute can be used to check across all Dwolla API Customers if two bank accounts share the same account number and routing number. Removing a funding source does not remove the `fingerprint`. |
@@ -75,7 +80,8 @@ Funding sources of type `bank` include an additional attribute, `bankAccountType
     "created": "2017-08-16T20:06:34.000Z",
     "removed": false,
     "channels": [
-        "ach"
+        "ach",
+        "real-time-payments"
     ],
     "bankName": "SANDBOX TEST BANK",
     "iavAccountHolders": {
