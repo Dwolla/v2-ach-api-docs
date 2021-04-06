@@ -1,6 +1,6 @@
 # Funding sources
 
-The Funding Sources resource represents payment accounts that can be used to send and/or receive funds transfers. Funding sources are relational to either a [Dwolla Master Account](#create-a-funding-source-for-an-account) or [Customer](#create-a-funding-source-for-a-customer) and can be used to reference details on a payment account. 
+The Funding Sources resource represents payment accounts that can be used to send and/or receive funds. Funding sources are relational to either a [Dwolla Master Account](#create-a-funding-source-for-an-account) or [Customer](#create-a-funding-source-for-a-customer) and can be used to reference details on a payment account. 
 
 ### Funding source types
 
@@ -21,9 +21,9 @@ Funding sources of type `bank` include an additional attribute, `bankAccountType
  - `loan` - Loan accounts can only be attached to Verified Customers. These funding-sources can only be credited, meaning funds can only be sent to these accounts. **Note**: Enabling this account type requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account type.
 
 
-###### Card funding source
+##### Card funding source
 
-Adding a debit `card` as a funding source type allows your [Customers](#customers) to receive funds in typically within 30 minutes rather than hours or days. By sending funds from your Master Dwolla Balance funding source, you can directly “push” these funds out in near real-time to a customer’s reloadable prepaid card or bank-issued debit card. To get a more in-depth overview of debit `cards`, including functionality and other benefits, check out our [developer resource article](https://developers.dwolla.com/concepts/debit-cards).
+Adding a debit `card` as a funding source type allows your [Customers](#customers) to receive funds typically within 30 minutes rather than hours or days. By sending funds from your Master Dwolla Balance funding source, you can directly “push” these funds out in near real-time to a customer’s reloadable prepaid card or bank-issued debit card. To get a more in-depth overview of debit `cards`, including functionality and other benefits, check out our [developer resource article](https://developers.dwolla.com/concepts/debit-cards).
 
 ### Funding source links
 
