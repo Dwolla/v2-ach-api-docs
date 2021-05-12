@@ -117,6 +117,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | metadata      | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters).                  |
 | correlationId | A string value attached to a mass payment item which can be used for traceability between Dwolla and your application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
 | achDetails    | An [ACH details JSON object](#achdetails-object) which represents additional information sent along with a transfer created from a mass payment item to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. |
+| processingChannel | A processingChannel JSON object that contains a key-value pair with a string key and string value of `destination` and `real-time-payments`. |
 
 ### amount JSON object
 
@@ -243,7 +244,10 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
             }
           }
         },
-        "correlationId": "ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841"
+        "correlationId": "ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841",
+        "processingChannel": {
+          "destination": "real-time-payments"
+        }
       },
       {
         "_links": {
@@ -323,6 +327,9 @@ request_body = {
             :values => ["ABC123_AddendaValue"]
           }
         }
+      },
+      :processingChannel => {
+        :destination => "real-time-payments"
       }
     },
     {
@@ -414,6 +421,9 @@ $massPayment = $massPaymentsApi->create([
             'values' => ['ABC123_AddendaValue']
           ]
         ]
+      ],
+      'processingChannel' => [
+        'destination' => 'real-time-payments'
       ]
     ],
     [
@@ -494,6 +504,9 @@ request_body = {
         'addenda': {
           'values': ['ABC123_AddendaValue']
         }
+      },
+      'processingChannel': {
+        'destination': 'real-time-payments'
       }
     },
     {
@@ -569,6 +582,9 @@ var requestBody = {
             values: ['ABC123_AddendaValue']
           }
         }
+      },
+      processingChannel: {
+        destination: 'real-time-payments'
       }
     },
     {
@@ -844,6 +860,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         },
         "metadata": {
           "item1": "item1"
+        },
+        "processingChannel": {
+          "destination": "real-time-payments"
         }
       },
       {
