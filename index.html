@@ -10705,6 +10705,10 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>achDetails</td>
 <td>An <a href="#achdetails-object">ACH details JSON object</a> which represents additional information sent along with a transfer created from a mass payment item to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution.</td>
 </tr>
+<tr>
+<td>processingChannel</td>
+<td>A processingChannel JSON object that contains a key-value pair with a string key and string value of <code class="prettyprint">destination</code> and <code class="prettyprint">real-time-payments</code>.</td>
+</tr>
 </tbody></table>
 <h3 id='amount-json-object'>amount JSON object</h3>
 <table><thead>
@@ -10892,7 +10896,10 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
             }
           }
         },
-        "correlationId": "ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841"
+        "correlationId": "ad6ca82d-59f7-45f0-a8d2-94c2cd4e8841",
+        "processingChannel": {
+          "destination": "real-time-payments"
+        }
       },
       {
         "_links": {
@@ -10978,6 +10985,9 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
             <span class="ss">:values</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"ABC123_AddendaValue"</span><span class="p">]</span>
           <span class="p">}</span>
         <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="ss">:processingChannel</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="s2">"real-time-payments"</span>
       <span class="p">}</span>
     <span class="p">},</span>
     <span class="p">{</span>
@@ -11075,6 +11085,9 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
             <span class="s1">'values'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'ABC123_AddendaValue'</span><span class="p">]</span>
           <span class="p">]</span>
         <span class="p">]</span>
+      <span class="p">],</span>
+      <span class="s1">'processingChannel'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'destination'</span> <span class="o">=&gt;</span> <span class="s1">'real-time-payments'</span>
       <span class="p">]</span>
     <span class="p">],</span>
     <span class="p">[</span>
@@ -11161,6 +11174,9 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
         <span class="s">'addenda'</span><span class="p">:</span> <span class="p">{</span>
           <span class="s">'values'</span><span class="p">:</span> <span class="p">[</span><span class="s">'ABC123_AddendaValue'</span><span class="p">]</span>
         <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="s">'processingChannel'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'destination'</span><span class="p">:</span> <span class="s">'real-time-payments'</span>
       <span class="p">}</span>
     <span class="p">},</span>
     <span class="p">{</span>
@@ -11242,6 +11258,9 @@ Location: https://api-sandbox.dwolla.com/mass-payments/d093bcd1-d0c1-41c2-bcb5-a
             <span class="na">values</span><span class="p">:</span> <span class="p">[</span><span class="s1">'ABC123_AddendaValue'</span><span class="p">]</span>
           <span class="p">}</span>
         <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="na">processingChannel</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">destination</span><span class="p">:</span> <span class="s1">'real-time-payments'</span>
       <span class="p">}</span>
     <span class="p">},</span>
     <span class="p">{</span>
@@ -11664,6 +11683,9 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
         },
         "metadata": {
           "item1": "item1"
+        },
+        "processingChannel": {
+          "destination": "real-time-payments"
         }
       },
       {
