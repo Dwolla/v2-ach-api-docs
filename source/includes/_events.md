@@ -69,6 +69,10 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | transfer_cancelled | A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds transferring either to or from a Dwolla Master Account’s `balance` or `bank`. |
 | transfer_failed | A transfer failed to clear successfully. Represents funds failing to clear either to or from a Dwolla Master Account’s `balance` or `bank`. |
 | transfer_completed | A transfer has cleared successfully. Represents funds clearing either to or from a Dwolla Master Account’s `balance` or `bank`. |
+| card_transfer_created | A push to debit card transfer was created from the Master Account. Represents funds transferring from a Master Account's `balance` to a Customer's debit `card`. |
+| card_transfer_cancelled | A pending push to debit card transfer was cancelled. Represents a cancellation of funds transferring from a Master Account's `balance` to a Customer's debit `card`.  |
+| card_transfer_failed | A push to debit card transfer failed to complete. Represents funds failing to complete from a Master Account's `balance` to a Customer's debit `card`.  |
+| card_transfer_completed | A push to debit card transfer has cleared successfully. Represents funds clearing from a Master Account's `balance` to a Customer's debit `card`.  |
 
 ##### Mass Payments
 
@@ -141,13 +145,10 @@ When the state of a resource changes, Dwolla creates a new event resource to rec
 | customer_bank_transfer_cancelled | A pending Customer bank transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a verified Customer's bank to the Dwolla network or from the Dwolla network to a verified Customer's bank. |
 | customer_bank_transfer_failed | A Customer bank transfer failed to clear successfully. Usually, this is a result of an ACH failure (insufficient funds, etc.). Represents funds failing to clear either from a verified Customer's bank to the Dwolla network or from the Dwolla network to a verified Customer's bank. |
 | customer_bank_transfer_completed | A bank transfer that was created for a Customer has cleared successfully. Represents funds clearing either from a verified Customer's bank to the Dwolla network or from the Dwolla network to a verified Customer's bank. |
-| customer_transfer_created | A transfer was created for a Customer. Represents funds transferring to an unverified Customer’s bank or to a verified Customer’s balance. |
-| customer_transfer_cancelled | A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds transferring either to an unverified Customer's bank or to a verified Customer's balance. |
-| customer_transfer_failed | A Customer transfer failed to clear successfully. Represents funds failing to clear either to an unverified Customer's bank or to a verified Customer's balance. |
-| customer_transfer_completed | A Customer transfer has cleared successfully. Represents funds clearing either to an unverified Customer's bank or to a verified Customer's balance. |
-| customer_card_transfer_created | A card transfer was created for a Customer. Represents funds transferring from a Master Accout's balance to a Customer's debit card.  |
-| customer_card_transfer_cancelled | A pending push to debit card transfer was cancelled for a Customer. Represents a cancellation of funds transferring from a Master Accout's balance to a Customer's debit card.  |
-| customer_card_transfer_failed | A push to debit card transfer failed to complete for a Customer. Represents funds failing to complete to a Customer's debit card.  |
+| customer_transfer_created | A transfer was created for a Customer. Represents funds transferring to an unverified Customer’s bank or to a verified Customer’s balance. This can also be fired when a push to debit card transfer is created from a Master Account's balance to a Customer's debit card.   |
+| customer_transfer_cancelled | A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds transferring either to an unverified Customer's bank or to a verified Customer's balance. This can also be fired when a pending push to debit card transfer is cancelled from a Master Account's balance to a Customer's debit card. |
+| customer_transfer_failed | A Customer transfer failed to clear successfully. Represents funds failing to clear either to an unverified Customer's bank or to a verified Customer's balance. This can also be fired when a push to debit card transfer fails to complete from a Master Account's balance to a Customer's debit card. |
+| customer_transfer_completed | A Customer transfer has cleared successfully. Represents funds clearing either to an unverified Customer's bank or to a verified Customer's balance. This can also be fired when a push to debit card transfer clears successfully from a Master Account's balance to a Customer's debit card.|
 
 
 ##### Mass Payments
