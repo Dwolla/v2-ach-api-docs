@@ -13531,6 +13531,22 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 <td>transfer_completed</td>
 <td>A transfer has cleared successfully. Represents funds clearing either to or from a Dwolla Master Account’s <code class="prettyprint">balance</code> or <code class="prettyprint">bank</code>.</td>
 </tr>
+<tr>
+<td>card_transfer_created</td>
+<td>A push to debit card transfer was created from the Master Account. Represents funds transferring from a Master Account&rsquo;s <code class="prettyprint">balance</code> to a Customer&rsquo;s debit <code class="prettyprint">card</code>.</td>
+</tr>
+<tr>
+<td>card_transfer_cancelled</td>
+<td>A pending push to debit card transfer was cancelled. Represents a cancellation of funds transferring from a Master Account&rsquo;s <code class="prettyprint">balance</code> to a Customer&rsquo;s debit <code class="prettyprint">card</code>.</td>
+</tr>
+<tr>
+<td>card_transfer_failed</td>
+<td>A push to debit card transfer failed to complete. Represents funds failing to complete from a Master Account&rsquo;s <code class="prettyprint">balance</code> to a Customer&rsquo;s debit <code class="prettyprint">card</code>.</td>
+</tr>
+<tr>
+<td>card_transfer_completed</td>
+<td>A push to debit card transfer has cleared successfully. Represents funds clearing from a Master Account&rsquo;s <code class="prettyprint">balance</code> to a Customer&rsquo;s debit <code class="prettyprint">card</code>.</td>
+</tr>
 </tbody></table>
 <h5 id='mass-payments'>Mass Payments</h5>
 <table><thead>
@@ -13721,51 +13737,39 @@ Authorization: Bearer pBA9fVDBEyYZCEsLf/wKehyh1RTpzjUj5KzIRfDi0wKTii7DqY
 </thead><tbody>
 <tr>
 <td>customer_bank_transfer_created</td>
-<td>A bank transfer was created for a Customer. Represents funds moving either from a verified Customer&rsquo;s bank to the Dwolla network or from the Dwolla network to a verified Customer&rsquo;s bank.</td>
+<td>A bank transfer was created for a Customer. Represents funds moving either from a verified Customer&rsquo;s <code class="prettyprint">bank</code> to the Dwolla network or from the Dwolla network to a verified Customer&rsquo;s <code class="prettyprint">bank</code>.</td>
 </tr>
 <tr>
 <td>customer_bank_transfer_creation_failed</td>
-<td>An attempt to initiate a transfer to a verified Customer&rsquo;s bank was made, but failed. Transfers initiated to a verified Customer&rsquo;s bank must pass through the verified Customer&rsquo;s balance before being sent to a receiving bank. Dwolla will fail to create a transaction intended for a verified Customer&rsquo;s bank if the funds available in the balance are less than the transfer amount.</td>
+<td>An attempt to initiate a transfer to a verified Customer&rsquo;s <code class="prettyprint">bank</code> was made, but failed. Transfers initiated to a verified Customer&rsquo;s <code class="prettyprint">bank</code> must pass through the verified Customer&rsquo;s <code class="prettyprint">balance</code> before being sent to a receiving bank. Dwolla will fail to create a transaction intended for a verified Customer&rsquo;s <code class="prettyprint">bank</code> if the funds available in the <code class="prettyprint">balance</code> are less than the transfer amount.</td>
 </tr>
 <tr>
 <td>customer_bank_transfer_cancelled</td>
-<td>A pending Customer bank transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a verified Customer&rsquo;s bank to the Dwolla network or from the Dwolla network to a verified Customer&rsquo;s bank.</td>
+<td>A pending Customer bank transfer has been cancelled, and will not process further. Represents a cancellation of funds either transferring from a verified Customer&rsquo;s <code class="prettyprint">bank</code> to the Dwolla network or from the Dwolla network to a verified Customer&rsquo;s <code class="prettyprint">bank</code>.</td>
 </tr>
 <tr>
 <td>customer_bank_transfer_failed</td>
-<td>A Customer bank transfer failed to clear successfully. Usually, this is a result of an ACH failure (insufficient funds, etc.). Represents funds failing to clear either from a verified Customer&rsquo;s bank to the Dwolla network or from the Dwolla network to a verified Customer&rsquo;s bank.</td>
+<td>A Customer bank transfer failed to clear successfully. Usually, this is a result of an ACH failure (insufficient funds, etc.). Represents funds failing to clear either from a verified Customer&rsquo;s <code class="prettyprint">bank</code> to the Dwolla network or from the Dwolla network to a verified Customer&rsquo;s <code class="prettyprint">bank</code>.</td>
 </tr>
 <tr>
 <td>customer_bank_transfer_completed</td>
-<td>A bank transfer that was created for a Customer has cleared successfully. Represents funds clearing either from a verified Customer&rsquo;s bank to the Dwolla network or from the Dwolla network to a verified Customer&rsquo;s bank.</td>
+<td>A bank transfer that was created for a Customer has cleared successfully. Represents funds clearing either from a verified Customer&rsquo;s <code class="prettyprint">bank</code> to the Dwolla network or from the Dwolla network to a verified Customer&rsquo;s <code class="prettyprint">bank</code>.</td>
 </tr>
 <tr>
 <td>customer_transfer_created</td>
-<td>A transfer was created for a Customer. Represents funds transferring to an unverified Customer’s bank or to a verified Customer’s balance.</td>
+<td>A transfer was created for a Customer. Represents funds transferring to an unverified Customer’s <code class="prettyprint">bank</code> or to a verified Customer’s <code class="prettyprint">balance</code>. This can also be fired when a push to debit card transfer is created from a Master Account&rsquo;s <code class="prettyprint">balance</code> to a Customer&rsquo;s debit <code class="prettyprint">card</code>.</td>
 </tr>
 <tr>
 <td>customer_transfer_cancelled</td>
-<td>A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds transferring either to an unverified Customer&rsquo;s bank or to a verified Customer&rsquo;s balance.</td>
+<td>A pending transfer has been cancelled, and will not process further. Represents a cancellation of funds transferring either to an unverified Customer&rsquo;s <code class="prettyprint">bank</code> or to a verified Customer&rsquo;s <code class="prettyprint">balance</code>. This can also be fired when a pending push to debit card transfer is cancelled from a Master Account&rsquo;s <code class="prettyprint">balance</code> to a Customer&rsquo;s debit <code class="prettyprint">card</code>.</td>
 </tr>
 <tr>
 <td>customer_transfer_failed</td>
-<td>A Customer transfer failed to clear successfully. Represents funds failing to clear either to an unverified Customer&rsquo;s bank or to a verified Customer&rsquo;s balance.</td>
+<td>A Customer transfer failed to clear successfully. Represents funds failing to clear either to an unverified Customer&rsquo;s <code class="prettyprint">bank</code> or to a verified Customer&rsquo;s <code class="prettyprint">balance</code>. This can also be fired when a push to debit card transfer fails to complete from a Master Account&rsquo;s <code class="prettyprint">balance</code> to a Customer&rsquo;s debit <code class="prettyprint">card</code>.</td>
 </tr>
 <tr>
 <td>customer_transfer_completed</td>
-<td>A Customer transfer has cleared successfully. Represents funds clearing either to an unverified Customer&rsquo;s bank or to a verified Customer&rsquo;s balance.</td>
-</tr>
-<tr>
-<td>customer_card_transfer_created</td>
-<td>A card transfer was created for a Customer. Represents funds transferring from a Master Accout&rsquo;s balance to a Customer&rsquo;s debit card.</td>
-</tr>
-<tr>
-<td>customer_card_transfer_cancelled</td>
-<td>A pending push to debit card transfer was cancelled for a Customer. Represents a cancellation of funds transferring from a Master Accout&rsquo;s balance to a Customer&rsquo;s debit card.</td>
-</tr>
-<tr>
-<td>customer_card_transfer_failed</td>
-<td>A push to debit card transfer failed to complete for a Customer. Represents funds failing to complete to a Customer&rsquo;s debit card.</td>
+<td>A Customer transfer has cleared successfully. Represents funds clearing either to an unverified Customer&rsquo;s <code class="prettyprint">bank</code> or to a verified Customer&rsquo;s <code class="prettyprint">balance</code>. This can also be fired when a push to debit card transfer clears successfully from a Master Account&rsquo;s <code class="prettyprint">balance</code> to a Customer&rsquo;s debit <code class="prettyprint">card</code>.</td>
 </tr>
 </tbody></table>
 <h5 id='mass-payments'>Mass Payments</h5>
