@@ -9011,7 +9011,11 @@ HTTP 200 OK
 </tr>
 <tr>
 <td>achDetails</td>
-<td>An achDetails JSON object. See below.</td>
+<td>An achDetails JSON object. <a href="#achdetails-object">See below</a>.</td>
+</tr>
+<tr>
+<td>rtpDetails</td>
+<td>An rtpDetails JSON object. <a href="#rtpdetails-object">See below</a>.</td>
 </tr>
 <tr>
 <td>correlationId</td>
@@ -9044,23 +9048,27 @@ HTTP 200 OK
     </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="s2">"next-available"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"achDetails"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"addenda"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"string"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="nt">"traceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-        </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"addenda"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"string"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="nt">"traceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"addenda"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+              </span><span class="s2">"string"</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"traceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"addenda"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+              </span><span class="s2">"string"</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"traceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"rtpDetails"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"destination"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="s2">"networkId"</span><span class="err">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
   </span><span class="nt">"correlationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"individualAchId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"processingChannel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -9235,6 +9243,51 @@ Source specifies the clearing time for the source funding source involved in the
     }
   }
 }
+</code></pre></div></div><h3 id='rtpdetails-object'>rtpDetails object</h3>
+<blockquote>
+<p>Note: This is available as part of RTP®, a premium feature available for Dwolla customers. Enabling RTP® does require additional Dwolla approvals before getting started. Please <a href="https://www.dwolla.com/contact?b=apidocs">contact Sales</a> or your account manager for more information on enabling this account feature.</p>
+</blockquote>
+
+<p>The <code class="prettyprint">rtpDetails</code> object is used to provide additional information to the payment recipient about their RTP® credit transfer. This value will be passed in on an RTP® credit transfer request to the recipient’s bank account. </p>
+
+<p>Refer to our <a href="https://developers.dwolla.com/concepts/real-time-payments#initiating-an-rtp-credit-transfer">Real-time Payments developer concept article</a> to learn more about initiating an RTP® credit transfer. </p>
+<h5 id='rtpdetails-object'>rtpDetails object</h5>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>destination</td>
+<td>no</td>
+<td>object</td>
+<td>Represents information that is sent to a destination/receiving bank account along with an RTP® credit transfer. Include information within this JSON object for customizing details on RTP® credit transfers. Contains a key-value pair for <code class="prettyprint">remittanceData</code>.</td>
+</tr>
+</tbody></table>
+<h5 id='destination-object'>destination object</h5>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>remittanceData</td>
+<td>no</td>
+<td>string</td>
+<td>Contains a string value. Used for the purpose of transmitting RTP® transfer-related information to the recipient&rsquo;s bank account. <br> RTP® remittance data value must be less than or equal to 140 characters and can include spaces.</td>
+</tr>
+</tbody></table>
+<h4 id='rtpdetails-example'>rtpDetails example:</h4><div class="code-snippet js-code-snippet language-nohide"><button class="btn alternative">copy</button><div class="code-snippet__cnt highlight"><pre><code class="language-nohide" data-lang="nohide">"rtpDetails": {
+  "destination": {
+    "remittanceData": "ABC_123 Remittance Data"
+  }
+}
 </code></pre></div></div><h2 id='initiate-a-transfer'>Initiate a transfer</h2>
 <p>This section covers how to initiate a transfer from either a Dwolla <a href="#accounts">Account</a> or Dwolla API <a href="#customers">Customer</a> resource.</p>
 <h3 id='prevent-duplicate-transfers-with-idempotency-key'>Prevent duplicate transfers with idempotency key</h3>
@@ -9289,6 +9342,12 @@ Source specifies the clearing time for the source funding source involved in the
 <td>no</td>
 <td>object</td>
 <td>An ACH details JSON object which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. <a href="#achdetails-object">Reference the achDetails JSON object to learn more</a></td>
+</tr>
+<tr>
+<td>rtpDetails</td>
+<td>no</td>
+<td>object</td>
+<td>An RTP® details JSON object which represents additional information sent along with an RTP® credit transfer to the receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. <a href="#rtpdetails-object">Reference the rtpDetails JSON object to learn more</a></td>
 </tr>
 <tr>
 <td>correlationId</td>
