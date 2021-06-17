@@ -24,7 +24,8 @@ A transfer represents money being transferred from a `source` to a `destination`
 | created | ISO-8601 timestamp. |
 | metadata | A metadata JSON object |
 | clearing | A clearing JSON object. |
-| achDetails | An achDetails JSON object. See below. |
+| achDetails | An achDetails JSON object. [See below](#achdetails-object). |
+| rtpDetails | An rtpDetails JSON object. [See below](#rtpdetails-object). |
 | correlationId | A string value attached to a transfer resource which can be used for traceability between Dwolla and your application. |
 | individualAchId | A unique string value matching the value on bank line related to the transfer. Appears when the debit entry clears out of the bank. The individual identifier for that ACH entry. |
 | processingChannel | A processingChannel JSON object that contains a key-value pair with a string key and string value of `destination` and `real-time-payments`. |
@@ -48,23 +49,27 @@ A transfer represents money being transferred from a `source` to a `destination`
     "destination": "next-available"
   },
   "achDetails": {
-        "source": {
-            "addenda": {
-                "values": [
-                    "string"
-                ]
-            },
-            "traceId": "string"
-            },
-        "destination": {
-            "addenda": {
-                "values": [
-                    "string"
-                ]
-            },
-            "traceId": "string"
-            }
-        },
+    "source": {
+      "addenda": {
+          "values": [
+              "string"
+          ]
+      },
+      "traceId": "string"
+    },
+    "destination": {
+      "addenda": {
+          "values": [
+              "string"
+          ]
+      },
+      "traceId": "string"
+    }
+  },
+  "rtpDetails": {
+    "destination": "string"
+    "networkId": "string"
+  },
   "correlationId": "string",
   "individualAchId": "string",
   "processingChannel": {
@@ -178,6 +183,36 @@ Source specifies the clearing time for the source funding source involved in the
 }
 ```
 
+### rtpDetails object
+
+> Note: This is available as part of RTP®, a premium feature available for Dwolla customers. Enabling RTP® does require additional Dwolla approvals before getting started. Please [contact Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account feature.
+
+The `rtpDetails` object is used to provide additional information to the payment recipient about their RTP® credit transfer. This value will be passed in on an RTP® credit transfer request to the recipient’s bank account. 
+
+Refer to our [Real-time Payments developer concept article](https://developers.dwolla.com/concepts/real-time-payments#initiating-an-rtp-credit-transfer) to learn more about initiating an RTP® credit transfer. 
+
+##### rtpDetails object
+
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| destination | no | object | Represents information that is sent to a destination/receiving bank account along with an RTP® credit transfer. Include information within this JSON object for customizing details on RTP® credit transfers. Contains a key-value pair for `remittanceData`.|
+
+##### destination object
+
+| Parameter | Required | Type | Description |
+|-----------|----------|----------------|-------------|
+| remittanceData | no | string | Contains a string value. Used for the purpose of transmitting RTP® transfer-related information to the recipient's bank account. <br> RTP® remittance data value must be less than or equal to 140 characters and can include spaces. |
+
+#### rtpDetails example:
+
+```noselect
+"rtpDetails": {
+  "destination": {
+    "remittanceData": "ABC_123 Remittance Data"
+  }
+}
+```
+
 ## Initiate a transfer
 
 This section covers how to initiate a transfer from either a Dwolla [Account](#accounts) or Dwolla API [Customer](#customers) resource.
@@ -204,6 +239,7 @@ Refer to our [idempotency key](#idempotency-key) section to learn more.
 | fees | no | array | An array of fee JSON objects that contain unique fee transfers. [Reference the facilitator fee JSON object to learn more](#facilitator-fee-json-object). |
 | clearing | no | object | A clearing JSON object that contains `source` and `destination` keys to slow down or expedite a transfer. [Reference the clearing JSON object to learn more](#clearing-json-object). |
 | achDetails | no | object | An ACH details JSON object which represents additional information sent along with a transfer to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [Reference the achDetails JSON object to learn more](#achdetails-object)|
+| rtpDetails | no | object | An RTP® details JSON object which represents additional information sent along with an RTP® credit transfer to the receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [Reference the rtpDetails JSON object to learn more](#rtpdetails-object)|
 | correlationId | no | string | A string value attached to a customer which can be used for traceability between Dwolla and your application. **Note:** A correlationId is not a replacement for an [idempotency-key](#idempotency-key). <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. |
 | processingChannel | no | object | A processingChannel JSON object that contains a key-value pair with a string key and string value of `destination` and `real-time-payments`.
 
