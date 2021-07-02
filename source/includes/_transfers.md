@@ -130,22 +130,49 @@ For more information on collecting fees on payments, reference the [facilitator 
 
 ### clearing JSON object
 
-The `clearing` object is used in tandem with our expedited transfer feature.
-Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH.
+The `clearing` object is used in tandem with our expedited transfer feature. This object does not need to be included if not using expedited transfers.
+Source specifies the clearing time for the source funding source involved in the transfer, and can be used to downgrade the clearing time from the default of Next-day ACH or to upgrade it to Same-day ACH debit. Destination specifies the clearing time for the destination funding source involved in the transfer, and can be used to upgrade the clearing time from the default of Standard ACH to Same-day ACH.
 
 > **Note:** The clearing request parameter is a premium feature available for [Dwolla](https://www.dwolla.com/platform) customers. Enabling Next-day ACH and Same-day ACH requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account setting.
 
 | Parameter | Required | Type | Description |
 |-----------|------------|------|-----------|
-| source | no | string | Represents a clearing object for `standard` debits into the Dwolla network. Used to downgrade the clearing time from the default of Next-day ACH. <br> Possible values: `standard` |
-| destination | no | string | Represents a clearing object for `same-day` credits out of the Dwolla network to a bank funding source. <br> Possible values: `next-available` |
+| source | no | string | Represents a clearing object for debits into the Dwolla network. <br> Possible values: `standard`, `next-available` <br> `standard` - Used to downgrade the clearing time of debits from the default of Next-day ACH (if enabled) to Standard ACH. <br> `next-available` - Used to upgrade the clearing time of debits to Same-day ACH.|
+| destination | no | string | Represents a clearing object for credits out of the Dwolla network to a bank funding source. <br> Possible values: `next-available` <br> `next-available` - Used to upgrade the clearing time of credits to Same-day ACH.|
 
-#### Clearing example:
+#### Clearing examples:
+
+##### Standard debit and Same-day credit (when Next-day is enabled)
 
 ```noselect
 "clearing": {
   "source": "standard",
   "destination": "next-available"
+}
+```
+
+##### Next-day debit and Same-day credit (when Next-day is enabled)
+
+```noselect
+"clearing": {
+  "destination": "next-available"
+}
+```
+
+##### Same-day debit and Same-day credit
+
+```noselect
+"clearing": {
+  "source": "next-available",
+  "destination": "next-available"
+}
+```
+
+##### Same-day debit and Standard credit
+
+```noselect
+"clearing": {
+  "source": "next-available"
 }
 ```
 

@@ -90,7 +90,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | items         | yes      | array  | an array of item JSON objects that contain unique payments. [See below](#mass-payment-item)        |
 | metadata      | no       | object | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters).     |
 | status        | no       | string | Acceptable value is: `deferred`. |
-| clearing      | no       | object | A clearing JSON object describing the desired `source` processing time. Utilize this parameter for bank sourced mass payments that you wish to configure the proccessing time for the ACH debit from Next-day ACH to standard ACH. [Reference the clearing JSON object to learn more](#clearing-json-object-mass-payment). |
+| clearing      | no       | object | A clearing JSON object describing the desired `source` processing time. Utilize this parameter for bank sourced mass payments that you wish to configure the proccessing time for the ACH debit to Same-day ACH, or from Next-day ACH to standard ACH . [Reference the clearing JSON object to learn more](#clearing-json-object-mass-payment). |
 | achDetails    | no       | object | An ACH details JSON object which represents additional information sent along with a transfer created from a mass payment item to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. [See below](#achdetails-and-addenda-object) |
 | correlationId | no       | string | A string value attached to a customer which can be used for traceability between Dwolla and your application. **Note:** A correlationId is not a replacement for an [idempotency key](#idempotency-key). <br> Must be less than 255 characters and contain no spaces. <br> Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. <br> **Note:** Sensitive Personal Identifying Information (PII) should not be used in this field and it is recommended to use a random value for correlationId, like a UUID. |
 
@@ -116,6 +116,7 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 | amount        | An amount JSON object containing `currency` and `value` keys.                                                                       |
 | metadata      | A metadata JSON object with a maximum of 10 key-value pairs (each key and value must be less than 255 characters).                  |
 | correlationId | A string value attached to a mass payment item which can be used for traceability between Dwolla and your application. The correlationId will be passed along to a transfer that is created from an item and can be searched on. Must be less than 255 characters and contain no spaces. Acceptable characters are: `a-Z`, `0-9`, `-`, `.`, and `_`. |
+| clearing | A clearing JSON object that contains `destination` key to expedite a transfer. [Reference the clearing JSON object to learn more](#clearing-json-object). |
 | achDetails    | An [ACH details JSON object](#achdetails-object) which represents additional information sent along with a transfer created from a mass payment item to an originating or receiving financial institution. Details within this object can be used to reference a transaction that has settled with a financial institution. |
 | processingChannel | A processingChannel JSON object that contains a key-value pair with a string key and string value of `destination` and `real-time-payments`. |
 
@@ -128,21 +129,29 @@ A mass payment can be created with a status of `deferred`, which allows you to c
 
 ### clearing JSON object (mass payment)
 
-The `clearing` object is used in tandem with our expedited transfers feature.
-Source specifies the processing time for the source bank funding source involved in the transfer, and can be used to downgrade the processing time from the default of Next-day ACH on the debit portion of the mass payment into the Dwolla Network. Destination specifies the processing time for the destination funding source involved in the transfer, and can be used to upgrade the processing time from the default of Standard ACH to Same-day ACH on each mass payment item. 
+The `clearing` object is used in tandem with our expedited transfers feature. This object does not need to be included if not using expedited transfers. Source specifies the processing time for the source bank funding source involved in the transfer, and can be used to downgrade the processing time from the default of Next-day ACH or to upgrade it to Same-day ACH on the debit portion of the mass payment into the Dwolla Network. Destination specifies the processing time for the destination funding source involved in the transfer, and can be used to upgrade the processing time from the default of Standard ACH to Same-day ACH on each mass payment item. 
 
 > **Note:** The clearing request parameter is a premium feature available for [Dwolla](https://www.dwolla.com/platform) customers. Enabling Next-day ACH and Same-day ACH requires additional Dwolla approvals before getting started. Please contact [Sales](https://www.dwolla.com/contact?b=apidocs) or your account manager for more information on enabling this account setting.
 
 | Parameter | Required | Type | Description |
 |-----------|------------|------|-----------|
-| source | no | string | Represents a clearing object for `standard` debits into the Dwolla network. Used to downgrade the processing time from the default of Next-day ACH. <br> Possible values: `standard` <br> **Note:** Cannot be used on individual [mass payment items](#mass-payment-item) as items represent a destination for the funds transfer. See [example masspayment request](#request-and-response-mass-payment-from-account-to-customers).  |
-| destination | no | string | Represents a clearing object for `same-day` credits out of the Dwolla network to a bank funding source. <br> Possible values: `next-available` <br> **Note:** Can only be used on individual [mass payment items](#mass-payment-item). See [example masspayment request](#request-and-response-mass-payment-from-account-to-customers)|
+| source | no | string | Represents a clearing object for debits into the Dwolla network. <br> Possible values: `standard`, `next-available` <br> `standard` - Used to downgrade the clearing time of debits from the default of Next-day ACH (if enabled) to Standard ACH. <br> `next-available` - Used to upgrade the clearing time of debits to Same-day ACH. <br> **Note:** Cannot be used on individual [mass payment items](#mass-payment-item) as items represent a destination for the funds transfer. See [example masspayment request](#request-and-response-mass-payment-from-account-to-customers).  |
+| destination | no | string | Represents a clearing object for credits out of the Dwolla network to a bank funding source. <br> Possible values: `next-available` <br> `next-available` - Used to upgrade the clearing time of credits to Same-day ACH. <br> **Note:** Can only be used on individual [mass payment items](#mass-payment-item). See [example masspayment request](#request-and-response-mass-payment-from-account-to-customers)|
 
 #### Clearing example:
 
+##### Same-day debit
 ```noselect
 "clearing": {
-  "destination": "next-available"
+  "source": "next-available"
+}
+```
+
+##### Standard debit (if Next-day is enabled)
+
+```noselect
+"clearing": {
+  "source": "standard"
 }
 ```
 
@@ -218,7 +227,7 @@ Idempotency-Key: 19051a62-3403-11e6-ac61-9e71128cae77
       }
     },
     "clearing": {
-      "source": "standard"
+      "source": "next-available"
     },
     "items": [
       {
